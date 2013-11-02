@@ -345,8 +345,8 @@ WARNING
   def install_language_pack_gems
     FileUtils.mkdir_p(slug_vendor_base)
     Dir.chdir(slug_vendor_base) do |dir|
-      gems.each do |gem|
-        fetch_package_and_untar("#{gem}.tgz")
+      gems.each do |gem_name|
+        fetch_package_and_untar("#{gem_name}.tgz")
       end
       Dir["bin/*"].each {|path| run("chmod 755 #{path}") }
     end
