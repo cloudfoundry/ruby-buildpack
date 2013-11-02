@@ -345,8 +345,8 @@ WARNING
   def install_language_pack_gems
     FileUtils.mkdir_p(slug_vendor_base)
     Dir.chdir(slug_vendor_base) do |dir|
-      gems.each do |gem|
-        fetch_package_and_untar("#{gem}.tgz")
+      gems.each do |gem_name|
+        fetch_package_and_untar("#{gem_name}.tgz")
       end
       Dir["bin/*"].each {|path| run("chmod 755 #{path}") }
     end
@@ -504,6 +504,7 @@ ERROR
   def create_database_yml
     log("create_database_yml") do
       return unless File.directory?("config")
+      return if File.exist?("config/database.yml")
       topic("Writing config/database.yml to read from DATABASE_URL")
       File.open("config/database.yml", "w") do |file|
         file.puts <<-DATABASE_YML
