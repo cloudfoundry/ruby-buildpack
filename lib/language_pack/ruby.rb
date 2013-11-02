@@ -328,7 +328,7 @@ WARNING
 
   # setup the environment so we can use the vendored ruby
   def setup_ruby_install_env
-    ENV["PATH"] = "#{ruby_install_binstub_path}:#{Dir.pwd}/#{slug_vendor_base}/bin:#{ENV["PATH"]}"
+    ENV["PATH"] = "#{ruby_install_binstub_path}:#{Dir.pwd}/#{slug_vendor_base}/bin:#{Dir.pwd}/#{slug_vendor_jvm}/bin:#{ENV["PATH"]}"
 
     if ruby_version_jruby?
       ENV['JAVA_OPTS']  = default_java_opts

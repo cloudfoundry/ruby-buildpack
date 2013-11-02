@@ -71,14 +71,17 @@ private
     ENV["DATABASE_URL"] ||= begin
       # need to use a dummy DATABASE_URL here, so rails can load the environment
       scheme =
-        if gem_is_bundled?("pg")
+        if gem_is_bundled?("pg") || gem_is_bundled?("jdbc-postgres")
           "postgres"
-        elsif gem_is_bundled?("mysql")
+        elsif gem_is_bundled?("mysql") || gem_is_bundled?("jdbc-mysql")
           "mysql"
         elsif gem_is_bundled?("mysql2")
           "mysql2"
-        elsif gem_is_bundled?("sqlite3") || gem_is_bundled?("sqlite3-ruby")
+        elsif gem_is_bundled?("sqlite3") || gem_is_bundled?("sqlite3-ruby") ||
+          gem_is_bundled?("jdbc-sqlite3")
           "sqlite3"
+        else
+          raise "Cannot determine database type from Gemfile.lock"
         end
       "#{scheme}://user:pass@127.0.0.1/dbname"
     end
