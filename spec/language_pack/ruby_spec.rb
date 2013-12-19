@@ -432,6 +432,19 @@ describe LanguagePack::Ruby do
           expect(File.exist?("#{slug_vendor_base}/cache")).to be_false
         end
 
+        it 'supports a custom BUNDLE_GEMFILE' do
+          ENV.should_receive(:[]).any_number_of_times.with('BUNDLE_GEMFILE').and_return('Gemfile-custom')
+          ENV.should_receive(:[]).any_number_of_times.with(anything).and_call_original
+          subject.should_receive(:pipe).with(/BUNDLE_GEMFILE.*Gemfile-custom/)
+          subject.compile
+        end
+
+        it 'does not allow a custom BUNDLE_GEMFILE with a path' do
+          ENV.should_receive(:[]).any_number_of_times.with('BUNDLE_GEMFILE').and_return('/bad/path/Gemfile-custom')
+          ENV.should_receive(:[]).any_number_of_times.with(anything).and_call_original
+          expect { subject.compile }.to raise_error
+        end
+
       end
 
       context 'creating database.yml' do

@@ -415,21 +415,22 @@ WARNING
     log("bundle") do
       bundle_without = ENV["BUNDLE_WITHOUT"] || "development:test"
       bundle_bin     = "bundle"
+      bundle_gemfile = ENV["BUNDLE_GEMFILE"] || "Gemfile"
       bundle_command = "#{bundle_bin} install --without #{bundle_without} --path vendor/bundle --binstubs #{bundler_binstubs_path}"
 
-      unless File.exist?("Gemfile.lock")
-        error "Gemfile.lock is required. Please run \"bundle install\" locally\nand commit your Gemfile.lock."
+      unless File.exist?("#{bundle_gemfile}.lock")
+        error "#{bundle_gemfile}.lock is required. Please run \"bundle install\" locally\nand commit your #{bundle_gemfile}.lock."
       end
 
       if has_windows_gemfile_lock?
         warn(<<WARNING)
-Removing `Gemfile.lock` because it was generated on Windows.
+Removing `#{bundle_gemfile}.lock` because it was generated on Windows.
 Bundler will do a full resolve so native gems are handled properly.
 This may result in unexpected gem versions being used in your app.
 WARNING
 
         log("bundle", "has_windows_gemfile_lock")
-        File.unlink("Gemfile.lock")
+        File.unlink("#{bundle_gemfile}.lock")
       else
         # using --deployment is preferred if we can
         bundle_command += " --deployment"
@@ -451,11 +452,12 @@ WARNING
         yaml_lib       = File.expand_path("#{libyaml_dir}/lib")
         pwd            = run("pwd").chomp
         bundler_path   = "#{pwd}/#{slug_vendor_base}/gems/#{BUNDLER_GEM_PATH}/lib"
+        bundle_gemfile_path = "#{pwd}/#{bundle_gemfile}"
         # we need to set BUNDLE_CONFIG and BUNDLE_GEMFILE for
         # codon since it uses bundler.
-        env_vars       = "env BUNDLE_GEMFILE=#{pwd}/Gemfile BUNDLE_CONFIG=#{pwd}/.bundle/config CPATH=#{yaml_include}:$CPATH CPPATH=#{yaml_include}:$CPPATH LIBRARY_PATH=#{yaml_lib}:$LIBRARY_PATH RUBYOPT=\"#{syck_hack}\""
+        env_vars       = "env BUNDLE_GEMFILE=#{bundle_gemfile_path} BUNDLE_CONFIG=#{pwd}/.bundle/config CPATH=#{yaml_include}:$CPATH CPPATH=#{yaml_include}:$CPPATH LIBRARY_PATH=#{yaml_lib}:$LIBRARY_PATH RUBYOPT=\"#{syck_hack}\""
         env_vars      += " BUNDLER_LIB_PATH=#{bundler_path}" if ruby_version && ruby_version.match(/^ruby-1\.8\.7/)
-        puts "Running: #{bundle_command}"
+        puts "Running: #{env_vars} #{bundle_command}"
         bundler_output << pipe("#{env_vars} #{bundle_command} --no-clean 2>&1")
 
       end
