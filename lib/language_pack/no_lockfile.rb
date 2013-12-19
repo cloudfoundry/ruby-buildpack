@@ -2,8 +2,12 @@ require "language_pack"
 require "language_pack/base"
 
 class LanguagePack::NoLockfile < LanguagePack::Base
+  def self.bundle_gemfile
+    @bundle_gemfile ||= ENV["BUNDLE_GEMFILE"] || "Gemfile"
+  end
+
   def self.use?
-    File.exist?("Gemfile") && !File.exists?("Gemfile.lock")
+    File.exist?(bundle_gemfile) && !File.exists?("#{bundle_gemfile}.lock")
   end
 
   def name
@@ -11,6 +15,6 @@ class LanguagePack::NoLockfile < LanguagePack::Base
   end
 
   def compile
-    error "Gemfile.lock required. Please check it in."
+    error "#{bundle_gemfile}.lock required. Please check it in."
   end
 end
