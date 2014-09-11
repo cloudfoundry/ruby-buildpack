@@ -485,6 +485,7 @@ WARNING
         bundle_bin     = "bundle"
         bundle_command = "#{bundle_bin} install --without #{bundle_without} --path vendor/bundle --binstubs #{bundler_binstubs_path}"
         bundle_command << " -j4"
+        bundle_command << " --retry 3"
 
         if bundler.windows_gemfile_lock?
           warn(<<WARNING, inline: true)
