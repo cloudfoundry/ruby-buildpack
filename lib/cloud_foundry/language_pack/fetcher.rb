@@ -1,32 +1,27 @@
-if Dir.exist?(DEPENDENCIES_PATH)
-  require 'language_pack/fetcher'
+require 'language_pack/fetcher'
+require 'cloud_foundry/language_pack/helpers/filename_translator'
+require 'cloud_foundry/language_pack/helpers/online_fetcher'
+require 'cloud_foundry/language_pack/helpers/offline_fetcher'
+require 'cloud_foundry/language_pack/helpers/online_buildpack_detector'
+require 'cloud_foundry/language_pack/helpers/dependency_existence_checker'
 
-  module LanguagePack
-    class Fetcher
-      def fetch(path)
-        copy_file_from_dependencies_cache(path)
+module LanguagePack
+  class Fetcher
+    alias_method :heroku_fetch, :fetch
+
+    def fetch(path)
+      if OnlineBuildpackDetector.online?
+        heroku_fetch path
+      else
+        OfflineFetcher.fetch(path, @host_url, self.method(:error), self.method(:run!))
       end
+    end
 
-      def fetch_untar(path, files_to_extract=nil)
-        untar_file_from_dependencies_cache(path, files_to_extract)
-      end
-
-      private
-
-      def copy_file_from_dependencies_cache(original_filename)
-        dependency_filename = Extensions.translate @host_url, original_filename
-        run!("cp #{File.join(DEPENDENCIES_PATH, dependency_filename)} #{original_filename}")
-      end
-
-      def untar_file_from_dependencies_cache(original_filename, files_to_extract="")
-        original_filename = "#{original_filename}.mac" if ruby_200_on_OSX(original_filename)
-
-        dependency_filename = Extensions.translate @host_url, original_filename
-        run!("tar zxf #{File.join(DEPENDENCIES_PATH, dependency_filename)} #{files_to_extract}")
-      end
-
-      def ruby_200_on_OSX(original_filename)
-        original_filename.match('ruby-2.0.0') && `uname -s`.match('Darwin')
+    def fetch_untar(path, files_to_extract="")
+      if OnlineBuildpackDetector.online?
+        OnlineFetcher.fetch_untar(path, @host_url, files_to_extract, self.method(:curl_command), self.method(:run!))
+      else
+        OfflineFetcher.fetch_untar(path, @host_url, files_to_extract, self.method(:error), self.method(:run!))
       end
     end
   end
