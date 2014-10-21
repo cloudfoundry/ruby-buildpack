@@ -6,8 +6,8 @@ describe "Fetcher" do
   let(:detector) { class_double("OnlineBuildpackDetector").as_stubbed_const }
   let(:online_fetcher) { class_double("OnlineFetcher").as_stubbed_const }
   let(:offline_fetcher) { class_double("OfflineFetcher").as_stubbed_const }
-  let(:host_url) { "localhost" }
-  let(:path) { double(:path) }
+  let(:host_url) { "localhost/" }
+  let(:path) { "ruby-2.1.2.tgz" }
   let(:pathname) { class_double("Pathname").as_stubbed_const }
 
   before do
@@ -23,6 +23,14 @@ describe "Fetcher" do
         expect(subject).to receive(:heroku_fetch).with(path)
         subject.fetch(path)
       end
+
+      it "appends 'cedar' to the host_url if the requested resource is ruby 2.1.3 or above" do
+        expect(subject).to receive(:heroku_fetch) do |path|
+          expect(path).to eq("ruby-2.1.3.tgz")
+          expect(subject.instance_variable_get(:@host_url)).to include "/cedar"
+        end
+        subject.fetch("ruby-2.1.3.tgz")
+      end
     end
 
     context "when there are packaged dependencies (offline buildpack)" do
@@ -31,6 +39,11 @@ describe "Fetcher" do
       it "delegates to offline fetcher" do
         expect(offline_fetcher).to receive(:fetch).with(path, host_url, subject.method(:error), subject.method(:run!))
         subject.fetch(path)
+      end
+
+      it "appends 'cedar' to the host_url if the requested resource is ruby 2.1.3 or above" do
+        expect(offline_fetcher).to receive(:fetch).with("ruby-2.1.3.tgz", "#{host_url}cedar", subject.method(:error), subject.method(:run!))
+        subject.fetch("ruby-2.1.3.tgz")
       end
     end
   end
@@ -51,6 +64,11 @@ describe "Fetcher" do
         allow(online_fetcher).to receive(:fetch_untar)
         expect{subject.fetch_untar(path)}.not_to raise_error
       end
+
+      it "appends 'cedar' to the host_url if the requested resource is ruby 2.1.3 or above" do
+        expect(online_fetcher).to receive(:fetch_untar).with("ruby-2.1.3.tgz", "#{host_url}cedar", files_to_extract, subject.method(:curl_command), subject.method(:run!))
+        subject.fetch_untar("ruby-2.1.3.tgz", files_to_extract)
+      end
     end
 
     context "when there are packaged dependencies (offline buildpack)" do
@@ -65,6 +83,34 @@ describe "Fetcher" do
         allow(offline_fetcher).to receive(:fetch_untar)
         expect{subject.fetch_untar(path)}.not_to raise_error
       end
+
+      it "appends 'cedar' to the host_url if the requested resource is ruby 2.1.3 or above" do
+        expect(offline_fetcher).to receive(:fetch_untar).with("ruby-2.1.3.tgz", "#{host_url}cedar", files_to_extract, subject.method(:error), subject.method(:run!))
+        subject.fetch_untar("ruby-2.1.3.tgz", files_to_extract)
+      end
+    end
+  end
+
+  describe "#requested_ruby_version_is_above_212?" do
+    let(:is_online) { double }
+
+    it "is true if a ruby version higher than 2.1.2 is found in the path" do
+      expect(subject.requested_ruby_version_is_above_212?("ruby-2.1.3.tgz")).to be_truthy
+      expect(subject.requested_ruby_version_is_above_212?("ruby-2.1.4.tgz")).to be_truthy
+      expect(subject.requested_ruby_version_is_above_212?("ruby-2.2.0.tgz")).to be_truthy
+      expect(subject.requested_ruby_version_is_above_212?("ruby-2.1.11.tgz")).to be_truthy
+    end
+
+    it "is false if a ruby version equal to 2.1.2 is found in the path" do
+      expect(subject.requested_ruby_version_is_above_212?("ruby-2.1.2.tgz")).to be_falsy
+    end
+
+    it "is false if a ruby version below 2.1.2 is found in the path" do
+      expect(subject.requested_ruby_version_is_above_212?("ruby-1.9.3.tgz")).to be_falsy
+    end
+
+    it "is false if the path does not match a ruby package" do
+      expect(subject.requested_ruby_version_is_above_212?("tomato-potato")).to be_falsy
     end
   end
 end
