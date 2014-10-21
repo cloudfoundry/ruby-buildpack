@@ -91,26 +91,34 @@ describe "Fetcher" do
     end
   end
 
-  describe "#requested_ruby_version_is_above_212?" do
+  describe "#requested_mri_version_is_above_212?" do
     let(:is_online) { double }
 
     it "is true if a ruby version higher than 2.1.2 is found in the path" do
-      expect(subject.requested_ruby_version_is_above_212?("ruby-2.1.3.tgz")).to be_truthy
-      expect(subject.requested_ruby_version_is_above_212?("ruby-2.1.4.tgz")).to be_truthy
-      expect(subject.requested_ruby_version_is_above_212?("ruby-2.2.0.tgz")).to be_truthy
-      expect(subject.requested_ruby_version_is_above_212?("ruby-2.1.11.tgz")).to be_truthy
+      expect(subject.requested_mri_version_is_above_212?("ruby-2.1.3.tgz")).to be_truthy
+      expect(subject.requested_mri_version_is_above_212?("ruby-2.1.4.tgz")).to be_truthy
+      expect(subject.requested_mri_version_is_above_212?("ruby-2.2.0.tgz")).to be_truthy
+      expect(subject.requested_mri_version_is_above_212?("ruby-2.1.11.tgz")).to be_truthy
     end
 
     it "is false if a ruby version equal to 2.1.2 is found in the path" do
-      expect(subject.requested_ruby_version_is_above_212?("ruby-2.1.2.tgz")).to be_falsy
+      expect(subject.requested_mri_version_is_above_212?("ruby-2.1.2.tgz")).to be_falsy
     end
 
     it "is false if a ruby version below 2.1.2 is found in the path" do
-      expect(subject.requested_ruby_version_is_above_212?("ruby-1.9.3.tgz")).to be_falsy
+      expect(subject.requested_mri_version_is_above_212?("ruby-1.9.3.tgz")).to be_falsy
+    end
+
+    it "is false for jruby" do
+      expect(subject.requested_mri_version_is_above_212?("ruby-2.0.0-jruby-1.7.11.tgz")).to be_falsy
+    end
+
+    it "is false for ruby-build" do
+      expect(subject.requested_mri_version_is_above_212?("ruby-build-1.8.7.tgz")).to be_falsy
     end
 
     it "is false if the path does not match a ruby package" do
-      expect(subject.requested_ruby_version_is_above_212?("tomato-potato")).to be_falsy
+      expect(subject.requested_mri_version_is_above_212?("tomato-potato")).to be_falsy
     end
   end
 end
