@@ -1,7 +1,19 @@
+v1.1.3 Oct 21, 2014
+====================
+
+* Adds code to resolve fault where Ruby 2.1.3 apps to fail to stage.
+  (https://www.pivotaltracker.com/story/show/80934254)
+
+* Adds friendlier error message when apps request unavailable rubies in offline buildpacks.
+  (https://www.pivotaltracker.com/story/show/80403676)
+
+* Makes supporting Bash scripts more robust.
+  (https://www.pivotaltracker.com/story/show/79735118)
+
 v1.1.2 Oct 07, 2014
 ====================
 
-* Add Ruby 2.1.2 and 2.1.3 to offline 
+* Add Ruby 2.1.2 and 2.1.3 to offline
   (https://www.pivotaltracker.com/story/show/79742234)
 
 * Introduce fix for errors arising from unset STACK variable.
@@ -10,7 +22,7 @@ v1.1.2 Oct 07, 2014
   (https://www.pivotaltracker.com/story/show/78290072)
 
 * Print version number of buildpack while compiling
-  (https://www.pivotaltracker.com/story/show/78505368) 
+  (https://www.pivotaltracker.com/story/show/78505368)
 
 * Merge from upstream
 
