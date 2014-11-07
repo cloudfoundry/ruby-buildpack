@@ -12,6 +12,7 @@ describe 'Stack environment should not change' do
     expect(app).to be_running
 
     expect(app).to_not have_logged 'Changing stack from'
+    expect(app).to_not have_logged 'are the same file'
 
     browser = Machete::Browser.new(app)
     browser.visit_path('/')
