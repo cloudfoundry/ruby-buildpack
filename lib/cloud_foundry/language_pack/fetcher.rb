@@ -11,7 +11,7 @@ module LanguagePack
 
     def fetch(path)
       original_host_url = @host_url
-      if requested_mri_version_is_above_212?(path)
+      if requested_resource_is_a_ruby?(path)
         @host_url += 'cedar'
       end
       if OnlineBuildpackDetector.online?
@@ -25,7 +25,7 @@ module LanguagePack
 
     def fetch_untar(path, files_to_extract="")
       original_host_url = @host_url
-      if requested_mri_version_is_above_212?(path)
+      if requested_resource_is_a_ruby?(path)
         @host_url += 'cedar'
       end
       if OnlineBuildpackDetector.online?
@@ -37,14 +37,8 @@ module LanguagePack
       @host_url = original_host_url
     end
 
-    def requested_mri_version_is_above_212?(path)
-      version_string_match = /^ruby-(?<version>[0-9]+\.[0-9]+\.[0-9]+).tgz$/.match(path)
-      return false unless version_string_match
-
-      requested_version = Gem::Version.new(version_string_match[:version])
-      version_212 = Gem::Version.new("2.1.2")
-
-      requested_version > version_212
+    def requested_resource_is_a_ruby?(path)
+      return (path.match /^ruby/) ? true : false
     end
   end
 end

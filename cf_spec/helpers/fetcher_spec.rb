@@ -24,7 +24,7 @@ describe "Fetcher" do
         subject.fetch(path)
       end
 
-      it "appends 'cedar' to the host_url if the requested resource is ruby 2.1.3 or above" do
+      it "appends 'cedar' to the host_url if the requested resource is a ruby" do
         expect(subject).to receive(:heroku_fetch) do |path|
           expect(path).to eq("ruby-2.1.3.tgz")
           expect(subject.instance_variable_get(:@host_url)).to include "/cedar"
@@ -37,11 +37,11 @@ describe "Fetcher" do
       let(:is_online) { false }
 
       it "delegates to offline fetcher" do
-        expect(offline_fetcher).to receive(:fetch).with(path, host_url, subject.method(:error), subject.method(:run!))
+        expect(offline_fetcher).to receive(:fetch).with(path, "#{host_url}cedar", subject.method(:error), subject.method(:run!))
         subject.fetch(path)
       end
 
-      it "appends 'cedar' to the host_url if the requested resource is ruby 2.1.3 or above" do
+      it "appends 'cedar' to the host_url if the requested resource is a ruby" do
         expect(offline_fetcher).to receive(:fetch).with("ruby-2.1.3.tgz", "#{host_url}cedar", subject.method(:error), subject.method(:run!))
         subject.fetch("ruby-2.1.3.tgz")
       end
@@ -56,7 +56,7 @@ describe "Fetcher" do
       let(:is_online) { true }
 
       it "delegates to online fetcher" do
-        expect(online_fetcher).to receive(:fetch_untar).with(path, host_url, files_to_extract, subject.method(:curl_command), subject.method(:run!))
+        expect(online_fetcher).to receive(:fetch_untar).with(path, "#{host_url}cedar", files_to_extract, subject.method(:curl_command), subject.method(:run!))
         subject.fetch_untar(path, files_to_extract)
       end
 
@@ -65,7 +65,7 @@ describe "Fetcher" do
         expect{subject.fetch_untar(path)}.not_to raise_error
       end
 
-      it "appends 'cedar' to the host_url if the requested resource is ruby 2.1.3 or above" do
+      it "appends 'cedar' to the host_url if the requested resource is a ruby" do
         expect(online_fetcher).to receive(:fetch_untar).with("ruby-2.1.3.tgz", "#{host_url}cedar", files_to_extract, subject.method(:curl_command), subject.method(:run!))
         subject.fetch_untar("ruby-2.1.3.tgz", files_to_extract)
       end
@@ -75,7 +75,7 @@ describe "Fetcher" do
       let(:is_online) { false }
 
       it "delegates to offline fetcher" do
-        expect(offline_fetcher).to receive(:fetch_untar).with(path, host_url, files_to_extract, subject.method(:error), subject.method(:run!))
+        expect(offline_fetcher).to receive(:fetch_untar).with(path, "#{host_url}cedar", files_to_extract, subject.method(:error), subject.method(:run!))
         subject.fetch_untar(path, files_to_extract)
       end
 
@@ -84,41 +84,30 @@ describe "Fetcher" do
         expect{subject.fetch_untar(path)}.not_to raise_error
       end
 
-      it "appends 'cedar' to the host_url if the requested resource is ruby 2.1.3 or above" do
+      it "appends 'cedar' to the host_url if the requested resource is a ruby" do
         expect(offline_fetcher).to receive(:fetch_untar).with("ruby-2.1.3.tgz", "#{host_url}cedar", files_to_extract, subject.method(:error), subject.method(:run!))
         subject.fetch_untar("ruby-2.1.3.tgz", files_to_extract)
       end
     end
   end
 
-  describe "#requested_mri_version_is_above_212?" do
+  describe "#requested_resource_is_a_ruby?" do
     let(:is_online) { double }
 
-    it "is true if a ruby version higher than 2.1.2 is found in the path" do
-      expect(subject.requested_mri_version_is_above_212?("ruby-2.1.3.tgz")).to be_truthy
-      expect(subject.requested_mri_version_is_above_212?("ruby-2.1.4.tgz")).to be_truthy
-      expect(subject.requested_mri_version_is_above_212?("ruby-2.2.0.tgz")).to be_truthy
-      expect(subject.requested_mri_version_is_above_212?("ruby-2.1.11.tgz")).to be_truthy
+    it "is true for mri" do
+      expect(subject.requested_resource_is_a_ruby?("ruby-2.1.3.tgz")).to be_truthy
     end
 
-    it "is false if a ruby version equal to 2.1.2 is found in the path" do
-      expect(subject.requested_mri_version_is_above_212?("ruby-2.1.2.tgz")).to be_falsy
+    it "is true for jruby" do
+      expect(subject.requested_resource_is_a_ruby?("ruby-2.0.0-jruby-1.7.11.tgz")).to be_truthy
     end
 
-    it "is false if a ruby version below 2.1.2 is found in the path" do
-      expect(subject.requested_mri_version_is_above_212?("ruby-1.9.3.tgz")).to be_falsy
-    end
-
-    it "is false for jruby" do
-      expect(subject.requested_mri_version_is_above_212?("ruby-2.0.0-jruby-1.7.11.tgz")).to be_falsy
-    end
-
-    it "is false for ruby-build" do
-      expect(subject.requested_mri_version_is_above_212?("ruby-build-1.8.7.tgz")).to be_falsy
+    it "is truefor ruby-build" do
+      expect(subject.requested_resource_is_a_ruby?("ruby-build-1.8.7.tgz")).to be_truthy
     end
 
     it "is false if the path does not match a ruby package" do
-      expect(subject.requested_mri_version_is_above_212?("tomato-potato")).to be_falsy
+      expect(subject.requested_resource_is_a_ruby?("tomato-potato")).to be_falsy
     end
   end
 end
