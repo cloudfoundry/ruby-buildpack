@@ -1,3 +1,26 @@
+v1.1.4 Nov 19, 2014
+====================
+
+* Add ruby 2.1.4 and 2.1.5
+
+* Update machete instructions in README
+  (https://www.pivotaltracker.com/story/show/82692644)
+
+* Test regression around copying the same file to itself
+  (https://www.pivotaltracker.com/story/show/81613240)
+
+* Add a regression test for stack env variable
+  (https://www.pivotaltracker.com/story/show/82289072)
+
+* Merge upstream changes
+  (https://www.pivotaltracker.com/story/show/82765888)
+  * Include fix to unbounded cache size
+    (https://github.com/heroku/heroku-buildpack-ruby/pull/314)
+  * Show full stack trace on all unexpected errors
+    (https://github.com/heroku/heroku-buildpack-ruby/commit/b84422c9c74f64aef37bd52966d0165858bf59a1)
+  * Suppress backtrace from likely errors
+    (https://github.com/heroku/heroku-buildpack-ruby/commit/74cba7c15c64386d85c46035030d46e2a6265b63)
+
 v1.1.3 Oct 21, 2014
 ====================
 
