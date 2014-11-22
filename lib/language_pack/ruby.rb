@@ -94,6 +94,7 @@ class LanguagePack::Ruby < LanguagePack::Base
         build_bundler
         post_bundler
         create_database_yml
+        migrate_database
         install_binaries
         run_assets_precompile_rake_task
       end
@@ -575,6 +576,15 @@ ERROR
         "-r#{syck_hack_file}"
       else
         ""
+      end
+    end
+  end
+
+  # migrates database
+  def migrate_database
+    instrument 'ruby.migrate_database' do
+      log("migrate_database") do
+        rake.task("db:migrate")
       end
     end
   end
