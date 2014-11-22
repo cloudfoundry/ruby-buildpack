@@ -94,8 +94,8 @@ class LanguagePack::Ruby < LanguagePack::Base
         build_bundler
         post_bundler
         create_database_yml
-        migrate_database
         install_binaries
+        migrate_database
         run_assets_precompile_rake_task
       end
       super
@@ -584,7 +584,9 @@ ERROR
   def migrate_database
     instrument 'ruby.migrate_database' do
       log("migrate_database") do
-        rake.task("db:migrate")
+        topic("Migrating database")
+
+        rake.task("db:migrate").invoke(env: rake_env)
       end
     end
   end
