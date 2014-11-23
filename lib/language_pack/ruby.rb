@@ -597,7 +597,9 @@ ERROR
       log("check_imagemagick") do
         topic("Checking for ImageMagick")
 
-        run "convert -version"
+        out = run_stdout("convert -version").chomp
+
+        puts "ImageMagick: `#{out}`"
       end
     end
   end
