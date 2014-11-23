@@ -591,6 +591,16 @@ ERROR
     end
   end
 
+  def check_imagemagick
+    instrument 'ruby.check_imagemagick' do
+      log("check_imagemagick") do
+        topic("Checking for ImageMagick")
+
+        run "convert -version"
+      end
+    end
+  end
+
   # writes ERB based database.yml for Rails. The database.yml uses the DATABASE_URL from the environment during runtime.
   def create_database_yml
     instrument 'ruby.create_database_yml' do
