@@ -90,6 +90,7 @@ class LanguagePack::Ruby < LanguagePack::Base
       setup_language_pack_environment
       setup_profiled
       allow_git do
+        check_imagemagick
         install_bundler_in_app
         build_bundler
         post_bundler
