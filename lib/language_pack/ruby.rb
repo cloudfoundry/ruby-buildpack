@@ -90,11 +90,13 @@ class LanguagePack::Ruby < LanguagePack::Base
       setup_language_pack_environment
       setup_profiled
       allow_git do
+        check_imagemagick
         install_bundler_in_app
         build_bundler
         post_bundler
         create_database_yml
         install_binaries
+        migrate_database
         run_assets_precompile_rake_task
       end
       super
@@ -575,6 +577,29 @@ ERROR
         "-r#{syck_hack_file}"
       else
         ""
+      end
+    end
+  end
+
+  # migrates database
+  def migrate_database
+    instrument 'ruby.migrate_database' do
+      log("migrate_database") do
+        topic("Migrating database")
+
+        rake.task("db:migrate").invoke(env: rake_env)
+      end
+    end
+  end
+
+  def check_imagemagick
+    instrument 'ruby.check_imagemagick' do
+      log("check_imagemagick") do
+        topic("Checking for ImageMagick")
+
+        out = run_stdout("convert -version").chomp
+
+        puts "ImageMagick: `#{out}`"
       end
     end
   end
