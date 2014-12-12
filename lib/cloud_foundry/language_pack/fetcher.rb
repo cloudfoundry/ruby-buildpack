@@ -1,44 +1,18 @@
 require 'language_pack/fetcher'
-require 'cloud_foundry/language_pack/helpers/filename_translator'
-require 'cloud_foundry/language_pack/helpers/online_fetcher'
-require 'cloud_foundry/language_pack/helpers/offline_fetcher'
-require 'cloud_foundry/language_pack/helpers/online_buildpack_detector'
-require 'cloud_foundry/language_pack/helpers/dependency_existence_checker'
+require 'uri'
 
 module LanguagePack
   class Fetcher
-    alias_method :heroku_fetch, :fetch
+    alias_method :original_curl_command, :curl_command
 
-    def fetch(path)
-      original_host_url = @host_url
-      if requested_resource_is_a_ruby?(path)
-        @host_url += 'cedar'
-      end
-      if OnlineBuildpackDetector.online?
-        heroku_fetch path
-      else
-        OfflineFetcher.fetch(path, @host_url, self.method(:error), self.method(:run!))
-      end
-    ensure
-      @host_url = original_host_url
-    end
+    private
 
-    def fetch_untar(path, files_to_extract="")
-      original_host_url = @host_url
-      if requested_resource_is_a_ruby?(path)
-        @host_url += 'cedar'
-      end
-      if OnlineBuildpackDetector.online?
-        OnlineFetcher.fetch_untar(path, @host_url, files_to_extract, self.method(:curl_command), self.method(:run!))
-      else
-        OfflineFetcher.fetch_untar(path, @host_url, files_to_extract, self.method(:error), self.method(:run!))
-      end
-    ensure
-      @host_url = original_host_url
-    end
-
-    def requested_resource_is_a_ruby?(path)
-      return (path.match /^ruby/) ? true : false
+    def curl_command(command)
+      rendered_command = original_curl_command(command)
+      url = rendered_command.match(URI.regexp)[0]
+      bin_path = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "compile-extensions", "bin"))
+      translated_url = `#{bin_path}/translate_dependency_url #{url}`.chomp
+      rendered_command.sub(url, translated_url)
     end
   end
 end
