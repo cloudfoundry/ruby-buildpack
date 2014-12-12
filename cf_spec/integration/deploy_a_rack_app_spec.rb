@@ -6,6 +6,10 @@ describe 'Rack App' do
   let(:app_name) { 'sinatra_web_app' }
   let(:browser) { Machete::Browser.new(app) }
 
+  after do
+    Machete::CF::DeleteApp.new.execute(app)
+  end
+
   context 'in an offline environment', if: Machete::BuildpackMode.offline? do
     specify do
       expect(app).to be_running

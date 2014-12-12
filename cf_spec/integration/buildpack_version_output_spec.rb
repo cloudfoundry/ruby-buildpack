@@ -5,6 +5,10 @@ describe 'Version output' do
   subject(:app) { Machete.deploy_app(app_name) }
   let(:app_name) { 'sinatra_web_app' }
 
+  after do
+    Machete::CF::DeleteApp.new.execute(app)
+  end
+
   context 'in an online environment', if: Machete::BuildpackMode.online? do
     specify do
       expect(app).to have_logged "-------> Buildpack version "

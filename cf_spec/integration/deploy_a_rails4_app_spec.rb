@@ -5,6 +5,10 @@ describe 'Rails 4 App' do
   subject(:app) { Machete.deploy_app(app_name, with_pg: true) }
   let(:browser) { Machete::Browser.new(app) }
 
+  after do
+    Machete::CF::DeleteApp.new.execute(app)
+  end
+
   context 'in an offline environment', if: Machete::BuildpackMode.offline? do
     let(:app_name) { 'rails4_web_app' }
 

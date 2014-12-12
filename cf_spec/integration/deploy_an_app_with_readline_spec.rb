@@ -6,6 +6,10 @@ describe 'CF Ruby Buildpack' do
   let(:app_name) { 'app_with_readline' }
   let(:browser) { Machete::Browser.new(app) }
 
+  after do
+    Machete::CF::DeleteApp.new.execute(app)
+  end
+
   context 'in an online environment', if: Machete::BuildpackMode.online? do
     specify do
       expect(app).to be_running

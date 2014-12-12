@@ -8,6 +8,10 @@ describe 'CF Ruby Buildpack' do
     {BUNDLE_GEMFILE: 'different.Gemfile'}
   end
 
+  after do
+    Machete::CF::DeleteApp.new.execute(app)
+  end
+
   context 'deploying an app with more than one Gemfile', if: Machete::BuildpackMode.online? do
     let(:app_name) { 'app_with_multiple_gemfiles' }
 

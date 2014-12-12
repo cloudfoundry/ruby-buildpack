@@ -5,6 +5,10 @@ describe 'Installing Nokogiri' do
   subject(:app) { Machete.deploy_app(app_name) }
   let(:app_name) { 'mri_187_nokogiri' }
 
+  after do
+    Machete::CF::DeleteApp.new.execute(app)
+  end
+
   context 'in an offline environment', if: Machete::BuildpackMode.offline? do
     specify do
       expect(app).to be_running

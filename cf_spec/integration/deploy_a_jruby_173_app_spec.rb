@@ -5,6 +5,10 @@ describe 'JRuby 1.7.3 App' do
   subject(:app) { Machete.deploy_app(app_name) }
   let(:app_name) { 'sinatra_jruby_web_app' }
 
+  after do
+    Machete::CF::DeleteApp.new.execute(app)
+  end
+
   context 'in an offline environment', if: Machete::BuildpackMode.offline? do
     specify do
       expect(app).to be_running

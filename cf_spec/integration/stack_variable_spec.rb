@@ -17,5 +17,6 @@ describe 'Stack environment should not change' do
     browser = Machete::Browser.new(app)
     browser.visit_path('/')
     expect(browser).to have_body('Hello world!')
+    Machete::CF::DeleteApp.new.execute(app)
   end
 end

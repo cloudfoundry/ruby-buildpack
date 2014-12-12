@@ -6,6 +6,9 @@ describe 'Rails 3 App' do
   let(:app_name) { 'rails3_mri_193' }
   let(:browser) { Machete::Browser.new(app) }
 
+  after do
+    Machete::CF::DeleteApp.new.execute(app)
+  end
 
   context 'in an offline environment', if: Machete::BuildpackMode.offline? do
     specify do
