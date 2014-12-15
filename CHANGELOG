@@ -1,3 +1,16 @@
+v1.2.0 Dec 15, 2014
+====================
+
+* Introduce new offline dependency packaging system
+  (https://www.pivotaltracker.com/story/show/82513994)
+  (https://www.pivotaltracker.com/story/show/83886038)
+	(https://www.pivotaltracker.com/story/show/82972454)
+
+* Introduce new runtime dependency translation system
+  (https://www.pivotaltracker.com/story/show/82513994)
+  (https://www.pivotaltracker.com/story/show/83483872)
+  (https://www.pivotaltracker.com/story/show/83504664)
+
 v1.1.4 Nov 19, 2014
 ====================
 
