@@ -14,31 +14,43 @@ This buildpack will be used if your app has a `Gemfile` and `Gemfile.lock` in th
 cf push my_app -b https://github.com/cloudfoundry/buildpack-ruby.git
 ```
 
-## Cloud Foundry Extensions - Offline Mode
+## Cloud Foundry Extensions - Cached Dependencies
 
-The primary purpose of extending the heroku buildpack is to cache system dependencies for firewalled or other non-internet accessible environments. This is called 'offline' mode.
+The primary purpose of extending the heroku buildpack is to cache system dependencies for partially or fully
+disconnected environments.
+Historically, this was called 'offline' mode.
+It is now called 'Cached dependencies'.
 
-'offline' buildpacks can be used in any environment where you would prefer the dependencies to be cached instead of fetched from the internet.
+Cached buildpacks can be used in any environment where you would prefer the dependencies to be cached instead of fetched
+from the internet.
 
-The list of what is cached is maintained in [bin/package](bin/package).
+The list of what is cached is maintained in [the manifest](manifest.yml). For a description of the manifest file,
+see the [buildpack packager documentation](https://github.com/cf-buildpacks/buildpack-packager/blob/master/README.md#manifest)
 
-Using cached system dependencies is accomplished by monkey-patching the heroku buildpack. See [lib/cloud_foundry/language_pack](lib/cloud_foundry/language_pack).
+The buildpack consumes cached system dependencies during staging by translating remote urls. 
+In this buildpack this is specifically achieved by monkey-patching 
+[the fetcher module](lib/cloud_foundry/language_pack/fetcher.rb#L14).
 
-### App Dependencies in Offline Mode
-Offline mode expects each app to [vendor its dependencies using Bundler](http://bundler.io/v1.1/bundle_package.html). The alternative is to [set up a local rubygems server](http://guides.rubygems.org/run-your-own-gem-server).
+### App Dependencies in Cached Mode
+Cached (offline) mode expects each app to [vendor its dependencies using Bundler](http://bundler.io/v1.1/bundle_package.html). The alternative is to [set up a local rubygems server](http://guides.rubygems.org/run-your-own-gem-server).
 
 ## Building
 
 1. Make sure you have fetched submodules
 
-  ```bash
+  ```shell
   git submodule update --init
+  ```
+
+1. Get latest buildpack dependencies
+  ```shell
+  BUNDLE_GEMFILE=cf.Gemfile bundle
   ```
 
 1. Build the buildpack
 
-  ```bash
-  bin/package [ online | offline ]
+  ```shell
+  BUNDLE_GEMFILE=cf.Gemfile bundle exec buildpack-packager [ online | offline ]
   ```
 
 1. Use in Cloud Foundry
@@ -46,7 +58,7 @@ Offline mode expects each app to [vendor its dependencies using Bundler](http://
     Either:
 
     Fork the repository, push your changes and specify the path when deploying your app
-    ```bash
+    ```shell
     cf push my_app --buildpack <new buildpack repository>
     ```
 
@@ -54,7 +66,7 @@ Offline mode expects each app to [vendor its dependencies using Bundler](http://
 
     Upload the buildpack to your Cloud Foundry and specify it by name
 
-    ```bash
+    ```shell
     cf create-buildpack custom_ruby_buildpack ruby_buildpack-offline-custom.zip 1
     ```
 
