@@ -35,6 +35,9 @@ url_to_dependency_map:
 - match: openjdk7-latest
   name: openjdk7-latest
   version: 0
+- match: openjdk1.8-latest
+  name: openjdk1.8-latest
+  version: 0
 
 dependencies:
   - name: node
@@ -49,6 +52,9 @@ dependencies:
   - name: bundler
     version: 1.6.3
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/bundler-1.6.3.tgz
+  - name: bundler
+    version: 1.7.12
+    uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/bundler-1.7.12.tgz
   - name: ruby_versions
     version: 0
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/ruby_versions.yml
@@ -70,6 +76,9 @@ dependencies:
   - name: openjdk7-latest
     version: 0
     uri: http://heroku-jdk.s3.amazonaws.com/openjdk7-latest.tar.gz
+  - name: openjdk1.8-latest
+    version: 0
+    uri: http://lang-jvm.s3.amazonaws.com/jdk/openjdk1.8-latest.tar.gz
   - name: ruby
     version: 2.1.5
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-2.1.5.tgz
