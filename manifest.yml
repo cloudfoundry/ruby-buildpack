@@ -80,6 +80,9 @@ dependencies:
     version: 0
     uri: http://lang-jvm.s3.amazonaws.com/jdk/openjdk1.8-latest.tar.gz
   - name: ruby
+    version: 2.2.0
+    uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-2.2.0.tgz
+  - name: ruby
     version: 2.1.5
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-2.1.5.tgz
   - name: ruby
