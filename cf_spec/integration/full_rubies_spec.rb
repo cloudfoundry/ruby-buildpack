@@ -1,7 +1,7 @@
 $: << 'cf_spec'
 require 'cf_spec_helper'
 
-describe 'For all supported Ruby versions' do
+describe 'For all supported Ruby versions', if: ENV['CF_CI_ENV'] == "true" do
   shared_examples 'a Sinatra app' do
     let(:app) { Machete.deploy_app("rubies/tmp/#{ruby_version}/sinatra") }
     let(:browser) { Machete::Browser.new(app) }
