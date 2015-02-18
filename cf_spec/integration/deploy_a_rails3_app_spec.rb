@@ -18,6 +18,7 @@ describe 'Rails 3 App' do
       expect(browser).to have_body('hello')
 
       expect(app).to have_file('app/vendor/plugins/rails3_serve_static_assets/init.rb')
+      expect(app).to have_file('app/vendor/plugins/rails_log_stdout/init.rb')
       expect(app.host).not_to have_internet_traffic
     end
   end
@@ -30,6 +31,7 @@ describe 'Rails 3 App' do
       expect(browser).to have_body('hello')
 
       expect(app).to have_file('app/vendor/plugins/rails3_serve_static_assets/init.rb')
+      expect(app).to have_file('app/vendor/plugins/rails_log_stdout/init.rb')
     end
   end
 end

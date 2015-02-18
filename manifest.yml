@@ -63,10 +63,10 @@ dependencies:
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-build-1.8.7.tgz
   - name: rails_log_stdout
     version: 0
-    uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/rails_log_stdout.tgz
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/plugins/rails_log_stdout.tgz
   - name: rails3_serve_static_assets
     version: 0
-    uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/rails3_serve_static_assets.tgz
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/plugins/rails3_serve_static_assets.tgz
   - name: openjdk
     version: 1.7.0_25
     uri: http://heroku-jdk.s3.amazonaws.com/openjdk1.7.0_25.tar.gz
