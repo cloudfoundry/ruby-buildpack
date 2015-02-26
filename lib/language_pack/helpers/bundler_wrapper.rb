@@ -1,7 +1,7 @@
 class LanguagePack::Helpers::BundlerWrapper
   include LanguagePack::ShellHelpers
 
-  class GemfileParseError < StandardError
+  class GemfileParseError < BuildpackError
     def initialize(error)
       msg = "There was an error parsing your Gemfile, we cannot continue\n"
       msg << error
@@ -89,7 +89,7 @@ class LanguagePack::Helpers::BundlerWrapper
       if output.match(/No ruby version specified/)
         ""
       else
-        output.chomp.sub('(', '').sub(')', '').sub("p", " p").split.join('-')
+        output.chomp.sub('(', '').sub(')', '').sub(/(p\d+)/, ' \1').split.join('-')
       end
     end
   end

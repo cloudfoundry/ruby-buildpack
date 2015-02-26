@@ -3,14 +3,22 @@ require 'cf_spec_helper'
 
 describe 'Rails 4 App' do
   subject(:app) { Machete.deploy_app(app_name, with_pg: true) }
+  let(:browser) { Machete::Browser.new(app) }
+
+  after do
+    Machete::CF::DeleteApp.new.execute(app)
+  end
 
   context 'in an offline environment', if: Machete::BuildpackMode.offline? do
     let(:app_name) { 'rails4_web_app' }
 
     specify do
       expect(app).to be_running
-      expect(app.homepage_html).to include 'The Kessel Run'
-      expect(app).to have_no_internet_traffic
+
+      browser.visit_path('/')
+      expect(browser).to have_body('The Kessel Run')
+
+      expect(app.host).not_to have_internet_traffic
     end
 
   end
@@ -21,7 +29,9 @@ describe 'Rails 4 App' do
 
       specify do
         expect(app).to be_running
-        expect(app.homepage_html).to include 'The Kessel Run'
+
+        browser.visit_path('/')
+        expect(browser).to have_body('The Kessel Run')
       end
     end
 
@@ -31,7 +41,9 @@ describe 'Rails 4 App' do
       specify do
         expect(Dir.exists?("cf_spec/fixtures/#{app_name}/vendor")).to eql(false)
         expect(app).to be_running
-        expect(app.homepage_html).to include 'The Kessel Run'
+
+        browser.visit_path('/')
+        expect(browser).to have_body('The Kessel Run')
       end
     end
   end

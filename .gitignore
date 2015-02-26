@@ -1,4 +1,5 @@
 **/**/vendor/bundle
+**/**/vendor/cache
 *.log
 .DS_Store
 .anvil/
@@ -11,5 +12,8 @@ machete.log
 repos/*
 ruby_buildpack.zip
 tmp/
+vendor/cache/*
 vendor/bundle/*
 vendor/bundler/*
+/ruby_buildpack-offline-v[0-9\.]*.zip
+/ruby_buildpack-v[0-9\.]*.zip

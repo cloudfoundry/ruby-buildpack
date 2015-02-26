@@ -30,7 +30,8 @@ module LanguagePack
         return true if directory.exist?
         directory.mkpath
         Dir.chdir(directory) do |dir|
-          run("curl #{vendor_url}/#{name}.tgz -s -o - | tar xzf -")
+          fetcher = Fetcher.new(vendor_url, '')
+          fetcher.fetch_untar("#{name}.tgz")
         end
       end
     end
