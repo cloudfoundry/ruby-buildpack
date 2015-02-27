@@ -65,23 +65,33 @@ dependencies:
   - name: bundler
     version: 1.6.3
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/bundler-1.6.3.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: bundler
     version: 1.7.12
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/bundler-1.7.12.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: ruby_versions
     version: 0
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/ruby_versions.yml
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: rails_log_stdout
     version: 0
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/plugins/rails_log_stdout.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: rails3_serve_static_assets
     version: 0
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/plugins/rails3_serve_static_assets.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: openjdk
     version: 1.7.0_25
     uri: http://heroku-jdk.s3.amazonaws.com/openjdk1.7.0_25.tar.gz
@@ -204,107 +214,159 @@ dependencies:
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.1
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.8.7-jruby-1.7.1.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.1
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.9.3-jruby-1.7.1.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.2
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.8.7-jruby-1.7.2.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.2
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.9.3-jruby-1.7.2.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.3
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.8.7-jruby-1.7.3.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.3
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.9.3-jruby-1.7.3.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.4
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.8.7-jruby-1.7.4.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.4
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.9.3-jruby-1.7.4.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.5
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.8.7-jruby-1.7.5.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.5
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.9.3-jruby-1.7.5.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-2.0.0-jruby-1.7.5
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-2.0.0-jruby-1.7.5.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.6
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.8.7-jruby-1.7.6.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.6
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.9.3-jruby-1.7.6.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-2.0.0-jruby-1.7.6
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-2.0.0-jruby-1.7.6.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.8
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.8.7-jruby-1.7.8.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.8
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.9.3-jruby-1.7.8.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-2.0.0-jruby-1.7.8
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-2.0.0-jruby-1.7.8.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.9
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.8.7-jruby-1.7.9.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.9
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.9.3-jruby-1.7.9.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-2.0.0-jruby-1.7.9
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-2.0.0-jruby-1.7.9.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.10
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.8.7-jruby-1.7.10.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.10
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.9.3-jruby-1.7.10.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-2.0.0-jruby-1.7.10
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-2.0.0-jruby-1.7.10.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.11
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.8.7-jruby-1.7.11.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.11
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.9.3-jruby-1.7.11.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
   - name: jruby
     version: ruby-2.0.0-jruby-1.7.11
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-2.0.0-jruby-1.7.11.tgz
-    cf_stacks: all
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
 
 exclude_files:
   - .git/
