@@ -17,7 +17,7 @@ class LanguagePack::Ruby < LanguagePack::Base
   BUNDLER_VERSION      = "1.7.12"
   BUNDLER_GEM_PATH     = "bundler-#{BUNDLER_VERSION}"
   DEFAULT_RUBY_VERSION = "ruby-2.0.0"
-  RBX_BASE_URL         = "http://binaries.rubini.us/heroku"
+  RBX_BASE_URL         = "https://binaries.rubini.us/heroku"
   NODE_BP_PATH         = "vendor/node/bin"
 
   # detects if this is a valid Ruby app

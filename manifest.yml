@@ -48,7 +48,7 @@ dependencies:
       - cflinuxfs2
   - name: node
     version: 0.10.30
-    uri: http://nodejs.org/dist/v0.10.30/node-v0.10.30-linux-x64.tar.gz
+    uri: https://nodejs.org/dist/v0.10.30/node-v0.10.30-linux-x64.tar.gz
     cf_stacks:
       - lucid64
       - cflinuxfs2
@@ -94,25 +94,25 @@ dependencies:
       - cflinuxfs2
   - name: openjdk
     version: 1.7.0_25
-    uri: http://heroku-jdk.s3.amazonaws.com/openjdk1.7.0_25.tar.gz
+    uri: https://heroku-jdk.s3.amazonaws.com/openjdk1.7.0_25.tar.gz
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: openjdk
     version: 1.7.0_45
-    uri: http://heroku-jdk.s3.amazonaws.com/openjdk1.7.0_45.tar.gz
+    uri: https://heroku-jdk.s3.amazonaws.com/openjdk1.7.0_45.tar.gz
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: openjdk7-latest
     version: 0
-    uri: http://heroku-jdk.s3.amazonaws.com/openjdk7-latest.tar.gz
+    uri: https://heroku-jdk.s3.amazonaws.com/openjdk7-latest.tar.gz
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: openjdk1.8-latest
     version: 0
-    uri: http://lang-jvm.s3.amazonaws.com/jdk/openjdk1.8-latest.tar.gz
+    uri: https://lang-jvm.s3.amazonaws.com/jdk/openjdk1.8-latest.tar.gz
     cf_stacks:
       - lucid64
       - cflinuxfs2
