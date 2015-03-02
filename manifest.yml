@@ -120,6 +120,11 @@ dependencies:
     uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/cedar/ruby-1.8.7.tgz
     cf_stacks:
       - lucid64
+  - name: ruby-build
+    version: 1.8.7
+    uri: https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/ruby-build-1.8.7.tgz
+    cf_stacks:
+      - lucid64
 
 exclude_files:
   - .git/
