@@ -1,18 +1,23 @@
-DEPENDENCIES_PATH = File.expand_path("../../dependencies", File.expand_path($0))
+require 'language_pack/fetcher'
+require 'uri'
 
-if Dir.exist?(DEPENDENCIES_PATH)
-  require 'language_pack/fetcher'
+module LanguagePack
+  class Fetcher
+    alias_method :original_curl_command, :curl_command
 
-  module LanguagePack
-    class Fetcher
-      def fetch(path)
-        run!("cp #{File.join(DEPENDENCIES_PATH, path)} .")
+    private
+
+    def curl_command(command)
+      rendered_command = original_curl_command(command)
+      url = rendered_command.match(URI.regexp)[0]
+      bin_path = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "compile-extensions", "bin"))
+      translated_url = `#{bin_path}/translate_dependency_url #{url}`.chomp
+      if $?.exitstatus != 0
+        puts("Could not get translated url, exited with: #{translated_url}")
+        exit 1
       end
 
-      def fetch_untar(path)
-        path = "#{path}.mac" if path.match('ruby-2.0.0') && `uname -s`.match('Darwin')
-        run!("tar zxf #{File.join(DEPENDENCIES_PATH, path)}")
-      end
+      rendered_command.sub(url, translated_url)
     end
   end
 end

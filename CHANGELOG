@@ -1,0 +1,146 @@
+v1.2.1 Jan 27, 2015
+====================
+
+* Add Ruby 2.2.0
+  (https://www.pivotaltracker.com/story/show/86046576)
+
+* Update documentation for use of buildpack-packager
+  (https://www.pivotaltracker.com/story/show/85807806)
+
+* Merge upstream changes
+  (https://www.pivotaltracker.com/story/show/86046576)
+  * Update Bundler to 1.7 
+    (https://github.com/heroku/heroku-buildpack-ruby/commit/4d6c831e9ba1c67604c395d20ba153a2752b303b)
+  * Fix support for JRuby 9.0.0.0.pre1 
+    (https://github.com/heroku/heroku-buildpack-ruby/commit/881d794a8f33d102561798f696c049f5178ce60d)
+  * set JAVA_TOOL_OPTIONS for compile time JRuby
+    (https://github.com/heroku/heroku-buildpack-ruby/commit/380c9aa8626d689b6d0f0bdeaf5b78c999cf7540)
+
+v1.2.0 Dec 15, 2014
+====================
+
+* Introduce new offline dependency packaging system
+  (https://www.pivotaltracker.com/story/show/82513994)
+  (https://www.pivotaltracker.com/story/show/83886038)
+	(https://www.pivotaltracker.com/story/show/82972454)
+
+* Introduce new runtime dependency translation system
+  (https://www.pivotaltracker.com/story/show/82513994)
+  (https://www.pivotaltracker.com/story/show/83483872)
+  (https://www.pivotaltracker.com/story/show/83504664)
+
+v1.1.4 Nov 19, 2014
+====================
+
+* Add ruby 2.1.4 and 2.1.5
+
+* Update machete instructions in README
+  (https://www.pivotaltracker.com/story/show/82692644)
+
+* Test regression around copying the same file to itself
+  (https://www.pivotaltracker.com/story/show/81613240)
+
+* Add a regression test for stack env variable
+  (https://www.pivotaltracker.com/story/show/82289072)
+
+* Merge upstream changes
+  (https://www.pivotaltracker.com/story/show/82765888)
+  * Include fix to unbounded cache size
+    (https://github.com/heroku/heroku-buildpack-ruby/pull/314)
+  * Show full stack trace on all unexpected errors
+    (https://github.com/heroku/heroku-buildpack-ruby/commit/b84422c9c74f64aef37bd52966d0165858bf59a1)
+  * Suppress backtrace from likely errors
+    (https://github.com/heroku/heroku-buildpack-ruby/commit/74cba7c15c64386d85c46035030d46e2a6265b63)
+
+v1.1.3 Oct 21, 2014
+====================
+
+* Adds code to resolve fault where Ruby 2.1.3 apps to fail to stage.
+  (https://www.pivotaltracker.com/story/show/80934254)
+
+* Adds friendlier error message when apps request unavailable rubies in offline buildpacks.
+  (https://www.pivotaltracker.com/story/show/80403676)
+
+* Makes supporting Bash scripts more robust.
+  (https://www.pivotaltracker.com/story/show/79735118)
+
+v1.1.2 Oct 07, 2014
+====================
+
+* Add Ruby 2.1.2 and 2.1.3 to offline
+  (https://www.pivotaltracker.com/story/show/79742234)
+
+* Introduce fix for errors arising from unset STACK variable.
+  (https://www.pivotaltracker.com/story/show/78677868)
+  (https://www.pivotaltracker.com/story/show/80029582)
+  (https://www.pivotaltracker.com/story/show/78290072)
+
+* Print version number of buildpack while compiling
+  (https://www.pivotaltracker.com/story/show/78505368)
+
+* Merge from upstream
+
+v1.1.1 Sep 22, 2014
+====================
+
+* Update buildpack-packager
+  (https://www.pivotaltracker.com/story/show/79126294)
+
+* Merge Heroku upstream changes up to [v127](https://github.com/heroku/heroku-buildpack-ruby/releases/tag/v127). Important changes:
+  * Improve RBX support
+
+v1.1.0 Aug 29, 2014
+====================
+
+* Fixed libreadline issue.
+  (https://www.pivotaltracker.com/story/show/75199948)
+
+* Removes spurious warning "already initialized constant" warning
+  (https://www.pivotaltracker.com/story/show/76163642)
+
+* Merges Heroku upstream changes up to [v126](https://github.com/heroku/heroku-buildpack-ruby/releases/tag/v126). Important changes:
+  * NodeJS is now a dependency
+  * Bundler updated to 1.6.3
+
+v1.0.1 Jul 22, 2014
+====================
+
+* Improve documentation and make the README CF specific.
+  (https://www.pivotaltracker.com/story/show/69192654)
+  (https://www.pivotaltracker.com/story/show/73157440)
+
+* Switch to new Cloud Foundry offline dependency framework
+  (https://www.pivotaltracker.com/story/show/73384384)
+  (https://www.pivotaltracker.com/story/show/73544396)
+
+  (https://www.pivotaltracker.com/story/show/74053110)
+  (https://www.pivotaltracker.com/story/show/73723814)
+
+* Allow apps to specify BUNDLE_GEMFILE environment variable
+  (https://www.pivotaltracker.com/story/show/73334472)
+
+* Added vendor/cache to .gitignore
+
+* Use Ruby 2.1.1 for packaging
+
+* Improve version imprinting
+  (https://www.pivotaltracker.com/story/show/73158908)
+
+* Fix: Offline mode should not attempt to use public networks
+  (https://www.pivotaltracker.com/story/show/73420832)
+
+* Fix: Install 12 factor plugins when the user does not provided it
+
+* Fix: do not ignore bin/ dir in rails 4 apps.
+
+v1.0.0 Jun 17, 2014
+===================
+
+* Remove libyaml 0.1.5. It's not used and has a security flaw.
+
+* Modify [the Heroku Ruby buildpack](https://github.com/heroku/heroku-buildpack-ruby) to
+  support offline mode.
+
+* Do not download Heroku's pre-cached gems. They are not binary compatible
+  with the Cloud Foundry environment.
+

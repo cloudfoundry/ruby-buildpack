@@ -3,8 +3,13 @@ require 'cf_spec_helper'
 
 describe 'CF Ruby Buildpack' do
   subject(:app) { Machete.deploy_app(app_name, env: env) }
+  let(:browser) { Machete::Browser.new(app) }
   let(:env) do
     {BUNDLE_GEMFILE: 'different.Gemfile'}
+  end
+
+  after do
+    Machete::CF::DeleteApp.new.execute(app)
   end
 
   context 'deploying an app with more than one Gemfile', if: Machete::BuildpackMode.online? do
@@ -12,8 +17,10 @@ describe 'CF Ruby Buildpack' do
 
     specify do
       expect(app).to be_running
-      expect(app.logs).not_to include 'cannot load such file -- sinatra'
-      expect(app.homepage_html).to include 'Hello world!'
+      expect(app).not_to have_logged 'cannot load such file -- sinatra'
+
+      browser.visit_path('/')
+      expect(browser).to have_body('Hello world!')
     end
   end
 end

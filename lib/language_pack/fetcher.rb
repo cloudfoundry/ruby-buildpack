@@ -3,27 +3,30 @@ require "language_pack/shell_helpers"
 
 module LanguagePack
   class Fetcher
+    class FetchError < StandardError; end
+
     include ShellHelpers
     CDN_YAML_FILE = File.expand_path("../../../config/cdn.yml", __FILE__)
 
-    def initialize(host_url)
+    def initialize(host_url, stack = nil)
       @config   = load_config
       @host_url = fetch_cdn(host_url)
+      @host_url += File.basename(stack) if stack
     end
 
     def fetch(path)
       curl = curl_command("-O #{@host_url.join(path)}")
-      run!(curl)
+      run!(curl, error_class: FetchError)
     end
 
-    def fetch_untar(path)
+    def fetch_untar(path, files_to_extract = nil)
       curl = curl_command("#{@host_url.join(path)} -s -o")
-      run!("#{curl} - | tar zxf -")
+      run!("#{curl} - | tar zxf - #{files_to_extract}", error_class: FetchError)
     end
 
-    def fetch_bunzip2(path)
+    def fetch_bunzip2(path, files_to_extract = nil)
       curl = curl_command("#{@host_url.join(path)} -s -o")
-      run!("#{curl} - | tar jxf -")
+      run!("#{curl} - | tar jxf - #{files_to_extract}", error_class: FetchError)
     end
 
     private
@@ -32,11 +35,11 @@ module LanguagePack
     end
 
     def curl_timeout_in_seconds
-      ENV['CURL_TIMEOUT'] || 30
+      ENV['CURL_TIMEOUT'] || 90
     end
 
     def curl_connect_timeout_in_seconds
-      ENV['CURL_CONNECT_TIMEOUT'] || 3
+      ENV['CURL_CONNECT_TIMEOUT'] || 10
     end
 
     def load_config
