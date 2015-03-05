@@ -48,7 +48,7 @@ dependencies:
       - cflinuxfs2
   - name: node
     version: 0.10.30
-    uri: http://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid/node-v0.10.30-linux-x64.tar.gz
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid/node-v0.10.30-linux-x64.tar.gz
     cf_stacks:
       - lucid64
       - cflinuxfs2
