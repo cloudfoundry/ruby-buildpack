@@ -118,52 +118,52 @@ dependencies:
       - cflinuxfs2
   - name: ruby
     version: 2.2.0
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/owned/binaries/lucid/ruby-2.2.0.tgz
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid/ruby-2.2.0.tgz
     cf_stacks:
       - lucid64
   - name: ruby
     version: 2.1.5
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/owned/binaries/lucid/ruby-2.1.5.tgz
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid/ruby-2.1.5.tgz
     cf_stacks:
       - lucid64
   - name: ruby
     version: 2.1.4
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/owned/binaries/lucid/ruby-2.1.4.tgz
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid/ruby-2.1.4.tgz
     cf_stacks:
       - lucid64
   - name: ruby
     version: 2.1.3
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/owned/binaries/lucid/ruby-2.1.3.tgz
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid/ruby-2.1.3.tgz
     cf_stacks:
       - lucid64
   - name: ruby
     version: 2.1.2
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/owned/binaries/lucid/ruby-2.1.2.tgz
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid/ruby-2.1.2.tgz
     cf_stacks:
       - lucid64
   - name: ruby
     version: 2.1.1
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/owned/binaries/lucid/ruby-2.1.1.tgz
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid/ruby-2.1.1.tgz
     cf_stacks:
       - lucid64
   - name: ruby
     version: 2.1.0
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/owned/binaries/lucid/ruby-2.1.0.tgz
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid/ruby-2.1.0.tgz
     cf_stacks:
       - lucid64
   - name: ruby
     version: 2.0.0
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/owned/binaries/lucid/ruby-2.0.0.tgz
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid/ruby-2.0.0.tgz
     cf_stacks:
       - lucid64
   - name: ruby
     version: 1.9.3
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/owned/binaries/lucid/ruby-1.9.3.tgz
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid/ruby-1.9.3.tgz
     cf_stacks:
       - lucid64
   - name: ruby
     version: 1.9.2
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/owned/binaries/lucid/ruby-1.9.2.tgz
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid/ruby-1.9.2.tgz
     cf_stacks:
       - lucid64
   - name: ruby
