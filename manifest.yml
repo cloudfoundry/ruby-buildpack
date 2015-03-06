@@ -43,327 +43,385 @@ dependencies:
   - name: node
     version: 0.4.7
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/node-0.4.7.tgz
+    md5: 97eb2c31d883eb577783d17fb7d3e2e9
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: node
     version: 0.10.30
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/node-v0.10.30-linux-x64.tar.gz
+    md5: e96aebef3cc0feaca0e9a7b73740ed01
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: libyaml
     version: 0.1.6
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/libyaml-0.1.6.tgz
+    md5: 94665f3a39e670507828f5084a40b669
     cf_stacks:
       - lucid64
   - name: libyaml
     version: 0.1.6
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/libyaml-0.1.6.tgz
+    md5: 94665f3a39e670507828f5084a40b669
     cf_stacks:
       - cflinuxfs2
   - name: bundler
     version: 1.6.3
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/bundler-1.6.3.tgz
+    md5: 2f3f3a8581be58d6d6d71ec63d390e09
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: bundler
     version: 1.7.12
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/bundler-1.7.12.tgz
+    md5: 5cac50112ab676bef0cfaccd7d9aaf52
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: ruby_versions
     version: 0
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby_versions.yml
+    md5: 087ab6decfe4dd69027cf1c4bb14500b
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: rails_log_stdout
     version: 0
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/rails_log_stdout.tgz
+    md5: 9ecd9126ba4a5f12ec98bc75c433885f
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: rails3_serve_static_assets
     version: 0
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/rails3_serve_static_assets.tgz
+    md5: 53ec25d17a33791989873388d779d644
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: openjdk
     version: 1.7.0_25
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/openjdk1.7.0_25.tar.gz
+    md5: 48549e234885241b2f745f88313af022
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: openjdk
     version: 1.7.0_45
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/openjdk1.7.0_45.tar.gz
+    md5: fdb9c737826ad97ae2160e2af4fb4be6
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: openjdk7-latest
     version: 0
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/openjdk7-latest.tar.gz
+    md5: fdb9c737826ad97ae2160e2af4fb4be6
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: openjdk1.8-latest
     version: 0
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/openjdk1.8-latest.tar.gz
+    md5: 5bc4ae62ce4e3b4dcde9151d8fce8180
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: ruby
     version: 2.2.0
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.2.0.tgz
+    md5: 47e892bbaa2b08cf3c522a38c4c6755c
     cf_stacks:
       - lucid64
   - name: ruby
     version: 2.1.5
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.1.5.tgz
+    md5: 905e676e23d2e6c598573674a17e5516
     cf_stacks:
       - lucid64
   - name: ruby
     version: 2.1.4
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.1.4.tgz
+    md5: 2f98c1a85a79d852954af6feba397ec9
     cf_stacks:
       - lucid64
   - name: ruby
     version: 2.1.3
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.1.3.tgz
+    md5: f50897ce36b78a369008030f41668539
     cf_stacks:
       - lucid64
   - name: ruby
     version: 2.1.2
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.1.2.tgz
+    md5: 643818a5d0f969620c70301858120c66
     cf_stacks:
       - lucid64
   - name: ruby
     version: 2.1.1
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.1.1.tgz
+    md5: dd597c3fc9249a23e691b47be6da1066
     cf_stacks:
       - lucid64
   - name: ruby
     version: 2.1.0
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.1.0.tgz
+    md5: e13ab33d4ab8fce52067471adab770e6
     cf_stacks:
       - lucid64
   - name: ruby
     version: 2.0.0
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.0.0.tgz
+    md5: c7bf4b6ad21e15795ee56b836ac6add6
     cf_stacks:
       - lucid64
   - name: ruby
     version: 1.9.3
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.9.3.tgz
+    md5: ddc41f840dd5752598be9fc1da75ea3d
     cf_stacks:
       - lucid64
   - name: ruby
     version: 1.9.2
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.9.2.tgz
+    md5: bce4a59fc14d46a90500cdd9a640708c
     cf_stacks:
       - lucid64
   - name: ruby
     version: 1.8.7
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.8.7.tgz
+    md5: 7189f0babb81ad8c78e3f5ccc4f3d2a2
     cf_stacks:
       - lucid64
   - name: ruby
     version: 2.2.0
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.2.0.tgz
+    md5: ce0f6aebcc2d81b2dc7b0c34b6bf6570
     cf_stacks:
       - cflinuxfs2
   - name: ruby
     version: 2.1.5
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.1.5.tgz
+    md5: 7f4e5540cb98fa583e9b288137c28970
     cf_stacks:
       - cflinuxfs2
   - name: ruby
     version: 2.1.4
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.1.4.tgz
+    md5: 971aad5cd68b8cbad8f96211549fcb8c
     cf_stacks:
       - cflinuxfs2
   - name: ruby
     version: 2.1.3
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.1.3.tgz
+    md5: db0610016d0f6065eb20ba49a95f3f66
     cf_stacks:
       - cflinuxfs2
   - name: ruby
     version: 2.1.2
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.1.2.tgz
+    md5: d6c11d37cd5e662b1e306d8c663a885a
     cf_stacks:
       - cflinuxfs2
   - name: ruby
     version: 2.0.0
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.0.0.tgz
+    md5: 7f77ee039ddda7b58cf322eb7d0b8a24
     cf_stacks:
       - cflinuxfs2
   - name: ruby
     version: 1.9.3
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-1.9.3.tgz
+    md5: 464543a5f95c3183aa1d07705db7f32c
     cf_stacks:
       - cflinuxfs2
   - name: ruby
     version: 1.9.2
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-1.9.2.tgz
+    md5: 8580d976c5679aa9c2f11bd3ac6714d5
     cf_stacks:
       - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.1
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.8.7-jruby-1.7.1.tgz
+    md5: 4eaf8ee129bbe6f3989e7fbbf61ea04e
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.1
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.9.3-jruby-1.7.1.tgz
+    md5: fbf25ff9cf10187b64af9f63b5492b93
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.2
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.8.7-jruby-1.7.2.tgz
+    md5: 9465e9bebb3da383906ce6386a1ca396
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.2
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.9.3-jruby-1.7.2.tgz
+    md5: 56794e6498809bce8a5e234f427b4c80
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.3
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.8.7-jruby-1.7.3.tgz
+    md5: 22ef6921274066367bbf302cc8c0d58b
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.3
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.9.3-jruby-1.7.3.tgz
+    md5: 6e386dacbc223724df51199bc54b924c
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.4
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.8.7-jruby-1.7.4.tgz
+    md5: 14d09d88e5887c6cb715366f4b893d0c
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.4
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.9.3-jruby-1.7.4.tgz
+    md5: ba82fdaa57962e26961a3f2d89588a0d
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.5
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.8.7-jruby-1.7.5.tgz
+    md5: 65a945e754e3d48a26aae19c8786872d
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.5
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.9.3-jruby-1.7.5.tgz
+    md5: a5291ec79e6e864c3371d040dd08c7f6
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-2.0.0-jruby-1.7.5
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.0.0-jruby-1.7.5.tgz
+    md5: 9ae3fae19cdbf4afc5982c13145b4fb0
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.6
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.8.7-jruby-1.7.6.tgz
+    md5: 8425a3ab48330c7aa861a7925b6db711
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.6
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.9.3-jruby-1.7.6.tgz
+    md5: e499fe99f664f51cda3608feb3b1dde1
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-2.0.0-jruby-1.7.6
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.0.0-jruby-1.7.6.tgz
+    md5: 5874b581d07c5661c1855af2d62be0eb
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.8
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.8.7-jruby-1.7.8.tgz
+    md5: 377ec264860cb9a568117639ac0f5936
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.8
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.9.3-jruby-1.7.8.tgz
+    md5: fd1d88571eb9e836ed192affde8b8562
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-2.0.0-jruby-1.7.8
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.0.0-jruby-1.7.8.tgz
+    md5: 2a6c9ee809b8fe4cf569c333125d80ba
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.9
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.8.7-jruby-1.7.9.tgz
+    md5: c0fd12f2d83395b280c91cbce8c0f09b
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.9
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.9.3-jruby-1.7.9.tgz
+    md5: 6473a1793564ff227aeecd3c2b0f7909
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-2.0.0-jruby-1.7.9
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.0.0-jruby-1.7.9.tgz
+    md5: c8687ccfb79f3dc5227bc048e775063f
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.10
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.8.7-jruby-1.7.10.tgz
+    md5: e50e5b99276f0945fde62329cc0fd475
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.10
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.9.3-jruby-1.7.10.tgz
+    md5: 8ed675c4ce72c29af10318a68e0c3f79
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-2.0.0-jruby-1.7.10
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.0.0-jruby-1.7.10.tgz
+    md5: 168490669345f77d80d33c2edec705c4
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.8.7-jruby-1.7.11
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.8.7-jruby-1.7.11.tgz
+    md5: 16c9942ffa1c812fe02482b4800a32a6
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.11
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.9.3-jruby-1.7.11.tgz
+    md5: edb820fe3977b178fd0b5fdbd0360546
     cf_stacks:
       - lucid64
       - cflinuxfs2
   - name: jruby
     version: ruby-2.0.0-jruby-1.7.11
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.0.0-jruby-1.7.11.tgz
+    md5: add1171753eaaf622b3d166ea717442a
     cf_stacks:
       - lucid64
       - cflinuxfs2
