@@ -2,42 +2,42 @@
 language: ruby
 
 url_to_dependency_map:
-- match: ruby-(\d+\.\d+\.\d+)-jruby-(\d+\.\d+\.\d+)
-  name: jruby
-  version: ruby-$1-jruby-$2
-- match: ruby-(\d+\.\d+\.\d+)
-  name: ruby
-  version: $1
-- match: node-v?(\d+\.\d+\.\d+)
-  name: node
-  version: $1
-- match: libyaml-(\d+\.\d+\.\d+)
-  name: libyaml
-  version: $1
-- match: bundler-(\d+\.\d+\.\d+)
-  name: bundler
-  version: $1
-- match: ruby_versions
-  name: ruby_versions
-  version: 0
-- match: ruby-build
-  name: ruby-build
-  version: 1.8.7
-- match: rails_log_stdout
-  name: rails_log_stdout
-  version: 0
-- match: rails3_serve_static_assets
-  name: rails3_serve_static_assets
-  version: 0
-- match: openjdk(\d+\.\d+\.\d+_\d+)
-  name: openjdk
-  version: $1
-- match: openjdk7-latest
-  name: openjdk7-latest
-  version: 0
-- match: openjdk1.8-latest
-  name: openjdk1.8-latest
-  version: 0
+  - match: ruby-(\d+\.\d+\.\d+)-jruby-(\d+\.\d+\.\d+)
+    name: jruby
+    version: ruby-$1-jruby-$2
+  - match: ruby-(\d+\.\d+\.\d+)
+    name: ruby
+    version: $1
+  - match: node-v?(\d+\.\d+\.\d+)
+    name: node
+    version: $1
+  - match: libyaml-(\d+\.\d+\.\d+)
+    name: libyaml
+    version: $1
+  - match: bundler-(\d+\.\d+\.\d+)
+    name: bundler
+    version: $1
+  - match: ruby_versions
+    name: ruby_versions
+    version: 0
+  - match: ruby-build
+    name: ruby-build
+    version: 1.8.7
+  - match: rails_log_stdout
+    name: rails_log_stdout
+    version: 0
+  - match: rails3_serve_static_assets
+    name: rails3_serve_static_assets
+    version: 0
+  - match: openjdk(\d+\.\d+\.\d+_\d+)
+    name: openjdk
+    version: $1
+  - match: openjdk7-latest
+    name: openjdk7-latest
+    version: 0
+  - match: openjdk1.8-latest
+    name: openjdk1.8-latest
+    version: 0
 
 dependencies:
   - name: node
