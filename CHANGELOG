@@ -1,3 +1,19 @@
+v1.3.0 Mar 17, 2015
+====================
+
+* Support cflinuxfs2 stack. This does not include support for 1.8.7 and 1.9.2
+  (https://www.pivotaltracker.com/story/show/88174340)
+  (https://www.pivotaltracker.com/story/show/90295946)
+
+* Dropped support for Ruby 1.9.2 on lucid64
+  (https://www.pivotaltracker.com/story/show/90295946)
+
+* Reference git repos by https in cf.Gemfile
+  (https://www.pivotaltracker.com/story/show/90365848)
+
+* Add checksum to `manifest.yml` for all binaries.
+  (https://www.pivotaltracker.com/story/show/89503122)
+
 v1.2.1 Jan 27, 2015
 ====================
 
