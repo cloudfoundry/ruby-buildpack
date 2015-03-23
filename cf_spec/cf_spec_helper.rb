@@ -1,7 +1,6 @@
 require 'bundler/setup'
 require 'machete'
 require 'machete/matchers'
-require 'rspec/retry'
 
 require 'language_pack'
 require 'cloud_foundry/language_pack/fetcher'
