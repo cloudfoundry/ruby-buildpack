@@ -2,7 +2,7 @@
 language: ruby
 
 url_to_dependency_map:
-  - match: ruby-(\d+\.\d+\.\d+)-jruby-(\d+\.\d+\.\d+)
+  - match: ruby-(\d+\.\d+\.\d+)-jruby-(\d+\.\d+\.\d+(?:\.\d\.pre\d)?)
     name: jruby
     version: ruby-$1-jruby-$2
   - match: ruby-(\d+\.\d+\.\d+)
@@ -416,6 +416,34 @@ dependencies:
     version: ruby-2.0.0-jruby-1.7.11
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.0.0-jruby-1.7.11.tgz
     md5: add1171753eaaf622b3d166ea717442a
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
+  - name: jruby
+    version: ruby-1.8.7-jruby-1.7.19
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.8.7-jruby-1.7.19.tgz
+    md5: 57b6627bfffd3c00153752e9a8df1491
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
+  - name: jruby
+    version: ruby-1.9.3-jruby-1.7.19
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.9.3-jruby-1.7.19.tgz
+    md5: cdfd28f591d86d5f10f933ceba180669
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
+  - name: jruby
+    version: ruby-2.0.0-jruby-1.7.19
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.0.0-jruby-1.7.19.tgz
+    md5: c08803a68494824a29a30e4a4bbcd9f5
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
+  - name: jruby
+    version: ruby-2.2.0-jruby-9.0.0.0.pre1
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.2.0-jruby-9.0.0.0.pre1.tgz
+    md5: f41cb2582afa57fb2d292752f5033db8
     cf_stacks:
       - lucid64
       - cflinuxfs2
