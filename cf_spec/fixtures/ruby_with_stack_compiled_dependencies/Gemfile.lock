@@ -1,0 +1,12 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    em-http-server (0.1.8)
+      eventmachine
+    eventmachine (1.0.7)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  em-http-server

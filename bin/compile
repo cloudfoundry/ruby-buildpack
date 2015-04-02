@@ -3,6 +3,10 @@
 # sync output
 $stdout.sync = true
 
+cache_dir = ARGV[1]
+compile_extensions_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'compile-extensions'))
+`#{File.join(compile_extensions_dir, 'bin', 'validate_app_cache')} #{cache_dir}`
+
 $:.unshift File.expand_path("../../lib", __FILE__)
 require "language_pack"
 require "language_pack/shell_helpers"
@@ -31,3 +35,5 @@ rescue Exception => e
     raise e
   end
 end
+
+`#{File.join(compile_extensions_dir, 'bin', 'store_stack_value')} #{cache_dir}`
