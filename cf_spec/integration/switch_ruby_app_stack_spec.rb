@@ -1,4 +1,3 @@
-$: << 'cf_spec'
 require 'cf_spec_helper'
 
 describe 'the app is restaged with a different rootfs' do

@@ -1,4 +1,3 @@
-$: << 'cf_spec'
 require 'cf_spec_helper'
 
 describe 'JRuby 1.7.3 App' do

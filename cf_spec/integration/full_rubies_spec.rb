@@ -1,4 +1,3 @@
-$: << 'cf_spec'
 require 'cf_spec_helper'
 
 describe 'For all supported Ruby versions', if: ENV['CF_CI_ENV'] == "true" do

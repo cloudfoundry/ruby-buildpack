@@ -1,4 +1,3 @@
-$: << 'cf_spec'
 require 'cf_spec_helper'
 
 describe 'CF Ruby Buildpack' do
