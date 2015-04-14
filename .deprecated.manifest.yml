@@ -21,6 +21,13 @@ dependencies:
     cf_stacks:
       - lucid64
       - cflinuxfs2
+  - name: bundler
+    version: 1.6.3
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/bundler-1.6.3.tgz
+    md5: 2f3f3a8581be58d6d6d71ec63d390e09
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
 
 exclude_files:
   - .git/
