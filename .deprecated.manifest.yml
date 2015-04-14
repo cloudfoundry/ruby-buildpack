@@ -1,0 +1,39 @@
+---
+language: ruby
+
+url_to_dependency_map:
+  - match: node-v?(\d+\.\d+\.\d+)
+    name: node
+    version: $1
+
+dependencies:
+  - name: node
+    version: 0.4.7
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/node-0.4.7.tgz
+    md5: 97eb2c31d883eb577783d17fb7d3e2e9
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
+  - name: node
+    version: 0.10.30
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/node-v0.10.30-linux-x64.tar.gz
+    md5: e96aebef3cc0feaca0e9a7b73740ed01
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
+
+exclude_files:
+  - .git/
+  - .gitignore
+  - .gitmodules
+  - repos/
+  - spec/
+  - cf_spec/
+  - log/
+  - test/
+  - cf.Gemfile
+  - cf.Gemfile.lock
+  - bin/package
+  - buildpack-packager/
+  - ruby_buildpack-*v*.zip
+

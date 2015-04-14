@@ -29,6 +29,40 @@ bundle package --all
 
 ```cf push``` uploads your vendored dependencies. The buildpack will compile any dependencies requiring compilation while staging your application.
 
+## Building
+
+The buildpack only supports the two most stable patches for each dependency in the [manifest.yml](manifest.yml).
+
+1. Make sure you have fetched submodules
+
+  ```bash
+  git submodule update --init
+  ```
+
+1. Get latest buildpack dependencies
+  ```shell
+  BUNDLE_GEMFILE=cf.Gemfile bundle
+  ```
+
+1. Build the buildpack
+
+  ```shell
+  BUNDLE_GEMFILE=cf.Gemfile bundle exec buildpack-packager [ uncached | cached ]
+  ```
+
+1. Use in Cloud Foundry
+
+    Upload the buildpack to your Cloud Foundry and optionally specify it by name
+        
+    ```bash
+    cf create-buildpack custom_ruby_buildpack ruby_buildpack-cached-custom.zip 1
+    cf push my_app -b custom_ruby_buildpack
+    ```  
+
+### Deprecated Versions
+
+If you would like to build the buildpack with previously supported dependency versions, you can update `manifest.yml` with entries from `.deprecated.manifest.yml`, and re-build.
+
 ## Contributing
 
 Find our guidelines [here](./CONTRIBUTING.md).
