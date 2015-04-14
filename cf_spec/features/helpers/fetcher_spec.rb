@@ -1,4 +1,4 @@
-require_relative '../cf_spec_helper'
+require 'cf_spec_helper'
 
 describe "Fetcher" do
   describe "#fetch" do
