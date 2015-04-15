@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+require 'tmpdir' 
+require 'digest/md5'
+
+gof3r_path = File.join(File.expand_path(File.dirname(__FILE__)), 'vendor', 'gof3r')
+
+def usage
+  puts "usage:"
+  puts "  copy <ruby_name>"
+  puts
+  puts "  ruby_name is the Ruby version to copy -- (e.g. 'ruby-2.2.2')"
+  exit(1)
+end
+
+def ruby_name
+  usage unless ARGV[0]
+  return ARGV[0]
+end
+
+def heroku_stack cf_stack
+  mappings = {
+    'lucid64' => 'cedar',
+    'cflinuxfs2' => 'cedar-14'
+  }
+  mappings.fetch(cf_stack)
+end
+
+def cf_stacks
+  %w{lucid64 cflinuxfs2}
+end
+
+cf_stacks.each do |stack| 
+  Dir.mktmpdir do |temp_dir|
+    Dir.chdir(temp_dir) do
+      `wget -q https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/#{heroku_stack(stack)}/#{ruby_name}.tgz`
+      `#{gof3r_path} cp #{ruby_name}.tgz s3://pivotal-buildpacks/ruby/binaries/#{stack}/#{ruby_name}.tgz 2>&1`
+    end
+
+    puts "uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/#{stack}/#{ruby_name}.tgz"
+    md5 = Digest::MD5.file("#{temp_dir}/#{ruby_name}.tgz").hexdigest
+    puts "md5: #{md5}"
+    puts "cf_stacks: \n  - #{stack}\n\n"
+  end
+end

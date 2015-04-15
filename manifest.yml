@@ -142,9 +142,21 @@ dependencies:
     cf_stacks:
       - lucid64
   - name: ruby
+    version: 2.2.2
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.2.2.tgz
+    md5: 8d520e4fe499eb6bfe5508a583301aac
+    cf_stacks:
+      - lucid64
+  - name: ruby
     version: 2.1.5
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.1.5.tgz
     md5: 905e676e23d2e6c598573674a17e5516
+    cf_stacks:
+      - lucid64
+  - name: ruby
+    version: 2.1.6
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.1.6.tgz
+    md5: be4a87c87f182cc77e8c3fbe4a334c2f
     cf_stacks:
       - lucid64
   - name: ruby
@@ -180,7 +192,7 @@ dependencies:
   - name: ruby
     version: 2.0.0
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.0.0.tgz
-    md5: c7bf4b6ad21e15795ee56b836ac6add6
+    md5: 45c6bcf1be9034967875d144abbf377b
     cf_stacks:
       - lucid64
   - name: ruby
@@ -199,6 +211,18 @@ dependencies:
     version: 2.2.0
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.2.0.tgz
     md5: ce0f6aebcc2d81b2dc7b0c34b6bf6570
+    cf_stacks:
+      - cflinuxfs2
+  - name: ruby
+    version: 2.2.2
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.2.2.tgz
+    md5: 8ef835d5ea5f53aea500b066b419be8a
+    cf_stacks:
+      - cflinuxfs2
+  - name: ruby
+    version: 2.1.6
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.1.6.tgz
+    md5: 815dff107e7538c626e6665587f9d5a8
     cf_stacks:
       - cflinuxfs2
   - name: ruby
@@ -228,7 +252,7 @@ dependencies:
   - name: ruby
     version: 2.0.0
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.0.0.tgz
-    md5: 7f77ee039ddda7b58cf322eb7d0b8a24
+    md5: 8d26b04cca945479fab9452b107b762f
     cf_stacks:
       - cflinuxfs2
   - name: ruby
@@ -462,3 +486,4 @@ exclude_files:
   - bin/package
   - buildpack-packager/
   - ruby_buildpack-*v*.zip
+  - cf_build/
