@@ -17,9 +17,6 @@ url_to_dependency_map:
   - match: bundler-(\d+\.\d+\.\d+)
     name: bundler
     version: $1
-  - match: ruby_versions
-    name: ruby_versions
-    version: 0
   - match: ruby-build
     name: ruby-build
     version: 1.8.7
@@ -69,13 +66,6 @@ dependencies:
     version: 1.7.12
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/bundler-1.7.12.tgz
     md5: 5cac50112ab676bef0cfaccd7d9aaf52
-    cf_stacks:
-      - lucid64
-      - cflinuxfs2
-  - name: ruby_versions
-    version: 0
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby_versions.yml
-    md5: 087ab6decfe4dd69027cf1c4bb14500b
     cf_stacks:
       - lucid64
       - cflinuxfs2

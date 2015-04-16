@@ -5,6 +5,9 @@ url_to_dependency_map:
   - match: node-v?(\d+\.\d+\.\d+)
     name: node
     version: $1
+  - match: ruby_versions
+    name: ruby_versions
+    version: 0
 
 dependencies:
   - name: node
@@ -25,6 +28,13 @@ dependencies:
     version: 1.6.3
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/bundler-1.6.3.tgz
     md5: 2f3f3a8581be58d6d6d71ec63d390e09
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
+  - name: ruby_versions
+    version: 0
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby_versions.yml
+    md5: 087ab6decfe4dd69027cf1c4bb14500b
     cf_stacks:
       - lucid64
       - cflinuxfs2
