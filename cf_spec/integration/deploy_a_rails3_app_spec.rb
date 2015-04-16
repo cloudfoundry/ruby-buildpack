@@ -9,28 +9,14 @@ describe 'Rails 3 App' do
     Machete::CF::DeleteApp.new.execute(app)
   end
 
-  context 'in an offline environment', if: Machete::BuildpackMode.offline? do
-    specify do
-      expect(app).to be_running
+  specify do
+    expect(app).to be_running
 
-      browser.visit_path('/')
-      expect(browser).to have_body('hello')
+    browser.visit_path('/')
+    expect(browser).to have_body('hello')
 
-      expect(app).to have_file('app/vendor/plugins/rails3_serve_static_assets/init.rb')
-      expect(app).to have_file('app/vendor/plugins/rails_log_stdout/init.rb')
-      expect(app.host).not_to have_internet_traffic
-    end
-  end
-
-  context 'in an online environment', if: Machete::BuildpackMode.online? do
-    specify do
-      expect(app).to be_running
-
-      browser.visit_path('/')
-      expect(browser).to have_body('hello')
-
-      expect(app).to have_file('app/vendor/plugins/rails3_serve_static_assets/init.rb')
-      expect(app).to have_file('app/vendor/plugins/rails_log_stdout/init.rb')
-    end
+    expect(app).to have_file('app/vendor/plugins/rails3_serve_static_assets/init.rb')
+    expect(app).to have_file('app/vendor/plugins/rails_log_stdout/init.rb')
+    expect(app.host).not_to have_internet_traffic if Machete::BuildpackMode.offline?
   end
 end
