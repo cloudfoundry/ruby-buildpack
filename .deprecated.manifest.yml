@@ -8,6 +8,12 @@ url_to_dependency_map:
   - match: ruby_versions
     name: ruby_versions
     version: 0
+  - match: openjdk7-latest
+    name: openjdk7-latest
+    version: 0
+  - match: openjdk(\d+\.\d+\.\d+_\d+)
+    name: openjdk
+    version: $1
 
 dependencies:
   - name: node
@@ -98,6 +104,19 @@ dependencies:
     md5: d6c11d37cd5e662b1e306d8c663a885a
     cf_stacks:
       - cflinuxfs2
+  - name: openjdk
+    version: 1.7.0_25
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/openjdk1.7.0_25.tar.gz
+    md5: 48549e234885241b2f745f88313af022
+    cf_stacks:
+      - lucid64
+      - cflinuxfs2
+  - name: openjdk7-latest
+    version: 0
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/openjdk7-latest.tar.gz
+    md5: fdb9c737826ad97ae2160e2af4fb4be6
+    cf_stacks:
+      - lucid64
 
 exclude_files:
   - .git/

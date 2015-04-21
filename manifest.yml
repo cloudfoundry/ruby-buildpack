@@ -26,12 +26,6 @@ url_to_dependency_map:
   - match: rails3_serve_static_assets
     name: rails3_serve_static_assets
     version: 0
-  - match: openjdk(\d+\.\d+\.\d+_\d+)
-    name: openjdk
-    version: $1
-  - match: openjdk7-latest
-    name: openjdk7-latest
-    version: 0
   - match: openjdk1.8-latest
     name: openjdk1.8-latest
     version: 0
@@ -83,26 +77,17 @@ dependencies:
     cf_stacks:
       - lucid64
       - cflinuxfs2
-  - name: openjdk
-    version: 1.7.0_25
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/openjdk1.7.0_25.tar.gz
-    md5: 48549e234885241b2f745f88313af022
-    cf_stacks:
-      - lucid64
-      - cflinuxfs2
-  - name: openjdk7-latest
-    version: 0
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/openjdk7-latest.tar.gz
-    md5: fdb9c737826ad97ae2160e2af4fb4be6
-    cf_stacks:
-      - lucid64
-      - cflinuxfs2
   - name: openjdk1.8-latest
     version: 0
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/openjdk1.8-latest.tar.gz
     md5: 5bc4ae62ce4e3b4dcde9151d8fce8180
     cf_stacks:
       - lucid64
+  - name: openjdk1.8-latest
+    version: 0
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/openjdk1.8-latest.tar.gz
+    md5: cbec09d0a4963c2c5da8e5942d18fcab
+    cf_stacks:
       - cflinuxfs2
   - name: ruby
     version: 2.2.1
