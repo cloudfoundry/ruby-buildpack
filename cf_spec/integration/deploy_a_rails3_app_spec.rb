@@ -4,6 +4,7 @@ describe 'Rails 3 App' do
   before(:all) do
     @app = Machete.deploy_app('rails3_mri_193', with_pg: true)
     expect(@app).to be_running
+    @browser = Machete::Browser.new(@app)
   end
 
   after(:all) do
@@ -11,9 +12,8 @@ describe 'Rails 3 App' do
   end
 
   specify 'the app can be visited in the browser' do
-    browser = Machete::Browser.new(@app)
-    browser.visit_path('/')
-    expect(browser).to have_body('hello')
+    @browser.visit_path('/')
+    expect(@browser).to have_body('hello')
   end
 
   context 'the app did not include the static asset or logging gems from Heroku' do
@@ -24,7 +24,7 @@ describe 'Rails 3 App' do
   end
 
   context 'a cached buildpack', if: Machete::BuildpackMode.offline? do
-    specify 'has not internet traffic' do 
+    specify 'has no internet traffic' do
       expect(@app.host).not_to have_internet_traffic
     end
   end
@@ -32,6 +32,15 @@ describe 'Rails 3 App' do
   context 'we include a rails logger message in the initializer' do
     specify 'the log message is visible in the cf cli app logging' do
       expect(@app).to have_logged 'Logging is being redirected to STDOUT with rails_log_stdout plugin'
+    end
+  end
+
+  context 'we include a static asset' do
+    specify 'app serves the static asset' do
+      expect do
+        @browser.visit_path('/assets/application.css')
+      end.not_to raise_error
+      expect(@browser).to have_body('body{color:red}')
     end
   end
 end
