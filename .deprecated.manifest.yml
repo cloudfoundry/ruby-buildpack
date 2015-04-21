@@ -38,6 +38,18 @@ dependencies:
     cf_stacks:
       - lucid64
       - cflinuxfs2
+  - name: ruby
+    version: 2.2.0
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.2.0.tgz
+    md5: 47e892bbaa2b08cf3c522a38c4c6755c
+    cf_stacks:
+      - lucid64
+  - name: ruby
+    version: 2.2.0
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.2.0.tgz
+    md5: ce0f6aebcc2d81b2dc7b0c34b6bf6570
+    cf_stacks:
+      - cflinuxfs2
 
 exclude_files:
   - .git/
