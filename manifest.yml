@@ -90,13 +90,6 @@ dependencies:
     cf_stacks:
       - lucid64
       - cflinuxfs2
-  - name: openjdk
-    version: 1.7.0_45
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/openjdk1.7.0_45.tar.gz
-    md5: fdb9c737826ad97ae2160e2af4fb4be6
-    cf_stacks:
-      - lucid64
-      - cflinuxfs2
   - name: openjdk7-latest
     version: 0
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/openjdk7-latest.tar.gz
