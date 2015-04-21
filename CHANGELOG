@@ -1,3 +1,25 @@
+v1.3.1 Apr 21, 2015
+====================
+
+* Update provided MRI ruby versions for CVE-2015-1855 (https://www.pivotaltracker.com/story/show/92437386)
+	* 2.0.0p645
+	* 2.1.6
+	* 2.2.2
+
+* Document Contribution guidelines (https://www.pivotaltracker.com/story/show/92459188)
+
+* Do not use cached dependencies when a running app is restaged on a different rootfs (https://www.pivotaltracker.com/story/show/91630536)
+
+* Merge upstream changes from Heroku up to SHA f349dfc1212ffb329ea73a41b15efac13ba302b8 (https://www.pivotaltracker.com/story/show/90537738)
+
+* Add support for jruby versions (https://www.pivotaltracker.com/story/show/90537738)
+	* jruby-1.7.19:
+		* ruby-1.8.7
+		* ruby-1.9.3
+		* ruby-2.0.0
+	* jruby-9.0.0.0:
+		* ruby-2.2.0
+
 v1.3.0 Mar 17, 2015
 ====================
 
