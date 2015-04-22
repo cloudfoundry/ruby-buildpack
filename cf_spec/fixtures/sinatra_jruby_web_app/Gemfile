@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
-ruby '1.8.7', :engine => 'jruby', :engine_version => '1.7.8'
+ruby '2.0.0', :engine => 'jruby', :engine_version => '1.7.19'
 
 gem 'sinatra'
