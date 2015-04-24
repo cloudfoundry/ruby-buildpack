@@ -14,7 +14,7 @@ module LanguagePack
 
     DEFAULT_VERSION_NUMBER = "2.0.0"
     DEFAULT_VERSION        = "ruby-#{DEFAULT_VERSION_NUMBER}"
-    LEGACY_VERSION_NUMBER  = "1.9.3"
+    LEGACY_VERSION_NUMBER  = "2.0.0"
     LEGACY_VERSION         = "ruby-#{LEGACY_VERSION_NUMBER}"
     RUBY_VERSION_REGEX     = %r{
         (?<ruby_version>\d+\.\d+\.\d+){0}

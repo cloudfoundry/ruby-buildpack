@@ -2,7 +2,7 @@ require 'cf_spec_helper'
 
 describe 'Rails 3 App' do
   before(:all) do
-    @app = Machete.deploy_app('rails3_mri_193', with_pg: true)
+    @app = Machete.deploy_app('rails3_mri_200', with_pg: true)
     expect(@app).to be_running
     @browser = Machete::Browser.new(@app)
   end

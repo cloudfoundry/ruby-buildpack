@@ -1,4 +1,6 @@
 #!/bin/bash -l
 
-rvm use 1.9.3
+rvm install 2.2.2
+rvm use 2.2.2
+gem install bundler
 bundle package --all

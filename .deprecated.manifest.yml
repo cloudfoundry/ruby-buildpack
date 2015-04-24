@@ -90,6 +90,18 @@ dependencies:
     cf_stacks:
       - lucid64
   - name: ruby
+    version: 1.9.3
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.9.3.tgz
+    md5: ddc41f840dd5752598be9fc1da75ea3d
+    cf_stacks:
+      - lucid64
+  - name: ruby
+    version: 1.8.7
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.8.7.tgz
+    md5: 7189f0babb81ad8c78e3f5ccc4f3d2a2
+    cf_stacks:
+      - lucid64
+  - name: ruby
     version: 2.1.4
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.1.4.tgz
     md5: 971aad5cd68b8cbad8f96211549fcb8c
@@ -105,6 +117,12 @@ dependencies:
     version: 2.1.2
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.1.2.tgz
     md5: d6c11d37cd5e662b1e306d8c663a885a
+    cf_stacks:
+      - cflinuxfs2
+  - name: ruby
+    version: 1.9.3
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-1.9.3.tgz
+    md5: 464543a5f95c3183aa1d07705db7f32c
     cf_stacks:
       - cflinuxfs2
   - name: jruby
