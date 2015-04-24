@@ -31,12 +31,6 @@ url_to_dependency_map:
     version: 0
 
 dependencies:
-  - name: ruby-build
-    version: 1.8.7
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-build-1.8.7.tgz
-    md5: 6142bd1f65e7726ec4bd484c6e4b6747
-    cf_stacks:
-      - lucid64
   - name: node
     version: 0.12.2
     uri: https://pivotal-buildpacks.s3.amazonaws.com/node/binaries/node-v0.12.2-linux-x64.tar.gz
