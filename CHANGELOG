@@ -1,3 +1,28 @@
+v1.4.0 Apr 28, 2015
+====================
+
+* Remove many older ruby versions. We currenly support:
+	* MRI ruby versions:
+		* 2.2.2
+		* 2.2.1
+		* 2.1.6
+		* 2.1.5
+		* 2.0.0
+	* JRuby verisons:
+		* ruby-1.9.3-jruby-1.7.19
+		* ruby-2.0.0-jruby-1.7.19
+		* ruby-2.2.0-jruby-9.0.0.0.pre1
+	
+  (https://www.pivotaltracker.com/story/show/93201508)
+  (https://www.pivotaltracker.com/story/show/90697240)
+  (https://www.pivotaltracker.com/story/show/90697238)
+
+* Update to latest OpenJDK 1.8
+  (https://www.pivotaltracker.com/story/show/90697236)
+
+* Updated to latest node JS 
+  (https://www.pivotaltracker.com/story/show/90697226)
+
 v1.3.1 Apr 21, 2015
 ====================
 
