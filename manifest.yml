@@ -17,9 +17,6 @@ url_to_dependency_map:
   - match: bundler-(\d+\.\d+\.\d+)
     name: bundler
     version: $1
-  - match: ruby-build
-    name: ruby-build
-    version: 1.8.7
   - match: rails_log_stdout
     name: rails_log_stdout
     version: 0
