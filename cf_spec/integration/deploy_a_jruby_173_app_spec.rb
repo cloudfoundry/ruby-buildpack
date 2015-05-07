@@ -2,7 +2,7 @@ require 'cf_spec_helper'
 
 describe 'JRuby 1.7.3 App' do
   before(:all) do
-    @app = Machete.deploy_app('sinatra_jruby_web_app', with_pg: true)
+    @app = Machete.deploy_app('sinatra_jruby_web_app')
     expect(@app).to be_running
   end
 

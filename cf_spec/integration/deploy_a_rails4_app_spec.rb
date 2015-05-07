@@ -1,7 +1,11 @@
 require 'cf_spec_helper'
 
 describe 'Rails 4 App' do
-  subject(:app) { Machete.deploy_app(app_name, with_pg: true) }
+  subject(:app) do
+    Machete.deploy_app(app_name, env: {
+      DATABASE_URL: 'sqlite3://db/test.db'
+    })
+  end
   let(:browser) { Machete::Browser.new(app) }
 
   after do

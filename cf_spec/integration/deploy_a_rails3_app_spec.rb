@@ -2,7 +2,9 @@ require 'cf_spec_helper'
 
 describe 'Rails 3 App' do
   before(:all) do
-    @app = Machete.deploy_app('rails3_mri_200', with_pg: true)
+    @app = Machete.deploy_app('rails3_mri_200', env: {
+      DATABASE_URL: 'sqlite3://db/test.db'
+    })
     expect(@app).to be_running
     @browser = Machete::Browser.new(@app)
   end
