@@ -1,3 +1,15 @@
+v1.4.1 May 08, 2015
+====================
+
+* Default Ruby version set to MRI 2.2.2
+  (https://www.pivotaltracker.com/story/show/91706560)
+
+* Fixed Ruby 1.8.7 for unsupported manifest
+  (https://www.pivotaltracker.com/story/show/93717296)
+
+* Bump buildpack-packager to support custom buildpack manifests.
+  (https://www.pivotaltracker.com/story/show/93717296)
+
 v1.4.0 Apr 28, 2015
 ====================
 
