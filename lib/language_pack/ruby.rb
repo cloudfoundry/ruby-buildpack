@@ -14,7 +14,7 @@ class LanguagePack::Ruby < LanguagePack::Base
   NAME                 = "ruby"
   LIBYAML_VERSION      = "0.1.6"
   LIBYAML_PATH         = "libyaml-#{LIBYAML_VERSION}"
-  BUNDLER_VERSION      = "1.7.12"
+  BUNDLER_VERSION      = "1.9.7"
   BUNDLER_GEM_PATH     = "bundler-#{BUNDLER_VERSION}"
   DEFAULT_RUBY_VERSION = "ruby-2.2.2"
   RBX_BASE_URL         = "http://binaries.rubini.us/heroku"
@@ -29,7 +29,7 @@ class LanguagePack::Ruby < LanguagePack::Base
   end
 
   def self.bundler
-    @bundler ||= LanguagePack::Helpers::BundlerWrapper.new.install
+    @@bundler ||= LanguagePack::Helpers::BundlerWrapper.new.install
   end
 
   def bundler
@@ -246,6 +246,7 @@ EOF
 #{set_jvm_max_heap}
 echo #{default_java_tool_options}
 SHELL
+        ENV["JRUBY_OPTS"] = env('JRUBY_BUILD_OPTS') || env('JRUBY_OPTS')
       end
       setup_ruby_install_env
       ENV["PATH"] += ":#{node_bp_bin_path}" if node_js_installed?
@@ -602,6 +603,12 @@ ERROR
   end
 
   def post_bundler
+    instrument "ruby.post_bundler" do
+      Dir[File.join(slug_vendor_base, "**", ".git")].each do |dir|
+        FileUtils.rm_rf(dir)
+      end
+      bundler.clean
+    end
   end
 
   # RUBYOPT line that requires syck_hack file

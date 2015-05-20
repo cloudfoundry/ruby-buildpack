@@ -1,5 +1,24 @@
 ## Master
 
+## v138 (5/19/2015)
+
+* Bump bundler to 1.9.7 [Bundler changelog](https://github.com/bundler/bundler/blob/master/CHANGELOG.md#196-2015-05-02) (#378)
+
+## v137 (5/11/2015)
+
+* Blacklist `JRUBY_OPTS`, use `JRUBY_BUILD_OPTS` to override build `JRUBY_OPTS`.  (#384)
+* Revert `--dev` during JRuby build for now. (#384)
+
+## v136 (5/6/2015)
+
+* JRUBY_BUILD_OPTS env var will override any build time jruby opts (#381)
+
+## v135 (5/5/2015)
+
+* Support sprockets 3.0 manifest file naming convention (#367)
+* Set `--dev` by default for JRuby builds (but not at runtime). This optimizes the JVM for short process and is ideal for `bundle install` and asset precompiles.
+* Cleanup `.git` folders in the bundle directory after `bundle install`.
+
 ## v134 (3/1/2015)
 
 * JVM is now available on cedar-14, do not vendor in JVM based on individual gems. If customer needs a specific version they should use multibuildpack with java and ruby buildpacks.
