@@ -1,3 +1,12 @@
+v1.4.2 May 20, 2015
+====================
+
+* Merge upstream changes from Heroku up to SHA 4b493f80ed9ea9ae7bf8cd743068fb79e3c8b9a2 
+	(https://www.pivotaltracker.com/story/show/94986118)
+
+* Add bundler version 1.9.7 to manifest
+	(https://www.pivotaltracker.com/story/show/94986118)
+
 v1.4.1 May 08, 2015
 ====================
 
