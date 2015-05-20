@@ -1,0 +1,60 @@
+#!/usr/bin/env ruby
+require 'tmpdir' 
+require 'digest/md5'
+require 'highline/import'
+
+gof3r_path = File.join(File.expand_path(File.dirname(__FILE__)), 'vendor', 'gof3r')
+
+def usage
+  puts "usage:"
+  puts "  copy <bundler_name>"
+  puts
+  puts "  bundler_name is the Bundler version to copy -- (e.g. 'bundler-2.2.2')"
+  exit(1)
+end
+
+def bundler_name
+  usage unless ARGV[0]
+  return ARGV[0]
+end
+
+def get_source_bundler_binary(target_directory)
+  Dir.chdir(target_directory) do
+    `wget -q https://s3-external-1.amazonaws.com/heroku-buildpack-ruby/#{bundler_name}.tgz`
+    File.join(target_directory, "#{bundler_name}.tgz")
+  end
+end
+
+def get_target_bundler_binary(target_directory)
+  Dir.chdir(target_directory) do
+    # wget always writes to the -O file, we remove it if wget couldnt find the file.
+    `wget -q https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/shared/#{bundler_name}.tgz -O #{bundler_name}.tgz.target || rm -rf #{bundler_name}.tgz.target`
+    File.join(target_directory, "#{bundler_name}.tgz.target")
+  end
+end
+
+Dir.mktmpdir do |temp_dir|
+  source_bundler_path = get_source_bundler_binary(temp_dir)
+  source_md5 = Digest::MD5.file(source_bundler_path).hexdigest
+
+  target_bundler_path = get_target_bundler_binary(temp_dir)
+
+  if File.exist?(target_bundler_path) then
+    target_md5 = Digest::MD5.file(target_bundler_path).hexdigest
+
+    puts "#{bundler_name} already exists on s3."
+    puts "source md5: #{source_md5}"
+    puts "target md5: #{target_md5}"
+
+    exit(1) unless HighLine.agree("Are you sure you want to override the target? [yes|no]")
+  end
+
+  Dir.chdir(temp_dir) do
+    output = `#{gof3r_path} cp #{bundler_name}.tgz s3://pivotal-buildpacks/ruby/binaries/shared/#{bundler_name}.tgz 2>&1`
+    raise "Could not put binary on s3:\n\nOutput from command:\n\n#{output}" unless $?.success?
+  end
+
+  puts "uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/shared/#{bundler_name}.tgz"
+  md5 = Digest::MD5.file("#{temp_dir}/#{bundler_name}.tgz").hexdigest
+  puts "md5: #{md5}"
+end
