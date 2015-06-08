@@ -16,3 +16,4 @@ vendor/cache/*
 vendor/bundle/*
 vendor/bundler/*
 /ruby_buildpack-*.zip
+.bundle/
