@@ -70,14 +70,14 @@ dependencies:
       - cflinuxfs2
   - name: openjdk1.8-latest
     version: 0
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/openjdk1.8-latest.tar.gz
-    md5: 5bc4ae62ce4e3b4dcde9151d8fce8180
+    uri: https://download.run.pivotal.io/openjdk/lucid/x86_64/openjdk-1.8.0_45.tar.gz
+    md5: 9a1e5ea7a9dcd845fcdbc4b930092f70
     cf_stacks:
       - lucid64
   - name: openjdk1.8-latest
     version: 0
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/openjdk1.8-latest.tar.gz
-    md5: cbec09d0a4963c2c5da8e5942d18fcab
+    uri: https://download.run.pivotal.io/openjdk/trusty/x86_64/openjdk-1.8.0_45.tar.gz
+    md5: 84cf2668e2f833f901f64de068b23412
     cf_stacks:
       - cflinuxfs2
   - name: ruby
