@@ -20,14 +20,13 @@ end
 
 def heroku_stack cf_stack
   mappings = {
-    'lucid64' => 'cedar',
     'cflinuxfs2' => 'cedar-14'
   }
   mappings.fetch(cf_stack)
 end
 
 def cf_stacks
-  %w{lucid64 cflinuxfs2}
+  %w{cflinuxfs2}
 end
 
 def get_source_openjdk_binary cf_stack, target_directory
