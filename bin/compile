@@ -6,6 +6,8 @@ $stdout.sync = true
 cache_dir = ARGV[1]
 compile_extensions_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'compile-extensions'))
 
+exit(44) unless system("#{compile_extensions_dir}/bin/check_stack_support")
+
 $:.unshift File.expand_path("../../lib", __FILE__)
 require "language_pack"
 require "language_pack/shell_helpers"
