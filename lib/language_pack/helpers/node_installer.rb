@@ -36,8 +36,7 @@ class LanguagePack::NodeInstaller
       @fetchers[:legacy].fetch_untar("#{LEGACY_BINARY_PATH}.tgz")
     else
       node_bin = "#{MODERN_BINARY_PATH}/bin/node"
-      # The second argument of fetch_untar was removed to work with our self-built binaries
-      @fetchers[:modern].fetch_untar("#{MODERN_BINARY_PATH}.tar.gz")
+      @fetchers[:modern].fetch_untar("#{MODERN_BINARY_PATH}.tar.gz", "#{MODERN_BINARY_PATH}/bin/node")
       FileUtils.mv(node_bin, ".")
       FileUtils.rm_rf(MODERN_BINARY_PATH)
     end
