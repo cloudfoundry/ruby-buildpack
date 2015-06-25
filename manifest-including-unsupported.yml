@@ -17,6 +17,9 @@ url_to_dependency_map:
   - match: ruby-(\d+\.\d+\.\d+)-jruby-(\d+\.\d+\.\d+(?:\.\d\.pre\d)?)
     name: jruby
     version: ruby-$1-jruby-$2
+  - match: ruby-(\d+\.\d+\.\d+)-jruby-(\d+\.\d+\.\d+(?:\.\d\.rc\d)?)
+    name: jruby
+    version: ruby-$1-jruby-$2
   - match: ruby-(\d+\.\d+\.\d+)
     name: ruby
     version: $1
@@ -493,6 +496,12 @@ dependencies:
     md5: f41cb2582afa57fb2d292752f5033db8
     cf_stacks:
       - lucid64
+      - cflinuxfs2
+  - name: jruby
+    version: ruby-2.2.2-jruby-9.0.0.0.rc1
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.2.2-jruby-9.0.0.0.rc1.tgz
+    md5: a57de6be773924e321ed8cffd5f4b168
+    cf_stacks:
       - cflinuxfs2
 
 exclude_files:

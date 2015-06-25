@@ -2,7 +2,7 @@
 language: ruby
 
 url_to_dependency_map:
-  - match: ruby-(\d+\.\d+\.\d+)-jruby-(\d+\.\d+\.\d+(?:\.\d\.pre\d)?)
+  - match: ruby-(\d+\.\d+\.\d+)-jruby-(\d+\.\d+\.\d+(?:\.\d\.rc\d)?)
     name: jruby
     version: ruby-$1-jruby-$2
   - match: ruby-(\d+\.\d+\.\d+)
@@ -107,9 +107,9 @@ dependencies:
     cf_stacks:
       - cflinuxfs2
   - name: jruby
-    version: ruby-2.2.0-jruby-9.0.0.0.pre1
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.2.0-jruby-9.0.0.0.pre1.tgz
-    md5: f41cb2582afa57fb2d292752f5033db8
+    version: ruby-2.2.2-jruby-9.0.0.0.rc1
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.2.2-jruby-9.0.0.0.rc1.tgz
+    md5: a57de6be773924e321ed8cffd5f4b168
     cf_stacks:
       - cflinuxfs2
 
