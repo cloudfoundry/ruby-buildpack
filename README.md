@@ -11,7 +11,7 @@ Additional information can be found at [CloudFoundry.org](http://docs.cloudfound
 This buildpack will be used if your app has a `Gemfile` and `Gemfile.lock` in the root directory. It will then use Bundler to install your dependencies.
 
 ```bash
-cf push my_app -b https://github.com/cloudfoundry/buildpack-ruby.git
+cf push my_app -b https://github.com/cloudfoundry/ruby-buildpack.git
 ```
 
 ## Disconnected environments
