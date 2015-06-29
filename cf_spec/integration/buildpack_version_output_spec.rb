@@ -8,7 +8,7 @@ describe 'Version output' do
     Machete::CF::DeleteApp.new.execute(app)
   end
 
-  context 'in an online environment', if: Machete::BuildpackMode.online? do
+  context 'in an online environment', if: Machete::BuildpackMode.uncached? do
     specify do
       expect(app).to have_logged "-------> Buildpack version "
     end

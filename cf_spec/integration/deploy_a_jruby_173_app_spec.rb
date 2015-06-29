@@ -19,7 +19,7 @@ describe 'JRuby 1.7.3 App' do
     expect(@app).not_to have_logged 'OpenJDK 64-Bit Server VM warning'
   end
 
-  context 'a cached buildpack', if: Machete::BuildpackMode.offline? do
+  context 'a cached buildpack', if: Machete::BuildpackMode.cached? do
     specify 'has no internet traffic' do
       expect(@app.host).not_to have_internet_traffic
     end

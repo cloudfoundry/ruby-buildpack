@@ -25,7 +25,7 @@ describe 'Rails 3 App' do
     end
   end
 
-  context 'a cached buildpack', if: Machete::BuildpackMode.offline? do
+  context 'a cached buildpack', if: Machete::BuildpackMode.cached? do
     specify 'has no internet traffic' do
       expect(@app.host).not_to have_internet_traffic
     end
