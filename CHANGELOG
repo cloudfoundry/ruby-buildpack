@@ -1,3 +1,20 @@
+v1.5.1 Jul 10, 2015
+====================
+
+* Update error message in the event of deploying this buildpack on
+  an unsupported stack
+  (https://www.pivotaltracker.com/story/show/98579464)
+    
+* Security upgrade to NodeJS 0.12.6
+  (https://www.pivotaltracker.com/story/show/98683546)
+
+* Updating to buildpack-packager v2.2.2
+  Now supports printing out buildpack dependencies via `buildpack-packager list`
+  (https://www.pivotaltracker.com/story/show/98588996)
+
+* Upgrade JRuby 9000 support to rc1
+  (https://www.pivotaltracker.com/story/show/97566746)
+
 v1.5.0 Jun 24, 2015
 ====================
 
