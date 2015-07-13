@@ -30,8 +30,8 @@ url_to_dependency_map:
 dependencies:
   - name: node
     version: 0.12.7
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/node/binaries/node-v0.12.7-linux-x64.tar.gz
-    md5: 182175d82395171f299e3a05a2ce70a1
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/node/beta-binaries/node-0.12.7-linux-x64.tar.gz
+    md5: 2b966ce7cceda8bcb6aba43eb99b81cf
     cf_stacks:
       - cflinuxfs2
   - name: libyaml
