@@ -63,6 +63,12 @@ dependencies:
     cf_stacks:
       - lucid64
       - cflinuxfs2
+  - name: node
+    version: 0.12.7
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/node/binaries/node-v0.12.7-linux-x64.tar.gz
+    md5: 182175d82395171f299e3a05a2ce70a1
+    cf_stacks:
+      - cflinuxfs2
   - name: bundler
     version: 1.7.12
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/bundler-1.7.12.tgz
