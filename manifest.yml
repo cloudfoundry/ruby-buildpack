@@ -95,21 +95,21 @@ dependencies:
     cf_stacks:
       - cflinuxfs2
   - name: jruby
-    version: ruby-1.9.3-jruby-1.7.19
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-1.9.3-jruby-1.7.19.tgz
-    md5: cdfd28f591d86d5f10f933ceba180669
+    version: ruby-1.9.3-jruby-1.7.21
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-1.9.3-jruby-1.7.21.tgz
+    md5: e26c707af612ddcadd978600e25bbc97
     cf_stacks:
       - cflinuxfs2
   - name: jruby
-    version: ruby-2.0.0-jruby-1.7.19
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/lucid64/ruby-2.0.0-jruby-1.7.19.tgz
-    md5: c08803a68494824a29a30e4a4bbcd9f5
+    version: ruby-2.0.0-jruby-1.7.21
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.0.0-jruby-1.7.21.tgz
+    md5: 1246af49614ffbb93c9422f3d225716e
     cf_stacks:
       - cflinuxfs2
   - name: jruby
-    version: ruby-2.2.2-jruby-9.0.0.0.rc1
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.2.2-jruby-9.0.0.0.rc1.tgz
-    md5: a57de6be773924e321ed8cffd5f4b168
+    version: ruby-2.2.2-jruby-9.0.0.0.rc2
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.2.2-jruby-9.0.0.0.rc2.tgz
+    md5: 817a78e9de42e4fa6e0e5428bf7f08d2
     cf_stacks:
       - cflinuxfs2
 
