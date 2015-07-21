@@ -66,7 +66,7 @@ dependencies:
   - name: node
     version: 0.12.7
     uri: https://pivotal-buildpacks.s3.amazonaws.com/node/binaries/node-v0.12.7-linux-x64.tar.gz
-    md5: 2b966ce7cceda8bcb6aba43eb99b81cf
+    md5: 182175d82395171f299e3a05a2ce70a1
     cf_stacks:
       - cflinuxfs2
   - name: node
@@ -541,13 +541,8 @@ dependencies:
       - cflinuxfs2
   - name: jruby
     version: ruby-2.2.2-jruby-9.0.0.0.rc2
-<<<<<<< HEAD
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.2.2-jruby-9.0.0.0.rc2.tgz
-    md5: 817a78e9de42e4fa6e0e5428bf7f08d2
-=======
     uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/beta-binaries/cflinuxfs2/jruby-9.0.0.0.rc2_ruby-2.2.2-linux-x64.tgz
     md5: cf390d0d64ec10da27f3960f97ff3bc0
->>>>>>> Add support for jrubies 1.7.21 and 9.0.0.0.rc2
     cf_stacks:
       - cflinuxfs2
 
