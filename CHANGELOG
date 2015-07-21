@@ -1,3 +1,10 @@
+v1.6.1 Jul 21, 2015
+====================
+
+* Fix issues with the 'including unsupported' manifest
+  - Fix incorrect md5 checksum for node version 0.12.7
+  - Remove merge conflict annotations
+
 v1.6.0 Jul 20, 2015
 ====================
 
