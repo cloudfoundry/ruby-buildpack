@@ -9,7 +9,7 @@ describe 'CF Ruby Buildpack' do
     Machete::CF::DeleteApp.new.execute(app)
   end
 
-  context 'in an online environment', if: Machete::BuildpackMode.uncached? do
+  context 'in an online environment', :uncached do
     specify do
       expect(app).to be_running
       expect(app).not_to have_logged 'cannot open shared object file'

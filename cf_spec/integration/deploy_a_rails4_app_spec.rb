@@ -12,7 +12,7 @@ describe 'Rails 4 App' do
     Machete::CF::DeleteApp.new.execute(app)
   end
 
-  context 'in an offline environment', if: Machete::BuildpackMode.cached? do
+  context 'in an offline environment', :cached do
     let(:app_name) { 'rails4_web_app' }
 
     specify do
@@ -26,7 +26,7 @@ describe 'Rails 4 App' do
 
   end
 
-  context 'in an online environment', if: Machete::BuildpackMode.uncached? do
+  context 'in an online environment', :uncached do
     context 'app has dependencies' do
       let(:app_name) { 'rails4_web_app' }
 
