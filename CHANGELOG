@@ -28,7 +28,7 @@ v1.5.1 Jul 10, 2015
 * Update error message in the event of deploying this buildpack on
   an unsupported stack
   (https://www.pivotaltracker.com/story/show/98579464)
-    
+
 * Security upgrade to NodeJS 0.12.6
   (https://www.pivotaltracker.com/story/show/98683546)
 
@@ -54,7 +54,7 @@ v1.5.0 Jun 24, 2015
 v1.4.2 May 20, 2015
 ====================
 
-* Merge upstream changes from Heroku up to SHA 4b493f80ed9ea9ae7bf8cd743068fb79e3c8b9a2 
+* Merge upstream changes from Heroku up to SHA 4b493f80ed9ea9ae7bf8cd743068fb79e3c8b9a2
 	(https://www.pivotaltracker.com/story/show/94986118)
 
 * Add bundler version 1.9.7 to manifest
@@ -86,7 +86,7 @@ v1.4.0 Apr 28, 2015
 		* ruby-1.9.3-jruby-1.7.19
 		* ruby-2.0.0-jruby-1.7.19
 		* ruby-2.2.0-jruby-9.0.0.0.pre1
-	
+
   (https://www.pivotaltracker.com/story/show/93201508)
   (https://www.pivotaltracker.com/story/show/90697240)
   (https://www.pivotaltracker.com/story/show/90697238)
@@ -94,7 +94,7 @@ v1.4.0 Apr 28, 2015
 * Update to latest OpenJDK 1.8
   (https://www.pivotaltracker.com/story/show/90697236)
 
-* Updated to latest node JS 
+* Updated to latest node JS
   (https://www.pivotaltracker.com/story/show/90697226)
 
 v1.3.1 Apr 21, 2015
@@ -146,9 +146,9 @@ v1.2.1 Jan 27, 2015
 
 * Merge upstream changes
   (https://www.pivotaltracker.com/story/show/86046576)
-  * Update Bundler to 1.7 
+  * Update Bundler to 1.7
     (https://github.com/heroku/heroku-buildpack-ruby/commit/4d6c831e9ba1c67604c395d20ba153a2752b303b)
-  * Fix support for JRuby 9.0.0.0.pre1 
+  * Fix support for JRuby 9.0.0.0.pre1
     (https://github.com/heroku/heroku-buildpack-ruby/commit/881d794a8f33d102561798f696c049f5178ce60d)
   * set JAVA_TOOL_OPTIONS for compile time JRuby
     (https://github.com/heroku/heroku-buildpack-ruby/commit/380c9aa8626d689b6d0f0bdeaf5b78c999cf7540)
@@ -280,4 +280,3 @@ v1.0.0 Jun 17, 2014
 
 * Do not download Heroku's pre-cached gems. They are not binary compatible
   with the Cloud Foundry environment.
-
