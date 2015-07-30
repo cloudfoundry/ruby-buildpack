@@ -60,7 +60,7 @@ dependencies:
       - cflinuxfs2
   - name: openjdk1.8-latest
     version: 0
-    uri: https://download.run.pivotal.io/openjdk/trusty/x86_64/openjdk-1.8.0_45.tar.gz
+    uri: https://download.run.pivotal.io/openjdk/trusty/x86_64/openjdk-1.8.0_51.tar.gz
     md5: 84cf2668e2f833f901f64de068b23412
     cf_stacks:
       - cflinuxfs2
