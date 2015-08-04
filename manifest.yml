@@ -25,7 +25,7 @@ url_to_dependency_map:
     version: 0
   - match: openjdk1.8-latest
     name: openjdk1.8-latest
-    version: 0
+    version: 1.8.0_51
 
 dependencies:
   - name: node
@@ -59,7 +59,7 @@ dependencies:
     cf_stacks:
       - cflinuxfs2
   - name: openjdk1.8-latest
-    version: 0
+    version: 1.8.0_51
     uri: https://download.run.pivotal.io/openjdk/trusty/x86_64/openjdk-1.8.0_51.tar.gz
     md5: aeb29e36b1b1efec8b888c76a21a8d13
     cf_stacks:
