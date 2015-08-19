@@ -65,15 +65,15 @@ dependencies:
     cf_stacks:
       - cflinuxfs2
   - name: ruby
-    version: 2.2.1
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/cflinuxfs2/ruby-2.2.1.tgz
-    md5: 4b3e18ae93c0bcc9cd4b46569629820a
-    cf_stacks:
-      - cflinuxfs2
-  - name: ruby
     version: 2.2.2
     uri: https://pivotal-buildpacks.s3.amazonaws.com/concourse-binaries/ruby/ruby-2.2.2-linux-x64.tgz
     md5: 3a66010947862c1225f54933a3697006
+    cf_stacks:
+      - cflinuxfs2
+  - name: ruby
+    version: 2.2.3
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/concourse-binaries/ruby/ruby-2.2.3-linux-x64.tgz
+    md5: bd2987703535e17b2e0f9b732adc0027
     cf_stacks:
       - cflinuxfs2
   - name: ruby
