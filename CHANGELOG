@@ -1,3 +1,11 @@
+v1.6.4 Aug 19, 2015
+===================
+
+* Add support for Ruby 2.1.7 and 2.0.0-p647, which addresses CVE-2015-3900.
+  Remove support for Ruby 2.1.5 and 2.0.0-p645.
+  (https://www.pivotaltracker.com/story/show/101589968)
+
+
 v1.6.3 Aug 19, 2015
 ===================
 
