@@ -1,3 +1,9 @@
+v1.6.5 Aug 21, 2015
+====================
+
+* Change default Ruby version to '2.2.3'
+  (https://www.pivotaltracker.com/story/show/101779882)
+
 v1.6.4 Aug 19, 2015
 ===================
 
