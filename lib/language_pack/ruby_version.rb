@@ -12,7 +12,7 @@ module LanguagePack
       end
     end
 
-    DEFAULT_VERSION_NUMBER = "2.2.2"
+    DEFAULT_VERSION_NUMBER = "2.2.3"
     DEFAULT_VERSION        = "ruby-#{DEFAULT_VERSION_NUMBER}"
     RUBY_VERSION_REGEX     = %r{
         (?<ruby_version>\d+\.\d+\.\d+){0}
