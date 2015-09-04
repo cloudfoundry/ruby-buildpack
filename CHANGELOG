@@ -1,3 +1,11 @@
+v1.6.7 Sep 04, 2015
+====================
+
+
+* Add support for jruby 9.0.1.0 (Removes support for jruby 9.0.0.0)
+* Removing support for jruby 1.7.21
+  (https://www.pivotaltracker.com/story/show/102606534)
+
 v1.6.6 Aug 28, 2015
 ====================
 
