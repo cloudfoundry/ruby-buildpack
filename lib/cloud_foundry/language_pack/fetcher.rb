@@ -12,6 +12,7 @@ module LanguagePack
       url = rendered_command.match(URI.regexp)[0]
       bin_path = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "compile-extensions", "bin"))
       translated_url = `#{bin_path}/translate_dependency_url #{url}`.chomp
+      puts "Downloaded [#{translated_url}]"
       if $?.exitstatus != 0
         puts("Could not get translated url, exited with: #{translated_url}")
         exit 1

@@ -22,6 +22,7 @@ describe 'Rails 4 App' do
       expect(browser).to have_body('The Kessel Run')
 
       expect(app.host).not_to have_internet_traffic
+      expect(app).to have_logged /Downloaded \[file:\/\/.*\]/
     end
 
   end
@@ -35,6 +36,7 @@ describe 'Rails 4 App' do
 
         browser.visit_path('/')
         expect(browser).to have_body('The Kessel Run')
+        expect(app).to have_logged /Downloaded \[https:\/\/.*\]/
       end
     end
 
