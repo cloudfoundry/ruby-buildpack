@@ -18,7 +18,7 @@ cf push my_app -b https://github.com/cloudfoundry/ruby-buildpack.git
 To use this buildpack on Cloud Foundry, where the Cloud Foundry instance limits some or all internet activity, please read the [Disconnected Environments documentation](https://github.com/cf-buildpacks/buildpack-packager/blob/master/doc/disconnected_environments.md).
 
 ### Vendoring app dependencies
-As stated in the [Disconnected Environments documentation](https://github.com/cf-buildpacks/buildpack-packager/blob/master/doc/disconnected_environments.md), your application must 'vendor' it's dependencies.
+As stated in the [Disconnected Environments documentation](https://github.com/cf-buildpacks/buildpack-packager/blob/master/doc/disconnected_environments.md), your application must 'vendor' its dependencies.
 
 For the Ruby buildpack, use bundler:
 
@@ -30,8 +30,6 @@ bundle package --all
 ```cf push``` uploads your vendored dependencies. The buildpack will compile any dependencies requiring compilation while staging your application.
 
 ## Building
-
-The buildpack only supports the two most stable patches for each dependency in the [manifest.yml](manifest.yml).
 
 1. Make sure you have fetched submodules
 
@@ -60,9 +58,20 @@ The buildpack only supports the two most stable patches for each dependency in t
     cf push my_app -b custom_ruby_buildpack
     ```  
 
-### Deprecated Versions
+## Supported binary dependencies
 
-If you would like to build the buildpack with previously supported dependency versions, provide the `--use-custom-manifest=manifest-including-unsupported.yml` option to `buildpack-packager`.
+The buildpack only supports the stable patches for each dependency listed in the [manifest.yml](manifest.yml) and [releases page](https://github.com/cloudfoundry/ruby-buildpack/releases).
+
+
+If you try to use a binary that is not currently supported, staging your app will fail and you will see the following error message:
+
+```
+       Could not get translated url, exited with: DEPENDENCY_MISSING_IN_MANIFEST: ...
+ !
+ !     exit
+ !
+Staging failed: Buildpack compilation step failed
+```
 
 ## Contributing
 
