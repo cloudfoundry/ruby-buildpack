@@ -3,7 +3,7 @@ language: ruby
 
 url_to_dependency_map:
   - match: ruby-(.*?)-jruby-(.*?)\.tgz
-  name: jruby
+    name: jruby
     version: ruby-$1-jruby-$2
   - match: ruby-(\d+\.\d+\.\d+)
     name: ruby
