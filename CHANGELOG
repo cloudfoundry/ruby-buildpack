@@ -1,3 +1,14 @@
+v1.6.8 Nov 03, 2015
+====================
+
+* Add support for JRuby 9.0.3.0 (Removes support for JRuby 9.0.1.0)
+  (https://www.pivotaltracker.com/story/show/106242058)
+  (https://www.pivotaltracker.com/story/show/106234536)
+
+* Update OpenJDK to 1.8.0_65.
+  (https://www.pivotaltracker.com/story/show/106836266)
+
+
 v1.6.7 Sep 04, 2015
 ====================
 
