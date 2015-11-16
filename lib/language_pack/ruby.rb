@@ -267,6 +267,7 @@ EOF
 #{set_jvm_max_heap}
 echo #{default_java_mem}
 SHELL
+puts "Using Java Memory: #{ENV["JAVA_MEM"]}"
         ENV["JRUBY_OPTS"] = env('JRUBY_BUILD_OPTS') || env('JRUBY_OPTS')
       end
       setup_ruby_install_env
