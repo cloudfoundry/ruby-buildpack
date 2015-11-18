@@ -49,5 +49,6 @@ describe 'Rails 4 App' do
         expect(browser).to have_body('The Kessel Run')
       end
     end
+
   end
 end
