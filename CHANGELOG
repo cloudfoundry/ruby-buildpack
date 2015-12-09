@@ -1,3 +1,10 @@
+v1.6.10 Dec 09, 2015
+=====================
+
+* Add support for JRuby 1.7.23 (Remove support for JRuby 1.7.22)
+  (https://www.pivotaltracker.com/story/show/109357572)
+
+
 v1.6.9 Nov 16, 2015
 ====================
 
