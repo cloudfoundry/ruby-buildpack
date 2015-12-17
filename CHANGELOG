@@ -1,3 +1,12 @@
+v1.6.11 Dec 17, 2015
+=====================
+
+* Added Ruby 2.2.4, 2.1.8, 2.0.0p648, Dropped 2.2.2, 2.1.6, 2.0.0p647
+  (https://www.pivotaltracker.com/story/show/110307648)
+
+* Removed manifest-including-unsupported
+  (https://www.pivotaltracker.com/story/show/109537822)
+
 v1.6.10 Dec 09, 2015
 =====================
 
