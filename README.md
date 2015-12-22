@@ -93,6 +93,10 @@ Find our guidelines [here](./CONTRIBUTING.md).
 
 Open an issue on this project
 
+## Help and Support
+
+Join the #buidpacks channel in our [Slack community] (http://slack.cloudfoundry.org/) 
+
 ## Active Development
 
 The project backlog is on [Pivotal Tracker](https://www.pivotaltracker.com/projects/1042066)
