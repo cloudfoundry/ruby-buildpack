@@ -1,4 +1,5 @@
-# Cloud Foundry buildpack: Ruby
+# Cloud Foundry Ruby Buildpack
+[![CF Slack](https://s3.amazonaws.com/buildpacks-assets/buildpacks-slack.svg)](http://slack.cloudfoundry.org)
 
 A Cloud Foundry [buildpack](http://docs.cloudfoundry.org/buildpacks/) for Ruby based apps.
 
