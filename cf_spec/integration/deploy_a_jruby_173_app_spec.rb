@@ -21,7 +21,7 @@ describe 'JRuby 1.7.3 App' do
 
   context 'a cached buildpack', :cached do
     specify 'has no internet traffic' do
-      expect(@app.host).not_to have_internet_traffic
+      expect(@app).not_to have_internet_traffic
     end
   end
 end
