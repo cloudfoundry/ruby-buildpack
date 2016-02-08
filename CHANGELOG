@@ -1,3 +1,17 @@
+v1.6.13 Feb 08, 2016
+=====================
+
+* Update jruby to 1.7.24 and 9.0.5.0, dropped 1.7.23 and 9.0.4.0
+  (https://www.pivotaltracker.com/story/show/112073931)
+  (https://www.pivotaltracker.com/story/show/112523589)
+
+* Update openjdk to 1.8.0_73, dropped 1.8.0_65
+  (https://www.pivotaltracker.com/story/show/113292605)
+
+* Change default ruby to 2.2.4
+
+* Instruct curl to follow redirects.
+
 v1.6.12 Dec 30, 2015
 =====================
 
