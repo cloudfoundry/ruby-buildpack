@@ -1,6 +1,6 @@
 require 'cf_spec_helper'
 
-describe 'JRuby 1.7.3 App' do
+describe 'JRuby App' do
   before(:all) do
     @app = Machete.deploy_app('sinatra_jruby_web_app')
     expect(@app).to be_running
@@ -12,7 +12,7 @@ describe 'JRuby 1.7.3 App' do
 
   specify 'the buildpack logged it installed a specific version of JRuby' do
     expect(@app).to have_logged 'Installing JVM'
-    expect(@app).to have_logged 'ruby-2.0.0-jruby-1.7.23'
+    expect(@app).to have_logged 'ruby-2.0.0-jruby-1.7.24'
   end
 
   specify 'the OpenJDK runs properly' do
