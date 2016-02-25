@@ -41,9 +41,9 @@ dependencies:
     cf_stacks:
       - cflinuxfs2
   - name: bundler
-    version: 1.9.7
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/shared/bundler-1.9.7.tgz
-    md5: 895b476cc0eba8b2cd978a5c5767bc71
+    version: 1.11.2
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/shared/bundler-1.11.2.tgz
+    md5: 6c73620cda24a36ae3264ef544d4e27c
     cf_stacks:
       - cflinuxfs2
   - name: rails_log_stdout
