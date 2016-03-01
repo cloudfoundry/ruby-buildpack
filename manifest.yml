@@ -94,12 +94,6 @@ dependencies:
     md5: 6610af292a8b5666858f1566c3349108
     cf_stacks:
       - cflinuxfs2
-  - name: ruby
-    version: 2.0.0
-    md5: 91e56ef4a433502f18f84946884dcb7b
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/concourse-binaries/ruby/ruby-2.0.0-p648-linux-x64.tgz
-    cf_stacks:
-      - cflinuxfs2
   - name: jruby
     version: ruby-1.9.3-jruby-1.7.24
     uri: https://pivotal-buildpacks.s3.amazonaws.com/concourse-binaries/jruby/jruby-1.7.24_ruby-1.9.3-linux-x64.tgz
