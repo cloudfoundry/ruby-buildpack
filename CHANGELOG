@@ -1,3 +1,12 @@
+v1.6.14 Mar 02, 2016
+=====================
+
+* Remove ruby 2.0.0
+  (https://www.pivotaltracker.com/story/show/114681287)
+
+* Upgrade bundler to 1.11.2
+  (https://www.pivotaltracker.com/story/show/113263389)
+
 v1.6.13 Feb 08, 2016
 =====================
 
