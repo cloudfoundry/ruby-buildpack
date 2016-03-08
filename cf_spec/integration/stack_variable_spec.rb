@@ -3,8 +3,15 @@ require 'cf_spec_helper'
 describe 'Stack environment should not change' do
   let(:app_name) { 'sinatra_web_app' }
 
+  subject(:app) do
+    Machete.deploy_app(app_name)
+  end
+
+  after do
+    Machete::CF::DeleteApp.new.execute(app)
+  end
+
   specify do
-    app = Machete.deploy_app(app_name)
     expect(app).to be_running
 
     Machete.push(app)
