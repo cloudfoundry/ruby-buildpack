@@ -20,8 +20,8 @@ describe 'Rails 3 App' do
 
   context 'the app did not include the static asset or logging gems from Heroku' do
     specify 'the rails 3 plugins are installed automatically' do
-      expect(@app).to have_file 'app/vendor/plugins/rails3_serve_static_assets/init.rb'
-      expect(@app).to have_file 'app/vendor/plugins/rails_log_stdout/init.rb'
+      expect(@app).to have_file '/app/vendor/plugins/rails3_serve_static_assets/init.rb'
+      expect(@app).to have_file '/app/vendor/plugins/rails_log_stdout/init.rb'
     end
   end
 
