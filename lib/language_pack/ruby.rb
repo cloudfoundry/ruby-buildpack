@@ -235,6 +235,10 @@ case $(ulimit -u) in
   export HEROKU_RAM_LIMIT_MB=${HEROKU_RAM_LIMIT_MB:-1024}
   export WEB_CONCURRENCY=${WEB_CONCURRENCY:-4}
   ;;
+16384)
+  export HEROKU_RAM_LIMIT_MB=${HEROKU_RAM_LIMIT_MB:-2560}
+  export WEB_CONCURRENCY=${WEB_CONCURRENCY:-8}
+  ;;
 32768)
   export HEROKU_RAM_LIMIT_MB=${HEROKU_RAM_LIMIT_MB:-6144}
   export WEB_CONCURRENCY=${WEB_CONCURRENCY:-16}
@@ -546,6 +550,17 @@ WARNING
         bundle_command = "#{bundle_bin} install --without #{bundle_without} --path vendor/bundle --binstubs #{bundler_binstubs_path}"
         bundle_command << " -j4"
 
+        if File.exist?("#{Dir.pwd}/.bundle/config")
+          warn(<<-WARNING, inline: true)
+You have the `.bundle/config` file checked into your repository
+ It contains local state like the location of the installed bundle
+ as well as configured git local gems, and other settings that should
+not be shared between multiple checkouts of a single repo. Please
+remove the `.bundle/` folder from your repo and add it to your `.gitignore` file.
+https://devcenter.heroku.com/articles/bundler-configuration
+WARNING
+        end
+
         if bundler.windows_gemfile_lock?
           warn(<<-WARNING, inline: true)
 Removing `Gemfile.lock` because it was generated on Windows.
@@ -560,7 +575,6 @@ WARNING
         else
           # using --deployment is preferred if we can
           bundle_command += " --deployment"
-          cache.load ".bundle"
         end
 
         topic("Installing dependencies using bundler #{bundler.version}")
@@ -728,7 +742,7 @@ params = CGI.parse(uri.query || "")
   def rake
     @rake ||= begin
       rake_gem_available = bundler.has_gem?("rake") || ruby_version.rake_is_vendored?
-      raise_on_fail      = bundler.gem_version('railties') && bundler.gem_version('railties') < Gem::Version.new('3.x')
+      raise_on_fail      = bundler.gem_version('railties') && bundler.gem_version('railties') > Gem::Version.new('3.x')
 
       rake = LanguagePack::Helpers::RakeRunner.new(rake_gem_available)
       rake.load_rake_tasks!({ env: rake_env }, raise_on_fail)
@@ -840,7 +854,6 @@ params = CGI.parse(uri.query || "")
       old_stack = @metadata.read(stack_cache).chomp if @metadata.exists?(stack_cache)
       old_stack ||= DEFAULT_LEGACY_STACK
 
-
       if old_bundler_version && old_bundler_version != BUNDLER_VERSION
         puts(<<-WARNING)
 Your app was upgraded to bundler #{ BUNDLER_VERSION }.
@@ -851,8 +864,6 @@ https://devcenter.heroku.com/articles/bundler-version
 
 WARNING
       end
-
-
 
       stack_change  = old_stack != @stack
       convert_stack = @bundler_cache.old?
