@@ -25,7 +25,7 @@ url_to_dependency_map:
     version: 0
   - match: openjdk1.8-latest
     name: openjdk1.8-latest
-    version: 1.8.0_73
+    version: 1.8.0_77
 
 dependencies:
   - name: node
@@ -59,9 +59,9 @@ dependencies:
     cf_stacks:
       - cflinuxfs2
   - name: openjdk1.8-latest
-    version: 1.8.0_73
-    uri: https://download.run.pivotal.io/openjdk/trusty/x86_64/openjdk-1.8.0_73.tar.gz
-    md5: fccf9c176dc65134aa6b9dcb27dd4b84
+    version: 1.8.0_77
+    uri: https://download.run.pivotal.io/openjdk/trusty/x86_64/openjdk-1.8.0_77.tar.gz
+    md5: 9bad625873ee94d706cff6b08aab4ec1
     cf_stacks:
       - cflinuxfs2
   - name: ruby
