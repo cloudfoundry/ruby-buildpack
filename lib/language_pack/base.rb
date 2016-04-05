@@ -103,8 +103,6 @@ class LanguagePack::Base
     File.open("tmp/heroku-buildpack-release-step.yml", 'w') do |f|
       f.write(release.to_yaml)
     end
-
-    warn_webserver
   end
 
   def warn_webserver
