@@ -38,7 +38,7 @@ describe 'Rails 4 App' do
       end
     end
 
-    context 'app has no dependencies' do
+    context 'app has non vendored dependencies' do
       let(:app_name) { 'rails4_web_app_without_vendored_dependencies' }
 
       specify do
@@ -48,7 +48,10 @@ describe 'Rails 4 App' do
         browser.visit_path('/')
         expect(browser).to have_body('The Kessel Run')
       end
-    end
 
+      it "uses a proxy during staging if present" do
+        expect(app).to use_proxy_during_staging
+      end
+    end
   end
 end
