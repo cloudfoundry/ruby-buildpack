@@ -1,3 +1,15 @@
+v1.6.15 Apr 06, 2016
+=====================
+
+* Remove non-CF specific Procfile and default web server warning
+  (https://www.pivotaltracker.com/story/show/113193737)
+
+* Add openjdk 1.8.0_77, remove openjdk 1.8.0_73
+  (https://www.pivotaltracker.com/story/show/116890851)
+
+* Add ruby 2.1.9, remove ruby 2.1.7
+  (https://www.pivotaltracker.com/story/show/116842687)
+
 v1.6.14 Mar 02, 2016
 =====================
 
