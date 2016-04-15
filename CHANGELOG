@@ -1,3 +1,12 @@
+v1.6.16 Apr 15, 2016
+=====================
+
+* Add jruby from 1.7.25, remove jruby 1.7.24
+  (https://www.pivotaltracker.com/story/show/117647027)
+
+* Fix checksum for OpenJDK due to rebuild
+  (https://www.pivotaltracker.com/story/show/117700771)
+
 v1.6.15 Apr 06, 2016
 =====================
 
