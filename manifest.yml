@@ -61,7 +61,7 @@ dependencies:
   - name: openjdk1.8-latest
     version: 1.8.0_77
     uri: https://download.run.pivotal.io/openjdk/trusty/x86_64/openjdk-1.8.0_77.tar.gz
-    md5: a2f7b2abd23672aca8e8d5c4578636b5
+    md5: 5332ec4bfb5534c160009f50d7215610
     cf_stacks:
       - cflinuxfs2
   - name: ruby
