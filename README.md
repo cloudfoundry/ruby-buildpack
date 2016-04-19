@@ -30,6 +30,13 @@ bundle package --all
 
 ```cf push``` uploads your vendored dependencies. The buildpack will compile any dependencies requiring compilation while staging your application.
 
+
+## HTTP Proxy Support
+
+If you need to use a proxy to download dependencies during staging, you can set
+the `http_proxy` and/or `https_proxy` environment variables. For more information, see
+the [Proxy Usage Docs](http://docs.cloudfoundry.org/buildpacks/proxy-usage.html).
+
 ## Building
 
 1. Make sure you have fetched submodules
