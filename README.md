@@ -31,7 +31,12 @@ bundle package --all
 ```cf push``` uploads your vendored dependencies. The buildpack will compile any dependencies requiring compilation while staging your application.
 
 ### Using an Alternative Gem Server
-To use an alternative gem server, please refer to the canonical documentation at [Rubygems](http://guides.rubygems.org/run-your-own-gem-server/#using-gems-from-your-server) and [Bundler](http://bundler.io/gemfile.html).
+
+Say you would like to use a custom gemserver when deploying to CF for an app that has a `Gemfile`. You can do so via an environment variable. If you have specified `https://rubygems.org/` as the source in your `Gemfile`, the following command would configure your app to use `https://custom-gemserver.com` as the gemserver mirror.
+
+`cf set-env your-app 'BUNDLE_MIRROR__HTTPS://RUBYGEMS__ORG/' https://custom-gemserver.com/`
+
+For other methods of using an alternative gemserver, please refer to the documentation at [Rubygems](http://guides.rubygems.org/run-your-own-gem-server/#using-gems-from-your-server) and Bundler for [`bundle config`](http://bundler.io/bundle_config.html#gem-source-mirrors) and [`Gemfile` source](http://bundler.io/gemfile.html).
 
 ## HTTP Proxy Support
 
