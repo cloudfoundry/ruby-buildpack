@@ -30,6 +30,8 @@ bundle package --all
 
 ```cf push``` uploads your vendored dependencies. The buildpack will compile any dependencies requiring compilation while staging your application.
 
+### Using an Alternative Gem Server
+To use an alternative gem server, please refer to the canonical documentation at [Rubygems](http://guides.rubygems.org/run-your-own-gem-server/#using-gems-from-your-server) and [Bundler](http://bundler.io/gemfile.html).
 
 ## HTTP Proxy Support
 
