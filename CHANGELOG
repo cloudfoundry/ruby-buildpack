@@ -1,3 +1,21 @@
+v1.6.17 Apr 28, 2016
+=====================
+
+* Make ruby 2.2.5 the default ruby version
+  (https://www.pivotaltracker.com/story/show/118363433)
+
+* Add ruby 2.3.1
+  (https://www.pivotaltracker.com/story/show/118323233)
+
+* Add ruby 2.2.5, remove ruby 2.2.3
+  (https://www.pivotaltracker.com/story/show/118363433)
+
+* Add openjdk 1.8.0_91, remove openjdk 1.8.0_77
+  (https://www.pivotaltracker.com/story/show/118006413)
+
+* Add openjdk 1.8.0_91, remove openjdk 1.8.0_77
+  (https://www.pivotaltracker.com/story/show/118006413)
+
 v1.6.16 Apr 15, 2016
 =====================
 
