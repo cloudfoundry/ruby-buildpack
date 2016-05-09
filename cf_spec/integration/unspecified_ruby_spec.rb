@@ -12,6 +12,6 @@ describe 'CF Ruby Buildpack' do
   end
 
   it 'uses the default ruby version' do
-    expect(@app).to have_logged 'Using Ruby version: ruby-2.2.5'
+    expect(@app).to have_logged 'Using Ruby version: ruby-2.3.0'
   end
 end
