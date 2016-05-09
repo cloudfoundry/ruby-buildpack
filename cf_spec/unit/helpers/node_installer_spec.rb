@@ -13,13 +13,13 @@ describe LanguagePack::NodeInstaller do
 
       it 'always executes the modern Fetcher' do
         expect_any_instance_of(LanguagePack::Fetcher).to receive(:fetch_untar).
-          with('node-v0.12.7-linux-x64.tar.gz', 'node-v0.12.7-linux-x64/bin/node')
+          with('node-v4.4.4-linux-x64.tar.gz', 'node-v4.4.4-linux-x64/bin/node')
 
         installer.install
       end
 
       it 'moves the node binary to the current path' do
-        expect(FileUtils).to receive(:mv).with('node-v0.12.7-linux-x64/bin/node', '.')
+        expect(FileUtils).to receive(:mv).with('node-v4.4.4-linux-x64/bin/node', '.')
 
         installer.install
       end

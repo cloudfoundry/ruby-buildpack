@@ -10,7 +10,7 @@ url_to_dependency_map:
     version: $1
   - match: node-v?(\d+\.\d+\.\d+)
     name: node
-    version: 0.12.7
+    version: 4.4.4
   - match: libyaml-(\d+\.\d+\.\d+)
     name: libyaml
     version: $1
@@ -29,9 +29,9 @@ url_to_dependency_map:
 
 dependencies:
   - name: node
-    version: 0.12.7
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/node/beta-binaries/node-0.12.7-linux-x64.tar.gz
-    md5: 2b966ce7cceda8bcb6aba43eb99b81cf
+    version: 4.4.4
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/concourse-binaries/node/node-4.4.4-linux-x64.tgz
+    md5: 8beeb9a17a81b9832a1ccce02e6d6897
     cf_stacks:
       - cflinuxfs2
   - name: libyaml
