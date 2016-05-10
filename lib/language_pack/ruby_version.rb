@@ -1,4 +1,5 @@
 require "language_pack/shell_helpers"
+require 'yaml'
 
 module LanguagePack
   class RubyVersion
@@ -33,8 +34,35 @@ module LanguagePack
       set_version
       parse_version
 
+      update_version
+
       @version_without_patchlevel = @version.sub(/-p[\d]+/, '')
     end
+
+    def update_version
+      command = "grep 'ruby \"~>' ./Gemfile"
+      output  = run_stdout(command)
+      if output == ""
+        return
+      else
+        manifest = YAML.load_file(File.join(File.dirname(__FILE__), '..', '..', 'manifest.yml'))
+        rubies = manifest['dependencies'].select {|hash| hash['name'] == @engine.to_s}
+        match_minor = rubies.select {|hash| match_version(hash)}
+        if match_minor == []
+          return
+        end
+        sorted = match_minor.sort_by {|hash| hash['version'].split('.')[2]}
+        @ruby_version = sorted[-1]['version']
+        @version = "ruby-"+@ruby_version
+      end
+    end
+
+    def match_version(hash)
+      h_maj,h_min,h_teeny = hash['version'].split('.')
+      r_maj,r_min,r_teeny =  @ruby_version.to_s.split('.')
+      return h_maj==r_maj && h_min == r_min && h_teeny >= r_teeny
+    end
+
 
     def rake_is_vendored?
       Gem::Version.new(self.ruby_version) >= Gem::Version.new("1.9")
