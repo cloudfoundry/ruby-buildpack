@@ -35,7 +35,7 @@ module LanguagePack
       set_version
       parse_version
 
-      update_version
+      update_version if engine == :ruby
 
       @version_without_patchlevel = @version.sub(/-p[\d]+/, '')
     end
