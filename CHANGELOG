@@ -1,3 +1,21 @@
+v1.6.18 May 11, 2016
+=====================
+
+* Make Ruby 2.3.x the default version of Ruby
+  (https://www.pivotaltracker.com/story/show/119010685)
+
+* Update node to v4.4.4
+  (https://www.pivotaltracker.com/story/show/118779505)
+
+* Ruby buildpack supports version operators when specifying a `ruby` in the `Gemfile`
+  (https://www.pivotaltracker.com/story/show/106117082)
+
+* Update bundler 1.11.2 -> 1.12.3
+  (https://www.pivotaltracker.com/story/show/119185545)
+
+* Add ruby-2.2.3-jruby-9.1.0.0, remove ruby-2.2.3-jruby-9.0.5.0
+  (https://www.pivotaltracker.com/story/show/118847051)
+
 v1.6.17 Apr 28, 2016
 =====================
 
