@@ -31,7 +31,9 @@ module LanguagePack
       gemfile_reader = GemfileReader.new
       gemfile_reader.instance_eval(File.read(gemfile), gemfile)
       ruby_version = gemfile_reader.ruby_version
-      return unless ruby_version
+      unless ruby_version
+        ruby_version = "~> #{LanguagePack::RubyVersion::DEFAULT_VERSION_NUMBER}"
+      end
       @ruby_requirement = Gem::Requirement.create(ruby_version)
     end
 
