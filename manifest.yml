@@ -41,9 +41,9 @@ dependencies:
     cf_stacks:
       - cflinuxfs2
   - name: bundler
-    version: 1.12.3
-    uri: https://pivotal-buildpacks.s3.amazonaws.com/concourse-binaries/bundler/bundler-1.12.3.tgz
-    md5: 5441f943af8c9e429499c7d6bad2889d
+    version: 1.12.5
+    uri: https://pivotal-buildpacks.s3.amazonaws.com/concourse-binaries/bundler/bundler-1.12.5.tgz
+    md5: 34dc19984300cf67f1beb616edaf89bc
     cf_stacks:
       - cflinuxfs2
   - name: rails_log_stdout
