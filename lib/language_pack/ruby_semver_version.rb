@@ -47,6 +47,10 @@ module LanguagePack
 
       def method_missing *args
       end
+
+      def self.const_missing(name)
+        ::Object.const_get(name)
+      end
     end
   end
 end
