@@ -24,13 +24,6 @@ describe LanguagePack::RubySemverVersion do
         let(:gemfile) { File.join(fixtures, 'Gemfile_8_2_9') }
         it { should eq('') }
       end
-
-      context "gemfile with global ruby constants" do
-        let(:gemfile) { File.join(fixtures, 'Gemfile_with_const') }
-        it "don't raise an error" do
-          expect { subject }.to_not raise_error
-        end
-      end
     end
 
     context "unordered manifest" do
