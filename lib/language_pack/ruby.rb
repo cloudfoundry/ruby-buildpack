@@ -335,7 +335,7 @@ puts "Using Java Memory: #{ENV["JAVA_MEM"]}"
         Dir.chdir(build_ruby_path) do
           ruby_vm = "ruby"
           instrument "ruby.fetch_build_ruby" do
-            @fetchers[:mri].fetch_untar("#{ruby_version.version.sub(ruby_vm, "#{ruby_vm}-build")}.tgz")
+            @fetchers[:mri].fetch_untar("#{ruby_version.version_for_download.sub(ruby_vm, "#{ruby_vm}-build")}.tgz")
           end
         end
       end
@@ -344,7 +344,7 @@ puts "Using Java Memory: #{ENV["JAVA_MEM"]}"
       Dir.chdir(slug_vendor_ruby) do
         instrument "ruby.fetch_ruby" do
           if ruby_version.rbx?
-            file     = "#{ruby_version.version}.tar.bz2"
+            file     = "#{ruby_version.version_for_download}.tar.bz2"
             sha_file = "#{file}.sha1"
             @fetchers[:rbx].fetch(file)
             @fetchers[:rbx].fetch(sha_file)
@@ -364,7 +364,7 @@ ERROR_MSG
             FileUtils.rm(file)
             FileUtils.rm(sha_file)
           else
-            @fetchers[:mri].fetch_untar("#{ruby_version.version}.tgz")
+            @fetchers[:mri].fetch_untar("#{ruby_version.version_for_download}.tgz")
           end
         end
       end
@@ -378,9 +378,9 @@ ERROR_MSG
         run("ln -s ../#{vendor_bin} #{app_bin_dir}")
       end
 
-      @metadata.write("buildpack_ruby_version", ruby_version.version)
+      @metadata.write("buildpack_ruby_version", ruby_version.version_for_download)
 
-      topic "Using Ruby version: #{ruby_version.version}"
+      topic "Using Ruby version: #{ruby_version.version_for_download}"
       if !ruby_version.set
         warn(<<-WARNING)
 You have not declared a Ruby version in your Gemfile.
@@ -393,21 +393,26 @@ WARNING
 
     true
   rescue LanguagePack::Fetcher::FetchError => error
+    message = <<ERROR
+An error occurred while installing #{ruby_version.version_for_download}
+
+Heroku recommends you use the latest supported Ruby version listed here:
+  https://devcenter.heroku.com/articles/ruby-support#supported-runtimes
+
+For more information on syntax for declaring a Ruby version see:
+  https://devcenter.heroku.com/articles/ruby-versions
+
+ERROR
+
     if ruby_version.jruby?
-      message = <<ERROR
-An error occurred while installing Ruby #{ruby_version.version}
-For supported Ruby versions see https://devcenter.heroku.com/articles/ruby-support#supported-runtimes
-Note: Only JRuby 1.7.13 and newer are supported on Cedar-14
-#{error.message}
-ERROR
-    else
-      message = <<ERROR
-An error occurred while installing Ruby #{ruby_version.version}
-For supported Ruby versions see https://devcenter.heroku.com/articles/ruby-support#supported-runtimes
-Note: Only the most recent version of Ruby 2.1 is supported on Cedar-14
-#{error.message}
-ERROR
+      message << "Note: Only JRuby 1.7.13 and newer are supported on Cedar-14"
+    elsif ruby_version.ruby_version.start_with?("2.1")
+      message << "Note: Only the most recent version of Ruby 2.1 is supported on Cedar-14\n"
     end
+
+    message << "\nDebug Information"
+    message << error.message
+
     error message
   end
 
