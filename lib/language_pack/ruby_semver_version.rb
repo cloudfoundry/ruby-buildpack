@@ -45,7 +45,10 @@ module LanguagePack
         @ruby_version = ruby_version.flatten
       end
 
-      def method_missing *args
+      def method_missing(*args)
+      end
+
+      def self.const_missing(name)
       end
     end
   end
