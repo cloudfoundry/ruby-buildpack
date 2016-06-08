@@ -1,3 +1,15 @@
+v1.6.19 Jun 08, 2016
+=====================
+
+* Add jruby 9.1.2.0, remove jruby 9.1.0.0
+  (https://www.pivotaltracker.com/story/show/120448043)
+
+* Correctly handle constants in Gemfile during ruby version check
+  (https://www.pivotaltracker.com/story/show/120409927)
+
+* Update bundler to 1.12.5
+  (https://www.pivotaltracker.com/story/show/120316237)
+
 v1.6.18 May 11, 2016
 =====================
 
