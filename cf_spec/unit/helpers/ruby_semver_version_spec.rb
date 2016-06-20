@@ -31,6 +31,14 @@ describe LanguagePack::RubySemverVersion do
           expect { subject }.to_not raise_error
         end
       end
+
+      context "gemfile with global ruby constants in conditionals" do
+        let(:gemfile) { File.join(fixtures, 'Gemfile_with_constants_in_conditionals') }
+        it "don't raise an error" do
+          expect { subject }.to_not raise_error
+        end
+        it { should eq('8.2.7') }
+      end
     end
 
     context "unordered manifest" do

@@ -28,28 +28,14 @@ module LanguagePack
     end
 
     def ruby_requirement(gemfile)
-      gemfile_reader = GemfileReader.new
-      gemfile_reader.instance_eval(File.read(gemfile), gemfile)
-      ruby_version = gemfile_reader.ruby_version
-      unless ruby_version
-        ruby_version = "~> #{LanguagePack::RubyVersion::DEFAULT_VERSION_NUMBER}"
-      end
-      @ruby_requirement = Gem::Requirement.create(ruby_version)
-    end
+      ruby_version = Bundler::Dsl.evaluate(gemfile, "#{gemfile}.lock", {}).ruby_version
 
-    class GemfileReader < BasicObject
-      attr_reader :ruby_version
-
-      def ruby(*ruby_version)
-        ruby_version.pop if ruby_version.last.is_a?(::Hash)
-        @ruby_version = ruby_version.flatten
+      if ruby_version
+        engine_versions = ruby_version.engine_versions
+      else
+        engine_versions = "~> #{LanguagePack::RubyVersion::DEFAULT_VERSION_NUMBER}"
       end
-
-      def method_missing(*args)
-      end
-
-      def self.const_missing(name)
-      end
+      @ruby_requirement = Gem::Requirement.create(engine_versions)
     end
   end
 end
