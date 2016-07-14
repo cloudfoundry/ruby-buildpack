@@ -28,7 +28,7 @@ end
 def get_target_bundler_binary(target_directory)
   Dir.chdir(target_directory) do
     # wget always writes to the -O file, we remove it if wget couldnt find the file.
-    `wget -q https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/shared/#{bundler_name}.tgz -O #{bundler_name}.tgz.target || rm -rf #{bundler_name}.tgz.target`
+    `wget -q https://buildpacks.cloudfoundry.org/ruby/binaries/shared/#{bundler_name}.tgz -O #{bundler_name}.tgz.target || rm -rf #{bundler_name}.tgz.target`
     File.join(target_directory, "#{bundler_name}.tgz.target")
   end
 end
@@ -54,7 +54,7 @@ Dir.mktmpdir do |temp_dir|
     raise "Could not put binary on s3:\n\nOutput from command:\n\n#{output}" unless $?.success?
   end
 
-  puts "uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/shared/#{bundler_name}.tgz"
+  puts "uri: https://buildpacks.cloudfoundry.org/ruby/binaries/shared/#{bundler_name}.tgz"
   md5 = Digest::MD5.file("#{temp_dir}/#{bundler_name}.tgz").hexdigest
   puts "md5: #{md5}"
 end

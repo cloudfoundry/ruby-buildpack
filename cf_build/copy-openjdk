@@ -39,7 +39,7 @@ end
 def get_target_openjdk_binary cf_stack, target_directory
   Dir.chdir(target_directory) do
     # wget always writes to the -O file, we remove it if wget couldnt find the file.
-    `wget -q https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/#{cf_stack}/#{openjdk_name}.tar.gz -O #{openjdk_name}.tar.gz.target || rm -rf #{openjdk_name}.tar.gz.target`
+    `wget -q https://buildpacks.cloudfoundry.org/ruby/binaries/#{cf_stack}/#{openjdk_name}.tar.gz -O #{openjdk_name}.tar.gz.target || rm -rf #{openjdk_name}.tar.gz.target`
     File.join(target_directory, "#{openjdk_name}.tar.gz.target")
   end
 end
@@ -66,7 +66,7 @@ cf_stacks.each do |stack|
       raise "Could not put binary on s3:\n\nOutput from command:\n\n#{output}" unless $?.success?
     end
 
-    puts "uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/#{stack}/#{openjdk_name}.tar.gz"
+    puts "uri: https://buildpacks.cloudfoundry.org/ruby/binaries/#{stack}/#{openjdk_name}.tar.gz"
     md5 = Digest::MD5.file("#{temp_dir}/#{openjdk_name}.tar.gz").hexdigest
     puts "md5: #{md5}"
     puts "cf_stacks: \n  - #{stack}\n\n"

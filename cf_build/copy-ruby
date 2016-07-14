@@ -39,7 +39,7 @@ end
 def get_target_ruby_binary cf_stack, target_directory
   Dir.chdir(target_directory) do
     # wget always writes to the -O file, we remove it if wget couldnt find the file.
-    `wget -q https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/#{cf_stack}/#{ruby_name}.tgz -O #{ruby_name}.tgz.target || rm -rf #{ruby_name}.tgz.target`
+    `wget -q https://buildpacks.cloudfoundry.org/ruby/binaries/#{cf_stack}/#{ruby_name}.tgz -O #{ruby_name}.tgz.target || rm -rf #{ruby_name}.tgz.target`
     File.join(target_directory, "#{ruby_name}.tgz.target")
   end
 end
@@ -66,7 +66,7 @@ cf_stacks.each do |stack|
       raise "Could not put binary on s3:\n\nOutput from command:\n\n#{output}" unless $?.success?
     end
 
-    puts "uri: https://pivotal-buildpacks.s3.amazonaws.com/ruby/binaries/#{stack}/#{ruby_name}.tgz"
+    puts "uri: https://buildpacks.cloudfoundry.org/ruby/binaries/#{stack}/#{ruby_name}.tgz"
     md5 = Digest::MD5.file("#{temp_dir}/#{ruby_name}.tgz").hexdigest
     puts "md5: #{md5}"
     puts "cf_stacks: \n  - #{stack}\n\n"
