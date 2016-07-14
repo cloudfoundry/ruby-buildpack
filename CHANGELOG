@@ -1,3 +1,10 @@
+v1.6.20 Jul 14, 2016
+=====================
+
+* Modify RubySemverVersion to use Bundler DSL to read file
+  (https://www.pivotaltracker.com/story/show/121730559)
+
+
 v1.6.19 Jun 08, 2016
 =====================
 
