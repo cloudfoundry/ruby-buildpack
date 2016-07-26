@@ -12,15 +12,16 @@ describe LanguagePack::NodeInstaller do
       end
 
       it 'always executes the modern Fetcher' do
+        node_tar_regex = Regexp.new('node\-v\d+\.\d+\.\d+' + Regexp.quote('-linux-x64.tar.gz'))
+        extract_path_regex = Regexp.new('node\-v\d+\.\d+\.\d+' + Regexp.quote('-linux-x64/bin/node'))
         expect_any_instance_of(LanguagePack::Fetcher).to receive(:fetch_untar).
-          with('node-v4.4.7-linux-x64.tar.gz', 'node-v4.4.7-linux-x64/bin/node')
-
+          with(node_tar_regex, extract_path_regex)
         installer.install
       end
 
       it 'moves the node binary to the current path' do
-        expect(FileUtils).to receive(:mv).with('node-v4.4.7-linux-x64/bin/node', '.')
-
+        extract_path_regex = Regexp.new('node\-v\d+\.\d+\.\d+' + Regexp.quote('-linux-x64/bin/node'))
+        expect(FileUtils).to receive(:mv).with(extract_path_regex, '.')
         installer.install
       end
     end
