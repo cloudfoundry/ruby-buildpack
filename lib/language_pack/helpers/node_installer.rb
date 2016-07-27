@@ -1,5 +1,5 @@
 class LanguagePack::NodeInstaller
-  MODERN_NODE_VERSION = "4.4.7"
+  MODERN_NODE_VERSION = "TO_BE_REPLACED_BY_CF_DEFAULTS"
   MODERN_BINARY_PATH  = "node-v#{MODERN_NODE_VERSION}-linux-x64"
 
   LEGACY_NODE_VERSION = "0.4.7"
@@ -40,5 +40,11 @@ class LanguagePack::NodeInstaller
       FileUtils.mv(node_bin, ".")
       FileUtils.rm_rf(MODERN_BINARY_PATH)
     end
+  end
+
+  def self.default_node_version
+    bin_path = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "compile-extensions", "bin"))
+    manifest_path = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "manifest.yml"))
+    `#{bin_path}/default_version_for #{manifest_path} node`.chomp
   end
 end

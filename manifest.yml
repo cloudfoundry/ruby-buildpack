@@ -1,5 +1,10 @@
 ---
 language: ruby
+default_versions:
+  - name: ruby
+    version: 2.3.1
+  - name: node
+    version: 4.4.7
 url_to_dependency_map:
 - match: ruby-(.*?)-jruby-(.*?)\.tgz
   name: jruby

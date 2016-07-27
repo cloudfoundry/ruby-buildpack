@@ -14,7 +14,7 @@ module LanguagePack
       end
     end
 
-    DEFAULT_VERSION_NUMBER = "2.3.0"
+    DEFAULT_VERSION_NUMBER = "TO_BE_REPLACED_BY_CF_DEFAULTS"
     DEFAULT_VERSION        = "ruby-#{DEFAULT_VERSION_NUMBER}"
     RUBY_VERSION_REGEX     = %r{
         (?<ruby_version>\d+\.\d+\.\d+){0}
@@ -128,6 +128,12 @@ module LanguagePack
 
       @ruby_version = version
       @version = "ruby-"+@ruby_version
+    end
+
+    def self.default_ruby_version
+      bin_path = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "compile-extensions", "bin"))
+      manifest_path = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "manifest.yml"))
+      `#{bin_path}/default_version_for #{manifest_path} ruby`.chomp
     end
   end
 end
