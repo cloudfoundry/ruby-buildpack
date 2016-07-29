@@ -42,7 +42,6 @@ module LanguagePack
     end
 
     def run!(command, options = {})
-      puts "CMD: " + command if (ENV['SHOW_COMMANDS'])
       filtered_command = options.delete(:filtered_command)
 
       result      = run(command, options)
