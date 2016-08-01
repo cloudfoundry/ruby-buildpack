@@ -8,7 +8,7 @@ describe "Fetcher" do
       it 'calls out to translate_dependency_url' do
         fetcher = LanguagePack::Fetcher.new(host_url)
         expect(fetcher).to receive(:`).with(%r{compile-extensions/bin/translate_dependency_url scheme://example.com/ruby.zip}).and_return('scheme://another.com/ruby.zip')
-        expect(fetcher).to receive(:`).with(%r{compile-extensions/bin/filter_dependency_url scheme://example.com/ruby.zip}).and_return('scheme://another.com/ruby.zip')
+        expect(fetcher).to receive(:`).with(%r{compile-extensions/bin/filter_dependency_url scheme://another.com/ruby.zip}).and_return('scheme://another.com/ruby.zip')
         expect(fetcher).to receive(:run!).with(%r{curl.*scheme://another.com/ruby.zip}, anything)
         fetcher.fetch('ruby.zip')
       end
