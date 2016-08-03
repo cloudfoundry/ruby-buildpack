@@ -1,3 +1,31 @@
+v1.6.21 Aug 03, 2016
+=====================
+
+* Redact credentials from URLs in a cached buildpack's output
+  (https://www.pivotaltracker.com/story/show/127357631)
+
+* Update buildpack-packager to 2.3.3
+  (https://www.pivotaltracker.com/story/show/127357631)
+
+* Redact credentials from URLs in an uncached buildpack's output
+  (https://www.pivotaltracker.com/story/show/126514693)
+
+* Add default_versions support to buildpack
+  (https://www.pivotaltracker.com/story/show/126394819)
+
+* Add node 4.4.7, remove node 4.4.4
+  (https://www.pivotaltracker.com/story/show/123264921)
+
+* Download openjdk from java-buildpack.cloudfoundry.org
+  (https://www.pivotaltracker.com/story/show/126972537)
+
+* Add openjdk 1.8.0_101, remove 1.8.0_91
+  (https://www.pivotaltracker.com/story/show/126661389)
+
+* The default domain for buildpack dependencies is now buildpacks.cloudfoundry.org
+  (https://www.pivotaltracker.com/story/show/121757949)
+
+
 v1.6.20 Jul 14, 2016
 =====================
 
