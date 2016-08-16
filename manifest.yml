@@ -1,10 +1,10 @@
 ---
 language: ruby
 default_versions:
-  - name: ruby
-    version: 2.3.1
-  - name: node
-    version: 4.4.7
+- name: ruby
+  version: 2.3.1
+- name: node
+  version: 4.5.0
 url_to_dependency_map:
 - match: ruby-(.*?)-jruby-(.*?)\.tgz
   name: jruby
@@ -12,9 +12,6 @@ url_to_dependency_map:
 - match: ruby-(\d+\.\d+\.\d+)
   name: ruby
   version: "$1"
-- match: node-v?(\d+\.\d+\.\d+)
-  name: node
-  version: 4.4.7
 - match: libyaml-(\d+\.\d+\.\d+)
   name: libyaml
   version: "$1"
@@ -30,13 +27,10 @@ url_to_dependency_map:
 - match: openjdk1.8-latest
   name: openjdk1.8-latest
   version: 1.8.0_101
+- match: node
+  name: node
+  version: 4.5.0
 dependencies:
-- name: node
-  version: 4.4.7
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/node/node-4.4.7-linux-x64.tgz
-  md5: 81fb9f3b687bdb931e9f06fa3b7c68fe
-  cf_stacks:
-  - cflinuxfs2
 - name: libyaml
   version: 0.1.6
   uri: https://buildpacks.cloudfoundry.org/ruby/binaries/cflinuxfs2/libyaml-0.1.6.tgz
@@ -119,6 +113,12 @@ dependencies:
   version: ruby-2.3.0-jruby-9.1.2.0
   uri: https://buildpacks.cloudfoundry.org/concourse-binaries/jruby/jruby-9.1.2.0_ruby-2.3.0-linux-x64.tgz
   md5: 1aa7047b7f7c233130ffef1af71bf7de
+  cf_stacks:
+  - cflinuxfs2
+- name: node
+  version: 4.5.0
+  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/node/node-4.5.0-linux-x64.tgz
+  md5: a0784a91f4cc412efa1472e13acc500a
   cf_stacks:
   - cflinuxfs2
 exclude_files:
