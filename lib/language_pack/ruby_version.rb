@@ -122,7 +122,7 @@ module LanguagePack
 
     def update_version
       manifest = File.join(File.dirname(__FILE__), '..', '..', 'manifest.yml')
-      gemfile = "./Gemfile"
+      gemfile = ENV['BUNDLE_GEMFILE'] || "./Gemfile"
       version = LanguagePack::RubySemverVersion.new(gemfile,manifest).version
       return if version.empty?
 

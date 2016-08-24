@@ -1,0 +1,8 @@
+---
+applications:
+- name: app-with-custom-gemfile
+  memory: 256M
+  instances: 1
+  path: .
+  env:
+    BUNDLE_GEMFILE: Gemfile-APP
