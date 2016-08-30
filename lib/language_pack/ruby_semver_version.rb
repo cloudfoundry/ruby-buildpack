@@ -1,5 +1,6 @@
 require "language_pack/shell_helpers"
 require 'yaml'
+require 'pathname'
 
 module LanguagePack
   class RubySemverVersion
@@ -28,7 +29,10 @@ module LanguagePack
     end
 
     def ruby_requirement(gemfile)
-      ruby_version = Bundler::Dsl.evaluate(gemfile, "#{gemfile}.lock", {}).ruby_version
+      # This can be restored to passing in 'gemfile' once bundler 1.13 is
+      # released
+      full_gemfile_path = Pathname.new(gemfile).expand_path.to_s
+      ruby_version = Bundler::Dsl.evaluate(full_gemfile_path, "#{gemfile}.lock", {}).ruby_version
 
       if ruby_version
         engine_versions = ruby_version.engine_versions
