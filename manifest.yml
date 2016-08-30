@@ -58,7 +58,7 @@ dependencies:
 - name: openjdk1.8-latest
   version: 1.8.0_101
   uri: https://java-buildpack.cloudfoundry.org/openjdk/trusty/x86_64/openjdk-1.8.0_101.tar.gz
-  md5: c097753b13585285b6a4232cf783d14f
+  md5: 66281ba0c6d42ff3a5b1770e1aa8369e
   cf_stacks:
   - cflinuxfs2
 - name: ruby
