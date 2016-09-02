@@ -75,14 +75,7 @@ class LanguagePack::Ruby < LanguagePack::Base
     end
   end
 
-  def best_practice_warnings
-    if bundler.has_gem?("asset_sync")
-      warn(<<-WARNING)
-You are using the `asset_sync` gem.
-See https://devcenter.heroku.com/articles/please-do-not-use-asset-sync for more information.
-WARNING
-    end
-  end
+  def best_practice_warnings; end
 
   def compile
     instrument 'ruby.compile' do
@@ -386,7 +379,7 @@ ERROR_MSG
 You have not declared a Ruby version in your Gemfile.
 To set your Ruby version add this line to your Gemfile:
 #{ruby_version.to_gemfile}
-# See https://devcenter.heroku.com/articles/ruby-versions for more information.
+# See http://docs.cloudfoundry.org/buildpacks/ruby/index.html#runtime for more information.
 WARNING
       end
     end
@@ -396,20 +389,13 @@ WARNING
     message = <<ERROR
 An error occurred while installing #{ruby_version.version_for_download}
 
-Heroku recommends you use the latest supported Ruby version listed here:
-  https://devcenter.heroku.com/articles/ruby-support#supported-runtimes
+It is recommended you use the latest supported Ruby version listed here:
+  http://docs.cloudfoundry.org/buildpacks/ruby/#supported_versions
 
 For more information on syntax for declaring a Ruby version see:
-  https://devcenter.heroku.com/articles/ruby-versions
+  http://docs.cloudfoundry.org/buildpacks/ruby/index.html#runtime
 
 ERROR
-
-    if ruby_version.jruby?
-      message << "Note: Only JRuby 1.7.13 and newer are supported on Cedar-14"
-    elsif ruby_version.ruby_version.start_with?("2.1")
-      message << "Note: Only the most recent version of Ruby 2.1 is supported on Cedar-14\n"
-    end
-
     message << "\nDebug Information"
     message << error.message
 
@@ -529,7 +515,6 @@ ERROR
   # remove `vendor/bundle` that comes from the git repo
   # in case there are native ext.
   # users should be using `bundle pack` instead.
-  # https://github.com/heroku/heroku-buildpack-ruby/issues/21
   def remove_vendor_bundle
     if File.exists?("vendor/bundle")
       warn(<<-WARNING)
@@ -562,7 +547,6 @@ You have the `.bundle/config` file checked into your repository
  as well as configured git local gems, and other settings that should
 not be shared between multiple checkouts of a single repo. Please
 remove the `.bundle/` folder from your repo and add it to your `.gitignore` file.
-https://devcenter.heroku.com/articles/bundler-configuration
 WARNING
         end
 
@@ -636,15 +620,6 @@ WARNING
           log "bundle", :status => "failure"
           error_message = "Failed to install gems via Bundler."
           puts "Bundler Output: #{bundler_output}"
-          if bundler_output.match(/An error occurred while installing sqlite3/)
-            error_message += <<ERROR
-
-
-Detected sqlite3 gem which is not supported on Heroku.
-https://devcenter.heroku.com/articles/sqlite3
-ERROR
-          end
-
           error error_message
         end
       end
@@ -778,7 +753,7 @@ params = CGI.parse(uri.query || "")
   # decides if we need to enable the dev database addon
   # @return [Array] the database addon if the pg gem is detected or an empty Array if it isn't.
   def add_dev_database_addon
-    bundler.has_gem?("pg") ? ['heroku-postgresql'] : []
+    []
   end
 
   # decides if we need to install the node.js binary
@@ -788,7 +763,7 @@ params = CGI.parse(uri.query || "")
     bundler.has_gem?('execjs') && node_not_preinstalled? ? [@node_installer.binary_path] : []
   end
 
-  # checks if node.js is installed via the official heroku-buildpack-nodejs using multibuildpack
+  # checks if node.js is installed
   # @return String if it's detected and false if it isn't
   def node_preinstall_bin_path
     return @node_preinstall_bin_path if defined?(@node_preinstall_bin_path)
@@ -830,7 +805,7 @@ params = CGI.parse(uri.query || "")
     msg = "Precompiling assets failed.\n"
     if output.match(/(127\.0\.0\.1)|(org\.postgresql\.util)/)
       msg << "Attempted to access a nonexistent database:\n"
-      msg << "https://devcenter.heroku.com/articles/pre-provision-database\n"
+      msg << "https://docs.cloudfoundry.org/buildpacks/ruby/ruby-service-bindings.html\n"
     end
     error msg
   end
@@ -863,10 +838,6 @@ params = CGI.parse(uri.query || "")
         puts(<<-WARNING)
 Your app was upgraded to bundler #{ BUNDLER_VERSION }.
 Previously you had a successful deploy with bundler #{ old_bundler_version }.
-
-If you see problems related to the bundler version please refer to:
-https://devcenter.heroku.com/articles/bundler-version
-
 WARNING
       end
 
@@ -900,14 +871,6 @@ WARNING
       # fix git gemspec bug from Bundler 1.3.0+ upgrade
       if File.exists?(bundler_cache) && !@metadata.exists?(bundler_version_cache) && !run("find vendor/bundle/*/*/bundler/gems/*/ -name *.gemspec").include?("No such file or directory")
         puts "Old bundler cache detected. Clearing bundler cache."
-        purge_bundler_cache
-      end
-
-      # fix for https://github.com/heroku/heroku-buildpack-ruby/issues/86
-      if (!@metadata.exists?(rubygems_version_cache) ||
-          (old_rubygems_version == "2.0.0" && old_rubygems_version != rubygems_version)) &&
-          @metadata.exists?(ruby_version_cache) && @metadata.read(ruby_version_cache).chomp.include?("ruby 2.0.0p0")
-        puts "Updating to rubygems #{rubygems_version}. Clearing bundler cache."
         purge_bundler_cache
       end
 

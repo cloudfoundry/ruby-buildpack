@@ -100,7 +100,7 @@ class LanguagePack::Base
     release["config_vars"]           = default_config_vars
     release["default_process_types"] = default_process_types
     FileUtils.mkdir("tmp") unless File.exists?("tmp")
-    File.open("tmp/heroku-buildpack-release-step.yml", 'w') do |f|
+    File.open("tmp/ruby-buildpack-release-step.yml", 'w') do |f|
       f.write(release.to_yaml)
     end
   end
@@ -109,7 +109,7 @@ class LanguagePack::Base
     return if File.exist?("Procfile")
     msg =  "No Procfile detected, using the default web server.\n"
     msg << "We recommend explicitly declaring how to boot your server process via a Procfile.\n"
-    msg << "https://devcenter.heroku.com/articles/ruby-default-web-server"
+    msg << "https://docs.cloudfoundry.org/buildpacks/prod-server.html#config-ruby"
     warn msg
   end
 

@@ -54,7 +54,6 @@ class LanguagePack::Rails2 < LanguagePack::Ruby
     if env("RAILS_ENV") != "production"
       warn(<<-WARNING)
 You are deploying to a non-production environment: #{ env("RAILS_ENV").inspect }.
-See https://devcenter.heroku.com/articles/deploying-to-a-custom-rails-environment for more information.
 WARNING
     end
     super
@@ -73,7 +72,7 @@ private
   # most rails apps need a database
   # @return [Array] shared database addon
   def add_dev_database_addon
-    ['heroku-postgresql']
+    []
   end
 
   # sets up the profile.d script for this buildpack
