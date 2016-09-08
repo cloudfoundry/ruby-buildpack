@@ -1,3 +1,12 @@
+v1.6.24 Sep 08, 2016
+=====================
+
+* Remove jruby-1.7.25, add jruby-1.7.26
+  (https://www.pivotaltracker.com/story/show/129371937)
+
+* Remove large variety of heroku references in staging output
+  (https://www.pivotaltracker.com/story/show/127931269)
+
 v1.6.23 Aug 31, 2016
 =====================
 
