@@ -38,9 +38,9 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 - name: bundler
-  version: 1.12.5
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/bundler/bundler-1.12.5.tgz
-  md5: 34dc19984300cf67f1beb616edaf89bc
+  version: 1.13.0
+  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/bundler/bundler-1.13.0.tgz
+  md5: 2282fd5df53cd733b0e693aa50d84d42
   cf_stacks:
   - cflinuxfs2
 - name: rails_log_stdout
