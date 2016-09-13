@@ -1,0 +1,4 @@
+---
+applications:
+- name: sinatra_jruby_web_app
+  memory: 512M
