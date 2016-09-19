@@ -6,5 +6,5 @@ get '/' do
 end
 
 get '/yaml' do
-  YAML.load("{foo: [bar, baz, quux]}").to_yaml
+  '<pre>' + YAML.load("{foo: [bar, baz, quux]}").to_yaml + '</pre>'
 end
