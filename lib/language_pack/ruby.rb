@@ -12,8 +12,6 @@ require "language_pack/version"
 # base Ruby Language Pack. This is for any base ruby app.
 class LanguagePack::Ruby < LanguagePack::Base
   NAME                 = "ruby"
-  LIBYAML_VERSION      = "0.1.6"
-  LIBYAML_PATH         = "libyaml-#{LIBYAML_VERSION}"
   BUNDLER_VERSION      = "1.13.1"
   BUNDLER_GEM_PATH     = "bundler-#{BUNDLER_VERSION}"
   RBX_BASE_URL         = "https://binaries.rubini.us/heroku"
@@ -501,17 +499,6 @@ ERROR
     end
   end
 
-  # install libyaml into the LP to be referenced for psych compilation
-  # @param [String] tmpdir to store the libyaml files
-  def install_libyaml(dir)
-    instrument 'ruby.install_libyaml' do
-      FileUtils.mkdir_p dir
-      Dir.chdir(dir) do |dir|
-        @fetchers[:buildpack].fetch_untar("#{LIBYAML_PATH}.tgz")
-      end
-    end
-  end
-
   # remove `vendor/bundle` that comes from the git repo
   # in case there are native ext.
   # users should be using `bundle pack` instead.
@@ -571,32 +558,22 @@ WARNING
 
         bundler_output = ""
         bundle_time    = nil
-        Dir.mktmpdir("libyaml-") do |tmpdir|
-          libyaml_dir = "#{tmpdir}/#{LIBYAML_PATH}"
-          install_libyaml(libyaml_dir)
 
-          # need to setup compile environment for the psych gem
-          yaml_include   = File.expand_path("#{libyaml_dir}/include").shellescape
-          yaml_lib       = File.expand_path("#{libyaml_dir}/lib").shellescape
-          pwd            = Dir.pwd
-          bundler_path   = "#{pwd}/#{slug_vendor_base}/gems/#{BUNDLER_GEM_PATH}/lib"
-          # we need to set BUNDLE_CONFIG and BUNDLE_GEMFILE for
-          # codon since it uses bundler.
-          env_vars       = {
-            "BUNDLE_GEMFILE"                => "#{pwd}/#{ENV['BUNDLE_GEMFILE']}",
-            "BUNDLE_CONFIG"                 => "#{pwd}/.bundle/config",
-            "CPATH"                         => noshellescape("#{yaml_include}:$CPATH"),
-            "CPPATH"                        => noshellescape("#{yaml_include}:$CPPATH"),
-            "LIBRARY_PATH"                  => noshellescape("#{yaml_lib}:$LIBRARY_PATH"),
-            "RUBYOPT"                       => syck_hack,
-            "NOKOGIRI_USE_SYSTEM_LIBRARIES" => "true"
-          }
-          env_vars["BUNDLER_LIB_PATH"] = "#{bundler_path}" if ruby_version.ruby_version == "1.8.7"
-          puts "Running: #{bundle_command}"
-          instrument "ruby.bundle_install" do
-            bundle_time = Benchmark.realtime do
-              bundler_output << pipe("#{bundle_command} --no-clean", out: "2>&1", env: env_vars, user_env: true)
-            end
+        # need to setup compile environment for the psych gem
+        pwd            = Dir.pwd
+        bundler_path   = "#{pwd}/#{slug_vendor_base}/gems/#{BUNDLER_GEM_PATH}/lib"
+        # we need to set BUNDLE_CONFIG and BUNDLE_GEMFILE for
+        # codon since it uses bundler.
+        env_vars       = {
+          "BUNDLE_GEMFILE"                => "#{pwd}/#{ENV['BUNDLE_GEMFILE']}",
+          "BUNDLE_CONFIG"                 => "#{pwd}/.bundle/config",
+          "NOKOGIRI_USE_SYSTEM_LIBRARIES" => "true"
+        }
+        env_vars["BUNDLER_LIB_PATH"] = "#{bundler_path}" if ruby_version.ruby_version == "1.8.7"
+        puts "Running: #{bundle_command}"
+        instrument "ruby.bundle_install" do
+          bundle_time = Benchmark.realtime do
+            bundler_output << pipe("#{bundle_command} --no-clean", out: "2>&1", env: env_vars, user_env: true)
           end
         end
 
@@ -632,21 +609,6 @@ WARNING
         FileUtils.rm_rf(dir)
       end
       bundler.clean
-    end
-  end
-
-  # RUBYOPT line that requires syck_hack file
-  # @return [String] require string if needed or else an empty string
-  def syck_hack
-    instrument "ruby.syck_hack" do
-      syck_hack_file = File.expand_path(File.join(File.dirname(__FILE__), "../../vendor/syck_hack"))
-      rv             = run_stdout('ruby -e "puts RUBY_VERSION"').chomp
-      # < 1.9.3 includes syck, so we need to use the syck hack
-      if Gem::Version.new(rv) < Gem::Version.new("1.9.3")
-        "-r#{syck_hack_file}"
-      else
-        ""
-      end
     end
   end
 
@@ -878,13 +840,6 @@ WARNING
       if @metadata.exists?(buildpack_version_cache) && (bv = @metadata.read(buildpack_version_cache).sub('v', '').to_i) && bv != 0 && bv <= 76
         puts "Fixing nokogiri install. Clearing bundler cache."
         puts "See https://github.com/sparklemotion/nokogiri/issues/923."
-        purge_bundler_cache
-      end
-
-      # recompile nokogiri to use new libyaml
-      if @metadata.exists?(buildpack_version_cache) && (bv = @metadata.read(buildpack_version_cache).sub('v', '').to_i) && bv != 0 && bv <= 99 && bundler.has_gem?("psych")
-        puts "Need to recompile psych for CVE-2013-6393. Clearing bundler cache."
-        puts "See http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=737076."
         purge_bundler_cache
       end
 
