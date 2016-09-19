@@ -12,9 +12,6 @@ url_to_dependency_map:
 - match: ruby-(\d+\.\d+\.\d+)
   name: ruby
   version: "$1"
-- match: libyaml-(\d+\.\d+\.\d+)
-  name: libyaml
-  version: "$1"
 - match: bundler-(\d+\.\d+\.\d+)
   name: bundler
   version: "$1"
@@ -31,12 +28,6 @@ url_to_dependency_map:
   name: node
   version: 4.5.0
 dependencies:
-- name: libyaml
-  version: 0.1.6
-  uri: https://buildpacks.cloudfoundry.org/ruby/binaries/cflinuxfs2/libyaml-0.1.6.tgz
-  md5: 94665f3a39e670507828f5084a40b669
-  cf_stacks:
-  - cflinuxfs2
 - name: bundler
   version: 1.13.1
   uri: https://buildpacks.cloudfoundry.org/concourse-binaries/bundler/bundler-1.13.1.tgz
