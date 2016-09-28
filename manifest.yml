@@ -4,7 +4,7 @@ default_versions:
 - name: ruby
   version: 2.3.1
 - name: node
-  version: 4.5.0
+  version: 4.6.0
 url_to_dependency_map:
 - match: ruby-(.*?)-jruby-(.*?)\.tgz
   name: jruby
@@ -26,7 +26,7 @@ url_to_dependency_map:
   version: 1.8.0_101
 - match: node
   name: node
-  version: 4.5.0
+  version: 4.6.0
 dependencies:
 - name: bundler
   version: 1.13.1
@@ -107,9 +107,9 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 - name: node
-  version: 4.5.0
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/node/node-4.5.0-linux-x64.tgz
-  md5: a0784a91f4cc412efa1472e13acc500a
+  version: 4.6.0
+  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/node/node-4.6.0-linux-x64.tgz
+  md5: 3c5c0d3ecb789aff7f815f3f1b9aa083
   cf_stacks:
   - cflinuxfs2
 exclude_files:
