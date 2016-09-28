@@ -1,3 +1,14 @@
+v1.6.26 Sep 28, 2016
+=====================
+
+* Address USN-3087-1: OpenSSL vulnerabilities by updating node.
+  The new version of node included in this buildpack was built
+  against the patched version of OpenSSL
+  (https://www.pivotaltracker.com/story/show/130945067)
+
+* Add node 4.6.0, remove node 4.5.0
+  (https://www.pivotaltracker.com/story/show/131225127)
+
 v1.6.25 Sep 19, 2016
 =====================
 
