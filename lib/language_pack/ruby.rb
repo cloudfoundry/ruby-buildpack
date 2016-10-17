@@ -12,7 +12,7 @@ require "language_pack/version"
 # base Ruby Language Pack. This is for any base ruby app.
 class LanguagePack::Ruby < LanguagePack::Base
   NAME                 = "ruby"
-  BUNDLER_VERSION      = "1.13.3"
+  BUNDLER_VERSION      = "1.13.5"
   BUNDLER_GEM_PATH     = "bundler-#{BUNDLER_VERSION}"
   RBX_BASE_URL         = "https://binaries.rubini.us/heroku"
   NODE_BP_PATH         = "vendor/node/bin"
