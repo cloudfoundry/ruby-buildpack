@@ -1,3 +1,12 @@
+v1.6.27 Oct 18, 2016
+=====================
+
+* Add node 4.6.1, remove node 4.6.0
+  (https://www.pivotaltracker.com/story/show/132686391)
+
+* Add bundler 1.13.5, remove bundler 1.13.1
+  (https://www.pivotaltracker.com/story/show/132366579)
+
 v1.6.26 Sep 28, 2016
 =====================
 
