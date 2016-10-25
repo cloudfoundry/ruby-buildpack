@@ -23,7 +23,7 @@ url_to_dependency_map:
   version: 0
 - match: openjdk1.8-latest
   name: openjdk1.8-latest
-  version: 1.8.0_101
+  version: 1.8.0_111
 - match: node
   name: node
   version: 4.6.1
@@ -47,9 +47,9 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 - name: openjdk1.8-latest
-  version: 1.8.0_101
-  uri: https://java-buildpack.cloudfoundry.org/openjdk/trusty/x86_64/openjdk-1.8.0_101.tar.gz
-  md5: 66281ba0c6d42ff3a5b1770e1aa8369e
+  version: 1.8.0_111
+  uri: https://java-buildpack.cloudfoundry.org/openjdk/trusty/x86_64/openjdk-1.8.0_111.tar.gz
+  md5: c5228311f1a6a6d7874535eebba7b466
   cf_stacks:
   - cflinuxfs2
 - name: ruby
