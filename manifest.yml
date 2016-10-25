@@ -29,9 +29,9 @@ url_to_dependency_map:
   version: 4.6.1
 dependencies:
 - name: bundler
-  version: 1.13.5
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/bundler/bundler-1.13.5.tgz
-  md5: bfc41fffe2531a75ad0789c299d82e16
+  version: 1.13.6
+  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/bundler/bundler-1.13.6.tgz
+  md5: 0919b09dfee3a85a23ac1633d99ec0a0
   cf_stacks:
   - cflinuxfs2
 - name: rails_log_stdout
