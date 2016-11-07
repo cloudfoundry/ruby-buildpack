@@ -15,25 +15,31 @@ module LanguagePack
     end
 
     def fetch(path)
-      curl,filtered_curl = curl_command("-O #{@host_url.join(path)}")
-      run!(curl, error_class: FetchError,filtered_command: filtered_curl)
+      download_url = @host_url.join(path)
+      output_directory = Dir.pwd
+      bin_path = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "compile-extensions", "bin"))
+      download_command = "#{bin_path}/download_dependency #{download_url} #{output_directory}"
+
+      filtered_url = `#{download_command}`.strip
+
+      unless $?.success?
+        error_message = `#{bin_path}/recommend_dependency #{download_url}`
+        message = "\nCommand: '#{download_command}' failed unexpectedly:\n#{error_message}"
+        raise FetchError, message
+      end
+
+      puts "Downloaded [#{filtered_url}]"
+      filtered_url
     end
 
     def fetch_untar(path, files_to_extract = nil)
-      curl,filtered_curl = curl_command("#{@host_url.join(path)} -s -o")
-      run!("#{curl} - | tar zxf - #{files_to_extract}", error_class: FetchError, filtered_command: filtered_curl)
-    end
+      fetch(path)
+      tar_command = "tar zxf #{path} #{files_to_extract} && rm #{path}"
 
-    def fetch_bunzip2(path, files_to_extract = nil)
-      curl,filtered_curl = curl_command("#{@host_url.join(path)} -s -o")
-      run!("#{curl} - | tar jxf - #{files_to_extract}", error_class: FetchError, filtered_command: filtered_curl)
+      run!(tar_command, error_class: FetchError)
     end
 
     private
-    def curl_command(command)
-      "set -o pipefail; curl -L --fail --retry 5 --retry-delay 1 --connect-timeout #{curl_connect_timeout_in_seconds} --max-time #{curl_timeout_in_seconds} #{command}"
-    end
-
     def curl_timeout_in_seconds
       ENV['CURL_TIMEOUT'] || 90
     end

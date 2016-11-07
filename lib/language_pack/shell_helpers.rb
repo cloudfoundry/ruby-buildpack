@@ -42,12 +42,10 @@ module LanguagePack
     end
 
     def run!(command, options = {})
-      filtered_command = options.delete(:filtered_command)
-
       result      = run(command, options)
       error_class = options.delete(:error_class) || StandardError
       unless $?.success?
-        message = "Command: '#{filtered_command || command}' failed unexpectedly:\n#{result}"
+        message = "\nCommand: '#{command}' failed unexpectedly:\n#{result}"
         raise error_class, message
       end
       return result
