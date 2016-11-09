@@ -1,3 +1,18 @@
+v1.6.28 Nov 09, 2016
+=====================
+
+* Add node 4.6.2, remove node 4.6.1
+  (https://www.pivotaltracker.com/story/show/133955125)
+
+* Add bundler 1.13.6, remove bundler 1.13.5
+  (https://www.pivotaltracker.com/story/show/132957609)
+
+* Add openjdk 1.8.0_111, remove openjdk 1.8.0_101
+  (https://www.pivotaltracker.com/story/show/132711731)
+
+* Ensure all downloaded binaries have checksums verified
+  (https://www.pivotaltracker.com/story/show/128099189)
+
 v1.6.27 Oct 18, 2016
 =====================
 
