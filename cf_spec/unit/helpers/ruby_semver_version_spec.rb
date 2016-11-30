@@ -65,13 +65,13 @@ describe LanguagePack::RubySemverVersion do
 
       context "specified_ruby_version fixture" do
         let(:gemfile) { File.join(fixtures, '..', 'specified_ruby_version', 'Gemfile') }
-        it { should eq('2.2.5') }
+        it { should eq('2.2.6') }
       end
 
       context "unspecified_ruby fixture" do
         let(:gemfile) { File.join(fixtures, '..', 'unspecified_ruby', 'Gemfile') }
         it 'finds a ruby matching "~> DEFAULT_VERSION_NUMBER"' do
-          expect(subject).to eq('2.3.1')
+          expect(subject).to eq('2.3.3')
         end
       end
     end

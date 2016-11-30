@@ -2,7 +2,7 @@
 language: ruby
 default_versions:
 - name: ruby
-  version: 2.3.1
+  version: 2.3.3
 - name: node
   version: 4.6.2
 url_to_dependency_map:
@@ -30,8 +30,8 @@ url_to_dependency_map:
 dependencies:
 - name: bundler
   version: 1.13.6
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/bundler/bundler-1.13.6.tgz
-  md5: 0919b09dfee3a85a23ac1633d99ec0a0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.13.6.tgz
+  md5: ea2e72dcd3f1d74d4448ffc340bc5046
   cf_stacks:
   - cflinuxfs2
 - name: rails_log_stdout
@@ -53,63 +53,63 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 - name: ruby
-  version: 2.3.0
-  md5: 535342030a11abeb11497824bf642bf2
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/ruby/ruby-2.3.0-linux-x64.tgz
+  version: 2.3.2
+  md5: 4d9fcc0ed0ec0dae9a862bb6521b4f04
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.3.2-linux-x64.tgz
   cf_stacks:
   - cflinuxfs2
 - name: ruby
-  version: 2.3.1
-  md5: c55c51d66a18123363e7f96635b54717
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/ruby/ruby-2.3.1-linux-x64.tgz
-  cf_stacks:
-  - cflinuxfs2
-- name: ruby
-  version: 2.2.4
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/ruby/ruby-2.2.4-linux-x64.tgz
-  md5: 10f417882bf68dca0f3047e6fe7426f7
+  version: 2.3.3
+  md5: 5dcf10a923894409bf2050b714c69529
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.3.3-linux-x64.tgz
   cf_stacks:
   - cflinuxfs2
 - name: ruby
   version: 2.2.5
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/ruby/ruby-2.2.5-linux-x64.tgz
-  md5: faf863c214dd9972f18daf9861fc3898
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.2.5-linux-x64.tgz
+  md5: c8561a54e5633eb0dcc318079e7312c7
   cf_stacks:
   - cflinuxfs2
 - name: ruby
-  version: 2.1.8
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/ruby/ruby-2.1.8-linux-x64.tgz
-  md5: 6610af292a8b5666858f1566c3349108
+  version: 2.2.6
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.2.6-linux-x64.tgz
+  md5: 71ef231380476a9ffc2bc0fcf9980fce
   cf_stacks:
   - cflinuxfs2
 - name: ruby
   version: 2.1.9
-  md5: 095249c4ed574b135b2aeb699c1c8d42
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/ruby/ruby-2.1.9-linux-x64.tgz
+  md5: 03921abd1505a7c62d38ffa0a29ab692
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.1.9-linux-x64.tgz
+  cf_stacks:
+  - cflinuxfs2
+- name: ruby
+  version: 2.1.10
+  md5: f42362306e601315457f46f2bbb0e0de
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.1.10-linux-x64.tgz
   cf_stacks:
   - cflinuxfs2
 - name: jruby
   version: ruby-1.9.3-jruby-1.7.26
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/jruby/jruby-1.7.26_ruby-1.9.3-linux-x64.tgz
-  md5: 9bff8068fd7fda0d3a1b24405c5d0b0a
+  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/jruby-1.7.26_ruby-1.9.3-linux-x64.tgz
+  md5: ce0313153c607d0556b272350293acd5
   cf_stacks:
   - cflinuxfs2
 - name: jruby
   version: ruby-2.0.0-jruby-1.7.26
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/jruby/jruby-1.7.26_ruby-2.0.0-linux-x64.tgz
-  md5: c4ef0e54035cc35a947580d2490f9ce6
+  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/jruby-1.7.26_ruby-2.0.0-linux-x64.tgz
+  md5: acd1b1d90d9eb1b94e84dc8555d9c475
   cf_stacks:
   - cflinuxfs2
 - name: jruby
   version: ruby-2.3.0-jruby-9.1.2.0
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/jruby/jruby-9.1.2.0_ruby-2.3.0-linux-x64.tgz
-  md5: 1aa7047b7f7c233130ffef1af71bf7de
+  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/jruby-9.1.2.0_ruby-2.3.0-linux-x64.tgz
+  md5: c8d503cbb9b66663a21ce5d95f5351f1
   cf_stacks:
   - cflinuxfs2
 - name: node
   version: 4.6.2
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/node/node-4.6.2-linux-x64.tgz
-  md5: 39f36ff2c35bdb6173dffa70946ac62f
+  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-4.6.2-linux-x64.tgz
+  md5: e1aa7791788efe795720985360f43e5b
   cf_stacks:
   - cflinuxfs2
 exclude_files:
