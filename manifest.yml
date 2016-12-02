@@ -54,38 +54,38 @@ dependencies:
   - cflinuxfs2
 - name: ruby
   version: 2.3.2
-  md5: 4d9fcc0ed0ec0dae9a862bb6521b4f04
+  md5: 58e947822ec1db817c434b2e51097827
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.3.2-linux-x64.tgz
   cf_stacks:
   - cflinuxfs2
 - name: ruby
   version: 2.3.3
-  md5: 5dcf10a923894409bf2050b714c69529
+  md5: 636d81f2a095b4f59afb64127e923ea0
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.3.3-linux-x64.tgz
   cf_stacks:
   - cflinuxfs2
 - name: ruby
   version: 2.2.5
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.2.5-linux-x64.tgz
-  md5: c8561a54e5633eb0dcc318079e7312c7
+  md5: 64c71b2cc8a8cfa4672837353b59f3f4
   cf_stacks:
   - cflinuxfs2
 - name: ruby
   version: 2.2.6
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.2.6-linux-x64.tgz
-  md5: 71ef231380476a9ffc2bc0fcf9980fce
+  md5: 15419a8d32cc384d3b9fe23f93d7441d
   cf_stacks:
   - cflinuxfs2
 - name: ruby
   version: 2.1.9
-  md5: 03921abd1505a7c62d38ffa0a29ab692
+  md5: 0042edb77be85274acb2c2a23c90e0c1
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.1.9-linux-x64.tgz
   cf_stacks:
   - cflinuxfs2
 - name: ruby
-  version: 2.1.10
-  md5: f42362306e601315457f46f2bbb0e0de
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.1.10-linux-x64.tgz
+  version: 2.1.8
+  md5: 9b2572f38be50d692d6491d4c7718626
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.1.8-linux-x64.tgz
   cf_stacks:
   - cflinuxfs2
 - name: jruby
