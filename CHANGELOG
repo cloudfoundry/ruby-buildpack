@@ -1,3 +1,22 @@
+v1.6.29 Dec 06, 2016
+=====================
+
+* Add ruby 2.1.10, remove ruby 2.1.8
+
+* Add ruby 2.2.6, remove ruby 2.2.4
+  (https://www.pivotaltracker.com/story/show/134340425)
+
+* Add ruby 2.3.2 and 2.3.3, remove ruby 2.3.1
+  (https://www.pivotaltracker.com/story/show/134330017)
+  (https://www.pivotaltracker.com/story/show/134696699)
+
+* Rebuild and change path for ruby, jruby, bundler, node binaries and
+  rails patching code
+  - We identified a potential, but unlikely, attack vector in our continuous
+    integration system. Our own auditing strongly suggests that this attack
+    vector was not taken advantage of. However, out of an abundance of caution,
+    we are rebuilding all buildpack dependencies that we maintain.
+
 v1.6.28 Nov 09, 2016
 =====================
 
