@@ -12,7 +12,7 @@ describe 'JRuby App' do
 
   specify 'the buildpack logged it installed a specific version of JRuby' do
     expect(@app).to have_logged 'Installing JVM'
-    expect(@app).to have_logged 'ruby-2.3.1-jruby-9.1.6.0'
+    expect(@app).to have_logged /ruby-2.3.\d+-jruby-9.1.\d+.0/
   end
 
   specify 'the OpenJDK runs properly' do
