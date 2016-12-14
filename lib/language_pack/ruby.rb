@@ -610,6 +610,7 @@ WARNING
           log "bundle", :status => "failure"
           error_message = "Failed to install gems via Bundler."
           puts "Bundler Output: #{bundler_output}"
+
           error error_message
         end
       end
