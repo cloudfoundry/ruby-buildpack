@@ -4,9 +4,11 @@
 $stdout.sync = true
 
 cache_dir = ARGV[1]
-compile_extensions_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'compile-extensions'))
+buildpack_dir = File.join(File.dirname(__FILE__), '..')
+compile_extensions_dir = File.expand_path(File.join(buildpack_dir, 'compile-extensions'))
 
 exit(44) unless system("#{compile_extensions_dir}/bin/check_stack_support")
+system("#{compile_extensions_dir}/bin/check_buildpack_version #{buildpack_dir} #{cache_dir}")
 
 $:.unshift File.expand_path("../../lib", __FILE__)
 require "language_pack"
@@ -23,6 +25,7 @@ begin
         pack.compile
       end
     end
+    system("#{compile_extensions_dir}/bin/store_buildpack_metadata #{buildpack_dir} #{cache_dir}")
   end
 rescue Exception => e
   Kernel.puts " !"
