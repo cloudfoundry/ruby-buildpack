@@ -203,7 +203,7 @@ FILE
   task :stage do
     Dir.mktmpdir("heroku-buildpack-ruby") do |tmpdir|
       Git.clone(File.expand_path("."), 'heroku-buildpack-ruby', path: tmpdir)
-      Dir.chdir(tmpdir) do
+      Dir.chdir(tmpdir) do |dir|
         streamer = lambda do |chunk, remaining_bytes, total_bytes|
           File.open("ruby.tgz", "w") {|file| file.print(chunk) }
         end
