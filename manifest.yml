@@ -112,6 +112,12 @@ dependencies:
   md5: 7f740735c3c91b5f20fceb66b24af487
   cf_stacks:
   - cflinuxfs2
+- name: jruby
+  version: ruby-2.3.3-jruby-9.1.7.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby-9.1.7.0_ruby-2.3.3-linux-x64.tgz
+  md5: ac99a4895159643c403c6b1958863859
+  cf_stacks:
+  - cflinuxfs2
 - name: node
   version: 4.7.2
   uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-4.7.2-linux-x64.tgz
