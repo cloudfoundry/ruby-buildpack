@@ -1,3 +1,15 @@
+v1.6.33 Jan 23, 2017
+=====================
+
+* Add bundler 1.14.2, remove bundler 1.13.7
+  (https://www.pivotaltracker.com/story/show/138119911)
+
+* Add jruby 9.1.7.0, remove jruby 9.1.5.0
+  (https://www.pivotaltracker.com/story/show/137476393)
+
+* Add openjdk 1.8.0_121, remove openjdk 1.8.0_111
+  (https://www.pivotaltracker.com/story/show/137883043)
+
 v1.6.32 Jan 10, 2017
 =====================
 
