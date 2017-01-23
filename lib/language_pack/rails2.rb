@@ -20,12 +20,16 @@ class LanguagePack::Rails2 < LanguagePack::Ruby
     "Ruby/Rails"
   end
 
+  def default_env_vars
+    {
+      "RAILS_ENV" => env("RAILS_ENV") || "production",
+      "RACK_ENV"  => env("RACK_ENV")  || "production",
+    }
+  end
+
   def default_config_vars
     instrument "rails2.default_config_vars" do
-      super.merge({
-        "RAILS_ENV" => env("RAILS_ENV") || "production",
-        "RACK_ENV"  => env("RACK_ENV")  || "production",
-      })
+      super.merge(default_env_vars)
     end
   end
 
