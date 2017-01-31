@@ -15,12 +15,6 @@ url_to_dependency_map:
 - match: bundler-(\d+\.\d+\.\d+)
   name: bundler
   version: "$1"
-- match: rails_log_stdout
-  name: rails_log_stdout
-  version: 0
-- match: rails3_serve_static_assets
-  name: rails3_serve_static_assets
-  version: 0
 - match: openjdk1.8-latest
   name: openjdk1.8-latest
   version: 1.8.0_121
@@ -32,18 +26,6 @@ dependencies:
   version: 1.14.3
   uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.14.3-cddcef74.tgz
   md5: cddcef7446e96ab89020e32ab421a926
-  cf_stacks:
-  - cflinuxfs2
-- name: rails_log_stdout
-  version: 0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/ruby/rails_log_stdout-9ecd9126.tgz
-  md5: 9ecd9126ba4a5f12ec98bc75c433885f
-  cf_stacks:
-  - cflinuxfs2
-- name: rails3_serve_static_assets
-  version: 0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/ruby/rails3_serve_static_assets-53ec25d1.tgz
-  md5: 53ec25d17a33791989873388d779d644
   cf_stacks:
   - cflinuxfs2
 - name: openjdk1.8-latest

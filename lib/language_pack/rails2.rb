@@ -67,11 +67,49 @@ private
 
   def install_plugins
     instrument "rails2.install_plugins" do
-      plugins = ["rails_log_stdout"].reject { |plugin| bundler.has_gem?(plugin) }
       topic "Rails plugin injection"
-      LanguagePack::Helpers::PluginsInstaller.new(plugins).install
+      install_plugin_stdout_logger unless bundler.has_gem?("rails_log_stdout")
     end
   end
+
+  def install_plugin_stdout_logger
+    directory = Pathname.new("vendor/plugins").join("rails_stdout_logging")
+    return true if directory.exist?
+    directory.mkpath
+    File.write(directory.join("init.rb"), %q{
+begin
+  STDOUT.sync = true
+
+  def Rails.logger
+    @@logger ||= Logger.new(STDOUT).tap do |logger|
+      logger = ActiveSupport::TaggedLogging.new(logger) if defined?(ActiveSupport::TaggedLogging)
+      level = ([ENV['LOG_LEVEL'].to_s.upcase, 'INFO'] & %w[DEBUG INFO WARN ERROR FATAL UNKNOWN]).compact.first
+      logger.level = Logger.const_get(level)
+      logger
+    end
+  end
+  %w(
+    ActiveSupport::Dependencies
+    ActiveRecord::Base
+    ActionController::Base
+    ActionMailer::Base
+    ActionView::Base
+    ActiveResource::Base
+  ).each do |klass_name|
+    begin
+      klass = Object
+      klass_name.split('::').each { |part| klass = klass.const_get(part) }
+      klass.logger = Rails.logger
+    rescue
+    end
+  end
+  Rails.cache.logger = Rails.logger rescue nil
+rescue Exception => ex
+  puts %Q{WARNING: Exception during rails_log_stdout init: #{ex.message}}
+end
+    })
+  end
+
 
   # most rails apps need a database
   # @return [Array] shared database addon

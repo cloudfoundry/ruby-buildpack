@@ -55,8 +55,39 @@ private
         warn "Injecting plugin '#{plugin}'"
       end
       warn "Add 'rails_12factor' gem to your Gemfile to skip plugin injection"
-      LanguagePack::Helpers::PluginsInstaller.new(plugins.keys).install
+      install_plugin_serve_static_assets if plugins['rails3_serve_static_assets']
+      install_plugin_stdout_logger if plugins['rails_log_stdout']
     end
+  end
+
+  def install_plugin_serve_static_assets
+    directory = Pathname.new("vendor/plugins/rails3_serve_static_assets")
+    return true if directory.exist?
+    directory.mkpath
+    File.write(directory.join("init.rb"), "Rails.application.class.config.serve_static_assets = true\n")
+  end
+
+  def install_plugin_stdout_logger
+    directory = Pathname.new("vendor/plugins/rails_log_stdout")
+    return true if directory.exist?
+    directory.mkpath
+    File.write(directory.join("init.rb"), %q{
+begin
+  STDOUT.sync = true
+
+  def Rails.cloudfoundry_stdout_logger
+    logger = Logger.new(STDOUT)
+    logger = ActiveSupport::TaggedLogging.new(logger) if defined?(ActiveSupport::TaggedLogging)
+    level = ([ENV['LOG_LEVEL'].to_s.upcase, 'INFO'] & %w[DEBUG INFO WARN ERROR FATAL UNKNOWN]).compact.first
+    logger.level = Logger.const_get(level)
+    logger
+  end
+
+  Rails.logger = Rails.application.config.logger = Rails.cloudfoundry_stdout_logger
+rescue Exception => ex
+  puts %Q{WARNING: Exception during rails_log_stdout init: #{ex.message}}
+end
+    })
   end
 
   # runs the tasks for the Rails 3.1 asset pipeline
