@@ -21,6 +21,19 @@ url_to_dependency_map:
 - match: node
   name: node
   version: 4.7.3
+dependency_deprecation_dates:
+- match: 4\.\d+\.\d+
+  version_line: "4"
+  name: node
+  date: 2018-04-01
+- match: ruby-.*-jruby-1.7.\d+
+  version_line: "1.7"
+  name: jruby
+  date: 2016-12-31
+- match: .*
+  version_line: "1.8"
+  name: openjdk1.8-latest
+  date: 2020-10-01
 dependencies:
 - name: bundler
   version: 1.14.3
