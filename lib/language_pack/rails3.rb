@@ -78,7 +78,8 @@ begin
   def Rails.cloudfoundry_stdout_logger
     logger = Logger.new(STDOUT)
     logger = ActiveSupport::TaggedLogging.new(logger) if defined?(ActiveSupport::TaggedLogging)
-    level = ([ENV['LOG_LEVEL'].to_s.upcase, 'INFO'] & %w[DEBUG INFO WARN ERROR FATAL UNKNOWN]).compact.first
+    level = ENV['LOG_LEVEL'].to_s.upcase
+    level = 'INFO' unless %w[DEBUG INFO WARN ERROR FATAL UNKNOWN].include?(level)
     logger.level = Logger.const_get(level)
     logger
   end
