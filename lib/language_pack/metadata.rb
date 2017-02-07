@@ -2,7 +2,7 @@ require "language_pack"
 require "language_pack/base"
 
 class LanguagePack::Metadata
-  FOLDER = "vendor/heroku"
+  FOLDER = "vendor/.cloudfoundry/metadata"
 
   def initialize(cache)
     if cache

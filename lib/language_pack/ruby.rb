@@ -183,7 +183,7 @@ WARNING
   def ruby_version
     instrument 'ruby.ruby_version' do
       return @ruby_version if @ruby_version
-      new_app           = !File.exist?("vendor/heroku")
+      new_app           = !File.exist?("vendor/.cloudfoundry/metadata")
       last_version_file = "buildpack_ruby_version"
       last_version      = nil
       last_version      = @metadata.read(last_version_file).chomp if @metadata.exists?(last_version_file)
@@ -414,7 +414,7 @@ ERROR
   end
 
   def new_app?
-    @new_app ||= !File.exist?("vendor/heroku")
+    @new_app ||= !File.exist?("vendor/.cloudfoundry/metadata")
   end
 
   # vendors JVM into the slug for JRuby
@@ -797,7 +797,7 @@ params = CGI.parse(uri.query || "")
 
       full_ruby_version       = run_stdout(%q(ruby -v)).chomp
       rubygems_version        = run_stdout(%q(gem -v)).chomp
-      heroku_metadata         = "vendor/heroku"
+      heroku_metadata         = "vendor/.cloudfoundry/metadata"
       old_rubygems_version    = nil
       ruby_version_cache      = "ruby_version"
       buildpack_version_cache = "buildpack_version"
