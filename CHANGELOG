@@ -1,3 +1,15 @@
+v1.6.34 Feb 07, 2017
+=====================
+
+* Add EOL dates for jruby, openjdk and node
+  (https://www.pivotaltracker.com/story/show/137374307)
+
+* Add node 4.7.3, remove node 4.7.2
+  (https://www.pivotaltracker.com/story/show/138773607)
+
+* Remove unlicensed external dependencies: rails_log_stdout and rails3_serve_static_assets
+  (https://www.pivotaltracker.com/story/show/138644499)
+
 v1.6.33 Jan 23, 2017
 =====================
 
