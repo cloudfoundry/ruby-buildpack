@@ -11,7 +11,7 @@ describe 'Rails 4 App' do
   end
 
   context 'in an offline environment', :cached do
-    let(:app_name) { 'rails4_web_app' }
+    let(:app_name) { 'rails4' }
 
     specify do
       expect(app).to be_running
@@ -27,7 +27,7 @@ describe 'Rails 4 App' do
 
   context 'in an online environment', :uncached do
     context 'app has dependencies' do
-      let(:app_name) { 'rails4_web_app' }
+      let(:app_name) { 'rails4' }
 
       specify do
         expect(app).to be_running
@@ -39,7 +39,7 @@ describe 'Rails 4 App' do
     end
 
     context 'app has non vendored dependencies' do
-      let(:app_name) { 'rails4_web_app_without_vendored_dependencies' }
+      let(:app_name) { 'rails4_not_vendored' }
 
       specify do
         expect(Dir.exists?("cf_spec/fixtures/#{app_name}/vendor")).to eql(false)

@@ -2,7 +2,7 @@ require 'cf_spec_helper'
 
 describe 'App with custom Gemfile' do
   before(:all) do
-    @app = Machete.deploy_app('app_with_custom_gemfile')
+    @app = Machete.deploy_app('custom_gemfile')
   end
 
   after(:all) { Machete::CF::DeleteApp.new.execute(@app) }

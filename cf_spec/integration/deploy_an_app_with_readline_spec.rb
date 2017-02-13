@@ -2,7 +2,7 @@ require 'cf_spec_helper'
 
 describe 'CF Ruby Buildpack' do
   subject(:app) { Machete.deploy_app(app_name) }
-  let(:app_name) { 'app_with_readline' }
+  let(:app_name) { 'with_readline' }
   let(:browser) { Machete::Browser.new(app) }
 
   after do

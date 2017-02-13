@@ -5,7 +5,7 @@ describe 'When running detect script' do
   context 'project root directory has Gemfile' do
     before do
       root_dir = Dir.pwd
-      Dir.chdir('./cf_spec/fixtures/rails4_web_app') do
+      Dir.chdir('./cf_spec/fixtures/rails4') do
         @output = `#{root_dir}/bin/detect $PWD 2>&1`
       end
     end
@@ -22,7 +22,7 @@ describe 'When running detect script' do
   context 'project root directory does not have Gemfile' do
     before do
       root_dir = Dir.pwd
-      Dir.chdir('./cf_spec/fixtures/app_with_no_gemfile') do
+      Dir.chdir('./cf_spec/fixtures/no_gemfile') do
         @output = `#{root_dir}/bin/detect $PWD 2>&1`
       end
     end

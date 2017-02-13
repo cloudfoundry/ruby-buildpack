@@ -1,7 +1,7 @@
 require 'cf_spec_helper'
 
 describe 'requiring execjs' do
-  subject(:app) { Machete.deploy_app('app_with_execjs') }
+  subject(:app) { Machete.deploy_app('with_execjs') }
 
   let(:browser) { Machete::Browser.new(app) }
 

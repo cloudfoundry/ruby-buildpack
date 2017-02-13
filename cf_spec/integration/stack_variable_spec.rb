@@ -1,7 +1,7 @@
 require 'cf_spec_helper'
 
 describe 'Stack environment should not change' do
-  let(:app_name) { 'sinatra_web_app' }
+  let(:app_name) { 'sinatra' }
 
   subject(:app) do
     Machete.deploy_app(app_name)

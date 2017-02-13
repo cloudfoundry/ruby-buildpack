@@ -2,7 +2,7 @@ require 'cf_spec_helper'
 
 describe 'Version output' do
   subject(:app) { Machete.deploy_app(app_name) }
-  let(:app_name) { 'sinatra_web_app' }
+  let(:app_name) { 'sinatra' }
 
   after do
     Machete::CF::DeleteApp.new.execute(app)

@@ -2,7 +2,7 @@ require 'cf_spec_helper'
 
 describe 'app using system yaml library' do
   before(:all) do
-    @app = Machete.deploy_app('sinatra_web_app')
+    @app = Machete.deploy_app('sinatra')
     @browser =  Machete::Browser.new(@app)
   end
 

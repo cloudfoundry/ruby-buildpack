@@ -2,7 +2,7 @@ require 'cf_spec_helper'
 
 describe 'App with relative gemspec path' do
   before(:all) do
-    @app = Machete.deploy_app('app_with_relative_gemspec_path')
+    @app = Machete.deploy_app('relative_gemspec_path')
   end
 
   after(:all) { Machete::CF::DeleteApp.new.execute(@app) }
