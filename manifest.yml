@@ -4,7 +4,7 @@ default_versions:
 - name: ruby
   version: 2.3.3
 - name: node
-  version: 4.7.3
+  version: 4.8.0
 url_to_dependency_map:
 - match: ruby-(.*?)-jruby-(.*?)\.tgz
   name: jruby
@@ -20,7 +20,7 @@ url_to_dependency_map:
   version: 1.8.0_121
 - match: node
   name: node
-  version: 4.7.3
+  version: 4.8.0
 dependency_deprecation_dates:
 - match: 4\.\d+\.\d+
   version_line: "4"
@@ -108,9 +108,9 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 - name: node
-  version: 4.7.3
-  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-4.7.3-linux-x64-031aca2e.tgz
-  md5: 031aca2e41da97fc614eed20af9814cb
+  version: 4.8.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-4.8.0-linux-x64-4678bae6.tgz
+  md5: 4678bae6cec2321a5e4228c026d5d654
   cf_stacks:
   - cflinuxfs2
 exclude_files:
