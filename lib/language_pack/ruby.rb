@@ -538,7 +538,8 @@ WARNING
         bundle_without = env("BUNDLE_WITHOUT") || "development:test"
         bundle_bin     = "bundle"
         bundle_command = "#{bundle_bin} install --without #{bundle_without} --path vendor/bundle --binstubs #{bundler_binstubs_path}"
-        bundle_command << " -j4"
+        bundle_command << " --jobs=4"
+        bundle_command << " --retry=4"
 
         if File.exist?("#{Dir.pwd}/.bundle/config")
           warn(<<-WARNING, inline: true)
