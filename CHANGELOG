@@ -1,3 +1,15 @@
+v1.6.35 Feb 27, 2017
+=====================
+
+* Add "retry" flag to bundler
+  (https://www.pivotaltracker.com/story/show/140511461)
+
+* Add node 4.8.0, remove node 4.7.3
+  (https://www.pivotaltracker.com/story/show/140373175)
+
+* Add bundler 1.14.5, remove bundler 1.14.3
+  (https://www.pivotaltracker.com/story/show/140373173)
+
 v1.6.34 Feb 07, 2017
 =====================
 
