@@ -729,7 +729,7 @@ params = CGI.parse(uri.query || "")
   end
 
   # decides if we need to enable the dev database addon
-  # @return [Array] the database addon if the pg gem is detected or an empty Array if it isn't.
+  # @return [Array] empty - we don't add database gems
   def add_dev_database_addon
     []
   end

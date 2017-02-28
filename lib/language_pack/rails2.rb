@@ -71,12 +71,6 @@ private
     end
   end
 
-  # most rails apps need a database
-  # @return [Array] shared database addon
-  def add_dev_database_addon
-    []
-  end
-
   # sets up the profile.d script for this buildpack
   def setup_profiled
     super
