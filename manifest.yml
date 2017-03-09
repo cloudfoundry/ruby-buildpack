@@ -36,9 +36,9 @@ dependency_deprecation_dates:
   date: 2020-10-01
 dependencies:
 - name: bundler
-  version: 1.14.5
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.14.5-248bdf35.tgz
-  md5: 248bdf357dc22a93145d3ec77d3a9304
+  version: 1.14.6
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.14.6-d7236b1f.tgz
+  md5: d7236b1f16e658d45de69257a3a78d5c
   cf_stacks:
   - cflinuxfs2
 - name: openjdk1.8-latest
