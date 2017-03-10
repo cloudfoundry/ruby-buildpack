@@ -1,5 +1,9 @@
 require 'sinatra'
 
+get '/npm' do
+  `npm help`
+end
+
 get '/' do
   begin
     #requiring execjs RTEs if node (or a js runtime) is not available.

@@ -22,8 +22,4 @@ describe 'CF Ruby Buildpack' do
   it 'pulls the default version from the manifest for ruby' do
     expect(@app).to have_logged('DEBUG: default_version_for ruby is')
   end
-
-  it 'pulls the default version from the manifest for node' do
-    expect(@app).to have_logged('DEBUG: default_version_for node is')
-  end
 end

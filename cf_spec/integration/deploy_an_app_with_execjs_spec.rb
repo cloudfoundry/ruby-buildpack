@@ -1,7 +1,7 @@
 require 'cf_spec_helper'
 
 describe 'requiring execjs' do
-  subject(:app) { Machete.deploy_app('with_execjs') }
+  subject(:app) { Machete.deploy_app('with_execjs', env: {'BP_DEBUG' => '1'}) }
 
   let(:browser) { Machete::Browser.new(app) }
 
@@ -11,10 +11,14 @@ describe 'requiring execjs' do
 
   specify do
     expect(app).to be_running
+    expect(app).to have_logged('DEBUG: default_version_for node is')
 
     browser.visit_path('/')
 
     expect(app).to_not have_logged 'ExecJS::RuntimeUnavailable'
     expect(browser).to have_body('Successfully required execjs')
+
+    browser.visit_path('/npm')
+    expect(browser).to have_body(/Usage: npm <command>/)
   end
 end

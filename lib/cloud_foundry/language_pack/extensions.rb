@@ -4,6 +4,5 @@ DEPENDENCIES_PATH = File.expand_path("../../dependencies", File.expand_path($0))
 
 require 'cloud_foundry/language_pack/ruby'
 require 'cloud_foundry/language_pack/ruby_version'
-require 'cloud_foundry/language_pack/helpers/node_installer'
 
 ENV['STACK'] ||= ''
