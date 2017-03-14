@@ -781,7 +781,7 @@ params = CGI.parse(uri.query || "")
 
       full_ruby_version       = run_stdout(%q(ruby -v)).chomp
       rubygems_version        = run_stdout(%q(gem -v)).chomp
-      heroku_metadata         = "vendor/.cloudfoundry/metadata"
+      cf_metadata         = "vendor/.cloudfoundry/metadata"
       old_rubygems_version    = nil
       ruby_version_cache      = "ruby_version"
       buildpack_version_cache = "buildpack_version"
@@ -834,7 +834,7 @@ params = CGI.parse(uri.query || "")
         purge_bundler_cache
       end
 
-      FileUtils.mkdir_p(heroku_metadata)
+      FileUtils.mkdir_p(cf_metadata)
       @metadata.write(ruby_version_cache, full_ruby_version, false)
       @metadata.write(buildpack_version_cache, BUILDPACK_VERSION, false)
       @metadata.write(cf_buildpack_version_cache, CF_BUILDPACK_VERSION, false)
