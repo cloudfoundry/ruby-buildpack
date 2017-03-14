@@ -809,7 +809,7 @@ params = CGI.parse(uri.query || "")
 
       old_rubygems_version = @metadata.read(ruby_version_cache).chomp if @metadata.exists?(ruby_version_cache)
       old_stack = @metadata.read(stack_cache).chomp if @metadata.exists?(stack_cache)
-      old_stack ||= DEFAULT_LEGACY_STACK
+      old_stack ||= "Unknown"
 
       stack_change  = old_stack != @stack
       convert_stack = @bundler_cache.old?
