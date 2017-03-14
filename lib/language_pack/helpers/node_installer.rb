@@ -17,7 +17,7 @@ class LanguagePack::NodeInstaller
   private
 
   def fetcher
-    nodejs_base_url = "https://s3pository.heroku.com/node/v#{version}/"
+    nodejs_base_url = "https://buildpacks.cloudfoundry.org/dependencies/node/v#{version}/"
     @fetcher ||= LanguagePack::Fetcher.new(nodejs_base_url)
   end
 
