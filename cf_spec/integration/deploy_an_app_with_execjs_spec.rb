@@ -11,7 +11,7 @@ describe 'requiring execjs' do
 
   specify do
     expect(app).to be_running
-    expect(app).to have_logged('DEBUG: default_version_for node is')
+    expect(app).to have_logged /Downloaded.*node-4\./
 
     browser.visit_path('/')
 

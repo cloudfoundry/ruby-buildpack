@@ -8,8 +8,8 @@ class LanguagePack::Rails5 < LanguagePack::Rails42
     instrument "rails5.use" do
       rails_version = bundler.gem_version('railties')
       return false unless rails_version
-      is_rails = rails_version >= Gem::Version.new('5.x') &&
-                 rails_version <  Gem::Version.new('6.0.0')
+      is_rails = rails_version >= Gem::Version.new('5.0.0.beta') &&
+                 rails_version <  Gem::Version.new('5.1.0.beta1')
       return is_rails
     end
   end

@@ -6,6 +6,7 @@ require "language_pack"
 require "language_pack/base"
 require "language_pack/ruby_version"
 require "language_pack/helpers/node_installer"
+require "language_pack/helpers/yarn_installer"
 require "language_pack/helpers/jvm_installer"
 require "language_pack/version"
 
@@ -36,6 +37,7 @@ class LanguagePack::Ruby < LanguagePack::Base
     super(build_path, cache_path)
     @fetchers[:mri]    = LanguagePack::Fetcher.new(VENDOR_URL, @stack)
     @node_installer    = LanguagePack::NodeInstaller.new(@stack)
+    @yarn_installer    = LanguagePack::YarnInstaller.new(@stack)
     @jvm_installer     = LanguagePack::JvmInstaller.new(slug_vendor_jvm, @stack)
   end
 
@@ -446,7 +448,11 @@ ERROR
   # default set of binaries to install
   # @return [Array] resulting list
   def binaries
-    add_node_js_binary
+    bins = add_node_js_binary
+    if File.exist?("yarn.lock")
+      bins << 'yarn'
+    end
+    bins
   end
 
   # vendors binaries into the slug
@@ -466,6 +472,8 @@ ERROR
     Dir.chdir(bin_dir) do |dir|
       if name.match(/^node\-/)
         @node_installer.install
+      elsif name == 'yarn'
+        @yarn_installer.install
       else
         @fetchers[:buildpack].fetch_untar("#{name}.tgz")
       end
@@ -747,7 +755,6 @@ params = CGI.parse(uri.query || "")
 
   def run_assets_precompile_rake_task
     instrument 'ruby.run_assets_precompile_rake_task' do
-
       precompile = rake.task("assets:precompile")
       return true unless precompile.is_defined?
 

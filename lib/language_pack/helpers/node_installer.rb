@@ -1,3 +1,6 @@
+require_relative '../../../compile-extensions/lib/dependencies'
+require 'yaml'
+
 class LanguagePack::NodeInstaller
   def initialize(stack)
   end
@@ -23,8 +26,18 @@ class LanguagePack::NodeInstaller
 
   def version
     return @version if @version
-    bin_path = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "compile-extensions", "bin"))
     manifest_path = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "manifest.yml"))
-    @version = `#{bin_path}/default_version_for #{manifest_path} node`.chomp
+    dependencies = CompileExtensions::Dependencies.new(YAML.load_file(manifest_path))
+    if rails51?
+      @version = dependencies.newest_patch_version({'name'=>'node', 'version'=>'6.x'})
+    else
+      @version = dependencies.newest_patch_version({'name'=>'node', 'version'=>'4.x'})
+    end
+  end
+
+  def rails51?
+    bundler = LanguagePack::Helpers::BundlerWrapper.new.install
+    rails_version = bundler.gem_version('railties') rescue nil
+    rails_version && rails_version >= Gem::Version.new('5.1.0.beta')
   end
 end

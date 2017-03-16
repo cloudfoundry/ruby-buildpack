@@ -31,6 +31,7 @@ describe 'Rails 4 App' do
 
       specify do
         expect(app).to be_running
+        expect(app).to have_logged /Downloaded.*node-4\./
 
         browser.visit_path('/')
         expect(browser).to have_body('The Kessel Run')
