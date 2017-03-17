@@ -1,14 +1,38 @@
 #!/usr/bin/env ruby
 
+require 'open3'
+
 # sync output
 $stdout.sync = true
 
+build_dir = ARGV[0]
 cache_dir = ARGV[1]
+deps_dir  = ARGV[3]
+
 buildpack_dir = File.join(File.dirname(__FILE__), '..')
 compile_extensions_dir = File.expand_path(File.join(buildpack_dir, 'compile-extensions'))
 
 exit(44) unless system("#{compile_extensions_dir}/bin/check_stack_support")
 system("#{compile_extensions_dir}/bin/check_buildpack_version #{buildpack_dir} #{cache_dir}")
+
+if deps_dir
+  stdout, stderr, status = Open3.capture3("#{compile_extensions_dir}/bin/build_path_from_supply #{deps_dir}") 
+
+  if status.exitstatus != 0
+    puts "build_path_from_supply script failed: #{stdout} \n====\n #{stderr}"
+    exit 1
+  end
+
+  stdout.split("\n").each do |line|
+    var, val = line.split('=')
+    ENV[var] = val
+  end
+  
+  stdout, stderr, status = Open3.capture3("#{compile_extensions_dir}/bin/write_profiled_from_supply #{deps_dir} #{build_dir}")
+  if status.exitstatus != 0
+    puts "write_profiled_from_supply failed: #{stdout} \n====\n #{stderr}"
+  end
+end
 
 $:.unshift File.expand_path("../../lib", __FILE__)
 require "language_pack"
