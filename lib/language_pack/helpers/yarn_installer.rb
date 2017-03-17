@@ -1,3 +1,6 @@
+require_relative '../../../compile-extensions/lib/dependencies'
+require 'yaml'
+
 class LanguagePack::YarnInstaller
   def initialize(stack)
   end
@@ -26,8 +29,8 @@ class LanguagePack::YarnInstaller
 
   def version
     return @version if @version
-    bin_path = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "compile-extensions", "bin"))
     manifest_path = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "..", "manifest.yml"))
-    @version = `#{bin_path}/default_version_for #{manifest_path} yarn`.chomp
+    dependencies = CompileExtensions::Dependencies.new(YAML.load_file(manifest_path))
+    @version = dependencies.newest_patch_version({'name'=>'yarn'})
   end
 end
