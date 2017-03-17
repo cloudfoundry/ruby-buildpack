@@ -3,8 +3,6 @@ language: ruby
 default_versions:
 - name: ruby
   version: 2.3.3
-- name: yarn
-  version: 0.21.3
 url_to_dependency_map:
 - match: ruby-(.*?)-jruby-(.*?)\.tgz
   name: jruby
@@ -21,9 +19,9 @@ url_to_dependency_map:
 - match: node-v(\d+\.\d+\.\d+)
   name: node
   version: "$1"
-- match: yarn
+- match: yarn-v(\d+\.\d+\.\d+)
   name: yarn
-  version: 0.21.3
+  version: "$1"
 dependency_deprecation_dates:
 - match: 4\.\d+\.\d+
   version_line: '4'
