@@ -27,6 +27,10 @@ dependency_deprecation_dates:
   version_line: '4'
   name: node
   date: 2018-04-01
+- match: 6\.\d+\.\d+
+  version_line: '6'
+  name: node
+  date: 2019-04-18
 - match: ruby-.*-jruby-1.7.\d+
   version_line: '1.7'
   name: jruby
