@@ -1,8 +1,9 @@
 require 'cf_spec_helper'
 
 describe 'Rails 5.1 (Webpack/Yarn) App' do
+  let(:buildpack) { ENV.fetch('SHARED_HOST')=='true' ? 'ruby_buildpack' : 'ruby-test-buildpack' }
   subject(:app) do
-    Machete.deploy_app(app_name)
+    Machete.deploy_app(app_name, buildpack: buildpack)
   end
   let(:browser) { Machete::Browser.new(app) }
 
