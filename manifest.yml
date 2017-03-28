@@ -79,9 +79,9 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 - name: ruby
-  version: 2.2.5
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.2.5-linux-x64-64c71b2c.tgz
-  md5: 64c71b2cc8a8cfa4672837353b59f3f4
+  version: 2.2.7
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.2.7-linux-x64-49b6bf7e.tgz
+  md5: 49b6bf7ea67e3f9ea4490be828c600f0
   cf_stacks:
   - cflinuxfs2
 - name: ruby

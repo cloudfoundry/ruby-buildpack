@@ -12,6 +12,6 @@ describe 'App with custom Gemfile' do
   end
 
   it 'uses the version of ruby specified in Gemfile-APP' do
-    expect(@app).to have_logged 'Using Ruby version: ruby-2.2.5'
+    expect(@app).to have_logged 'Using Ruby version: ruby-2.2.6'
   end
 end
