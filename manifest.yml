@@ -2,7 +2,7 @@
 language: ruby
 default_versions:
 - name: ruby
-  version: 2.3.3
+  version: 2.3.4
 - name: yarn
   version: 0.22.0
 url_to_dependency_map:
@@ -67,9 +67,9 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 - name: ruby
-  version: 2.3.2
-  md5: 58e947822ec1db817c434b2e51097827
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.3.2-linux-x64-58e94782.tgz
+  version: 2.3.4
+  md5: 8939735f9b2c08436f25649ee320b82b
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.3.4-linux-x64-8939735f.tgz
   cf_stacks:
   - cflinuxfs2
 - name: ruby

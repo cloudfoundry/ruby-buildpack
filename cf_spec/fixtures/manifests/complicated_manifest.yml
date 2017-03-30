@@ -32,15 +32,15 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 - name: ruby
-  version: 2.3.2
-  md5: 4d9fcc0ed0ec0dae9a862bb6521b4f04
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.3.2-linux-x64.tgz
-  cf_stacks:
-  - cflinuxfs2
-- name: ruby
   version: 2.3.3
   md5: 5dcf10a923894409bf2050b714c69529
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.3.3-linux-x64.tgz
+  cf_stacks:
+  - cflinuxfs2
+- name: ruby
+  version: 2.3.4
+  md5: 8939735f9b2c08436f25649ee320b82b
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.3.4-linux-x64-8939735f.tgz
   cf_stacks:
   - cflinuxfs2
 - name: ruby
