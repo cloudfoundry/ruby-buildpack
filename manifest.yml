@@ -41,6 +41,14 @@ dependency_deprecation_dates:
   version_line: '1.8'
   name: openjdk1.8-latest
   date: 2020-10-01
+- match: 2\.2\.\d+
+  version_line: '2.2'
+  name: ruby
+  date: 2018-04-01
+- match: 2\.1\.\d+
+  version_line: '2.1'
+  name: ruby
+  date: 2017-04-01
 dependencies:
 - name: bundler
   version: 1.14.6
