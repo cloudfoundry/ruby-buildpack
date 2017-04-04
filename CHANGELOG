@@ -1,3 +1,23 @@
+v1.6.37 Apr 04, 2017
+=====================
+
+* Add node 4.8.2, remove node 4.8.1
+  (https://www.pivotaltracker.com/story/show/143029841)
+
+* Add node 6.10.2, remove node 6.10.1
+  (https://www.pivotaltracker.com/story/show/143029841)
+
+* Add deprecation dates for ruby 2.1.x
+  See: https://www.ruby-lang.org/en/news/2017/04/01/support-of-ruby-2-1-has-ended/
+
+* Add ruby 2.3.4, remove 2.3.2
+  (https://www.pivotaltracker.com/story/show/142590541)
+
+* Add ruby 2.2.7, remove 2.2.5
+  (https://www.pivotaltracker.com/story/show/142579565)
+
+* Add yarn 0.22.0, remove yarn 0.21.3
+
 v1.6.36 Mar 23, 2017
 =====================
 
