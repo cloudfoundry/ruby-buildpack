@@ -4,7 +4,7 @@ default_versions:
 - name: ruby
   version: 2.3.4
 - name: yarn
-  version: 0.22.0
+  version: 0.23.2
 url_to_dependency_map:
 - match: ruby-(.*?)-jruby-(.*?)\.tgz
   name: jruby
@@ -128,12 +128,6 @@ dependencies:
   md5: e6a45d6ed829ced730c2dcc8e68ca9e8
   cf_stacks:
   - cflinuxfs2
-- name: yarn
-  version: 0.22.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn-v0.22.0-bd0fa300.tar.gz
-  md5: bd0fa3000a488d89f75b03efcbd32cec
-  cf_stacks:
-  - cflinuxfs2
 - name: node
   version: 6.10.2
   uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-6.10.2-linux-x64-9f48b587.tgz
@@ -144,6 +138,12 @@ dependencies:
   version: 4.8.2
   uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-4.8.2-linux-x64-09d53abc.tgz
   md5: 09d53abca4f08cf63b9eb88b7175266f
+  cf_stacks:
+  - cflinuxfs2
+- name: yarn
+  version: 0.23.2
+  uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn-v0.23.2-8c40f982.tar.gz
+  md5: 8c40f98256c9f14234e6afb04af910b0
   cf_stacks:
   - cflinuxfs2
 exclude_files:
