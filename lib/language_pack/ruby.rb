@@ -82,6 +82,7 @@ class LanguagePack::Ruby < LanguagePack::Base
       Dir.chdir(build_path)
       remove_vendor_bundle
       warn_bundler_upgrade
+      warn_windows_gemfile_endline
       install_ruby
       install_jvm
       setup_language_pack_environment
@@ -111,6 +112,14 @@ Your app was upgraded to bundler #{ BUNDLER_VERSION }.
 Previously you had a successful deploy with bundler #{ old_bundler_version }.
 
 WARNING
+    end
+  end
+
+  def warn_windows_gemfile_endline
+    filename = ENV.fetch("BUNDLE_GEMFILE", "Gemfile")
+    file_contents = File.read(filename)
+    if file_contents.include?("\r\n")
+      puts("WARNING: Windows line endings detected in Gemfile. Your app may fail to stage. Please use UNIX line endings.")
     end
   end
 
