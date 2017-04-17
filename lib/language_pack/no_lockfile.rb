@@ -10,7 +10,11 @@ class LanguagePack::NoLockfile < LanguagePack::Base
     "Ruby/NoLockfile"
   end
 
-  def compile
+  def supply
+    error "Gemfile.lock required. Please check it in."
+  end
+
+  def finalize
     error "Gemfile.lock required. Please check it in."
   end
 end

@@ -3,7 +3,8 @@ require 'cf_spec_helper'
 describe LanguagePack::NodeInstaller do
   describe '#install' do
     context 'with different stacks' do
-      let(:installer) { LanguagePack::NodeInstaller.new('stack') }
+      let(:dep_dir) { Dir.mktmpdir }
+      let(:installer) { LanguagePack::NodeInstaller.new(dep_dir, 'stack') }
       let(:railsversion) { Gem::Version.new('4.2.0') }
       let(:bundler) { double(:bundler_wrapper) }
 
@@ -13,6 +14,10 @@ describe LanguagePack::NodeInstaller do
         allow_any_instance_of(LanguagePack::Helpers::BundlerWrapper).to receive(:install).and_return(bundler)
         allow_any_instance_of(LanguagePack::Fetcher).to receive(:fetch_untar)
         allow(bundler).to receive(:gem_version).and_return(railsversion)
+      end
+
+      after do
+        FileUtils.rm_rf(dep_dir)
       end
 
       it 'executes the fetcher' do

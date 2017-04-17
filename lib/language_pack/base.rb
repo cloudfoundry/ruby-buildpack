@@ -23,10 +23,11 @@ class LanguagePack::Base
   # changes directory to the build_path
   # @param [String] the path of the build dir
   # @param [String] the path of the cache dir this is nil during detect and release
-  def initialize(build_path, cache_path=nil)
+  def initialize(build_path, cache_path=nil, dep_dir)
      self.class.instrument "base.initialize" do
       @build_path    = build_path
-      @stack         = ENV.fetch("STACK")
+      @stack         = ENV.fetch("CF_STACK", 'Unknown')
+      @dep_dir       = dep_dir
       @cache         = LanguagePack::Cache.new(cache_path) if cache_path
       @metadata      = LanguagePack::Metadata.new(@cache)
       @bundler_cache = LanguagePack::BundlerCache.new(@cache, @stack)
@@ -57,11 +58,6 @@ class LanguagePack::Base
     raise "must subclass"
   end
 
-  # list of default addons to install
-  def default_addons
-    raise "must subclass"
-  end
-
   # config vars to be set on first push.
   # @return [Hash] the result
   # @not: this is only set the first time an app is pushed to.
@@ -77,7 +73,11 @@ class LanguagePack::Base
   end
 
   # this is called to build the slug
-  def compile
+  def supply
+    raise "must subclass"
+  end
+
+  def finalize
     write_release_yaml
     instrument 'base.compile' do
       Kernel.puts ""
@@ -95,7 +95,6 @@ class LanguagePack::Base
 
   def write_release_yaml
     release = {}
-    release["addons"]                = default_addons
     release["config_vars"]           = default_config_vars
     release["default_process_types"] = default_process_types
     FileUtils.mkdir("tmp") unless File.exists?("tmp")
@@ -139,13 +138,14 @@ class LanguagePack::Base
 
 private ##################################
 
-  # sets up the environment variables for the build process
-  def setup_language_pack_environment
+  def write_env_file(key, value)
+    FileUtils.mkdir_p("#{@dep_dir}/env")
+    File.write("#{@dep_dir}/env/#{key}", value)
   end
 
   def add_to_profiled(string)
-    FileUtils.mkdir_p "#{build_path}/.profile.d"
-    File.open("#{build_path}/.profile.d/ruby.sh", "a") do |file|
+    FileUtils.mkdir_p "#{@dep_dir}/profile.d"
+    File.open("#{@dep_dir}/profile.d/ruby.sh", "a") do |file|
       file.puts string
     end
   end
@@ -156,21 +156,6 @@ private ##################################
 
   def set_env_override(key, val)
     add_to_profiled %{export #{key}="#{val.gsub('"','\"')}"}
-  end
-
-  def add_to_export(string)
-    export = File.join(ROOT_DIR, "export")
-    File.open(export, "a") do |file|
-      file.puts string
-    end
-  end
-
-  def set_export_default(key, val)
-    add_to_export "export #{key}=${#{key}:-#{val}}"
-  end
-
-  def set_export_override(key, val)
-    add_to_export %{export #{key}="#{val.gsub('"','\"')}"}
   end
 
   def log_internal(*args)

@@ -8,13 +8,11 @@ class LanguagePack::JvmInstaller
   JVM_BASE_URL    = "#{JVM_BUCKET}/jdk"
   JVM_1_8_PATH    = "openjdk1.8-latest.tar.gz"
 
-  PG_CONFIG_JAR   = "pgconfig.jar"
-
-  def initialize(slug_vendor_jvm, stack)
-    @vendor_dir = slug_vendor_jvm
+  def initialize(dep_dir, stack)
+    @dep_dir = dep_dir
+    @vendor_dir = "#{dep_dir}/jvm"
     @stack = stack
     @fetcher = LanguagePack::Fetcher.new(JVM_BASE_URL, stack)
-    @pg_config_jar_fetcher = LanguagePack::Fetcher.new(JVM_BUCKET)
   end
 
   def system_properties
@@ -35,13 +33,12 @@ class LanguagePack::JvmInstaller
 
     fetch_untar(JVM_1_8_PATH, "openjdk-8")
 
-    bin_dir = "bin"
-    FileUtils.mkdir_p bin_dir
-    Dir["#{@vendor_dir}/bin/*"].each do |bin|
-      run("ln -s ../#{bin} #{bin_dir}")
+    FileUtils.mkdir_p "#{@dep_dir}/bin"
+    Dir.chdir("#{@dep_dir}/bin") do
+      Dir["../jvm/bin/*"].each do |bin|
+        FileUtils.ln_s(bin, File.basename(bin))
+      end
     end
-
-    install_pgconfig_jar
   end
 
   def fetch_untar(jvm_path, jvm_version=nil)
@@ -57,14 +54,5 @@ Failed to download JVM: #{jvm_path}
 
 If this was a custom version or URL, please check to ensure it is correct.
 EOF
-  end
-
-  def install_pgconfig_jar
-    jdk_ext_dir="#{@vendor_dir}/jre/lib/ext"
-    if Dir.exist?(jdk_ext_dir)
-      Dir.chdir(jdk_ext_dir) do
-        @pg_config_jar_fetcher.fetch(PG_CONFIG_JAR)
-      end
-    end
   end
 end

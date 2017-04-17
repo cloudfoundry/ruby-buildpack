@@ -37,12 +37,6 @@ class LanguagePack::Rails3 < LanguagePack::Rails2
     default_env_vars.merge("RAILS_GROUPS" => "assets").merge(super)
   end
 
-  def compile
-    instrument "rails3.compile" do
-      super
-    end
-  end
-
 private
 
   def install_plugins

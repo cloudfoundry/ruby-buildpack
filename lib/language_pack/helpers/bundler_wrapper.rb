@@ -12,15 +12,17 @@ class LanguagePack::Helpers::BundlerWrapper
   VENDOR_URL         = LanguagePack::Base::VENDOR_URL                # coupling
   DEFAULT_FETCHER    = LanguagePack::Fetcher.new(VENDOR_URL)         # coupling
   BUNDLER_DIR_NAME   = LanguagePack::Ruby::BUNDLER_GEM_PATH          # coupling
-  BUNDLER_PATH       = File.expand_path("../../../../tmp/#{BUNDLER_DIR_NAME}", __FILE__)
   GEMFILE_PATH       = Pathname.new "./Gemfile"
 
   attr_reader   :bundler_path
+  class << self
+    attr_accessor :dep_dir
+  end
 
   def initialize(options = {})
     @fetcher              = options[:fetcher]      || DEFAULT_FETCHER
     @bundler_tmp          = Dir.mktmpdir
-    @bundler_path         = options[:bundler_path] || File.join(@bundler_tmp, "#{BUNDLER_DIR_NAME}")
+    @bundler_path         = options[:bundler_path] || File.join((self.class.dep_dir || @bundler_tmp), "#{BUNDLER_DIR_NAME}")
     @gemfile_path         = options[:gemfile_path] || ENV['BUNDLE_GEMFILE'] || GEMFILE_PATH
     @bundler_tar          = options[:bundler_tar]  || "#{BUNDLER_DIR_NAME}.tgz"
     @gemfile_lock_path    = "#{@gemfile_path}.lock"
@@ -31,6 +33,7 @@ class LanguagePack::Helpers::BundlerWrapper
 
   def install
     fetch_bundler
+    create_symlinks
     $LOAD_PATH << @path
     require "bundler"
     self
@@ -125,6 +128,16 @@ class LanguagePack::Helpers::BundlerWrapper
     instrument 'parse_bundle' do
       gemfile_contents = File.read(@gemfile_lock_path)
       Bundler::LockfileParser.new(gemfile_contents)
+    end
+  end
+
+  def create_symlinks
+    if self.class.dep_dir
+      FileUtils.mkdir_p("#{self.class.dep_dir}/bin")
+      Dir.chdir("#{self.class.dep_dir}/bin") do
+        FileUtils.ln_s("../#{BUNDLER_DIR_NAME}/bin/bundle", "bundle", force: true)
+        FileUtils.ln_s("../#{BUNDLER_DIR_NAME}/bin/bundler", "bundler", force: true)
+      end
     end
   end
 end

@@ -33,22 +33,16 @@ class LanguagePack::Ruby < LanguagePack::Base
     self.class.bundler
   end
 
-  def initialize(build_path, cache_path=nil)
-    super(build_path, cache_path)
+  def initialize(build_path, cache_path=nil, dep_dir = "vendor")
+    super(build_path, cache_path, dep_dir)
     @fetchers[:mri]    = LanguagePack::Fetcher.new(VENDOR_URL, @stack)
-    @node_installer    = LanguagePack::NodeInstaller.new(@stack)
-    @yarn_installer    = LanguagePack::YarnInstaller.new(@stack)
-    @jvm_installer     = LanguagePack::JvmInstaller.new(slug_vendor_jvm, @stack)
+    @node_installer    = LanguagePack::NodeInstaller.new(dep_dir, @stack)
+    @yarn_installer    = LanguagePack::YarnInstaller.new(dep_dir, @stack)
+    @jvm_installer     = LanguagePack::JvmInstaller.new(dep_dir, @stack)
   end
 
   def name
     "Ruby"
-  end
-
-  def default_addons
-    instrument "ruby.default_addons" do
-      add_dev_database_addon
-    end
   end
 
   def default_config_vars
@@ -75,25 +69,34 @@ class LanguagePack::Ruby < LanguagePack::Base
 
   def best_practice_warnings; end
 
-  def compile
-    instrument 'ruby.compile' do
-      # check for new app at the beginning of the compile
+  def supply
+    instrument 'ruby.supply' do
+      # check for new app at the beginning of supply
       new_app?
       Dir.chdir(build_path)
-      remove_vendor_bundle
       warn_bundler_upgrade
       warn_windows_gemfile_endline
       install_ruby
       install_jvm
-      setup_language_pack_environment
+      install_binaries
+      add_dep_dir_to_path
       setup_export
       setup_profiled
+    end
+  end
+
+  def finalize
+    instrument 'ruby.finalize' do
+      # check for new app at the beginning of finalize
+      new_app?
+      Dir.chdir(build_path)
+      remove_vendor_bundle
+      link_supplied_binaries_in_app
       allow_git do
         install_bundler_in_app
         build_bundler
         post_bundler
         create_database_yml
-        install_binaries
         run_assets_precompile_rake_task
       end
       best_practice_warnings
@@ -123,24 +126,6 @@ WARNING
     end
   end
 
-  # the base PATH environment variable to be used
-  # @return [String] the resulting PATH
-  def default_path
-    # need to remove bin/ folder since it links
-    # to the wrong --prefix ruby binstubs
-    # breaking require. This only applies to Ruby 1.9.2 and 1.8.7.
-    safe_binstubs = binstubs_relative_paths - ["bin"]
-    paths         = [
-      ENV["PATH"],
-      "bin",
-      system_paths,
-    ]
-    paths.unshift("#{slug_vendor_jvm}/bin") if ruby_version.jruby?
-    paths.unshift(safe_binstubs)
-
-    paths.join(":")
-  end
-
   def binstubs_relative_paths
     [
       "bin",
@@ -149,42 +134,28 @@ WARNING
     ]
   end
 
-  def system_paths
-    "/usr/local/bin:/usr/bin:/bin"
-  end
-
   # the relative path to the bundler directory of gems
   # @return [String] resulting path
   def slug_vendor_base
     instrument 'ruby.slug_vendor_base' do
-      if @slug_vendor_base
-        @slug_vendor_base
-      elsif ruby_version.ruby_version == "1.8.7"
-        @slug_vendor_base = "vendor/bundle/1.8"
-      else
-        @slug_vendor_base = run_no_pipe(%q(ruby -e "require 'rbconfig';puts \"vendor/bundle/#{RUBY_ENGINE}/#{RbConfig::CONFIG['ruby_version']}\"")).chomp
-        error "Problem detecting bundler vendor directory: #{@slug_vendor_base}" unless $?.success?
-        @slug_vendor_base
-      end
+      return @slug_vendor_base if @slug_vendor_base
+
+      @slug_vendor_base = run_no_pipe(%q(ruby -e "require 'rbconfig';puts \"vendor/bundle/#{RUBY_ENGINE}/#{RbConfig::CONFIG['ruby_version']}\"")).chomp
+      error "Problem detecting bundler vendor directory: #{@slug_vendor_base}" unless $?.success?
+      @slug_vendor_base
     end
   end
 
   # the relative path to the vendored ruby directory
   # @return [String] resulting path
   def slug_vendor_ruby
-    "vendor/#{ruby_version.version_without_patchlevel}"
+    "#{@dep_dir}/#{ruby_version.version_without_patchlevel}"
   end
 
   # the relative path to the vendored jvm
   # @return [String] resulting path
   def slug_vendor_jvm
-    "vendor/jvm"
-  end
-
-  # the absolute path of the build ruby to use during the buildpack
-  # @return [String] resulting path
-  def build_ruby_path
-    "/tmp/#{ruby_version.version_without_patchlevel}"
+    "#{@dep_dir}/jvm"
   end
 
   # fetch the ruby version from bundler
@@ -274,47 +245,26 @@ EOF
     "-Xmx${JVM_MAX_HEAP:-384}m"
   end
 
-  # sets up the environment variables for the build process
-  def setup_language_pack_environment
-    instrument 'ruby.setup_language_pack_environment' do
-      if ruby_version.jruby?
-        ENV["PATH"] += ":bin"
-        ENV["JAVA_MEM"] = run(<<-SHELL).chomp
-#{set_jvm_max_heap}
-echo #{default_java_mem}
-SHELL
-puts "Using Java Memory: #{ENV["JAVA_MEM"]}"
-        ENV["JRUBY_OPTS"] = env('JRUBY_BUILD_OPTS') || env('JRUBY_OPTS')
-      end
-      setup_ruby_install_env
-      ENV["PATH"] += ":#{node_preinstall_bin_path}" if node_js_installed?
-
-      # TODO when buildpack-env-args rolls out, we can get rid of
-      # ||= and the manual setting below
-      config_vars = default_config_vars.each do |key, value|
-        ENV[key] ||= value
-      end
-
-      ENV["GEM_PATH"] = slug_vendor_base
-      ENV["GEM_HOME"] = slug_vendor_base
-      ENV["PATH"]     = default_path
-    end
+  # we need this so supply and finalize use the same ruby when they call slug_vendor_base
+  def add_dep_dir_to_path
+    ENV['PATH'] = "#{@dep_dir}/bin:#{ENV['PATH']}"
   end
 
   # Sets up the environment variables for subsequent processes run by
   # muiltibuildpack. We can't use profile.d because $HOME isn't set up
   def setup_export
     instrument 'ruby.setup_export' do
-      paths = ENV["PATH"].split(":")
-      set_export_override "GEM_PATH", "#{build_path}/#{slug_vendor_base}:$GEM_PATH"
-      set_export_default  "LANG",     "en_US.UTF-8"
-      set_export_override "PATH",     paths.map { |path| /^\/.*/ !~ path ? "#{build_path}/#{path}" : path }.join(":")
+      write_env_file "GEM_PATH", "#{build_path}/#{slug_vendor_base}:#{ENV['GEM_PATH']}"
+      write_env_file "GEM_HOME", "#{build_path}/#{slug_vendor_base}"
+      write_env_file "LANG",     "en_US.UTF-8"
+
+      config_vars = default_config_vars.each do |key, value|
+        write_env_file key, value
+      end
 
       if ruby_version.jruby?
-        add_to_export set_jvm_max_heap
-        add_to_export set_java_mem
-        set_export_default "JAVA_OPTS",  default_java_opts
-        set_export_default "JRUBY_OPTS", default_jruby_opts
+        write_env_file "JAVA_OPTS",  default_java_opts
+        write_env_file "JRUBY_OPTS", default_jruby_opts
       end
     end
   end
@@ -334,6 +284,8 @@ puts "Using Java Memory: #{ENV["JAVA_MEM"]}"
         set_env_default "JAVA_OPTS", default_java_opts
         set_env_default "JRUBY_OPTS", default_jruby_opts
       end
+
+      set_env_default  "LD_LIBRARY_PATH", "$HOME/ld_library_path"
     end
   end
 
@@ -342,16 +294,6 @@ puts "Using Java Memory: #{ENV["JAVA_MEM"]}"
   def install_ruby
     instrument 'ruby.install_ruby' do
       return false unless ruby_version
-
-      if ruby_version.build?
-        FileUtils.mkdir_p(build_ruby_path)
-        Dir.chdir(build_ruby_path) do
-          ruby_vm = "ruby"
-          instrument "ruby.fetch_build_ruby" do
-            @fetchers[:mri].fetch_untar("#{ruby_version.version_for_download.sub(ruby_vm, "#{ruby_vm}-build")}.tgz")
-          end
-        end
-      end
 
       FileUtils.mkdir_p(slug_vendor_ruby)
       Dir.chdir(slug_vendor_ruby) do
@@ -367,13 +309,20 @@ ERROR
         end
       end
 
-      app_bin_dir = "bin"
-      FileUtils.mkdir_p app_bin_dir
+      ## Change rake hashbang
+      if File.exists?("#{slug_vendor_ruby}/bin/rake")
+        rake_contents = File.read("#{slug_vendor_ruby}/bin/rake")
+        if rake_contents.gsub!(%r{/app/vendor/.*/bin/ruby}, '/usr/bin/env ruby')
+          File.write("#{slug_vendor_ruby}/bin/rake", rake_contents)
+        end
+      end
 
-      run("ln -s ruby #{slug_vendor_ruby}/bin/ruby.exe")
-
-      Dir["#{slug_vendor_ruby}/bin/*"].each do |vendor_bin|
-        run("ln -s ../#{vendor_bin} #{app_bin_dir}")
+      FileUtils.ln_s("ruby", "#{slug_vendor_ruby}/bin/ruby.exe")
+      dest = Pathname.new("#{@dep_dir}/bin")
+      FileUtils.mkdir_p(dest.to_s)
+      Dir["#{slug_vendor_ruby}/bin/*"].each do |bin|
+        relative_bin = Pathname.new(bin).relative_path_from(dest).to_s
+        FileUtils.ln_s(relative_bin, "#{dest}/#{File.basename(bin)}")
       end
 
       @metadata.write("buildpack_ruby_version", ruby_version.version_for_download)
@@ -407,8 +356,17 @@ ERROR
     error message
   end
 
+  def link_supplied_binaries_in_app
+    dest = Pathname.new("#{build_path}/bin")
+    FileUtils.mkdir_p(dest.to_s)
+    Dir["#{@dep_dir}/bin/*"].each do |bin|
+      relative_bin = Pathname.new(bin).relative_path_from(dest).to_s
+      FileUtils.ln_s(relative_bin, "#{dest}/#{File.basename(bin)}", force: true)
+    end
+  end
+
   def new_app?
-    @new_app ||= !File.exist?("vendor/.cloudfoundry/metadata")
+    @new_app ||= !File.exist?("vendor/.cloudfoundry/metadata/stack")
   end
 
   # vendors JVM into the slug for JRuby
@@ -416,30 +374,6 @@ ERROR
     instrument 'ruby.install_jvm' do
       if ruby_version.jruby? || forced
         @jvm_installer.install(ruby_version.engine_version, forced)
-      end
-    end
-  end
-
-  # find the ruby install path for its binstubs during build
-  # @return [String] resulting path or empty string if ruby is not vendored
-  def ruby_install_binstub_path
-    @ruby_install_binstub_path ||=
-      if ruby_version.build?
-        "#{build_ruby_path}/bin"
-      elsif ruby_version
-        "#{slug_vendor_ruby}/bin"
-      else
-        ""
-      end
-  end
-
-  # setup the environment so we can use the vendored ruby
-  def setup_ruby_install_env
-    instrument 'ruby.setup_ruby_install_env' do
-      ENV["PATH"] = "#{ruby_install_binstub_path}:#{ENV["PATH"]}"
-
-      if ruby_version.jruby?
-        ENV['JAVA_OPTS']  = default_java_opts
       end
     end
   end
@@ -485,29 +419,6 @@ ERROR
         @yarn_installer.install
       else
         @fetchers[:buildpack].fetch_untar("#{name}.tgz")
-      end
-    end
-  end
-
-  # removes a binary from the slug
-  # @param [String] relative path of the binary on the slug
-  def uninstall_binary(path)
-    FileUtils.rm File.join('bin', File.basename(path)), :force => true
-  end
-
-  def load_default_cache?
-    return false # CloudFoundry cannot use the precompiled heroku gems.
-    new_app? && ruby_version.default?
-  end
-
-  # loads a default bundler cache for new apps to speed up initial bundle installs
-  def load_default_cache
-    instrument "ruby.load_default_cache" do
-      if false # load_default_cache?
-        puts "New app detected loading default bundler cache"
-        patchlevel = run("ruby -e 'puts RUBY_PATCHLEVEL'").chomp
-        cache_name  = "#{LanguagePack::RubyVersion::DEFAULT_VERSION}-p#{patchlevel}-default-cache"
-        @fetchers[:buildpack].fetch_untar("#{cache_name}.tgz")
       end
     end
   end
@@ -583,7 +494,6 @@ WARNING
           "BUNDLE_CONFIG"                 => "#{pwd}/.bundle/config",
           "NOKOGIRI_USE_SYSTEM_LIBRARIES" => "true"
         }
-        env_vars["BUNDLER_LIB_PATH"] = "#{bundler_path}" if ruby_version.ruby_version == "1.8.7"
         puts "Running: #{bundle_command}"
         instrument "ruby.bundle_install" do
           bundle_time = Benchmark.realtime do
@@ -596,12 +506,7 @@ WARNING
           log "bundle", :status => "success"
           puts "Cleaning up the bundler cache."
           instrument "ruby.bundle_clean" do
-            # Only show bundle clean output when not using default cache
-            if load_default_cache?
-              run("#{bundle_bin} clean > /dev/null", user_env: true)
-            else
-              pipe("#{bundle_bin} clean", out: "2> /dev/null", user_env: true)
-            end
+            pipe("#{bundle_bin} clean", out: "2> /dev/null", user_env: true)
           end
           @bundler_cache.store
 
@@ -698,11 +603,10 @@ params = CGI.parse(uri.query || "")
 
   def rake
     @rake ||= begin
-      rake_gem_available = bundler.has_gem?("rake") || ruby_version.rake_is_vendored?
       raise_on_fail      = bundler.gem_version('railties') && bundler.gem_version('railties') > Gem::Version.new('3.x')
 
       topic "Detecting rake tasks"
-      rake = LanguagePack::Helpers::RakeRunner.new(rake_gem_available)
+      rake = LanguagePack::Helpers::RakeRunner.new()
       rake.load_rake_tasks!({ env: rake_env }, raise_on_fail)
       rake
     end
@@ -726,12 +630,6 @@ params = CGI.parse(uri.query || "")
     git_dir = ENV.delete("GIT_DIR") # can mess with bundler
     blk.call
     ENV["GIT_DIR"] = git_dir
-  end
-
-  # decides if we need to enable the dev database addon
-  # @return [Array] empty - we don't add database gems
-  def add_dev_database_addon
-    []
   end
 
   # decides if we need to install the node.js binary

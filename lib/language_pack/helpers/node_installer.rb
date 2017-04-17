@@ -2,15 +2,20 @@ require_relative '../../../compile-extensions/lib/dependencies'
 require 'yaml'
 
 class LanguagePack::NodeInstaller
-  def initialize(stack)
+  def initialize(dep_dir, stack)
+    @dep_dir = dep_dir
   end
 
   def install
-    Dir.chdir("../vendor") do
+    Dir.chdir(@dep_dir) do
       fetcher.fetch_untar("#{binary_path}.tar.gz")
+
+      FileUtils.mkdir_p("bin")
+      Dir.chdir("bin") do
+        FileUtils.ln_s("../#{binary_path}/bin/node", "node")
+        FileUtils.ln_s("../#{binary_path}/bin/npm", "npm")
+      end
     end
-    FileUtils.ln_s("../vendor/#{binary_path}/bin/node", "node")
-    FileUtils.ln_s("../vendor/#{binary_path}/bin/npm", "npm")
   end
 
   def binary_path

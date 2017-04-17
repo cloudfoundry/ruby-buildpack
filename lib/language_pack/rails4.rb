@@ -36,12 +36,6 @@ class LanguagePack::Rails4 < LanguagePack::Rails3
     end
   end
 
-  def compile
-    instrument "rails4.compile" do
-      super
-    end
-  end
-
   private
 
   def install_plugins

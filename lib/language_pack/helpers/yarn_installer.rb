@@ -2,18 +2,22 @@ require_relative '../../../compile-extensions/lib/dependencies'
 require 'yaml'
 
 class LanguagePack::YarnInstaller
-  def initialize(stack)
+  def initialize(dep_dir, stack)
+    @dep_dir = dep_dir
   end
 
   def install
-    Dir.chdir("../vendor") do
+    Dir.chdir(@dep_dir) do
       FileUtils.mkdir_p(binary_path)
       Dir.chdir(binary_path) do
         fetcher.fetch_untar("#{binary_path}.tar.gz", "--strip-components 1")
       end
-    end
 
-    FileUtils.ln_s("../vendor/#{binary_path}/bin/yarn", "yarn", :force => true)
+      Dir.chdir("bin") do
+        FileUtils.ln_s("../#{binary_path}/bin/yarn", "yarn")
+        FileUtils.ln_s("../#{binary_path}/bin/yarnpkg", "yarnpkg")
+      end
+    end
   end
 
   def binary_path

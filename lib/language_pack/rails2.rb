@@ -47,8 +47,8 @@ class LanguagePack::Rails2 < LanguagePack::Ruby
     end
   end
 
-  def compile
-    instrument "rails2.compile" do
+  def finalize
+    instrument "rails2.finalize" do
       install_plugins
       super
     end
