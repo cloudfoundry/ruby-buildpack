@@ -181,7 +181,31 @@ WARNING
     "-Xss512k -XX:+UseCompressedOops -Dfile.encoding=UTF-8"
   end
 
-  def set_jvm_max_heap
+  def staging_jvm_max_heap
+    ulimit = `bash -c 'ulimit -u'`.strip
+
+    case ulimit
+      when "256" then "384"
+      when "512" then "768"
+      when "16384" then "2048"
+      when "32768" then "5120"
+      else ""
+    end
+  end
+
+  # staging Java Xmx
+  # return [String] string of Java Xmx
+  def staging_java_mem
+    max_heap = staging_jvm_max_heap
+
+    if max_heap != ""
+      "-Xmx#{max_heap}m"
+    else
+      "-Xmx384m"
+    end
+  end
+
+  def runtime_jvm_max_heap
     <<-EOF
 case $(ulimit -u) in
 256)   # 1X Dyno
@@ -200,7 +224,7 @@ esac
 EOF
   end
 
-  def set_java_mem
+  def runtime_java_mem
     <<-EOF
 if ! [[ "${JAVA_OPTS}" == *-Xmx* ]]; then
   export JAVA_MEM=${JAVA_MEM:--Xmx${JVM_MAX_HEAP:-384}m}
@@ -239,11 +263,6 @@ EOF
     "-Xcompile.invokedynamic=false"
   end
 
-  # default Java Xmx
-  # return [String] string of Java Xmx
-  def default_java_mem
-    "-Xmx${JVM_MAX_HEAP:-384}m"
-  end
 
   # we need this so supply and finalize use the same ruby when they call slug_vendor_base
   def add_dep_dir_to_path
@@ -263,6 +282,9 @@ EOF
       end
 
       if ruby_version.jruby?
+        puts "Using Java Memory: #{staging_java_mem}"
+        write_env_file "JVM_MAX_HEAP", staging_jvm_max_heap if staging_jvm_max_heap != ""
+        write_env_file "JAVA_MEM",   staging_java_mem
         write_env_file "JAVA_OPTS",  default_java_opts
         write_env_file "JRUBY_OPTS", default_jruby_opts
       end
@@ -279,8 +301,8 @@ EOF
       add_to_profiled set_default_web_concurrency if env("SENSIBLE_DEFAULTS")
 
       if ruby_version.jruby?
-        add_to_profiled set_jvm_max_heap
-        add_to_profiled set_java_mem
+        add_to_profiled runtime_jvm_max_heap
+        add_to_profiled runtime_java_mem
         set_env_default "JAVA_OPTS", default_java_opts
         set_env_default "JRUBY_OPTS", default_jruby_opts
       end
