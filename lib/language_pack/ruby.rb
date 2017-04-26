@@ -267,6 +267,11 @@ EOF
   # we need this so supply and finalize use the same ruby when they call slug_vendor_base
   def add_dep_dir_to_path
     ENV['PATH'] = "#{@dep_dir}/bin:#{ENV['PATH']}"
+    if ENV['GEM_PATH']
+      ENV['GEM_PATH'] = "#{@dep_dir}/bundler-#{BUNDLER_VERSION}:#{ENV['GEM_PATH']}"
+    else
+      ENV['GEM_PATH'] = "#{@dep_dir}/bundler-#{BUNDLER_VERSION}"
+    end
   end
 
   # Sets up the environment variables for subsequent processes run by
@@ -295,7 +300,8 @@ EOF
   def setup_profiled
     instrument 'setup_profiled' do
       set_env_default  "LANG",     "en_US.UTF-8"
-      set_env_override "GEM_PATH", "$HOME/#{slug_vendor_base}:$GEM_PATH"
+      dep_idx = File.basename(@dep_dir)
+      add_to_profiled %{export GEM_PATH="$HOME/#{slug_vendor_base}:$DEPS_DIR/#{dep_idx}/bundler-#{BUNDLER_VERSION}$([[ ! -z "${GEM_PATH:-}" ]] && echo ":$GEM_PATH")"}
       set_env_override "PATH",     binstubs_relative_paths.map {|path| "$HOME/#{path}" }.join(":") + ":$PATH"
 
       add_to_profiled set_default_web_concurrency if env("SENSIBLE_DEFAULTS")
