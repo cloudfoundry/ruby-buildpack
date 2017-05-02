@@ -134,16 +134,16 @@ dependencies:
   md5: 9f48b58738d33e263789c30f9d1a044b
   cf_stacks:
   - cflinuxfs2
-- name: node
-  version: 4.8.2
-  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-4.8.2-linux-x64-09d53abc.tgz
-  md5: 09d53abca4f08cf63b9eb88b7175266f
-  cf_stacks:
-  - cflinuxfs2
 - name: yarn
   version: 0.23.3
   uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn-v0.23.3-54850071.tar.gz
   md5: 54850071e7b675d569fdbbc328ee6b36
+  cf_stacks:
+  - cflinuxfs2
+- name: node
+  version: 4.8.3
+  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-4.8.3-linux-x64-0622641b.tgz
+  md5: 0622641b64386fdfcaa82da4987a1105
   cf_stacks:
   - cflinuxfs2
 exclude_files:
