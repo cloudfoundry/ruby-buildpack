@@ -1,3 +1,25 @@
+v1.6.38 May 03, 2017
+=====================
+
+* Add node 4.8.3 and 6.10.3, remove node 6.10.2 and 4.8.2
+  (https://www.pivotaltracker.com/story/show/144725819)
+  (https://www.pivotaltracker.com/story/show/144719795)
+
+* Add yarn 0.23.4, remove yarn 0.23.2
+  (https://www.pivotaltracker.com/story/show/144725823)
+  (https://www.pivotaltracker.com/story/show/144440647)
+
+* Add Add openjdk 1.8.0_131, remove openjdk 1.8.0_121
+  (https://www.pivotaltracker.com/story/show/144221517)
+
+* Spilt compile into supply and finalize
+  - allows buildpack to use dependencies supplied by previous buildpacks
+  - Move install directories for bundler, ruby, node, yarn, + jvm to
+  dep_dir
+  - clean up some unused code (e.g. only mattered for ancient versions of
+  ruby, only applied to heroku)
+  (https://www.pivotaltracker.com/story/show/142852033)
+
 v1.6.37 Apr 04, 2017
 =====================
 
