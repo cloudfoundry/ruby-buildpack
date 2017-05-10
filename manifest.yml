@@ -58,7 +58,7 @@ dependencies:
   - cflinuxfs2
 - name: openjdk1.8-latest
   version: 1.8.0_131
-  uri: https://java-buildpack.cloudfoundry.org/openjdk/trusty/x86_64/openjdk-1.8.0_131.tar.gz
+  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/openjdk-1.8.0_131-41cbf08b.tar.gz
   md5: 41cbf08b9a72db7a1a53a74c75a819ba
   cf_stacks:
   - cflinuxfs2
