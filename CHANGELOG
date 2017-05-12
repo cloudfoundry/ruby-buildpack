@@ -1,3 +1,22 @@
+v1.6.39 May 12, 2017
+=====================
+
+* Add yarn 0.24.4, remove yarn 0.23.4
+  (https://www.pivotaltracker.com/story/show/145364383)
+  (https://www.pivotaltracker.com/story/show/145350573)
+
+* Add EOL links to ruby buildpack
+  (https://www.pivotaltracker.com/story/show/144943203)
+
+* Reference new windows gemfile docs
+  (https://www.pivotaltracker.com/story/show/141699203)
+
+* Host openjdk in buildpacks bucket
+  (https://www.pivotaltracker.com/story/show/145198585)
+
+* Use '_' instead of '-' in .profile.d script names
+  (https://www.pivotaltracker.com/story/show/144964891)
+
 v1.6.38 May 03, 2017
 =====================
 
