@@ -71,7 +71,7 @@ describe LanguagePack::RubySemverVersion do
       context "unspecified_ruby fixture" do
         let(:gemfile) { File.join(fixtures, '..', 'unspecified_ruby', 'Gemfile') }
         it 'finds a ruby matching "~> DEFAULT_VERSION_NUMBER"' do
-          expect(subject).to eq('2.3.4')
+          expect(subject).to eq('2.4.1')
         end
       end
     end
