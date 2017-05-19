@@ -129,9 +129,9 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 - name: jruby
-  version: ruby-2.3.1-jruby-9.1.8.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby-9.1.8.0_ruby-2.3.1-linux-x64-e6a45d6e.tgz
-  md5: e6a45d6ed829ced730c2dcc8e68ca9e8
+  version: ruby-2.3.1-jruby-9.1.9.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby-9.1.9.0_ruby-2.3.1-linux-x64-0b7b68a0.tgz
+  md5: 0b7b68a0fdce85f70d356b8bdc012603
   cf_stacks:
   - cflinuxfs2
 - name: node
