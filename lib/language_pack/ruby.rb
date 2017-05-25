@@ -9,11 +9,12 @@ require "language_pack/helpers/node_installer"
 require "language_pack/helpers/yarn_installer"
 require "language_pack/helpers/jvm_installer"
 require "language_pack/version"
+require "language_pack/default_version"
 
 # base Ruby Language Pack. This is for any base ruby app.
 class LanguagePack::Ruby < LanguagePack::Base
   NAME                 = "ruby"
-  BUNDLER_VERSION      = "1.14.6"
+  BUNDLER_VERSION      = LanguagePack::DefaultVersion.for('bundler')
   BUNDLER_GEM_PATH     = "bundler-#{BUNDLER_VERSION}"
   NODE_BP_PATH         = "vendor/node/bin"
 
