@@ -54,12 +54,6 @@ dependency_deprecation_dates:
   date: 2017-04-01
   link: https://www.ruby-lang.org/en/news/2017/04/01/support-of-ruby-2-1-has-ended/
 dependencies:
-- name: bundler
-  version: 1.14.6
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.14.6-d7236b1f.tgz
-  md5: d7236b1f16e658d45de69257a3a78d5c
-  cf_stacks:
-  - cflinuxfs2
 - name: openjdk1.8-latest
   version: 1.8.0_131
   uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/openjdk-1.8.0_131-41cbf08b.tar.gz
@@ -148,6 +142,12 @@ dependencies:
   version: 0.24.6
   uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn-v0.24.6-156eb82f.tar.gz
   md5: 156eb82fc7a7635bbc2738a9af936fc5
+  cf_stacks:
+  - cflinuxfs2
+- name: bundler
+  version: 1.15.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.15.0-72f4a679.tgz
+  md5: 72f4a6792a7b74fcef66bb81d184dba9
   cf_stacks:
   - cflinuxfs2
 exclude_files:
