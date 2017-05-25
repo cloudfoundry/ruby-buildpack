@@ -109,15 +109,15 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 - name: jruby
-  version: ruby-1.9.3-jruby-1.7.27
-  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby-1.7.27_ruby-1.9.3-linux-x64-eaf50de5.tgz
-  md5: eaf50de559184a6e29e7df36b64338c8
+  version: ruby-1.9.3-jruby-1.7.26
+  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/jruby-1.7.26_ruby-1.9.3-linux-x64-ce031315.tgz
+  md5: ce0313153c607d0556b272350293acd5
   cf_stacks:
   - cflinuxfs2
 - name: jruby
-  version: ruby-2.0.0-jruby-1.7.27
-  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby-1.7.27_ruby-2.0.0-linux-x64-7f298348.tgz
-  md5: 7f29834834e451261709fe60d02a17eb
+  version: ruby-2.0.0-jruby-1.7.26
+  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/jruby-1.7.26_ruby-2.0.0-linux-x64-acd1b1d9.tgz
+  md5: acd1b1d90d9eb1b94e84dc8555d9c475
   cf_stacks:
   - cflinuxfs2
 - name: jruby
