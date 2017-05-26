@@ -1,3 +1,18 @@
+v1.6.40 May 26, 2017
+=====================
+
+* Add bundler 1.15.0, remove bundler 1.14.6
+  (https://www.pivotaltracker.com/story/show/145768065)
+
+* Add yarn 0.24.6, remove yarn 0.24.4
+  (https://www.pivotaltracker.com/story/show/145961345)
+
+* Add JRuby 9.1.9.0, Remove JRuby 9.1.8.0
+  (https://www.pivotaltracker.com/story/show/145548597)
+
+* Change default ruby version from 2.3.4 to 2.4.1
+  (https://www.pivotaltracker.com/story/show/143721855)
+
 v1.6.39 May 12, 2017
 =====================
 
