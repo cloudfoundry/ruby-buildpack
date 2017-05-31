@@ -9,5 +9,33 @@ mkdir -p "$DEPS_DIR/0"
 mkdir -p "$BUILD_DIR/.profile.d"
 echo "export DEPS_DIR=\$HOME/.cloudfoundry" > "$BUILD_DIR/.profile.d/0000_set-deps-dir.sh"
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+AD_SDK_DIR="$BUILD_DIR/appdynamics"
+mkdir -p $AD_SDK_DIR
+
+tar xvzf "$SCRIPT_DIR/appdynamics-sdk-native-64bit-linux-4.2.6.1.tar.gz" -C "$AD_SDK_DIR/"
+$AD_SDK_DIR/appdynamics-sdk-native/install.sh --ignore-permissions
+
+cat <<EOF >"$BUILD_DIR"/.profile.d/appdynamics.sh
+export AD_INSTALLATION_PATH=/app/appdynamics/appdynamics-sdk-native
+
+sed -i "s/<param name=\"file\" value=\".*\.log\"\/>/<param name=\"file\" value=\"\/dev\/stdout\"\/>/g" /app/appdynamics/appdynamics-sdk-native/conf/appdynamics_sdk_log4cxx.xml
+sed -i "s/RollingFileAppender/FileAppender/g" /app/appdynamics/appdynamics-sdk-native/conf/appdynamics_sdk_log4cxx.xml
+
+rm -rf /app/appdynamics/appdynamics-sdk-native/logs/proxy*
+
+/app/appdynamics/appdynamics-sdk-native/runSDKProxy.sh &
+
+until find /app/appdynamics/appdynamics-sdk-native/logs/proxy* | tail -n 1 | xargs cat | grep 'ProxyControl - init completed'
+do
+  sleep 1
+done;
+
+until ps -axww | grep 'java' | grep 'com.appdynamics.ee.agent.proxy.bootstrap.ProxyControlEntryPoint'
+do
+  sleep 1
+done;
+EOF
+
 $BUILDPACK_DIR/bin/supply "$BUILD_DIR" "$CACHE_DIR" "$DEPS_DIR" 0
 $BUILDPACK_DIR/bin/finalize "$BUILD_DIR" "$CACHE_DIR" "$DEPS_DIR" 0
