@@ -1,4 +1,6 @@
 #!/bin/bash
+echo 'Hello!!!'
+
 set -euo pipefail
 
 BUILD_DIR=$1
