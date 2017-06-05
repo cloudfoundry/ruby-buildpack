@@ -145,9 +145,9 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 - name: bundler
-  version: 1.15.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.15.0-72f4a679.tgz
-  md5: 72f4a6792a7b74fcef66bb81d184dba9
+  version: 1.15.1
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.15.1-2803ca8e.tgz
+  md5: 2803ca8e3f549607430a58e957aa74ff
   cf_stacks:
   - cflinuxfs2
 exclude_files:
