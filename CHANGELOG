@@ -1,3 +1,19 @@
+v1.6.41 Jun 06, 2017
+=====================
+
+* Convert to online-only distribution.
+  - See: http://cf-dev.70369.x6.nabble.com/cf-dev-Discontinuing-Distribution-of-the-Offline-Buildpacks-td6732.html
+  (https://www.pivotaltracker.com/story/show/146375487)
+
+* Add jruby 9.1.10.0, remove jruby 9.1.9.0
+  (https://www.pivotaltracker.com/story/show/146119231)
+
+* Add bundler 1.15.1, remove bundler 1.15.0
+  source url: https://rubygems.org/downloads/bundler-1.15.1.gem
+  source sha256: fa6ec48f94faffe4987f89b4b85409fd6a4ddce8d46f779acdc26d041eb200d7
+  (https://www.pivotaltracker.com/story/show/146502569)
+
+
 v1.6.40 May 26, 2017
 =====================
 
