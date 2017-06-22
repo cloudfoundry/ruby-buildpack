@@ -3,13 +3,13 @@
 
 A Cloud Foundry [buildpack](http://docs.cloudfoundry.org/buildpacks/) for Ruby based apps.
 
-This is based on the [Heroku buildpack] (https://github.com/heroku/heroku-buildpack-ruby).
+This is based on the [Heroku buildpack(https://github.com/heroku/heroku-buildpack-ruby).
 
 Additional information can be found at [CloudFoundry.org](http://docs.cloudfoundry.org/buildpacks/).
 
 ### Buildpack User Documentation
 
-Official buildpack documentation can be found at http://docs.cloudfoundry.org/buildpacks/ruby/index.html.
+Official buildpack documentation can be found at [ruby buildpack docs](http://docs.cloudfoundry.org/buildpacks/ruby/index.html).
 
 ### Building the Buildpack
 
@@ -49,7 +49,7 @@ To test a buildpack, run the following command from the buildpack's directory:
 BUNDLE_GEMFILE=cf.Gemfile bundle exec buildpack-build
 ```
 
-More options can be found on Machete's [Github page.](https://github.com/cloudfoundry/machete)
+More options can be found on Machete's [Github page](https://github.com/cloudfoundry/machete).
 
 ### Contributing
 
@@ -57,7 +57,7 @@ Find our guidelines [here](./CONTRIBUTING.md).
 
 ### Help and Support
 
-Join the #buildpacks channel in our [Slack community] (http://slack.cloudfoundry.org/) if you need any further assistance.
+Join the #buildpacks channel in our [Slack community](http://slack.cloudfoundry.org/) if you need any further assistance.
 
 ### Reporting Issues
 
