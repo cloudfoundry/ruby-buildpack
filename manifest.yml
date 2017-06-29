@@ -145,9 +145,9 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 - name: yarn
-  version: 0.26.1
-  uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn-v0.26.1-0bf0ee93.tar.gz
-  md5: 0bf0ee938c79e9286cd6eea2e2c58f61
+  version: 0.27.3
+  uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn-v0.27.3-4ad6f69b.tar.gz
+  md5: 4ad6f69bcefb07ded5d4c5c308891dc4
   cf_stacks:
   - cflinuxfs2
 exclude_files:
