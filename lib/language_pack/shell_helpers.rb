@@ -116,14 +116,10 @@ module LanguagePack
       $stdout.flush
     end
 
-    def warn(message, options = {})
-      if options.key?(:inline) ? options[:inline] : false
-        Kernel.puts "###### WARNING:"
-        puts message
-        Kernel.puts ""
-      end
-      @warnings ||= []
-      @warnings << message
+    def warn(message)
+      Kernel.puts "###### WARNING:"
+      puts message
+      Kernel.puts ""
     end
 
     def error(message)

@@ -80,13 +80,8 @@ class LanguagePack::Base
   def finalize
     write_release_yaml
     instrument 'base.compile' do
-      Kernel.puts ""
-      @warnings.each do |warning|
-        Kernel.puts "###### WARNING:"
-        puts warning
-        Kernel.puts ""
-      end
       if @deprecations.any?
+        Kernel.puts ""
         topic "DEPRECATIONS:"
         puts @deprecations.join("\n")
       end

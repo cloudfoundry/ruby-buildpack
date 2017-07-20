@@ -488,7 +488,7 @@ WARNING
         bundle_command << " --retry=4"
 
         if File.exist?("#{Dir.pwd}/.bundle/config")
-          warn(<<-WARNING, inline: true)
+          warn(<<-WARNING)
 You have the `.bundle/config` file checked into your repository
  It contains local state like the location of the installed bundle
  as well as configured git local gems, and other settings that should
@@ -498,7 +498,7 @@ WARNING
         end
 
         if bundler.windows_gemfile_lock?
-          warn(<<-WARNING, inline: true)
+          warn(<<-WARNING)
 Removing `Gemfile.lock` because it was generated on Windows.
 Bundler will do a full resolve so native gems are handled properly.
 This may result in unexpected gem versions being used in your app.
