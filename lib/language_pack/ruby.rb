@@ -279,7 +279,6 @@ EOF
   # muiltibuildpack. We can't use profile.d because $HOME isn't set up
   def setup_export
     instrument 'ruby.setup_export' do
-      FileUtils.mkdir_p "#{build_path}/#{slug_vendor_base}"
       write_env_file "GEM_PATH", "#{build_path}/#{slug_vendor_base}:#{ENV['GEM_PATH']}"
       write_env_file "GEM_HOME", "#{build_path}/#{slug_vendor_base}"
       write_env_file "LANG",     "en_US.UTF-8"
