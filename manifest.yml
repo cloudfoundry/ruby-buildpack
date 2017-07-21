@@ -151,6 +151,9 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 exclude_files:
+- ".bin"
+- ".bundle"
+- ".envc"
 - ".git/"
 - ".gitignore"
 - ".gitmodules"

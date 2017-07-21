@@ -18,3 +18,4 @@ vendor/bundler/*
 /ruby_buildpack-*.zip
 .bundle/
 *.so.*
+/.bin/
