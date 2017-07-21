@@ -392,11 +392,15 @@ ERROR
   end
 
   def link_supplied_binaries_in_app
+    dep_idx = File.basename(@dep_dir)
     dest = Pathname.new("#{build_path}/bin")
     FileUtils.mkdir_p(dest.to_s)
     Dir["#{@dep_dir}/bin/*"].each do |bin|
-      relative_bin = Pathname.new(bin).relative_path_from(dest).to_s
-      FileUtils.ln_s(relative_bin, "#{dest}/#{File.basename(bin)}", force: true)
+      dest_file = "#{dest}/#{File.basename(bin)}"
+      unless File.exists?(dest_file)
+        File.write(dest_file, %Q{#!/bin/bash\n$DEPS_DIR/#{dep_idx}/bin/#{File.basename(bin)} "$@"\n})
+        FileUtils.chmod '+x', dest_file
+      end
     end
   end
 
