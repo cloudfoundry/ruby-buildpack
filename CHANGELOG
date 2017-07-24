@@ -1,3 +1,19 @@
+v1.6.45 Jul 24, 2017
+=====================
+
+* Add bundler 1.15.3, remove bundler 1.15.1
+  (https://www.pivotaltracker.com/story/show/149029147)
+  (https://www.pivotaltracker.com/story/show/149328823)
+
+* link to dep/*/bin/* using bash script instead of symlinks
+  (https://www.pivotaltracker.com/story/show/149299715)
+
+* Only emit warnings inline to avoid both duplication and confusion during diagnosis
+  (https://www.pivotaltracker.com/story/show/148696219)
+
+* Avoid warning developers about having vendor/bundle in their repository when they had not
+  (https://www.pivotaltracker.com/story/show/148696219)
+
 v1.6.44 Jul 13, 2017
 =====================
 
