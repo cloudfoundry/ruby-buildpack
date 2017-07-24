@@ -685,13 +685,20 @@ params = CGI.parse(uri.query || "")
 
     legacy_path = "#{Dir.pwd}/#{NODE_BP_PATH}"
     path        = run("which node")
+    node_supplied = false
     if path && $?.success?
+      node_supplied = true
       @node_preinstall_bin_path = path
     elsif run("#{legacy_path}/node -v") && $?.success?
+      node_supplied = false
       @node_preinstall_bin_path = legacy_path
     else
       @node_preinstall_bin_path = false
     end
+    if node_supplied
+      puts "Skipping install of nodejs since it has been supplied"
+    end
+      @node_preinstall_bin_path
   end
   alias :node_js_installed? :node_preinstall_bin_path
 
