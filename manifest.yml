@@ -15,7 +15,7 @@ url_to_dependency_map:
   version: "$1"
 - match: openjdk1.8-latest
   name: openjdk1.8-latest
-  version: 1.8.0_131
+  version: 1.8.0_141
 - match: node-v(\d+\.\d+\.\d+)
   name: node
   version: "$1"
@@ -55,9 +55,9 @@ dependency_deprecation_dates:
   link: https://www.ruby-lang.org/en/news/2017/04/01/support-of-ruby-2-1-has-ended/
 dependencies:
 - name: openjdk1.8-latest
-  version: 1.8.0_131
-  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/openjdk-1.8.0_131-41cbf08b.tar.gz
-  md5: 41cbf08b9a72db7a1a53a74c75a819ba
+  version: 1.8.0_141
+  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/openjdk-1.8.0_141-68d0948c.tar.gz
+  md5: 68d0948ce2a31b2a53ecfdac6395dad5
   cf_stacks:
   - cflinuxfs2
 - name: ruby
@@ -122,8 +122,8 @@ dependencies:
   - cflinuxfs2
 - name: jruby
   version: ruby-2.3.3-jruby-9.1.12.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby-9.1.12.0_ruby-2.3.3-linux-x64-a9d5dc95.tgz
-  md5: a9d5dc9583151ef0cba1f7dc6c8c2b68
+  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby-9.1.12.0_ruby-2.3.3-linux-x64-0cf8c163.tgz
+  md5: 0cf8c163a89b742e33404daac28a4f51
   cf_stacks:
   - cflinuxfs2
 - name: yarn
