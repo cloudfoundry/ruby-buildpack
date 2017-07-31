@@ -1,3 +1,12 @@
+v1.6.46 Jul 31, 2017
+=====================
+
+* Update openjdk 1.8.0_131 -> 1.8.0_141
+  (https://www.pivotaltracker.com/story/show/149546525)
+
+* Log a message if node is already supplied
+  (https://www.pivotaltracker.com/story/show/147464525)
+
 v1.6.45 Jul 24, 2017
 =====================
 
