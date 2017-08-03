@@ -3,25 +3,8 @@ language: ruby
 default_versions:
 - name: ruby
   version: 2.4.1
-url_to_dependency_map:
-- match: ruby-(.*?)-jruby-(.*?)\.tgz
-  name: jruby
-  version: ruby-$1-jruby-$2
-- match: ruby-(\d+\.\d+\.\d+)
-  name: ruby
-  version: "$1"
-- match: bundler-(\d+\.\d+\.\d+)
-  name: bundler
-  version: "$1"
-- match: openjdk1.8-latest
-  name: openjdk1.8-latest
-  version: 1.8.0_141
-- match: node-v(\d+\.\d+\.\d+)
-  name: node
-  version: "$1"
-- match: yarn-v(\d+\.\d+\.\d+)
-  name: yarn
-  version: "$1"
+pre_package: scripts/build.sh
+url_to_dependency_map: []
 dependency_deprecation_dates:
 - match: 4\.\d+\.\d+
   version_line: '4'
@@ -55,7 +38,7 @@ dependency_deprecation_dates:
   link: https://www.ruby-lang.org/en/news/2017/04/01/support-of-ruby-2-1-has-ended/
 dependencies:
 - name: openjdk1.8-latest
-  version: 1.8.0_141
+  version: 1.8.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/openjdk-1.8.0_141-68d0948c.tar.gz
   md5: 68d0948ce2a31b2a53ecfdac6395dad5
   cf_stacks:
@@ -138,33 +121,30 @@ dependencies:
   md5: 230101ff1ca8309ee8ab37b1c9ad28d8
   cf_stacks:
   - cflinuxfs2
-- name: node
-  version: 6.11.2
-  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-6.11.2-linux-x64-02a017c6.tgz
-  md5: 02a017c606bbf9b9f8382d4e872a14cb
-  cf_stacks:
-  - cflinuxfs2
 - name: bundler
   version: 1.15.4
   uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.15.4-e083af6d.tgz
   md5: e083af6d9b61cd30cad2ef2b9d1d4a8d
   cf_stacks:
   - cflinuxfs2
-exclude_files:
-- ".bin"
-- ".bundle"
-- ".envc"
-- ".git/"
-- ".gitignore"
-- ".gitmodules"
-- repos/
-- spec/
-- cf_spec/
-- log/
-- test/
-- cf.Gemfile
-- cf.Gemfile.lock
-- bin/package
-- buildpack-packager/
-- ruby_buildpack-*v*.zip
-- cf_build/
+- name: node
+  version: 6.11.2
+  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-6.11.2-linux-x64-02a017c6.tgz
+  md5: 02a017c606bbf9b9f8382d4e872a14cb
+  cf_stacks:
+  - cflinuxfs2
+include_files:
+- CHANGELOG
+- CONTRIBUTING.md
+- ISSUE_TEMPLATE
+- LICENSE
+- NOTICE
+- PULL_REQUEST_TEMPLATE
+- README.md
+- VERSION
+- bin/compile
+- bin/detect
+- bin/finalize
+- bin/release
+- bin/supply
+- manifest.yml

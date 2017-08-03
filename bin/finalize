@@ -1,59 +1,17 @@
-#!/usr/bin/env ruby
+#!/bin/bash
+set -euo pipefail
 
-require 'open3'
+BUILD_DIR=$1
+CACHE_DIR=$2
+DEPS_DIR=$3
+DEPS_IDX=$4
 
-# sync output
-$stdout.sync = true
+export BUILDPACK_DIR=`dirname $(readlink -f ${BASH_SOURCE%/*})`
+source "$BUILDPACK_DIR/scripts/install_go.sh"
+output_dir=$(mktemp -d -t finalizeXXX)
 
-build_dir = ARGV[0]
-cache_dir = ARGV[1]
-deps_dir  = ARGV[2]
-deps_idx  = ARGV[3]
+echo "-----> Running go build finalize"
+GOROOT=$GoInstallDir/go GOPATH=$BUILDPACK_DIR $GoInstallDir/go/bin/go build -o $output_dir/finalize ruby/finalize/cli
 
-buildpack_dir = File.join(File.dirname(__FILE__), '..')
-compile_extensions_dir = File.expand_path(File.join(buildpack_dir, 'compile-extensions'))
+$output_dir/finalize "$BUILD_DIR" "$CACHE_DIR" "$DEPS_DIR" "$DEPS_IDX"
 
-exit(44) unless system("#{compile_extensions_dir}/bin/check_stack_support")
-
-$:.unshift File.expand_path("../../lib", __FILE__)
-require "language_pack"
-require "language_pack/shell_helpers"
-
-require 'cloud_foundry/language_pack/extensions'
-
-dep_dir = "#{deps_dir}/#{deps_idx}"
-LanguagePack::Helpers::BundlerWrapper.dep_dir = dep_dir
-
-stdout, stderr, status = Open3.capture3("#{compile_extensions_dir}/bin/build_path_from_supply #{deps_dir}") 
-if status.exitstatus != 0
-  puts "build_path_from_supply script failed: #{stdout} \n====\n #{stderr}"
-  exit 1
-end
-stdout.split("\n").each do |line|
-  var, val = line.split('=', 2)
-  ENV[var] = val
-end
-
-begin
-  LanguagePack::Instrument.trace 'finalize', 'app.finalize' do
-    if pack = LanguagePack.detect(ARGV[0], ARGV[1], dep_dir)
-      pack.topic("Finalizing #{pack.name}")
-      pack.log("finalize") do
-        pack.finalize
-      end
-    end
-    system("#{compile_extensions_dir}/bin/write_profiled_from_supply #{deps_dir} #{build_dir}") or raise 'Could not write .profile.d script'
-    system("#{compile_extensions_dir}/bin/store_buildpack_metadata #{buildpack_dir} #{cache_dir}")
-  end
-rescue Exception => e
-  Kernel.puts " !"
-  e.message.split("\n").each do |line|
-    Kernel.puts " !     #{line.strip}"
-  end
-  Kernel.puts " !"
-  if e.is_a?(BuildpackError)
-    exit 1
-  else
-    raise e
-  end
-end
