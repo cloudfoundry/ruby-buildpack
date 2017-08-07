@@ -1,3 +1,9 @@
+v1.6.47 Aug 07, 2017
+=====================
+
+* Add node 6.11.2, remove node 6.11.1
+  (https://www.pivotaltracker.com/story/show/149837609)
+
 v1.6.46 Jul 31, 2017
 =====================
 
