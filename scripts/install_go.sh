@@ -21,6 +21,7 @@ if [ ! -f $GoInstallDir/go/bin/go ]; then
   fi
 
   tar xzf /tmp/go.tar.gz -C $GoInstallDir
+  rm /tmp/go.tar.gz
 fi
 if [ ! -f $GoInstallDir/go/bin/go ]; then
   echo "       **ERROR** Could not download go"
