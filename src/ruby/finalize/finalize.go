@@ -149,23 +149,12 @@ func (f *Finalizer) PrecompileAssets() error {
 		return nil
 	}
 
-	env := []string{
-		fmt.Sprintf("BUNDLE_BIN=%s", os.Getenv("BUNDLE_BIN")),
-		fmt.Sprintf("BUNDLE_CONFIG=%s", os.Getenv("BUNDLE_CONFIG")),
-		fmt.Sprintf("BUNDLE_PATH=%s", os.Getenv("BUNDLE_PATH")),
-		fmt.Sprintf("BUNDLE_WITHOUT=%s", os.Getenv("BUNDLE_WITHOUT")),
-		fmt.Sprintf("GEM_HOME=%s", os.Getenv("GEM_HOME")),
-		fmt.Sprintf("GEM_PATH=%s", os.Getenv("GEM_PATH")),
-		fmt.Sprintf("PATH=%s", os.Getenv("PATH")),
-	}
-
 	f.Log.BeginStep("Precompiling assets")
 	startTime := time.Now()
 	cmd = exec.Command("bundle", "exec", "rake", "assets:precompile")
 	cmd.Dir = f.Stager.BuildDir()
 	cmd.Stdout = text.NewIndentWriter(os.Stdout, []byte("       "))
 	cmd.Stderr = text.NewIndentWriter(os.Stderr, []byte("       "))
-	cmd.Env = env
 	err := cmd.Run()
 
 	f.Log.Info("Asset precompilation completed (%v)", time.Since(startTime))
@@ -176,7 +165,6 @@ func (f *Finalizer) PrecompileAssets() error {
 		cmd.Dir = f.Stager.BuildDir()
 		cmd.Stdout = text.NewIndentWriter(os.Stdout, []byte("       "))
 		cmd.Stderr = text.NewIndentWriter(os.Stderr, []byte("       "))
-		cmd.Env = env
 		err = cmd.Run()
 	}
 
