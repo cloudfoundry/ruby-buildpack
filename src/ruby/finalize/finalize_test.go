@@ -2,8 +2,10 @@ package finalize_test
 
 import (
 	"bytes"
+	"errors"
 	"io/ioutil"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"ruby/finalize"
 
@@ -27,6 +29,7 @@ var _ = Describe("Finalize", func() {
 		buffer       *bytes.Buffer
 		mockCtrl     *gomock.Controller
 		mockVersions *MockVersions
+		mockCommand  *MockCommand
 	)
 
 	BeforeEach(func() {
@@ -45,6 +48,7 @@ var _ = Describe("Finalize", func() {
 
 		mockCtrl = gomock.NewController(GinkgoT())
 		mockVersions = NewMockVersions(mockCtrl)
+		mockCommand = NewMockCommand(mockCtrl)
 
 		args := []string{buildDir, "", depsDir, depsIdx}
 		stager := libbuildpack.NewStager(args, logger, &libbuildpack.Manifest{})
@@ -52,6 +56,7 @@ var _ = Describe("Finalize", func() {
 		finalizer = &finalize.Finalizer{
 			Stager:   stager,
 			Versions: mockVersions,
+			Command:  mockCommand,
 			Log:      logger,
 		}
 	})
@@ -231,6 +236,52 @@ var _ = Describe("Finalize", func() {
 			It("does not log", func() {
 				finalizer.WriteDatabaseYml()
 				Expect(buffer.String()).To(BeEmpty())
+			})
+		})
+	})
+
+	Describe("PrecompileAssets", func() {
+		Context("app does not have assets:precompile task", func() {
+			It("doesn't run assets:precompile", func() {
+				mockCommand.EXPECT().Run(gomock.Any()).Do(func(cmd *exec.Cmd) {
+					Expect(cmd.Args).To(Equal([]string{"bundle", "exec", "rake", "-n", "assets:precompile"}))
+				}).Return(errors.New("app does not have assets:precompile task"))
+				Expect(finalizer.PrecompileAssets()).To(Succeed())
+			})
+		})
+
+		Context("app has assets:precompile task", func() {
+			var cmds []*exec.Cmd
+			BeforeEach(func() {
+				mockVersions.EXPECT().HasGem(gomock.Any()).AnyTimes().Return(false, nil)
+				cmds = []*exec.Cmd{}
+				mockCommand.EXPECT().Run(gomock.Any()).AnyTimes().Do(func(cmd *exec.Cmd) {
+					cmds = append(cmds, cmd)
+				}).Return(nil)
+			})
+			Context("Rails < 4", func() {
+				BeforeEach(func() {
+					finalizer.RailsVersion = 3
+				})
+				It("runs assets:precompile with DATABASE_URL", func() {
+					Expect(finalizer.PrecompileAssets()).To(Succeed())
+					Expect(cmds).To(HaveLen(2))
+					Expect(cmds[1].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:precompile"}))
+					Expect(cmds[1].Env).To(ContainElement("DATABASE_URL=://user:pass@127.0.0.1/dbname"))
+				})
+			})
+			Context("Rails >= 4", func() {
+				BeforeEach(func() {
+					finalizer.RailsVersion = 4
+				})
+				It("runs assets:precompile with DATABASE_URL", func() {
+					Expect(finalizer.PrecompileAssets()).To(Succeed())
+					Expect(cmds).To(HaveLen(3))
+					Expect(cmds[1].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:precompile"}))
+					Expect(cmds[1].Env).To(ContainElement("DATABASE_URL=://user:pass@127.0.0.1/dbname"))
+
+					Expect(cmds[2].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:clean"}))
+				})
 			})
 		})
 	})

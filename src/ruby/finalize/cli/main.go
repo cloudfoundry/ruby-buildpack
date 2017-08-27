@@ -46,6 +46,7 @@ func main() {
 		Stager:   stager,
 		Log:      logger,
 		Versions: versions.New(stager.BuildDir(), manifest),
+		Command:  &libbuildpack.Command{},
 	}
 
 	if err := finalize.Run(&f); err != nil {

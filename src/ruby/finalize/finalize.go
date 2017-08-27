@@ -18,10 +18,15 @@ type Stager interface {
 	DepDir() string
 }
 
+type Command interface {
+	Run(*exec.Cmd) error
+}
+
 type Finalizer struct {
 	Stager           Stager
 	Versions         Versions
 	Log              *libbuildpack.Logger
+	Command          Command
 	Gem12Factor      bool
 	GemStaticAssets  bool
 	GemStdoutLogging bool
@@ -142,12 +147,39 @@ func (f *Finalizer) WriteDatabaseYml() error {
 	return nil
 }
 
+func (f *Finalizer) databaseUrl() string {
+	if os.Getenv("DATABASE_URL") != "" {
+		return os.Getenv("DATABASE_URL")
+	}
+
+	gems := map[string]string{
+		"pg":            "postgres",
+		"jdbc-postgres": "postgres",
+		"mysql":         "mysql",
+		"mysql2":        "mysql2",
+		"sqlite3":       "sqlite3",
+		"sqlite3-ruby":  "sqlite3",
+	}
+
+	scheme := ""
+	for k, v := range gems {
+		if a, err := f.Versions.HasGem(k); err == nil && a {
+			scheme = v
+			break
+		}
+	}
+
+	return fmt.Sprintf("%s://user:pass@127.0.0.1/dbname", scheme)
+}
+
 func (f *Finalizer) PrecompileAssets() error {
 	cmd := exec.Command("bundle", "exec", "rake", "-n", "assets:precompile")
 	cmd.Dir = f.Stager.BuildDir()
-	if err := cmd.Run(); err != nil {
+	if err := f.Command.Run(cmd); err != nil {
 		return nil
 	}
+
+	env := append(os.Environ(), fmt.Sprintf("DATABASE_URL=%s", f.databaseUrl()))
 
 	f.Log.BeginStep("Precompiling assets")
 	startTime := time.Now()
@@ -155,7 +187,8 @@ func (f *Finalizer) PrecompileAssets() error {
 	cmd.Dir = f.Stager.BuildDir()
 	cmd.Stdout = text.NewIndentWriter(os.Stdout, []byte("       "))
 	cmd.Stderr = text.NewIndentWriter(os.Stderr, []byte("       "))
-	err := cmd.Run()
+	cmd.Env = env
+	err := f.Command.Run(cmd)
 
 	f.Log.Info("Asset precompilation completed (%v)", time.Since(startTime))
 
@@ -165,7 +198,8 @@ func (f *Finalizer) PrecompileAssets() error {
 		cmd.Dir = f.Stager.BuildDir()
 		cmd.Stdout = text.NewIndentWriter(os.Stdout, []byte("       "))
 		cmd.Stderr = text.NewIndentWriter(os.Stderr, []byte("       "))
-		err = cmd.Run()
+		cmd.Env = env
+		err = f.Command.Run(cmd)
 	}
 
 	return err

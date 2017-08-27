@@ -6,6 +6,7 @@ package finalize_test
 
 import (
 	gomock "github.com/golang/mock/gomock"
+	exec "os/exec"
 	reflect "reflect"
 )
 
@@ -66,4 +67,39 @@ func (m *MockStager) DepDir() string {
 // DepDir indicates an expected call of DepDir
 func (mr *MockStagerMockRecorder) DepDir() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DepDir", reflect.TypeOf((*MockStager)(nil).DepDir))
+}
+
+// MockCommand is a mock of Command interface
+type MockCommand struct {
+	ctrl     *gomock.Controller
+	recorder *MockCommandMockRecorder
+}
+
+// MockCommandMockRecorder is the mock recorder for MockCommand
+type MockCommandMockRecorder struct {
+	mock *MockCommand
+}
+
+// NewMockCommand creates a new mock instance
+func NewMockCommand(ctrl *gomock.Controller) *MockCommand {
+	mock := &MockCommand{ctrl: ctrl}
+	mock.recorder = &MockCommandMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use
+func (m *MockCommand) EXPECT() *MockCommandMockRecorder {
+	return m.recorder
+}
+
+// Run mocks base method
+func (m *MockCommand) Run(arg0 *exec.Cmd) error {
+	ret := m.ctrl.Call(m, "Run", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Run indicates an expected call of Run
+func (mr *MockCommandMockRecorder) Run(arg0 interface{}) *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Run", reflect.TypeOf((*MockCommand)(nil).Run), arg0)
 }
