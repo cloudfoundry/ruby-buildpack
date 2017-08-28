@@ -2,6 +2,7 @@ package integration_test
 
 import (
 	"path/filepath"
+	"time"
 
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
@@ -31,7 +32,7 @@ var _ = Describe("App with dependencies installed in vendor/bundle", func() {
 
 		By("has required gems at runtime", func() {
 			Expect(app.GetBody("/")).To(ContainSubstring("Healthy"))
-			Eventually(func() string { return app.Stdout.String() }).Should(ContainSubstring("This is red"))
+			Eventually(func() string { return app.Stdout.String() }, 5*time.Second).Should(ContainSubstring("This is red"))
 			Eventually(func() string { return app.Stdout.String() }).Should(ContainSubstring("This is blue"))
 		})
 	})
