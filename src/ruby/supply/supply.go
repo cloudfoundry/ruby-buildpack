@@ -3,6 +3,7 @@ package supply
 import (
 	"bytes"
 	"crypto/md5"
+	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -69,6 +70,11 @@ func Run(s *Supplier) error {
 	s.Log.BeginStep("Supplying Ruby")
 
 	_ = s.Command.Execute(s.Stager.BuildDir(), ioutil.Discard, ioutil.Discard, "touch", "/tmp/checkpoint")
+
+	if err := s.AssetGemfileLockExists(); err != nil {
+		s.Log.Error(err.Error())
+		return err
+	}
 
 	if checksum, err := s.CalcChecksum(); err == nil {
 		s.Log.Debug("BuildDir Checksum Before Supply: %s", checksum)
@@ -153,6 +159,15 @@ func Run(s *Supplier) error {
 		s.Log.Debug(filesChanged)
 	}
 
+	return nil
+}
+
+func (s *Supplier) AssetGemfileLockExists() error {
+	if exists, err := libbuildpack.FileExists(filepath.Join(s.Stager.BuildDir(), "Gemfile.lock")); err != nil {
+		return err
+	} else if !exists {
+		return errors.New("Gemfile.lock required")
+	}
 	return nil
 }
 
