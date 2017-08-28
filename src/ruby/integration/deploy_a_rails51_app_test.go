@@ -27,8 +27,7 @@ var _ = Describe("Rails 5.1 (Webpack/Yarn) App", func() {
 		Eventually(func() string { return app.Stdout.String() }, 10*time.Second).Should(ContainSubstring(`Started GET "/" for`))
 
 		By("Make sure supply does not change BuildDir", func() {
-			Expect(app.Stdout.String()).To(ContainSubstring("BuildDir Checksum Before Supply: 5d823d48d154ee2622e8cf8c2fb21ff7"))
-			Expect(app.Stdout.String()).To(ContainSubstring("BuildDir Checksum After Supply: 5d823d48d154ee2622e8cf8c2fb21ff7"))
+			Expect(app).To(HaveUnchangedAppdir("BuildDir Checksum Before Supply", "BuildDir Checksum After Supply"))
 		})
 	})
 })
