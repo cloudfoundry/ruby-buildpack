@@ -537,6 +537,10 @@ var _ = Describe("Supply", func() {
 			It("returns false", func() {
 				Expect(supplier.NeedsNode()).To(BeFalse())
 			})
+			It("informs the user that node is being skipped", func() {
+				supplier.NeedsNode()
+				Expect(buffer.String()).To(ContainSubstring("Skipping install of nodejs since it has been supplied"))
+			})
 		})
 	})
 })
