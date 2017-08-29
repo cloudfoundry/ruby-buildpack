@@ -172,7 +172,29 @@ func (f *Finalizer) databaseUrl() string {
 	return fmt.Sprintf("%s://user:pass@127.0.0.1/dbname", scheme)
 }
 
+func (f *Finalizer) hasPrecompiledAssets() (bool, error) {
+	globs := []string{".sprockets-manifest-*.json", "manifest-*.json"}
+	if f.RailsVersion < 4 {
+		globs = []string{"manifest.yml"}
+	}
+	for _, glob := range globs {
+		if matches, err := filepath.Glob(filepath.Join(f.Stager.BuildDir(), "public", "assets", glob)); err != nil {
+			return false, err
+		} else if len(matches) > 0 {
+			return true, nil
+		}
+	}
+	return false, nil
+}
+
 func (f *Finalizer) PrecompileAssets() error {
+	if exists, err := f.hasPrecompiledAssets(); err != nil {
+		return err
+	} else if exists {
+		f.Log.Info("Detected assets manifest file, assuming assets were compiled locally")
+		return nil
+	}
+
 	cmd := exec.Command("bundle", "exec", "rake", "-n", "assets:precompile")
 	cmd.Dir = f.Stager.BuildDir()
 	if err := f.Command.Run(cmd); err != nil {

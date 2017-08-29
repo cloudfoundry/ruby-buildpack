@@ -263,24 +263,78 @@ var _ = Describe("Finalize", func() {
 				BeforeEach(func() {
 					finalizer.RailsVersion = 3
 				})
-				It("runs assets:precompile with DATABASE_URL", func() {
-					Expect(finalizer.PrecompileAssets()).To(Succeed())
-					Expect(cmds).To(HaveLen(2))
-					Expect(cmds[1].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:precompile"}))
-					Expect(cmds[1].Env).To(ContainElement("DATABASE_URL=://user:pass@127.0.0.1/dbname"))
+				Context("public/assets/manifest.yml is present", func() {
+					BeforeEach(func() {
+						Expect(os.MkdirAll(filepath.Join(buildDir, "public", "assets"), 0755)).To(Succeed())
+						Expect(ioutil.WriteFile(filepath.Join(buildDir, "public", "assets", "manifest.yml"), []byte("memanifest"), 0644)).To(Succeed())
+					})
+					It("skips assets:precompile", func() {
+						Expect(finalizer.PrecompileAssets()).To(Succeed())
+						Expect(cmds).To(BeEmpty())
+						Expect(buffer.String()).To(ContainSubstring("Detected assets manifest file, assuming assets were compiled locally"))
+					})
+				})
+				Context("public/assets/manifest.yml is not present", func() {
+					BeforeEach(func() {
+						Expect(libbuildpack.FileExists(filepath.Join(buildDir, "public", "assets", "manifest.yml"))).To(BeFalse())
+					})
+					It("runs assets:precompile with DATABASE_URL", func() {
+						Expect(finalizer.PrecompileAssets()).To(Succeed())
+						Expect(cmds).To(HaveLen(2))
+						Expect(cmds[1].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:precompile"}))
+						Expect(cmds[1].Env).To(ContainElement("DATABASE_URL=://user:pass@127.0.0.1/dbname"))
+					})
 				})
 			})
 			Context("Rails >= 4", func() {
 				BeforeEach(func() {
 					finalizer.RailsVersion = 4
 				})
-				It("runs assets:precompile with DATABASE_URL", func() {
-					Expect(finalizer.PrecompileAssets()).To(Succeed())
-					Expect(cmds).To(HaveLen(3))
-					Expect(cmds[1].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:precompile"}))
-					Expect(cmds[1].Env).To(ContainElement("DATABASE_URL=://user:pass@127.0.0.1/dbname"))
+				Context("public/assets/.sprockets-manifest-*.json is present", func() {
+					BeforeEach(func() {
+						Expect(os.MkdirAll(filepath.Join(buildDir, "public", "assets"), 0755)).To(Succeed())
+						Expect(ioutil.WriteFile(filepath.Join(buildDir, "public", "assets", ".sprockets-manifest-123.json"), []byte("memanifest"), 0644)).To(Succeed())
+					})
+					It("skips assets:precompile", func() {
+						Expect(finalizer.PrecompileAssets()).To(Succeed())
+						Expect(cmds).To(BeEmpty())
+						Expect(buffer.String()).To(ContainSubstring("Detected assets manifest file, assuming assets were compiled locally"))
+					})
+				})
+				Context("public/assets/manifest-*.json is present", func() {
+					BeforeEach(func() {
+						Expect(os.MkdirAll(filepath.Join(buildDir, "public", "assets"), 0755)).To(Succeed())
+						Expect(ioutil.WriteFile(filepath.Join(buildDir, "public", "assets", "manifest-123.json"), []byte("memanifest"), 0644)).To(Succeed())
+					})
+					It("skips assets:precompile", func() {
+						Expect(finalizer.PrecompileAssets()).To(Succeed())
+						Expect(cmds).To(BeEmpty())
+						Expect(buffer.String()).To(ContainSubstring("Detected assets manifest file, assuming assets were compiled locally"))
+					})
+				})
+				Context("public/assets/manifest.yml is present", func() {
+					BeforeEach(func() {
+						Expect(os.MkdirAll(filepath.Join(buildDir, "public", "assets"), 0755)).To(Succeed())
+						Expect(ioutil.WriteFile(filepath.Join(buildDir, "public", "assets", "manifest.yml"), []byte("memanifest"), 0644)).To(Succeed())
+					})
+					It("runs assets:precompile with DATABASE_URL", func() {
+						Expect(finalizer.PrecompileAssets()).To(Succeed())
+						Expect(cmds).To(HaveLen(3))
+						Expect(cmds[1].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:precompile"}))
+						Expect(cmds[1].Env).To(ContainElement("DATABASE_URL=://user:pass@127.0.0.1/dbname"))
 
-					Expect(cmds[2].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:clean"}))
+						Expect(cmds[2].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:clean"}))
+					})
+				})
+				Context("No manifest files exist in public/assets/", func() {
+					It("runs assets:precompile with DATABASE_URL", func() {
+						Expect(finalizer.PrecompileAssets()).To(Succeed())
+						Expect(cmds).To(HaveLen(3))
+						Expect(cmds[1].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:precompile"}))
+						Expect(cmds[1].Env).To(ContainElement("DATABASE_URL=://user:pass@127.0.0.1/dbname"))
+
+						Expect(cmds[2].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:clean"}))
+					})
 				})
 			})
 		})
