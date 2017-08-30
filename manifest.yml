@@ -38,8 +38,8 @@ dependency_deprecation_dates:
 dependencies:
 - name: openjdk1.8-latest
   version: 1.8.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/openjdk-1.8.0_141-68d0948c.tar.gz
-  md5: 68d0948ce2a31b2a53ecfdac6395dad5
+  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/openjdk-1.8.0_144-803337cc.tar.gz
+  md5: 803337ccdaabcbb935eb983e5322f3f1
   cf_stacks:
   - cflinuxfs2
 - name: ruby
