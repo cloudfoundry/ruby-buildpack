@@ -125,7 +125,7 @@ func Run(s *Supplier) error {
 		}
 
 		if err := s.InstallYarn(); err != nil {
-			s.Log.Error("Unable to install node: %s", err.Error())
+			s.Log.Error("Unable to install yarn: %s", err.Error())
 			return err
 		}
 	}
@@ -211,7 +211,7 @@ func (s *Supplier) InstallYarn() error {
 		return nil
 	}
 
-	tempDir, err := ioutil.TempDir("", "node")
+	tempDir, err := ioutil.TempDir("", "yarn")
 	if err != nil {
 		return err
 	}
