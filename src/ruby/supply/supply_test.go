@@ -498,8 +498,8 @@ var _ = Describe("Supply", func() {
 			})
 			It("installs yarn", func() {
 				mockManifest.EXPECT().InstallOnlyVersion("yarn", gomock.Any()).Do(func(_, tempDir string) error {
-					Expect(os.MkdirAll(filepath.Join(tempDir, "dist", "bin"), 0755)).To(Succeed())
-					Expect(ioutil.WriteFile(filepath.Join(tempDir, "dist", "bin", "yarn"), []byte("contents"), 0644)).To(Succeed())
+					Expect(os.MkdirAll(filepath.Join(tempDir, "yarn-v1.2.3", "bin"), 0755)).To(Succeed())
+					Expect(ioutil.WriteFile(filepath.Join(tempDir, "yarn-v1.2.3", "bin", "yarn"), []byte("contents"), 0644)).To(Succeed())
 					return nil
 				})
 				Expect(supplier.InstallYarn()).To(Succeed())
