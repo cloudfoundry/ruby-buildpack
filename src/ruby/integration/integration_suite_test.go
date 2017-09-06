@@ -55,6 +55,14 @@ var _ = SynchronizedBeforeSuite(func() []byte {
 	bpDir, err = cutlass.FindRoot()
 	Expect(err).NotTo(HaveOccurred())
 
+	cf_home := os.Getenv("CF_HOME")
+	if cf_home == "" {
+		cf_home = filepath.Join(os.Getenv("HOME"), ".cf")
+	}
+	cf_home, err = cutlass.CopyFixture(cf_home)
+	Expect(err).NotTo(HaveOccurred())
+	Expect(os.Setenv("CF_HOME", cf_home)).To(Succeed())
+
 	cutlass.SeedRandom()
 	cutlass.DefaultStdoutStderr = GinkgoWriter
 })
