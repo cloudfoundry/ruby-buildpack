@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"net/url"
 	"os"
 	"os/exec"
@@ -11,6 +12,7 @@ import (
 	"time"
 
 	"github.com/blang/semver"
+	"github.com/cloudfoundry/libbuildpack"
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
 	. "github.com/onsi/ginkgo"
@@ -57,11 +59,13 @@ var _ = SynchronizedBeforeSuite(func() []byte {
 
 	cf_home := os.Getenv("CF_HOME")
 	if cf_home == "" {
-		cf_home = filepath.Join(os.Getenv("HOME"), ".cf")
+		cf_home = os.Getenv("HOME")
 	}
-	cf_home, err = cutlass.CopyFixture(cf_home)
+	cf_home_new, err := ioutil.TempDir("", "cf-home-copy")
 	Expect(err).NotTo(HaveOccurred())
-	Expect(os.Setenv("CF_HOME", cf_home)).To(Succeed())
+	Expect(os.Mkdir(filepath.Join(cf_home_new, ".cf"), 0755)).To(Succeed())
+	Expect(libbuildpack.CopyDirectory(filepath.Join(cf_home, ".cf"), filepath.Join(cf_home_new, ".cf"))).To(Succeed())
+	Expect(os.Setenv("CF_HOME", cf_home_new)).To(Succeed())
 
 	cutlass.SeedRandom()
 	cutlass.DefaultStdoutStderr = GinkgoWriter
