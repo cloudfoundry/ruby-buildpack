@@ -563,4 +563,45 @@ var _ = Describe("Supply", func() {
 			})
 		})
 	})
+
+	Describe("UpdateRubygems", func() {
+		BeforeEach(func() {
+			mockManifest.EXPECT().AllDependencyVersions("rubygems-update").AnyTimes().Return([]string{"2.6.13"})
+		})
+		Context("gem version is less than 2.6.13", func() {
+			BeforeEach(func() {
+				mockCommand.EXPECT().Output(gomock.Any(), "gem", "--version").AnyTimes().Return("2.6.12\n", nil)
+			})
+
+			It("updates rubygems", func() {
+				mockManifest.EXPECT().FetchDependency(gomock.Any(), gomock.Any()).Do(func(dep libbuildpack.Dependency, path string) {
+					Expect(dep.Name).To(Equal("rubygems-update"))
+					Expect(dep.Version).To(Equal("2.6.13"))
+					Expect(path).To(Equal(filepath.Join(os.TempDir(), "rubygems-update.gem")))
+				})
+				mockCommand.EXPECT().Output(gomock.Any(), "gem", "install", "--no-ri", "--no-rdoc", filepath.Join(os.TempDir(), "rubygems-update.gem"))
+				mockCommand.EXPECT().Output(gomock.Any(), "gem", "update", "--no-document", "-q", "--system", "2.6.13")
+
+				Expect(supplier.UpdateRubygems()).To(Succeed())
+			})
+		})
+		Context("gem version is equal to 2.6.13", func() {
+			BeforeEach(func() {
+				mockCommand.EXPECT().Output(gomock.Any(), "gem", "--version").AnyTimes().Return("2.6.13\n", nil)
+			})
+
+			It("does nothing", func() {
+				Expect(supplier.UpdateRubygems()).To(Succeed())
+			})
+		})
+		Context("gem version is greater than to 2.6.13", func() {
+			BeforeEach(func() {
+				mockCommand.EXPECT().Output(gomock.Any(), "gem", "--version").AnyTimes().Return("2.6.14\n", nil)
+			})
+
+			It("does nothing", func() {
+				Expect(supplier.UpdateRubygems()).To(Succeed())
+			})
+		})
+	})
 })

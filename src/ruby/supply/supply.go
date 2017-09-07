@@ -13,6 +13,7 @@ import (
 	"ruby/cache"
 	"strings"
 
+	"github.com/Masterminds/semver"
 	"github.com/cloudfoundry/libbuildpack"
 	"github.com/kr/text"
 )
@@ -28,6 +29,7 @@ type Manifest interface {
 	InstallDependency(libbuildpack.Dependency, string) error
 	InstallOnlyVersion(string, string) error
 	DefaultVersion(string) (libbuildpack.Dependency, error)
+	FetchDependency(dep libbuildpack.Dependency, outputFile string) error
 }
 type Versions interface {
 	Engine() (string, error)
@@ -115,6 +117,11 @@ func Run(s *Supplier) error {
 
 	if err := s.AddPostRubyInstallDefaultEnv(engine); err != nil {
 		s.Log.Error("Unable to add bundler and gem path to default environment: %s", err.Error())
+		return err
+	}
+
+	if err := s.UpdateRubygems(); err != nil {
+		s.Log.Error("Unable to update rubygems: %s", err.Error())
 		return err
 	}
 
@@ -359,6 +366,53 @@ func (s *Supplier) InstallRuby(name, version string) error {
 		return err
 	}
 	return s.Stager.LinkDirectoryInDepDir(filepath.Join(s.Stager.DepDir(), "ruby", "bin"), "bin")
+}
+
+func (s *Supplier) UpdateRubygems() error {
+	dep := libbuildpack.Dependency{Name: "rubygems-update"}
+	versions := s.Manifest.AllDependencyVersions(dep.Name)
+	if len(versions) == 0 {
+		return nil
+	} else if len(versions) > 1 {
+		return fmt.Errorf("Could not determine version of rubygems-update")
+	}
+	dep.Version = versions[0]
+	gemPath := filepath.Join(os.TempDir(), "rubygems-update.gem")
+
+	currVersion, err := s.Command.Output("/", "gem", "--version")
+	if err != nil {
+		return fmt.Errorf("Could not determine current version of rubygems: %v", err)
+	}
+
+	currVersion = strings.TrimSpace(currVersion)
+	c, err := semver.NewConstraint(fmt.Sprintf(">= %s", dep.Version))
+	if err != nil {
+		return fmt.Errorf("Could not parse rubygems version constraint: >= %s: %v", dep.Version, err)
+	}
+	v, err := semver.NewVersion(currVersion)
+	if err != nil {
+		return fmt.Errorf("Could not parse rubygems current version: %s: %v", currVersion, err)
+	}
+	if c.Check(v) {
+		return nil
+	}
+
+	s.Log.BeginStep("Update rubygems from %s to %s", currVersion, dep.Version)
+
+	if err := s.Manifest.FetchDependency(dep, gemPath); err != nil {
+		return err
+	}
+
+	if output, err := s.Command.Output("/", "gem", "install", "--no-ri", "--no-rdoc", gemPath); err != nil {
+		s.Log.Error(output)
+		return fmt.Errorf("Could not install rubygems-update: %v", err)
+	}
+	if output, err := s.Command.Output("/", "gem", "update", "--no-document", "-q", "--system", dep.Version); err != nil {
+		s.Log.Error(output)
+		return fmt.Errorf("Could not update rubygems: %v", err)
+	}
+
+	return nil
 }
 
 type IndentedWriter struct {

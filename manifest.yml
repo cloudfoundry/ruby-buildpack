@@ -42,6 +42,12 @@ dependencies:
   md5: 803337ccdaabcbb935eb983e5322f3f1
   cf_stacks:
   - cflinuxfs2
+- name: rubygems-update
+  version: 2.6.13
+  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/ruby/rubygems-update-2.6.13.gem
+  md5: cad98b534ae8e1d65f9a5cf00fdaa89f
+  cf_stacks:
+  - cflinuxfs2
 - name: ruby
   version: 2.4.0
   md5: e6c8fe1167d47c3ea78b45e260139bc5
