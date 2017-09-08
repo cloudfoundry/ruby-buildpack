@@ -389,6 +389,13 @@ func (s *Supplier) UpdateRubygems() error {
 		return nil
 	}
 
+	if engine, err := s.Versions.Engine(); err != nil {
+		return err
+	} else if engine == "jruby" {
+		s.Log.Debug("Skipping update of rubygems since jruby")
+		return nil
+	}
+
 	s.Log.BeginStep("Update rubygems from %s to %s", currVersion, dep.Version)
 
 	tempDir, err := ioutil.TempDir("", "node")

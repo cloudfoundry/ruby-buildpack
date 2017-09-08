@@ -575,6 +575,7 @@ var _ = Describe("Supply", func() {
 			})
 
 			It("updates rubygems", func() {
+				mockVersions.EXPECT().Engine().Return("ruby", nil)
 				mockManifest.EXPECT().InstallDependency(gomock.Any(), gomock.Any()).Do(func(dep libbuildpack.Dependency, _ string) {
 					Expect(dep.Name).To(Equal("rubygems"))
 					Expect(dep.Version).To(Equal("2.6.13"))
@@ -582,6 +583,13 @@ var _ = Describe("Supply", func() {
 				mockCommand.EXPECT().Output(gomock.Any(), "ruby", "setup.rb")
 
 				Expect(supplier.UpdateRubygems()).To(Succeed())
+			})
+
+			Context("jruby", func() {
+				It("skips update of rubygems", func() {
+					mockVersions.EXPECT().Engine().Return("jruby", nil)
+					Expect(supplier.UpdateRubygems()).To(Succeed())
+				})
 			})
 		})
 		Context("gem version is equal to 2.6.13", func() {
