@@ -309,4 +309,29 @@ BUNDLED WITH
 			Expect(match).To(BeFalse())
 		})
 	})
+
+	Describe("VersionConstraint", func() {
+		var v *versions.Versions
+		BeforeEach(func() {
+			v = versions.New(tmpDir, manifest)
+		})
+
+		It("returns true for 2.28.1 >=2.28.0", func() {
+			match, err := v.VersionConstraint("2.28.1", ">=2.28.0")
+			Expect(err).ToNot(HaveOccurred())
+			Expect(match).To(BeTrue())
+		})
+
+		It("returns true for 3.0.1.2 >=2.28.0", func() {
+			match, err := v.VersionConstraint("3.0.1.2", ">=2.28.0")
+			Expect(err).ToNot(HaveOccurred())
+			Expect(match).To(BeTrue())
+		})
+
+		It("returns false for 1.50.12 >=2.28.0", func() {
+			match, err := v.VersionConstraint("1.50.12", ">=2.28.0")
+			Expect(err).ToNot(HaveOccurred())
+			Expect(match).To(BeFalse())
+		})
+	})
 })

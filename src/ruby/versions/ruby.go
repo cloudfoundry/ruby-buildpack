@@ -99,6 +99,20 @@ func (v *Versions) RubyEngineVersion() (string, error) {
 	return data.(string), nil
 }
 
+func (v *Versions) VersionConstraint(version string, constraints ...string) (bool, error) {
+	code := `
+		version = input.shift
+		Gem::Requirement.create(input).satisfied_by? Gem::Version.new(version)
+	`
+
+	data, err := v.run(v.buildDir, code, append([]string{version}, constraints...))
+	if err != nil {
+		return false, err
+	}
+
+	return data.(bool), nil
+}
+
 func (v *Versions) HasGemVersion(gem string, constraints ...string) (bool, error) {
 	specs, err := v.specs()
 	if err != nil {
@@ -108,17 +122,7 @@ func (v *Versions) HasGemVersion(gem string, constraints ...string) (bool, error
 		return false, nil
 	}
 
-	code := `
-		gem_version = input.shift
-		Gem::Requirement.create(input).satisfied_by? Gem::Version.new(gem_version)
-	`
-
-	data, err := v.run(v.buildDir, code, append([]string{specs[gem]}, constraints...))
-	if err != nil {
-		return false, err
-	}
-
-	return data.(bool), nil
+	return v.VersionConstraint(specs[gem], constraints...)
 }
 
 func (v *Versions) HasGem(gem string) (bool, error) {

@@ -13,7 +13,6 @@ import (
 	"ruby/cache"
 	"strings"
 
-	"github.com/Masterminds/semver"
 	"github.com/cloudfoundry/libbuildpack"
 	"github.com/kr/text"
 )
@@ -29,7 +28,6 @@ type Manifest interface {
 	InstallDependency(libbuildpack.Dependency, string) error
 	InstallOnlyVersion(string, string) error
 	DefaultVersion(string) (libbuildpack.Dependency, error)
-	FetchDependency(dep libbuildpack.Dependency, outputFile string) error
 }
 type Versions interface {
 	Engine() (string, error)
@@ -37,6 +35,7 @@ type Versions interface {
 	JrubyVersion() (string, error)
 	RubyEngineVersion() (string, error)
 	HasGemVersion(gem string, constraints ...string) (bool, error)
+	VersionConstraint(version string, constraints ...string) (bool, error)
 	HasWindowsGemfileLock() (bool, error)
 	Gemfile() string
 }
@@ -369,15 +368,14 @@ func (s *Supplier) InstallRuby(name, version string) error {
 }
 
 func (s *Supplier) UpdateRubygems() error {
-	dep := libbuildpack.Dependency{Name: "rubygems-update"}
+	dep := libbuildpack.Dependency{Name: "rubygems"}
 	versions := s.Manifest.AllDependencyVersions(dep.Name)
 	if len(versions) == 0 {
 		return nil
 	} else if len(versions) > 1 {
-		return fmt.Errorf("Could not determine version of rubygems-update")
+		return fmt.Errorf("Too many versions of rubygems in manifest")
 	}
 	dep.Version = versions[0]
-	gemPath := filepath.Join(os.TempDir(), "rubygems-update.gem")
 
 	currVersion, err := s.Command.Output("/", "gem", "--version")
 	if err != nil {
@@ -385,31 +383,27 @@ func (s *Supplier) UpdateRubygems() error {
 	}
 
 	currVersion = strings.TrimSpace(currVersion)
-	c, err := semver.NewConstraint(fmt.Sprintf(">= %s", dep.Version))
-	if err != nil {
-		return fmt.Errorf("Could not parse rubygems version constraint: >= %s: %v", dep.Version, err)
-	}
-	v, err := semver.NewVersion(currVersion)
-	if err != nil {
-		return fmt.Errorf("Could not parse rubygems current version: %s: %v", currVersion, err)
-	}
-	if c.Check(v) {
+	if newer, err := s.Versions.VersionConstraint(currVersion, fmt.Sprintf(">= %s", dep.Version)); err != nil {
+		return fmt.Errorf("Could not parse rubygems version constraint: %s >= %s: %v", currVersion, dep.Version, err)
+	} else if newer {
 		return nil
 	}
 
 	s.Log.BeginStep("Update rubygems from %s to %s", currVersion, dep.Version)
 
-	if err := s.Manifest.FetchDependency(dep, gemPath); err != nil {
+	tempDir, err := ioutil.TempDir("", "node")
+	if err != nil {
 		return err
 	}
 
-	if output, err := s.Command.Output("/", "gem", "install", "--no-ri", "--no-rdoc", gemPath); err != nil {
-		s.Log.Error(output)
-		return fmt.Errorf("Could not install rubygems-update: %v", err)
+	if err := s.Manifest.InstallDependency(dep, tempDir); err != nil {
+		return err
 	}
-	if output, err := s.Command.Output("/", "gem", "update", "--no-document", "-q", "--system", dep.Version); err != nil {
+
+	rubygemsDir := filepath.Join(tempDir, fmt.Sprintf("rubygems-%s", dep.Version))
+	if output, err := s.Command.Output(rubygemsDir, "ruby", "setup.rb"); err != nil {
 		s.Log.Error(output)
-		return fmt.Errorf("Could not update rubygems: %v", err)
+		return fmt.Errorf("Could not install rubygems: %v", err)
 	}
 
 	return nil
