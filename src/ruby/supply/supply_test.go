@@ -148,15 +148,33 @@ var _ = Describe("Supply", func() {
 
 		Context("UNIX Gemfile", func() {
 			BeforeEach(func() {
+				os.Setenv("BUNDLE_CONFIG", filepath.Join(depsDir, depsIdx, "bundle_config"))
 				mockVersions.EXPECT().HasWindowsGemfileLock().Return(false, nil)
 				mockVersions.EXPECT().Gemfile().AnyTimes().Return(filepath.Join(buildDir, "Gemfile"))
-				mockCommand.EXPECT().Run(gomock.Any()).AnyTimes()
+				mockCommand.EXPECT().Run(gomock.Any()).AnyTimes().Do(func(cmd *exec.Cmd) error {
+					if len(cmd.Args) > 2 && cmd.Args[1] == "install" {
+						Expect(os.MkdirAll(filepath.Join(cmd.Dir, ".bundle"), 0755)).To(Succeed())
+						Expect(ioutil.WriteFile(filepath.Join(cmd.Dir, ".bundle", "config"), []byte("new content"), 0644)).To(Succeed())
+					}
+					return nil
+				})
 				mockManifest.EXPECT().AllDependencyVersions("bundler").Return([]string{"1.2.3"})
 				Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte("source \"https://rubygems.org\"\ngem \"rack\"\n"), 0644)).To(Succeed())
 			})
+			AfterEach(func() { os.Unsetenv("BUNDLE_CONFIG") })
+
 			It("Does not warn the user", func() {
 				Expect(supplier.InstallGems()).To(Succeed())
 				Expect(buffer.String()).ToNot(ContainSubstring(windowsWarning))
+			})
+			It("does not change .bundle/config", func() {
+				Expect(os.MkdirAll(filepath.Join(buildDir, ".bundle"), 0755)).To(Succeed())
+				Expect(ioutil.WriteFile(filepath.Join(buildDir, ".bundle", "config"), []byte("orig content"), 0644)).To(Succeed())
+				Expect(ioutil.ReadFile(filepath.Join(buildDir, ".bundle", "config"))).To(Equal([]byte("orig content")))
+
+				Expect(supplier.InstallGems()).To(Succeed())
+
+				Expect(ioutil.ReadFile(filepath.Join(buildDir, ".bundle", "config"))).To(Equal([]byte("orig content")))
 			})
 		})
 

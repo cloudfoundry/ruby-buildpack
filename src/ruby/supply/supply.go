@@ -468,6 +468,14 @@ func (s *Supplier) InstallGems() error {
 		}
 	}
 
+	// Remove .bundle/config && copy if exists
+	if exists, err := libbuildpack.FileExists(filepath.Join(tempDir, ".bundle", "config")); err != nil {
+		return err
+	} else if exists {
+		os.Remove(filepath.Join(tempDir, ".bundle", "config"))
+		libbuildpack.CopyFile(filepath.Join(s.Stager.BuildDir(), ".bundle", "config"), filepath.Join(tempDir, ".bundle", "config"))
+	}
+
 	args := []string{"install", "--without", os.Getenv("BUNDLE_WITHOUT"), "--jobs=4", "--retry=4", "--path", filepath.Join(s.Stager.DepDir(), "vendor_bundle"), "--binstubs", filepath.Join(s.Stager.DepDir(), "binstubs")}
 	if exists, err := libbuildpack.FileExists(gemfileLock); err != nil {
 		return err
@@ -524,7 +532,7 @@ func (s *Supplier) InstallGems() error {
 
 	// Save .bundle/config to global config
 	if exists, err := libbuildpack.FileExists(filepath.Join(tempDir, ".bundle", "config")); err == nil && exists {
-		s.Log.Debug("SaveGemfileLock; %s -> %s", filepath.Join(tempDir, ".bundle", "config"), os.Getenv("BUNDLE_CONFIG"))
+		s.Log.Debug("SaveBundleConfig; %s -> %s", filepath.Join(tempDir, ".bundle", "config"), os.Getenv("BUNDLE_CONFIG"))
 		if err := os.Rename(filepath.Join(tempDir, ".bundle", "config"), os.Getenv("BUNDLE_CONFIG")); err != nil {
 			return err
 		}

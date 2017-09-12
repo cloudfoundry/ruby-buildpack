@@ -46,6 +46,11 @@ func Run(f *Finalizer) error {
 		return err
 	}
 
+	if err := f.RestoreBundleConfig(); err != nil {
+		f.Log.Error("Error copying .bundle/config to app: %v", err)
+		return err
+	}
+
 	if err := f.InstallPlugins(); err != nil {
 		f.Log.Error("Error installing plugins: %v", err)
 		return err
@@ -122,6 +127,20 @@ func (f *Finalizer) RestoreGemfileLock() error {
 		}
 		target := filepath.Join(f.Stager.BuildDir(), gemfile) + ".lock"
 		f.Log.Debug("RestoreGemfileLock; exists, copy to %s", target)
+		return os.Rename(source, target)
+	}
+	return nil
+}
+
+func (f *Finalizer) RestoreBundleConfig() error {
+	source := filepath.Join(f.Stager.DepDir(), "bundle_config")
+	f.Log.Debug("RestoreBundleConfig; %s", source)
+	if exists, err := libbuildpack.FileExists(source); err != nil {
+		return err
+	} else if exists {
+		target := filepath.Join(f.Stager.BuildDir(), ".bundle", "config")
+		f.Log.Debug("RestoreBundleConfig; exists, copy to %s", target)
+		os.MkdirAll(filepath.Join(f.Stager.BuildDir(), ".bundle"), 0755)
 		return os.Rename(source, target)
 	}
 	return nil

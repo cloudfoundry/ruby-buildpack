@@ -71,6 +71,29 @@ var _ = Describe("Finalize", func() {
 		Expect(err).To(BeNil())
 	})
 
+	Describe("RestoreBundleConfig", func() {
+		JustBeforeEach(func() {
+			Expect(finalizer.RestoreBundleConfig()).To(Succeed())
+		})
+
+		Context("DEPS/IDX/.bundle_config exists", func() {
+			BeforeEach(func() {
+				Expect(ioutil.WriteFile(filepath.Join(depsDir, depsIdx, "bundle_config"), []byte("bundler is awesome"), 0644)).To(Succeed())
+			})
+
+			It("Copies the config file to build dir", func() {
+				Expect(filepath.Join(buildDir, ".bundle", "config")).To(BeARegularFile())
+				Expect(ioutil.ReadFile(filepath.Join(buildDir, ".bundle", "config"))).To(Equal([]byte("bundler is awesome")))
+			})
+		})
+
+		Context("DEPS/IDX/.bundle_config does NOT exist", func() {
+			It("does nothing", func() {
+				Expect(filepath.Join(buildDir, ".bundle", "config")).ToNot(BeARegularFile())
+			})
+		})
+	})
+
 	Describe("Install plugins", func() {
 		JustBeforeEach(func() {
 			Expect(finalizer.InstallPlugins()).To(Succeed())
