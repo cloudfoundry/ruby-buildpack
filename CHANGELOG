@@ -1,3 +1,36 @@
+v1.7.0 Sep 14, 2017
+=====================
+
+* Rewrite buildpack using libbuildpack
+  behavioural changes:
+  * ensure supply does not change build dir
+  * gems are available when the buildpack is not last in order
+  (https://www.pivotaltracker.com/story/show/149435225)
+
+* Add ruby 2.4.2, 2.3.5, 2.2.8. Remove 2.4.0, 2.3.3, 2.2.6
+  (https://www.pivotaltracker.com/story/show/151087653)
+
+* Add yarn 1.0.2, remove yarn 0.27.5
+  (https://www.pivotaltracker.com/story/show/151059801)
+  (https://www.pivotaltracker.com/story/show/150886385)
+  (https://www.pivotaltracker.com/story/show/150856905)
+  (https://www.pivotaltracker.com/story/show/150856905)
+
+* Update rubygems if older than version in manifest
+  (https://www.pivotaltracker.com/story/show/150884901)
+
+* Add jruby 9.1.13.0, Remove jruby 9.1.12.0
+  (https://www.pivotaltracker.com/story/show/150863849)
+
+* Add node 6.11.3, remove node 6.11.2
+  (https://www.pivotaltracker.com/story/show/150824934)
+
+* Update openjdk from 1.8.0_141 -> 1.8.0_144
+  (https://www.pivotaltracker.com/story/show/150621073)
+
+* Add bundler 1.15.4, remove bundler 1.15.3
+  (https://www.pivotaltracker.com/story/show/150383252)
+
 v1.6.47 Aug 07, 2017
 =====================
 
