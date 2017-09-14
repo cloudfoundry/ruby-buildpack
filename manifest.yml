@@ -25,7 +25,6 @@ dependency_deprecation_dates:
 - version_line: 1.8.x
   name: openjdk1.8-latest
   date: 2020-10-01
-  link: https://access.redhat.com/articles/1299013
 - match: 2\.2\.\d+
   version_line: 2.2.x
   name: ruby
