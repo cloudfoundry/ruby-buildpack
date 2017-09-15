@@ -22,9 +22,6 @@ dependency_deprecation_dates:
   name: jruby
   date: 2016-12-31
   link: https://github.com/jruby/jruby/issues/4112
-- version_line: 1.8.x
-  name: openjdk1.8-latest
-  date: 2020-10-01
 - match: 2\.2\.\d+
   version_line: 2.2.x
   name: ruby
