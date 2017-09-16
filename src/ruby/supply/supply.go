@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"ruby/cache"
 	"strings"
 
@@ -138,6 +139,11 @@ func Run(s *Supplier) error {
 
 	if err := s.InstallGems(); err != nil {
 		s.Log.Error("Unable to install gems: %s", err.Error())
+		return err
+	}
+
+	if err := s.RewriteShebangs(); err != nil {
+		s.Log.Error("Unable to rewrite shebangs: %s", err.Error())
 		return err
 	}
 
@@ -350,14 +356,7 @@ func (s *Supplier) InstallRuby(name, version string) error {
 		return err
 	}
 
-	rakePath := filepath.Join(s.Stager.DepDir(), "ruby", "bin", "rake")
-	rakeContent, err := ioutil.ReadFile(rakePath)
-	if err != nil {
-		return err
-	}
-	groups := strings.SplitN(string(rakeContent), "\n", 2)
-	groups[0] = fmt.Sprintf("#!/usr/bin/env %s", name)
-	if err := ioutil.WriteFile(rakePath, []byte(strings.Join(groups, "\n")), 0755); err != nil {
+	if err := s.RewriteShebangs(); err != nil {
 		return err
 	}
 
@@ -365,6 +364,31 @@ func (s *Supplier) InstallRuby(name, version string) error {
 		return err
 	}
 	return s.Stager.LinkDirectoryInDepDir(filepath.Join(s.Stager.DepDir(), "ruby", "bin"), "bin")
+}
+
+func (s *Supplier) RewriteShebangs() error {
+	files, err := filepath.Glob(filepath.Join(s.Stager.DepDir(), "bin", "*"))
+	if err != nil {
+		return err
+	}
+
+	for _, file := range files {
+		if fileInfo, err := os.Stat(file); err != nil {
+			return err
+		} else if fileInfo.IsDir() {
+			continue
+		}
+		fileContents, err := ioutil.ReadFile(file)
+		if err != nil {
+			return err
+		}
+		shebangRegex := regexp.MustCompile(`^#!/.*/ruby.*`)
+		fileContents = shebangRegex.ReplaceAll(fileContents, []byte("#!/usr/bin/env ruby"))
+		if err := ioutil.WriteFile(file, fileContents, 0755); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (s *Supplier) UpdateRubygems() error {

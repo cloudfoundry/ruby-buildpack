@@ -631,4 +631,28 @@ var _ = Describe("Supply", func() {
 			})
 		})
 	})
+
+	Describe("RewriteShebangs", func() {
+		var depDir string
+		BeforeEach(func() {
+			depDir = filepath.Join(depsDir, depsIdx)
+			Expect(os.MkdirAll(filepath.Join(depDir, "bin"), 0755)).To(Succeed())
+			Expect(ioutil.WriteFile(filepath.Join(depDir, "bin", "somescript"), []byte("#!/usr/bin/ruby\n\n\n"), 0755)).To(Succeed())
+			Expect(ioutil.WriteFile(filepath.Join(depDir, "bin", "anotherscript"), []byte("#!//bin/ruby\n\n\n"), 0755)).To(Succeed())
+			Expect(os.MkdirAll(filepath.Join(depDir, "bin", "__ruby__"), 0755)).To(Succeed())
+			Expect(os.Symlink(filepath.Join(depDir, "bin", "__ruby__"), filepath.Join(depDir, "bin", "__ruby__SYMLINK"))).To(Succeed())
+		})
+		It("changes them to #!/usr/bin/env ruby", func() {
+			Expect(supplier.RewriteShebangs()).To(Succeed())
+
+			fileContents, err := ioutil.ReadFile(filepath.Join(depDir, "bin", "somescript"))
+			Expect(err).ToNot(HaveOccurred())
+
+			secondFileContents, err := ioutil.ReadFile(filepath.Join(depDir, "bin", "anotherscript"))
+			Expect(err).ToNot(HaveOccurred())
+
+			Expect(string(fileContents)).To(HavePrefix("#!/usr/bin/env ruby"))
+			Expect(string(secondFileContents)).To(HavePrefix("#!/usr/bin/env ruby"))
+		})
+	})
 })
