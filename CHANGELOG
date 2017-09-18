@@ -1,3 +1,9 @@
+v1.7.1 Sep 18, 2017
+====================
+
+* Rewrite all shebangs - fixes a bug with "gem"
+  (https://www.pivotaltracker.com/story/show/151139503)
+
 v1.7.0 Sep 14, 2017
 =====================
 
