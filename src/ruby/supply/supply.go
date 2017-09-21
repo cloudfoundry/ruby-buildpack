@@ -542,7 +542,18 @@ func (s *Supplier) InstallGems() error {
 		}
 	} else {
 		for _, file := range files {
+			// Rewrite binstubs so BUNDLE_GEMFILE defaults to final app location before copying
 			source := filepath.Join(s.Stager.DepDir(), "binstubs", file.Name())
+			fileContents, err := ioutil.ReadFile(source)
+			if err != nil {
+				return err
+			}
+			bundleGemfileRegex := regexp.MustCompile(`ENV\["BUNDLE_GEMFILE"\] \|\|= File\.expand_path\("[^"]+"`)
+			fileContents = bundleGemfileRegex.ReplaceAll(fileContents, []byte(`ENV["BUNDLE_GEMFILE"] ||= File.expand_path("#{ENV["HOME"]}/Gemfile"`))
+			if err := ioutil.WriteFile(source, fileContents, 0755); err != nil {
+				return err
+			}
+
 			target := filepath.Join(s.Stager.DepDir(), "bin", file.Name())
 			if exists, err := libbuildpack.FileExists(target); err != nil {
 				return fmt.Errorf("Checking existence: %v", err)

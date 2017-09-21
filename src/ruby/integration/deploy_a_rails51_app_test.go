@@ -1,6 +1,7 @@
 package integration_test
 
 import (
+	"os/exec"
 	"path/filepath"
 	"time"
 
@@ -8,6 +9,7 @@ import (
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/onsi/gomega/gexec"
 )
 
 var _ = Describe("Rails 5.1 (Webpack/Yarn) App", func() {
@@ -28,6 +30,13 @@ var _ = Describe("Rails 5.1 (Webpack/Yarn) App", func() {
 
 		By("Make sure supply does not change BuildDir", func() {
 			Expect(app).To(HaveUnchangedAppdir("BuildDir Checksum Before Supply", "BuildDir Checksum After Supply"))
+		})
+
+		By("Make sure binstubs work", func() {
+			command := exec.Command("cf", "ssh", app.Name, "-c", "/tmp/lifecycle/launcher /home/vcap/app 'rails about' ''")
+			session, err := gexec.Start(command, GinkgoWriter, GinkgoWriter)
+			Expect(err).ToNot(HaveOccurred())
+			Eventually(session, 10, 0.25).Should(gexec.Exit(0))
 		})
 	})
 })
