@@ -1,3 +1,9 @@
+v1.7.2 Sep 22, 2017
+====================
+
+* Rewrite binstubs to use runtime app location
+  (https://www.pivotaltracker.com/story/show/151255308)
+
 v1.7.1 Sep 18, 2017
 ====================
 
