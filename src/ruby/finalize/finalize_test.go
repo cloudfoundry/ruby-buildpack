@@ -449,7 +449,7 @@ var _ = Describe("Finalize", func() {
 
 			It("creates a shim for dep/bin", func() {
 				Expect(finalizer.CopyToAppBin()).To(Succeed())
-				Expect(ioutil.ReadFile(filepath.Join(buildDir, "bin", "rake"))).To(ContainSubstring(`exec $DEPS_DIR/%s/bin/rake "$@"`, depsIdx))
+				Expect(ioutil.ReadFile(filepath.Join(buildDir, "bin", "rake"))).To(ContainSubstring(`Kernel.exec "#{ENV['DEPS_DIR']}/%s/bin/rake", *ARGV`, depsIdx))
 			})
 		})
 
@@ -460,7 +460,7 @@ var _ = Describe("Finalize", func() {
 			})
 			It("creates a shim for dep/bin", func() {
 				Expect(finalizer.CopyToAppBin()).To(Succeed())
-				Expect(ioutil.ReadFile(filepath.Join(buildDir, "bin", "rake"))).To(ContainSubstring(`exec $DEPS_DIR/%s/bin/rake "$@"`, depsIdx))
+				Expect(ioutil.ReadFile(filepath.Join(buildDir, "bin", "rake"))).To(ContainSubstring(`Kernel.exec "#{ENV['DEPS_DIR']}/%s/bin/rake", *ARGV`, depsIdx))
 			})
 		})
 	})

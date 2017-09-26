@@ -376,7 +376,7 @@ func (f *Finalizer) CopyToAppBin() error {
 		if exists, err := libbuildpack.FileExists(target); err != nil {
 			return fmt.Errorf("Checking existence: %v", err)
 		} else if !exists {
-			contents := fmt.Sprintf("#!/bin/bash\nexec $DEPS_DIR/%s/bin/%s \"$@\"\n", f.Stager.DepsIdx(), file.Name())
+			contents := fmt.Sprintf("#!/usr/bin/env ruby\nKernel.exec \"#{ENV['DEPS_DIR']}/%s/bin/%s\", *ARGV\n", f.Stager.DepsIdx(), file.Name())
 			if err := ioutil.WriteFile(target, []byte(contents), 0755); err != nil {
 				return fmt.Errorf("WriteFile: %v", err)
 			}
