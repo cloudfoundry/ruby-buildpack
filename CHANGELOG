@@ -1,3 +1,13 @@
+v1.7.3 Sep 27, 2017
+====================
+
+* Write shims in app/bin/ in ruby instead of bash
+  Preserves functionality when commands are run with ruby/jruby
+  (https://www.pivotaltracker.com/story/show/151369802)
+
+* Add yarn 1.1.0, remove yarn 1.0.2
+  (https://www.pivotaltracker.com/story/show/151359400)
+
 v1.7.2 Sep 22, 2017
 ====================
 
