@@ -22,8 +22,7 @@ dependency_deprecation_dates:
   name: jruby
   date: 2016-12-31
   link: https://github.com/jruby/jruby/issues/4112
-- match: 2\.2\.\d+
-  version_line: 2.2.x
+- version_line: 2.2.x
   name: ruby
   date: 2018-04-01
   link: https://www.ruby-lang.org/en/news/2017/04/01/support-of-ruby-2-1-has-ended/
