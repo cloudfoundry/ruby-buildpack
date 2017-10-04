@@ -1,6 +1,7 @@
 package finalize
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -35,6 +36,11 @@ type Finalizer struct {
 
 func Run(f *Finalizer) error {
 	f.Log.BeginStep("Finalizing Ruby")
+
+	if err := f.AssetGemfileLockExists(); err != nil {
+		f.Log.Error(err.Error())
+		return err
+	}
 
 	if err := f.Setup(); err != nil {
 		f.Log.Error("Error determining versions: %v", err)
@@ -112,6 +118,15 @@ func (f *Finalizer) Setup() error {
 		return err
 	}
 
+	return nil
+}
+
+func (f *Finalizer) AssetGemfileLockExists() error {
+	if exists, err := libbuildpack.FileExists(filepath.Join(f.Stager.BuildDir(), "Gemfile.lock")); err != nil {
+		return err
+	} else if !exists {
+		return errors.New("Gemfile.lock required")
+	}
 	return nil
 }
 

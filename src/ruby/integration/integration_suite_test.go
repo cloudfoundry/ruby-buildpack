@@ -124,6 +124,16 @@ func DestroyApp(app *cutlass.App) *cutlass.App {
 	return nil
 }
 
+func DefaultVersion(name string) string {
+	m := &libbuildpack.Manifest{}
+	err := (&libbuildpack.YAML{}).Load(filepath.Join(bpDir, "manifest.yml"), m)
+	Expect(err).ToNot(HaveOccurred())
+	dep, err := m.DefaultVersion(name)
+	Expect(err).ToNot(HaveOccurred())
+	Expect(dep.Version).ToNot(Equal(""))
+	return dep.Version
+}
+
 func AssertUsesProxyDuringStagingIfPresent(fixtureName string) {
 	Context("with an uncached buildpack", func() {
 		BeforeEach(SkipUnlessUncached)

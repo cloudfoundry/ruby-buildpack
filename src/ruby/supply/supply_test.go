@@ -54,6 +54,7 @@ var _ = Describe("Supply", func() {
 		mockCtrl = gomock.NewController(GinkgoT())
 		mockManifest = NewMockManifest(mockCtrl)
 		mockVersions = NewMockVersions(mockCtrl)
+		mockVersions.EXPECT().Gemfile().AnyTimes().Return(filepath.Join(buildDir, "Gemfile"))
 		mockCommand = NewMockCommand(mockCtrl)
 		mockCache = NewMockCache(mockCtrl)
 
@@ -69,6 +70,9 @@ var _ = Describe("Supply", func() {
 			Command:  mockCommand,
 		}
 	})
+	JustBeforeEach(func() {
+		Expect(supplier.Setup()).To(Succeed())
+	})
 
 	AfterEach(func() {
 		mockCtrl.Finish()
@@ -83,26 +87,6 @@ var _ = Describe("Supply", func() {
 	PIt("InstallBundler", func() {})
 	PIt("InstallNode", func() {})
 	PIt("InstallRuby", func() {})
-
-	Describe("AssetGemfileLockExists", func() {
-		Context("Gemfile.lock exists", func() {
-			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile.lock"), []byte("body"), 0644)).To(Succeed())
-				Expect(filepath.Join(buildDir, "Gemfile.lock")).To(BeAnExistingFile())
-			})
-			It("Succeeds", func() {
-				Expect(supplier.AssetGemfileLockExists()).To(Succeed())
-			})
-		})
-		Context("Gemfile.lock is missing", func() {
-			BeforeEach(func() {
-				Expect(filepath.Join(buildDir, "Gemfile.lock")).ToNot(BeAnExistingFile())
-			})
-			It("Fails", func() {
-				Expect(supplier.AssetGemfileLockExists()).To(MatchError("Gemfile.lock required"))
-			})
-		})
-	})
 
 	Describe("CalcChecksum", func() {
 		BeforeEach(func() {
@@ -135,7 +119,6 @@ var _ = Describe("Supply", func() {
 		Context("Windows Gemfile", func() {
 			BeforeEach(func() {
 				mockVersions.EXPECT().HasWindowsGemfileLock().Return(false, nil)
-				mockVersions.EXPECT().Gemfile().AnyTimes().Return(filepath.Join(buildDir, "Gemfile"))
 				mockCommand.EXPECT().Run(gomock.Any()).AnyTimes()
 				mockManifest.EXPECT().AllDependencyVersions("bundler").Return([]string{"1.2.3"})
 				Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte("source \"https://rubygems.org\"\r\ngem \"rack\"\r\n"), 0644)).To(Succeed())
@@ -150,7 +133,6 @@ var _ = Describe("Supply", func() {
 			BeforeEach(func() {
 				os.Setenv("BUNDLE_CONFIG", filepath.Join(depsDir, depsIdx, "bundle_config"))
 				mockVersions.EXPECT().HasWindowsGemfileLock().Return(false, nil)
-				mockVersions.EXPECT().Gemfile().AnyTimes().Return(filepath.Join(buildDir, "Gemfile"))
 				mockCommand.EXPECT().Run(gomock.Any()).AnyTimes().Do(func(cmd *exec.Cmd) error {
 					if len(cmd.Args) > 2 && cmd.Args[1] == "install" {
 						Expect(os.MkdirAll(filepath.Join(cmd.Dir, ".bundle"), 0755)).To(Succeed())
@@ -183,7 +165,6 @@ var _ = Describe("Supply", func() {
 			const newGemfileLock = "new lockfile"
 			BeforeEach(func() {
 				mockVersions.EXPECT().HasWindowsGemfileLock().Return(true, nil)
-				mockVersions.EXPECT().Gemfile().AnyTimes().Return(filepath.Join(buildDir, "Gemfile"))
 				mockManifest.EXPECT().AllDependencyVersions("bundler").Return([]string{"1.2.3"})
 				Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte("source \"https://rubygems.org\"\r\ngem \"rack\"\r\n"), 0644)).To(Succeed())
 				Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile.lock"), []byte(gemfileLock), 0644)).To(Succeed())
@@ -336,6 +317,8 @@ var _ = Describe("Supply", func() {
 	Describe("WriteProfileD", func() {
 		BeforeEach(func() {
 			mockCommand.EXPECT().Output(buildDir, "node", "--version").AnyTimes().Return("v8.2.1", nil)
+			Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte{}, 0644)).To(Succeed())
+			Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile.lock"), []byte{}, 0644)).To(Succeed())
 		})
 		Describe("SecretKeyBase", func() {
 			Context("Rails >= 4.1", func() {
@@ -420,6 +403,10 @@ var _ = Describe("Supply", func() {
 	})
 
 	Describe("DetermineRuby", func() {
+		BeforeEach(func() {
+			Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte{}, 0644)).To(Succeed())
+			Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile.lock"), []byte{}, 0644)).To(Succeed())
+		})
 		Context("MRI", func() {
 			BeforeEach(func() {
 				mockVersions.EXPECT().Engine().Return("ruby", nil)
