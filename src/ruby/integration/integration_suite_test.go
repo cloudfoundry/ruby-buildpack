@@ -104,6 +104,15 @@ func ApiHasTask() bool {
 	Expect(err).To(BeNil())
 	return apiHasTask(apiVersion)
 }
+func ApiHasMultiBuildpack() bool {
+	apiVersionString, err := cutlass.ApiVersion()
+	Expect(err).To(BeNil())
+	apiVersion, err := semver.Make(apiVersionString)
+	Expect(err).To(BeNil())
+	apiHasTask, err := semver.ParseRange(">= 3.27.0")
+	Expect(err).To(BeNil())
+	return apiHasTask(apiVersion)
+}
 
 func SkipUnlessUncached() {
 	if cutlass.Cached {

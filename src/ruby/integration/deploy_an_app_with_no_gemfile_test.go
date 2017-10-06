@@ -36,6 +36,9 @@ var _ = Describe("App with No Gemfile", func() {
 
 	Context("Supply buildpack", func() {
 		BeforeEach(func() {
+			if !ApiHasMultiBuildpack() {
+				Skip("API does not have multi buildpack support")
+			}
 			app.Buildpacks = []string{"ruby_buildpack", "binary_buildpack"}
 		})
 		It("deploys", func() {
