@@ -1,3 +1,16 @@
+v1.7.4 Oct 12, 2017
+====================
+
+* Using ruby buildpack as a supply buildpack does not require a Gemfile
+  (https://www.pivotaltracker.com/story/show/151542741)
+
+* Add node 6.11.4, remove node 6.11.3
+  (https://www.pivotaltracker.com/story/show/151659499)
+
+* Add yarn 1.2.1, remove yarn 1.1.0
+  (https://www.pivotaltracker.com/story/show/151912328)
+  (https://www.pivotaltracker.com/story/show/151833736)
+
 v1.7.3 Sep 27, 2017
 ====================
 
