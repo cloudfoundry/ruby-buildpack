@@ -6,7 +6,6 @@ import (
 	"math/rand"
 	"os"
 	"path/filepath"
-	"strings"
 	"time"
 
 	"github.com/cloudfoundry/libbuildpack"
@@ -39,6 +38,28 @@ func FindRoot() (string, error) {
 	}
 }
 
+func PackageUniquelyVersionedBuildpackExtra(name, version string, cached bool) (VersionedBuildpackPackage, error) {
+	bpDir, err := FindRoot()
+	if err != nil {
+		return VersionedBuildpackPackage{}, err
+	}
+
+	file, err := packager.Package(bpDir, packager.CacheDir, version, cached)
+	if err != nil {
+		return VersionedBuildpackPackage{}, err
+	}
+
+	err = CreateOrUpdateBuildpack(name, file)
+	if err != nil {
+		return VersionedBuildpackPackage{}, err
+	}
+
+	return VersionedBuildpackPackage{
+		Version: version,
+		File:    file,
+	}, nil
+}
+
 func PackageUniquelyVersionedBuildpack() (VersionedBuildpackPackage, error) {
 	bpDir, err := FindRoot()
 	if err != nil {
@@ -49,13 +70,8 @@ func PackageUniquelyVersionedBuildpack() (VersionedBuildpackPackage, error) {
 	if err != nil {
 		return VersionedBuildpackPackage{}, err
 	}
-	buildpackVersion := strings.TrimSpace(string(data))
+	buildpackVersion := string(data)
 	buildpackVersion = fmt.Sprintf("%s.%s", buildpackVersion, time.Now().Format("20060102150405"))
-
-	file, err := packager.Package(bpDir, packager.CacheDir, buildpackVersion, Cached)
-	if err != nil {
-		return VersionedBuildpackPackage{}, err
-	}
 
 	var manifest struct {
 		Language string `yaml:"language"`
@@ -65,15 +81,7 @@ func PackageUniquelyVersionedBuildpack() (VersionedBuildpackPackage, error) {
 		return VersionedBuildpackPackage{}, err
 	}
 
-	err = CreateOrUpdateBuildpack(manifest.Language, file)
-	if err != nil {
-		return VersionedBuildpackPackage{}, err
-	}
-
-	return VersionedBuildpackPackage{
-		Version: buildpackVersion,
-		File:    file,
-	}, nil
+	return PackageUniquelyVersionedBuildpackExtra(manifest.Language, buildpackVersion, Cached)
 }
 
 func SeedRandom() {

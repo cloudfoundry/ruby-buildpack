@@ -1,0 +1,11 @@
+source 'https://rubygems.org'
+
+ruby '<%= ruby_version %>'
+
+gem 'nokogiri'
+gem 'sinatra'
+gem 'eventmachine'
+gem 'bcrypt'
+gem 'bson'
+gem 'mysql2'
+gem 'pg'

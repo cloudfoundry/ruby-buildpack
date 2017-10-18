@@ -8,4 +8,4 @@ if [ ! -f $ROOT/.bin/ginkgo ]; then
 fi
 
 cd $ROOT/src/ruby/
-ginkgo -r -skipPackage=integration
+ginkgo -r -skipPackage=brats,integration
