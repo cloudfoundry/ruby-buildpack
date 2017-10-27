@@ -128,9 +128,9 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 - name: node
-  version: 4.8.5
-  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-4.8.5-linux-x64-cf014b1d.tgz
-  md5: cf014b1d69f4d5d20c2e0bd70ac5dda4
+  version: 4.8.4
+  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-4.8.4-linux-x64-b442a23e.tgz
+  md5: b442a23ec104f10e6ba61f04089b3147
   cf_stacks:
   - cflinuxfs2
 include_files:
