@@ -31,108 +31,91 @@ dependency_deprecation_dates:
   date: 2017-04-01
   link: https://www.ruby-lang.org/en/news/2017/04/01/support-of-ruby-2-1-has-ended/
 dependencies:
-- name: openjdk1.8-latest
-  version: 1.8.0
+- cf_stacks: [cflinuxfs2]
+  name: openjdk1.8-latest
+  sha256: 24a0d41479ca73107e34ff47400906e1b48fa315c64e57d5be0e9628dfd5036a
   uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/openjdk-1.8.0_144-803337cc.tar.gz
-  md5: 803337ccdaabcbb935eb983e5322f3f1
-  cf_stacks:
-  - cflinuxfs2
-- name: rubygems
-  version: 2.6.13
+  version: 1.8.0
+- cf_stacks: [cflinuxfs2]
+  name: rubygems
+  sha256: d041502ae77e8d49e0a436483fb91f9ad6cc1489e49e0735e7c4a7cf10e728c9
   uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/ruby/rubygems-2.6.13.tgz
-  md5: e6f19b51614055d826e431549a12a80b
-  cf_stacks:
-  - cflinuxfs2
-- name: ruby
-  version: 2.4.2
-  md5: 3810a760ff6d55d8476d179c2f9f8653
+  version: 2.6.13
+- cf_stacks: [cflinuxfs2]
+  name: ruby
+  sha256: 32e4bcb9133552e898fa0968666c5561c7f42572931799b85546cb61671d7199
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.4.2-linux-x64-3810a760.tgz
-  cf_stacks:
-  - cflinuxfs2
-- name: ruby
-  version: 2.4.1
-  md5: 9e45185894c63e4be0f45caa2d5546e1
+  version: 2.4.2
+- cf_stacks: [cflinuxfs2]
+  name: ruby
+  sha256: 0ae63394663de4543d7d53458d3489fa99bc3f4fbd96806657a8073d9345f0ac
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.4.1-linux-x64-9e451858.tgz
-  cf_stacks:
-  - cflinuxfs2
-- name: ruby
-  version: 2.3.4
-  md5: 8939735f9b2c08436f25649ee320b82b
+  version: 2.4.1
+- cf_stacks: [cflinuxfs2]
+  name: ruby
+  sha256: 86eaa164e8402b37dc3f3c6e624adccbb23b7477f06827076a4941cae5128c4f
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.3.4-linux-x64-8939735f.tgz
-  cf_stacks:
-  - cflinuxfs2
-- name: ruby
-  version: 2.3.5
-  md5: 5634abe2e31a6e379b2fa28ad221c038
+  version: 2.3.4
+- cf_stacks: [cflinuxfs2]
+  name: ruby
+  sha256: 077b884878096bb862c541b597169d9fe2e64756c423257e5f0dd224abd8d14b
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.3.5-linux-x64-5634abe2.tgz
-  cf_stacks:
-  - cflinuxfs2
-- name: ruby
-  version: 2.2.7
+  version: 2.3.5
+- cf_stacks: [cflinuxfs2]
+  name: ruby
+  sha256: e16087417199b2d21c3f202360ed44489cfb7ed4059cf1a2881fc2d5e5116ae7
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.2.7-linux-x64-49b6bf7e.tgz
-  md5: 49b6bf7ea67e3f9ea4490be828c600f0
-  cf_stacks:
-  - cflinuxfs2
-- name: ruby
-  version: 2.2.8
+  version: 2.2.7
+- cf_stacks: [cflinuxfs2]
+  name: ruby
+  sha256: 12504238ecf8eacaf8b058f283e2d6beb16ea8f1081d3dcee366f22939d9f146
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.2.8-linux-x64-af774eb0.tgz
-  md5: af774eb07c7b21977b2954b7e6dc8e2e
-  cf_stacks:
-  - cflinuxfs2
-- name: ruby
-  version: 2.1.9
-  md5: 0042edb77be85274acb2c2a23c90e0c1
+  version: 2.2.8
+- cf_stacks: [cflinuxfs2]
+  name: ruby
+  sha256: c8972c25fb533467521870b5d92b8e87caa1ebe5cab932646c0cd16f726af816
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.1.9-linux-x64-0042edb7.tgz
-  cf_stacks:
-  - cflinuxfs2
-- name: ruby
-  version: 2.1.8
-  md5: 9b2572f38be50d692d6491d4c7718626
+  version: 2.1.9
+- cf_stacks: [cflinuxfs2]
+  name: ruby
+  sha256: 8edba1b1d4a124ae411ad18b69564b9e29e30ee59c5887e28c69d14f7fd9cba0
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.1.8-linux-x64-9b2572f3.tgz
-  cf_stacks:
-  - cflinuxfs2
-- name: jruby
-  version: ruby-1.9.3-jruby-1.7.26
+  version: 2.1.8
+- cf_stacks: [cflinuxfs2]
+  name: jruby
+  sha256: ac95c765e5258029f54b942706c2ade06de451fadf403653106bc87116ebb7bc
   uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/jruby-1.7.26_ruby-1.9.3-linux-x64-ce031315.tgz
-  md5: ce0313153c607d0556b272350293acd5
-  cf_stacks:
-  - cflinuxfs2
-- name: jruby
-  version: ruby-2.0.0-jruby-1.7.26
+  version: ruby-1.9.3-jruby-1.7.26
+- cf_stacks: [cflinuxfs2]
+  name: jruby
+  sha256: 83c2910fcc92591b91bb4bc3f019ba952ee5203b295a223a473d7baf0bd0e57e
   uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/jruby-1.7.26_ruby-2.0.0-linux-x64-acd1b1d9.tgz
-  md5: acd1b1d90d9eb1b94e84dc8555d9c475
-  cf_stacks:
-  - cflinuxfs2
-- name: jruby
-  version: ruby-2.3.3-jruby-9.1.13.0
+  version: ruby-2.0.0-jruby-1.7.26
+- cf_stacks: [cflinuxfs2]
+  name: jruby
+  sha256: 8ebbfd4d9c4601390f388f508c9c4605183544f8772260e3feee32661194d175
   uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby-9.1.13.0_ruby-2.3.4-linux-x64-98fa85e0.tgz
-  md5: 98fa85e0d4a3ea1a13d33443190dba7a
-  cf_stacks:
-  - cflinuxfs2
-- name: bundler
-  version: 1.15.4
+  version: ruby-2.3.3-jruby-9.1.13.0
+- cf_stacks: [cflinuxfs2]
+  name: bundler
+  sha256: 0186639ed9c79f116d3340265917810be351d6d2ea576215204a151170559741
   uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.15.4-e083af6d.tgz
-  md5: e083af6d9b61cd30cad2ef2b9d1d4a8d
-  cf_stacks:
-  - cflinuxfs2
-- name: yarn
-  version: 1.2.1
+  version: 1.15.4
+- cf_stacks: [cflinuxfs2]
+  name: yarn
+  sha256: f8ed07675c3a0b866e11a02af5c15d2f34c3aa261ab1501943ecee328786c959
   uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn-v1.2.1-a16106e2.tar.gz
-  md5: a16106e2b9a79bfdfad563d3fcbd97b4
-  cf_stacks:
-  - cflinuxfs2
-- name: node
-  version: 6.11.5
+  version: 1.2.1
+- cf_stacks: [cflinuxfs2]
+  name: node
+  sha256: b9056767cd618fc869eba0927be977901ee0347e4cbde36133a33b3ca2caf8ee
   uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-6.11.5-linux-x64-d1e31dac.tgz
-  md5: d1e31dac7c75394d76dc56b4ce8e3ef2
-  cf_stacks:
-  - cflinuxfs2
-- name: node
-  version: 4.8.5
+  version: 6.11.5
+- cf_stacks: [cflinuxfs2]
+  name: node
+  sha256: 3b73e96291ae86c182cf3c944b8975973619b6f94de472f47c6e83cef9659854
   uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-4.8.5-linux-x64-cf014b1d.tgz
-  md5: cf014b1d69f4d5d20c2e0bd70ac5dda4
-  cf_stacks:
-  - cflinuxfs2
+  version: 4.8.5
 include_files:
 - CHANGELOG
 - CONTRIBUTING.md
