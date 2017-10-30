@@ -130,7 +130,7 @@ dependencies:
 - name: node
   version: 4.8.5
   uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-4.8.5-linux-x64-1a9b97a5.tgz
-  md5: 1a9b97a5f541589c44746b322a354663
+  sha256: 53355f8ef418a04d2e71869561d2418e152f6e8088a2a927859f41014541a15b
   cf_stacks:
   - cflinuxfs2
 include_files:
