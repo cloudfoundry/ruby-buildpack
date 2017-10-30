@@ -30,7 +30,7 @@ var _ = Describe("App with No Gemfile", func() {
 		It("fails in finalize", func() {
 			Expect(app.Push()).ToNot(Succeed())
 			Expect(app.ConfirmBuildpack(buildpackVersion)).To(Succeed())
-			Expect(app.Stdout.String()).To(ContainSubstring("Gemfile.lock required"))
+			Eventually(app.Stdout.String).Should(ContainSubstring("Gemfile.lock required"))
 		})
 	})
 
