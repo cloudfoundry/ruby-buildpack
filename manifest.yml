@@ -130,7 +130,7 @@ dependencies:
 - name: node
   version: 6.11.5
   uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-6.11.5-linux-x64-b640deb6.tgz
-  md5: b640deb6c5128371ef1215df4e1e9c29
+  sha256: 6cb7483fe6e52e07048cabe5ba925f7e9d0a85f79c0f4107ad6befd230dffb6e
   cf_stacks:
   - cflinuxfs2
 include_files:
