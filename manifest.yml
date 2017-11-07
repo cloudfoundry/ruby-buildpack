@@ -115,12 +115,6 @@ dependencies:
   sha256: 0186639ed9c79f116d3340265917810be351d6d2ea576215204a151170559741
   uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.15.4-e083af6d.tgz
   version: 1.15.4
-- name: node
-  version: 4.8.5
-  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-4.8.5-linux-x64-1a9b97a5.tgz
-  sha256: 53355f8ef418a04d2e71869561d2418e152f6e8088a2a927859f41014541a15b
-  cf_stacks:
-  - cflinuxfs2
 - name: yarn
   version: 1.3.2
   uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn-v1.3.2-6cfe82e5.tar.gz
@@ -131,6 +125,12 @@ dependencies:
   version: 6.12.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-6.12.0-linux-x64-87c5152f.tgz
   sha256: 87c5152febdd9f4ffa0691e4630a45874c21b63d1b1a7a85cfb765f1da41c8a0
+  cf_stacks:
+  - cflinuxfs2
+- name: node
+  version: 4.8.6
+  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-4.8.6-linux-x64-c8323162.tgz
+  sha256: c8323162d0c2bc3d6ef1e9232e74791f45d7b426964b9a60dd7b7176ef6d664f
   cf_stacks:
   - cflinuxfs2
 include_files:
