@@ -236,6 +236,67 @@ var _ = Describe("Supply", func() {
 		})
 	})
 
+	Describe("EnableLDLibraryPathEnv", func() {
+		AfterEach(func() {
+			Expect(os.Unsetenv("LD_LIBRARY_PATH")).To(Succeed())
+		})
+		Context("app has ld_library_path directory", func() {
+			BeforeEach(func() {
+				Expect(os.Mkdir(filepath.Join(buildDir, "ld_library_path"), 0755)).To(Succeed())
+			})
+			Context("LD_LIBRARY_PATH is set", func() {
+				BeforeEach(func() {
+					Expect(os.Setenv("LD_LIBRARY_PATH", "prior_ld_path")).To(Succeed())
+				})
+				It("Sets LD_LIBRARY_PATH", func() {
+					Expect(supplier.EnableLDLibraryPathEnv()).To(Succeed())
+					Expect(os.Getenv("LD_LIBRARY_PATH")).To(Equal(filepath.Join(buildDir, "ld_library_path") + ":prior_ld_path"))
+				})
+				It("Writes LD_LIBRARY_PATH env file for later buildpacks", func() {
+					Expect(supplier.EnableLDLibraryPathEnv()).To(Succeed())
+					Expect(filepath.Join(depsDir, depsIdx, "env", "LD_LIBRARY_PATH")).To(BeAnExistingFile())
+					Expect(ioutil.ReadFile(filepath.Join(depsDir, depsIdx, "env", "LD_LIBRARY_PATH"))).To(Equal([]byte(filepath.Join(buildDir, "ld_library_path") + ":prior_ld_path")))
+				})
+				It("Writes LD_LIBRARY_PATH env file as a profile.d script", func() {
+					Expect(supplier.EnableLDLibraryPathEnv()).To(Succeed())
+					Expect(filepath.Join(depsDir, depsIdx, "profile.d", "app_lib_path.sh")).To(BeAnExistingFile())
+					Expect(ioutil.ReadFile(filepath.Join(depsDir, depsIdx, "profile.d", "app_lib_path.sh"))).To(Equal([]byte(`export LD_LIBRARY_PATH=` + filepath.Join(buildDir, "ld_library_path") + `$([[ ! -z "${LD_LIBRARY_PATH:-}" ]] && echo ":$LD_LIBRARY_PATH")`)))
+				})
+			})
+
+			Context("LD_LIBRARY_PATH is NOT set", func() {
+				BeforeEach(func() {
+					Expect(os.Unsetenv("LD_LIBRARY_PATH")).To(Succeed())
+				})
+				It("Sets LD_LIBRARY_PATH", func() {
+					Expect(supplier.EnableLDLibraryPathEnv()).To(Succeed())
+					Expect(os.Getenv("LD_LIBRARY_PATH")).To(Equal(filepath.Join(buildDir, "ld_library_path")))
+				})
+				It("Writes LD_LIBRARY_PATH env file for later buildpacks", func() {
+					Expect(supplier.EnableLDLibraryPathEnv()).To(Succeed())
+					Expect(filepath.Join(depsDir, depsIdx, "env", "LD_LIBRARY_PATH")).To(BeAnExistingFile())
+					Expect(ioutil.ReadFile(filepath.Join(depsDir, depsIdx, "env", "LD_LIBRARY_PATH"))).To(Equal([]byte(filepath.Join(buildDir, "ld_library_path"))))
+				})
+				It("Writes LD_LIBRARY_PATH env file as a profile.d script", func() {
+					Expect(supplier.EnableLDLibraryPathEnv()).To(Succeed())
+					Expect(filepath.Join(depsDir, depsIdx, "profile.d", "app_lib_path.sh")).To(BeAnExistingFile())
+					Expect(ioutil.ReadFile(filepath.Join(depsDir, depsIdx, "profile.d", "app_lib_path.sh"))).To(Equal([]byte(`export LD_LIBRARY_PATH=` + filepath.Join(buildDir, "ld_library_path") + `$([[ ! -z "${LD_LIBRARY_PATH:-}" ]] && echo ":$LD_LIBRARY_PATH")`)))
+				})
+			})
+		})
+
+		Context("app does NOT have ld_library_path directory", func() {
+			It("Does not set LD_LIBRARY_PATH", func() {
+				Expect(supplier.EnableLDLibraryPathEnv()).To(Succeed())
+				Expect(os.Getenv("LD_LIBRARY_PATH")).To(Equal(""))
+			})
+			It("Does not write LD_LIBRARY_PATH env file for later buildpacks", func() {
+				Expect(supplier.EnableLDLibraryPathEnv()).To(Succeed())
+				Expect(filepath.Join(depsDir, depsIdx, "env", "LD_LIBRARY_PATH")).ToNot(BeAnExistingFile())
+			})
+		})
+	})
+
 	Describe("CreateDefaultEnv", func() {
 		AfterEach(func() {
 			_ = os.Unsetenv("RAILS_ENV")

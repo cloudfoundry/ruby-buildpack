@@ -98,6 +98,11 @@ func Run(s *Supplier) error {
 		return err
 	}
 
+	if err := s.EnableLDLibraryPathEnv(); err != nil {
+		s.Log.Error("Unable to enable ldL_library_path env: %s", err.Error())
+		return err
+	}
+
 	engine, rubyVersion, err := s.DetermineRuby()
 	if err != nil {
 		s.Log.Error("Unable to determine ruby: %s", err.Error())
@@ -605,6 +610,30 @@ func (s *Supplier) InstallGems() error {
 	return os.RemoveAll(tempDir)
 }
 
+func (s *Supplier) EnableLDLibraryPathEnv() error {
+	if exists, err := libbuildpack.FileExists(filepath.Join(s.Stager.BuildDir(), "ld_library_path")); err != nil {
+		return err
+	} else if !exists {
+		return nil
+	}
+
+	envVar := filepath.Join(s.Stager.BuildDir(), "ld_library_path")
+	if env := os.Getenv("LD_LIBRARY_PATH"); env != "" {
+		envVar += ":" + env
+	}
+
+	if err := os.Setenv("LD_LIBRARY_PATH", envVar); err != nil {
+		return err
+	}
+
+	if err := s.Stager.WriteEnvFile("LD_LIBRARY_PATH", envVar); err != nil {
+		return err
+	}
+
+	scriptContents := fmt.Sprintf(`export %[1]s=%[2]s$([[ ! -z "${%[1]s:-}" ]] && echo ":$%[1]s")`, "LD_LIBRARY_PATH", filepath.Join(s.Stager.BuildDir(), "ld_library_path"))
+	return s.Stager.WriteProfileD("app_lib_path.sh", scriptContents)
+}
+
 func (s *Supplier) CreateDefaultEnv() error {
 	environmentDefaults := map[string]string{
 		"RAILS_ENV":      "production",
@@ -619,6 +648,7 @@ func (s *Supplier) CreateDefaultEnv() error {
 			filepath.Join(s.Stager.DepDir(), "bundler"),
 		}, ":"),
 	}
+
 	return s.writeEnvFiles(environmentDefaults, false)
 }
 
