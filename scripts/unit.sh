@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export ROOT=`dirname $(readlink -f ${BASH_SOURCE%/*})`
-if [ ! -f $ROOT/.bin/ginkgo ]; then
-  echo "Installing ginkgo"
-  (cd $ROOT/src/ruby/vendor/github.com/onsi/ginkgo/ginkgo/ && go install)
-fi
+cd "$( dirname "${BASH_SOURCE[0]}" )/.."
+source .envrc
+./scripts/install_tools.sh
 
-cd $ROOT/src/ruby/
+cd src/*/integration/..
 ginkgo -r -skipPackage=brats,integration
