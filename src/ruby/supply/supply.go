@@ -99,7 +99,7 @@ func Run(s *Supplier) error {
 	}
 
 	if err := s.EnableLDLibraryPathEnv(); err != nil {
-		s.Log.Error("Unable to enable ldL_library_path env: %s", err.Error())
+		s.Log.Error("Unable to enable ld_library_path env: %s", err.Error())
 		return err
 	}
 
