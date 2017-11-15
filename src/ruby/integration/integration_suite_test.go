@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/blang/semver"
@@ -64,6 +65,9 @@ var _ = SynchronizedBeforeSuite(func() []byte {
 
 var _ = SynchronizedAfterSuite(func() {
 	// Run on all nodes
+	if strings.HasPrefix(os.Getenv("CF_HOME"), "/tmp") {
+		Expect(os.RemoveAll(os.Getenv("CF_HOME"))).To(Succeed())
+	}
 }, func() {
 	// Run once
 	cutlass.RemovePackagedBuildpack(packagedBuildpack)
