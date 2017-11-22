@@ -548,6 +548,10 @@ func (s *Supplier) InstallGems() error {
 		return err
 	}
 
+	if err := s.regenerateBundlerBinStub(tempDir); err != nil {
+		return err
+	}
+
 	s.Log.Info("Cleaning up the bundler cache.")
 
 	cmd = exec.Command("bundle", "clean")
@@ -567,22 +571,11 @@ func (s *Supplier) InstallGems() error {
 		}
 	} else {
 		for _, file := range files {
-			// Rewrite binstubs so BUNDLE_GEMFILE defaults to final app location before copying
-			source := filepath.Join(s.Stager.DepDir(), "binstubs", file.Name())
-			fileContents, err := ioutil.ReadFile(source)
-			if err != nil {
-				return err
-			}
-			bundleGemfileRegex := regexp.MustCompile(`ENV\["BUNDLE_GEMFILE"\] \|\|= File\.expand_path\("[^"]+"`)
-			fileContents = bundleGemfileRegex.ReplaceAll(fileContents, []byte(`ENV["BUNDLE_GEMFILE"] ||= File.expand_path("#{ENV["HOME"]}/Gemfile"`))
-			if err := ioutil.WriteFile(source, fileContents, 0755); err != nil {
-				return err
-			}
-
 			target := filepath.Join(s.Stager.DepDir(), "bin", file.Name())
 			if exists, err := libbuildpack.FileExists(target); err != nil {
 				return fmt.Errorf("Checking existence: %v", err)
 			} else if !exists {
+				source := filepath.Join(s.Stager.DepDir(), "binstubs", file.Name())
 				if err := libbuildpack.CopyFile(source, target); err != nil {
 					return fmt.Errorf("CopyFile: %v", err)
 				}
@@ -608,6 +601,18 @@ func (s *Supplier) InstallGems() error {
 	}
 
 	return os.RemoveAll(tempDir)
+}
+
+func (s *Supplier) regenerateBundlerBinStub(appDir string) error {
+	s.Log.BeginStep("Regenerating bundler binstubs...")
+	cmd := exec.Command("bundle", "binstubs", "bundler", "--force", "--path", filepath.Join(s.Stager.DepDir(), "binstubs"))
+	cmd.Dir = appDir
+	cmd.Stdout = text.NewIndentWriter(os.Stdout, []byte("       "))
+	cmd.Stderr = text.NewIndentWriter(os.Stderr, []byte("       "))
+	if err := s.Command.Run(cmd); err != nil {
+		return err
+	}
+	return libbuildpack.CopyFile(filepath.Join(s.Stager.DepDir(), "binstubs", "bundle"), filepath.Join(s.Stager.DepDir(), "bin", "bundle"))
 }
 
 func (s *Supplier) EnableLDLibraryPathEnv() error {
@@ -640,6 +645,7 @@ func (s *Supplier) CreateDefaultEnv() error {
 		"RACK_ENV":       "production",
 		"RAILS_GROUPS":   "assets",
 		"BUNDLE_WITHOUT": "development:test",
+		"BUNDLE_GEMFILE": "Gemfile",
 		"BUNDLE_BIN":     filepath.Join(s.Stager.DepDir(), "binstubs"),
 		"BUNDLE_CONFIG":  filepath.Join(s.Stager.DepDir(), "bundle_config"),
 		"GEM_HOME":       filepath.Join(s.Stager.DepDir(), "gem_home"),
@@ -697,6 +703,7 @@ export RAILS_ENV=${RAILS_ENV:-production}
 export RACK_ENV=${RACK_ENV:-production}
 export RAILS_SERVE_STATIC_FILES=${RAILS_SERVE_STATIC_FILES:-enabled}
 export RAILS_LOG_TO_STDOUT=${RAILS_LOG_TO_STDOUT:-enabled}
+export BUNDLE_GEMFILE=${BUNDLE_GEMFILE:-$HOME/Gemfile}
 
 export GEM_HOME=${GEM_HOME:-$DEPS_DIR/%s/gem_home}
 export GEM_PATH=${GEM_PATH:-$DEPS_DIR/%s/vendor_bundle/%s/%s:$DEPS_DIR/%s/gem_home:$DEPS_DIR/%s/bundler}

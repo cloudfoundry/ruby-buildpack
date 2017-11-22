@@ -112,9 +112,9 @@ dependencies:
 - cf_stacks:
   - cflinuxfs2
   name: bundler
-  sha256: 0186639ed9c79f116d3340265917810be351d6d2ea576215204a151170559741
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.15.4-e083af6d.tgz
-  version: 1.15.4
+  sha256: 2862b70c3c1a0fb22b6c087c0dbc6e5d0458fc7e46bbd6686355af5da2baf55d
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.16.0-2862b70c.tgz
+  version: 1.16.0
 - name: yarn
   version: 1.3.2
   uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn-v1.3.2-6cfe82e5.tar.gz
