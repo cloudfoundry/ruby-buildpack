@@ -1,3 +1,25 @@
+v1.7.8 Dec 12, 2017
+====================
+
+* Add jruby 9.1.15.0, remove jruby 9.1.13.0
+  (https://www.pivotaltracker.com/story/show/153491050)
+  (https://www.pivotaltracker.com/story/show/152721520)
+
+* Add node 4.8.7, remove node 4.8.6
+  (https://www.pivotaltracker.com/story/show/153514063)
+
+* Add node 6.12.2, remove node 6.12.0
+  (https://www.pivotaltracker.com/story/show/153514063)
+  (https://www.pivotaltracker.com/story/show/153407348)
+
+* Adds bundler 1.16.0, removes bundler 1.15.4
+  - Regenerates bundler binstub to account for incompatibility with Rails
+  generated ones. See:
+     * https://github.com/rails/rails/issues/31193
+     * https://github.com/bundler/bundler/issues/6149
+  - binstubs are no longer modified; BUNDLE_GEMFILE is set instead
+  (https://www.pivotaltracker.com/story/show/152452239)
+
 v1.7.7 Nov 21, 2017
 ====================
 
