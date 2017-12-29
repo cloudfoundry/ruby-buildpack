@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"ruby/finalize"
+	"strings"
 
 	"github.com/cloudfoundry/libbuildpack"
 	"github.com/cloudfoundry/libbuildpack/ansicleaner"
@@ -377,6 +378,35 @@ var _ = Describe("Finalize", func() {
 						Expect(cmds[1].Env).To(ContainElement("DATABASE_URL=://user:pass@127.0.0.1/dbname"))
 
 						Expect(cmds[2].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:clean"}))
+					})
+				})
+
+				findAllWithPrefix := func(prefix string, inp []string) []string {
+					var out []string
+					for _, s := range inp {
+						if strings.HasPrefix(s, prefix) {
+							out = append(out, s)
+						}
+					}
+					return out
+				}
+
+				Context("SECRET_KEY_BASE is set", func() {
+					BeforeEach(func() { os.Setenv("SECRET_KEY_BASE", "existing-key") })
+					AfterEach(func() { os.Unsetenv("SECRET_KEY_BASE") })
+					It("passes SECRET_KEY_BASE through", func() {
+						Expect(finalizer.PrecompileAssets()).To(Succeed())
+						Expect(cmds).To(HaveLen(3))
+						Expect(cmds[1].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:precompile"}))
+						Expect(findAllWithPrefix("SECRET_KEY_BASE=", cmds[1].Env)).To(Equal([]string{"SECRET_KEY_BASE=existing-key"}))
+					})
+				})
+				Context("SECRET_KEY_BASE is NOT set", func() {
+					It("sets a dummy key", func() {
+						Expect(finalizer.PrecompileAssets()).To(Succeed())
+						Expect(cmds).To(HaveLen(3))
+						Expect(cmds[1].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:precompile"}))
+						Expect(findAllWithPrefix("SECRET_KEY_BASE=", cmds[1].Env)).To(Equal([]string{"SECRET_KEY_BASE=dummy-staging-key"}))
 					})
 				})
 			})

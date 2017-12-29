@@ -236,6 +236,9 @@ func (f *Finalizer) PrecompileAssets() error {
 	}
 
 	env := append(os.Environ(), fmt.Sprintf("DATABASE_URL=%s", f.databaseUrl()))
+	if _, exists := os.LookupEnv("SECRET_KEY_BASE"); !exists {
+		env = append(env, "SECRET_KEY_BASE=dummy-staging-key")
+	}
 
 	f.Log.BeginStep("Precompiling assets")
 	startTime := time.Now()
