@@ -443,12 +443,16 @@ func (s *Supplier) UpdateRubygems() error {
 
 	s.Log.BeginStep("Update rubygems from %s to %s", currVersion, dep.Version)
 
-	tempDir, err := ioutil.TempDir("", "node")
+	tempDir, err := ioutil.TempDir("", "rubygems")
 	if err != nil {
 		return err
 	}
 
 	if err := s.Manifest.InstallDependency(dep, tempDir); err != nil {
+		return err
+	}
+
+	if err := os.MkdirAll(filepath.Join(s.Stager.DepDir(), "gem_home"), 0755); err != nil {
 		return err
 	}
 

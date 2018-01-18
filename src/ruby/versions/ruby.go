@@ -38,10 +38,10 @@ type output struct {
 func (v *Versions) Engine() (string, error) {
 	gemfile := v.Gemfile()
 	code := fmt.Sprintf(`
-		b = Bundler::Dsl.evaluate('%s', '%s.lock', {}).ruby_version
+		b = Bundler::Dsl.evaluate('%s', '%s.lock', {}).ruby_version if File.exists?('%s')
 	  return 'ruby' if !b
 		b.engine
-	`, filepath.Base(gemfile), filepath.Base(gemfile))
+	`, filepath.Base(gemfile), filepath.Base(gemfile), filepath.Base(gemfile))
 
 	data, err := v.run(filepath.Dir(gemfile), code, []string{})
 	if err != nil {

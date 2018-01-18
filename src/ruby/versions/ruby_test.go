@@ -97,6 +97,13 @@ var _ = Describe("Ruby", func() {
 				Expect(v.Engine()).To(Equal("ruby"))
 			})
 		})
+
+		Context("gemfile doesn't exist", func() {
+			It("returns ruby", func() {
+				v := versions.New(tmpDir, manifest)
+				Expect(v.Engine()).To(Equal("ruby"))
+			})
+		})
 	})
 
 	Describe("Version", func() {
