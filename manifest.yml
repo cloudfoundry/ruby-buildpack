@@ -106,9 +106,9 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 - name: rubygems
-  version: 2.6.13
-  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/ruby/rubygems-2.6.13.tgz
-  sha256: d041502ae77e8d49e0a436483fb91f9ad6cc1489e49e0735e7c4a7cf10e728c9
+  version: 2.7.4
+  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/ruby/rubygems-2.7.4.tgz
+  sha256: bbe35ce6646e4168fcb1071d5f83b2d1154924f5150df0f5fca0f37d2583a182
   cf_stacks:
   - cflinuxfs2
 - name: yarn
