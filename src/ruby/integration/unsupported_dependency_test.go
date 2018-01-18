@@ -2,7 +2,6 @@ package integration_test
 
 import (
 	"path/filepath"
-	"time"
 
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
@@ -21,6 +20,6 @@ var _ = Describe("CF Ruby Buildpack", func() {
 	It("displays a nice error message when Ruby 99.99.99 is specified", func() {
 		Expect(app.Push()).ToNot(Succeed())
 		Expect(app.ConfirmBuildpack(buildpackVersion)).To(Succeed())
-		Eventually(func() string { return app.Stdout.String() }, 10*time.Second).Should(ContainSubstring("No Matching versions, ruby = 99.99.99 not found in this buildpack"))
+		Eventually(app.Stdout.String).Should(ContainSubstring("No Matching versions, ruby = 99.99.99 not found in this buildpack"))
 	})
 })

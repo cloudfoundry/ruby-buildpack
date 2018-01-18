@@ -60,6 +60,8 @@ var _ = SynchronizedBeforeSuite(func() []byte {
 
 	cutlass.SeedRandom()
 	cutlass.DefaultStdoutStderr = GinkgoWriter
+
+	SetDefaultEventuallyTimeout(10 * time.Second)
 })
 
 var _ = SynchronizedAfterSuite(func() {
@@ -77,13 +79,13 @@ func TestIntegration(t *testing.T) {
 
 func PushAppAndConfirm(app *cutlass.App) {
 	Expect(app.Push()).To(Succeed())
-	Eventually(func() ([]string, error) { return app.InstanceStates() }, 20*time.Second).Should(Equal([]string{"RUNNING"}))
+	Eventually(app.InstanceStates, 20*time.Second).Should(Equal([]string{"RUNNING"}))
 	Expect(app.ConfirmBuildpack(buildpackVersion)).To(Succeed())
 }
 
 func Restart(app *cutlass.App) {
 	Expect(app.Restart()).To(Succeed())
-	Eventually(func() ([]string, error) { return app.InstanceStates() }, 20*time.Second).Should(Equal([]string{"RUNNING"}))
+	Eventually(app.InstanceStates, 20*time.Second).Should(Equal([]string{"RUNNING"}))
 }
 
 func ApiHasTask() bool {

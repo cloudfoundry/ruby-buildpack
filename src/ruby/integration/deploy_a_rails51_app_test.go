@@ -3,7 +3,6 @@ package integration_test
 import (
 	"os/exec"
 	"path/filepath"
-	"time"
 
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
@@ -26,7 +25,7 @@ var _ = Describe("Rails 5.1 (Webpack/Yarn) App", func() {
 		Expect(app.Stdout.String()).To(ContainSubstring("Installing node 6."))
 
 		Expect(app.GetBody("/")).To(ContainSubstring("Hello World"))
-		Eventually(func() string { return app.Stdout.String() }, 10*time.Second).Should(ContainSubstring(`Started GET "/" for`))
+		Eventually(app.Stdout.String).Should(ContainSubstring(`Started GET "/" for`))
 
 		By("Make sure supply does not change BuildDir", func() {
 			Expect(app).To(HaveUnchangedAppdir("BuildDir Checksum Before Supply", "BuildDir Checksum After Supply"))

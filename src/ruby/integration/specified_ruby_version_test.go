@@ -2,7 +2,6 @@ package integration_test
 
 import (
 	"path/filepath"
-	"time"
 
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
@@ -34,7 +33,7 @@ var _ = Describe("CF Ruby Buildpack", func() {
 				_, err := app.RunTask(`echo "RUNNING A TASK: $(ruby --version)"`)
 				Expect(err).ToNot(HaveOccurred())
 
-				Eventually(func() string { return app.Stdout.String() }, 10*time.Second).Should(ContainSubstring("RUNNING A TASK: ruby 2.2."))
+				Eventually(app.Stdout.String).Should(ContainSubstring("RUNNING A TASK: ruby 2.2."))
 			})
 		})
 	})
