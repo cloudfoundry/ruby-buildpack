@@ -1,3 +1,9 @@
+v1.7.10 Jan 19, 2018
+=====================
+
+* Add rubygems 2.7.4, remove 2.6.13
+  (https://www.pivotaltracker.com/story/show/154440553)
+
 v1.7.9 Jan 05, 2018
 ====================
 
