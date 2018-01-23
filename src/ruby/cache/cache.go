@@ -71,8 +71,7 @@ func (c *Cache) Restore() error {
 				}
 			}
 		}
-	}
-	if c.metadata.Stack != "" {
+	} else if c.metadata.Stack != "" {
 		c.log.BeginStep("Skipping restoring vendor_bundle from cache, stack changed from %s to %s", c.metadata.Stack, os.Getenv("CF_STACK"))
 	}
 	return os.RemoveAll(filepath.Join(c.cacheDir, "vendor_bundle"))
