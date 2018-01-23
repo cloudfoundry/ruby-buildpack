@@ -9,7 +9,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = FDescribe("pushing an app a second time", func() {
+var _ = Describe("pushing an app a second time", func() {
 	var app *cutlass.App
 	AfterEach(func() { app = DestroyApp(app) })
 
