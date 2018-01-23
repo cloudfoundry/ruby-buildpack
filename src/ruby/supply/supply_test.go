@@ -731,5 +731,15 @@ var _ = Describe("Supply", func() {
 			Expect(string(fileContents)).To(HavePrefix("#!/usr/bin/env ruby"))
 			Expect(string(secondFileContents)).To(HavePrefix("#!/usr/bin/env ruby"))
 		})
+		It(`also finds files in vendor_bundle/ruby/*/bin/*`, func() {
+			Expect(os.MkdirAll(filepath.Join(depDir, "vendor_bundle", "ruby", "2.4.0", "bin"), 0755)).To(Succeed())
+			Expect(ioutil.WriteFile(filepath.Join(depDir, "vendor_bundle", "ruby", "2.4.0", "bin", "somescript"), []byte("#!/usr/bin/ruby\n\n\n"), 0755)).To(Succeed())
+
+			Expect(supplier.RewriteShebangs()).To(Succeed())
+
+			fileContents, err := ioutil.ReadFile(filepath.Join(depDir, "vendor_bundle", "ruby", "2.4.0", "bin", "somescript"))
+			Expect(err).ToNot(HaveOccurred())
+			Expect(string(fileContents)).To(HavePrefix("#!/usr/bin/env ruby"))
+		})
 	})
 })

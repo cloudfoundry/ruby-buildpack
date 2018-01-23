@@ -388,12 +388,16 @@ func (s *Supplier) InstallRuby(name, version string) error {
 }
 
 func (s *Supplier) RewriteShebangs() error {
-	files, err := filepath.Glob(filepath.Join(s.Stager.DepDir(), "bin", "*"))
+	files1, err := filepath.Glob(filepath.Join(s.Stager.DepDir(), "bin", "*"))
+	if err != nil {
+		return err
+	}
+	files2, err := filepath.Glob(filepath.Join(s.Stager.DepDir(), "vendor_bundle", "ruby", "*", "bin", "*"))
 	if err != nil {
 		return err
 	}
 
-	for _, file := range files {
+	for _, file := range append(files1, files2...) {
 		if fileInfo, err := os.Stat(file); err != nil {
 			return err
 		} else if fileInfo.IsDir() {
