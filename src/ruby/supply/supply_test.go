@@ -742,4 +742,22 @@ var _ = Describe("Supply", func() {
 			Expect(string(fileContents)).To(HavePrefix("#!/usr/bin/env ruby"))
 		})
 	})
+	Describe("SymlinkBundlerIntoRubygems", func() {
+		var depDir string
+		BeforeEach(func() {
+			depDir = filepath.Join(depsDir, depsIdx)
+			mockVersions.EXPECT().RubyEngineVersion().Return("2.3.4", nil)
+			mockManifest.EXPECT().AllDependencyVersions("bundler").Return([]string{"1.2.3"})
+
+			Expect(os.MkdirAll(filepath.Join(depDir, "bundler", "gems", "bundler-1.2.3"), 0755)).To(Succeed())
+			Expect(ioutil.WriteFile(filepath.Join(depDir, "bundler", "gems", "bundler-1.2.3", "file"), []byte("my content"), 0644)).To(Succeed())
+		})
+		It("Creates a symlink from the installed ruby's gem directory to the installed bundler gem", func() {
+			Expect(supplier.SymlinkBundlerIntoRubygems()).To(Succeed())
+
+			fileContents, err := ioutil.ReadFile(filepath.Join(depDir, "ruby", "lib", "ruby", "gems", "2.3.4", "gems", "bundler-1.2.3", "file"))
+			Expect(err).ToNot(HaveOccurred())
+			Expect(string(fileContents)).To(HavePrefix("my content"))
+		})
+	})
 })

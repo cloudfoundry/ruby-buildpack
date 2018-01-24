@@ -153,6 +153,11 @@ func Run(s *Supplier) error {
 		return err
 	}
 
+	if err := s.SymlinkBundlerIntoRubygems(); err != nil {
+		s.Log.Error("Unable to symlink bundler into rubygems: %s", err.Error())
+		return err
+	}
+
 	if err := s.WriteProfileD(engine); err != nil {
 		s.Log.Error("Unable to write profile.d: %s", err.Error())
 		return err
@@ -414,6 +419,32 @@ func (s *Supplier) RewriteShebangs() error {
 		}
 	}
 	return nil
+}
+
+func (s *Supplier) SymlinkBundlerIntoRubygems() error {
+	s.Log.Debug("SymlinkBundlerIntoRubygems")
+
+	rubyEngineVersion, err := s.Versions.RubyEngineVersion()
+	if err != nil {
+		return fmt.Errorf("Unable to determine ruby engine: %s", err)
+	}
+	versions := s.Manifest.AllDependencyVersions("bundler")
+	if len(versions) != 1 {
+		return fmt.Errorf("expect 1 version of bundler, found %d", len(versions))
+	}
+	bundlerVersion := versions[0]
+
+	destDir := filepath.Join(s.Stager.DepDir(), "ruby", "lib", "ruby", "gems", rubyEngineVersion, "gems")
+	if err := os.MkdirAll(destDir, 0755); err != nil {
+		return err
+	}
+	srcDir := filepath.Join(s.Stager.DepDir(), "bundler", "gems", "bundler-"+bundlerVersion)
+	relPath, err := filepath.Rel(destDir, srcDir)
+	if err != nil {
+		return err
+	}
+
+	return os.Symlink(relPath, filepath.Join(destDir, "bundler-"+bundlerVersion))
 }
 
 func (s *Supplier) UpdateRubygems() error {
