@@ -1,3 +1,12 @@
+v1.7.11 Jan 26, 2018
+=====================
+
+* Fix bug with rails asset:precompile
+  - Bug was discovered to exist when using webpacker, or somethinge which used
+    bundler to call bunder, and thus forced a simpler GEM_PATH than required.
+  - Rewrite Shebangs on a larger collection of files
+  (https://www.pivotaltracker.com/story/show/154546718)
+
 v1.7.10 Jan 19, 2018
 =====================
 
