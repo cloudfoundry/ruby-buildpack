@@ -52,6 +52,7 @@ var _ = Describe("Ruby buildpack", func() {
 
 	bratshelper.ForAllSupportedVersions("jruby", CopyBratsJRuby, func(fullRubyVersion string, app *cutlass.App) {
 		app.Memory = "400Mb"
+		app.Disk = "300M"
 		PushApp(app)
 
 		By("installs the correct version of JRuby", func() {
