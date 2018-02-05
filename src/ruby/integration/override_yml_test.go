@@ -13,11 +13,17 @@ var _ = Describe("override yml", func() {
 	var app *cutlass.App
 	var buildpackName string
 	AfterEach(func() {
-		cutlass.DeleteBuildpack(buildpackName)
+		if buildpackName != "" {
+			cutlass.DeleteBuildpack(buildpackName)
+		}
 		app = DestroyApp(app)
 	})
 
 	BeforeEach(func() {
+		if !ApiHasMultiBuildpack() {
+			Skip("Multi buildpack support is required")
+		}
+
 		buildpackName = "override_yml_" + cutlass.RandStringRunes(5)
 		Expect(cutlass.CreateOrUpdateBuildpack(buildpackName, filepath.Join(bpDir, "fixtures", "overrideyml_bp"))).To(Succeed())
 
