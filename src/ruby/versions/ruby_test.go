@@ -104,6 +104,16 @@ var _ = Describe("Ruby", func() {
 				Expect(v.Engine()).To(Equal("ruby"))
 			})
 		})
+
+		Context("Gemfile does a puts", func() {
+			BeforeEach(func() {
+				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte("ruby '2.2.3'\nputs 'Hello'\nSTDERR.puts 'Bye'\n"), 0644)).To(Succeed())
+			})
+			It("stdout from gemfile does not create problems", func() {
+				v := versions.New(tmpDir, manifest)
+				Expect(v.Engine()).To(Equal("ruby"))
+			})
+		})
 	})
 
 	Describe("Version", func() {

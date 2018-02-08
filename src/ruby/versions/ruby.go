@@ -210,22 +210,22 @@ func (v *Versions) run(dir, code string, in interface{}) (interface{}, error) {
 	}
 
 	code = fmt.Sprintf(`
+	  stdout, $stdout = $stdout, $stderr
 		begin
 			def data(input)
 				%s
 			end
 			input = JSON.parse(STDIN.read)
 			out = data(input)
-			puts({error:nil, data:out}.to_json)
+			stdout.puts({error:nil, data:out}.to_json)
 		rescue => e
-			puts({error:e.to_s, data:nil}.to_json)
+			stdout.puts({error:e.to_s, data:nil}.to_json)
 		end
 	`, code)
 
 	cmd := exec.Command("ruby", "-rjson", "-rbundler", "-e", code)
 	cmd.Dir = dir
 	cmd.Stdin = strings.NewReader(string(data))
-	cmd.Stderr = os.Stderr
 	body, err := cmd.Output()
 	if err != nil {
 		fmt.Println(body)
