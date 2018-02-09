@@ -1,3 +1,15 @@
+v1.7.12 Feb 09, 2018
+=====================
+
+* Handle puts in Gemfile for version detection
+  (https://www.pivotaltracker.com/story/show/155047298)
+
+* Enable manifest apply override
+  (https://www.pivotaltracker.com/story/show/153614649)
+
+* Add Openjdk 1.8.0_162, Remove 1.8.0_152
+  (https://www.pivotaltracker.com/story/show/154634186)
+
 v1.7.11 Jan 26, 2018
 =====================
 
