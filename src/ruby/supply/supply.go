@@ -444,7 +444,15 @@ func (s *Supplier) SymlinkBundlerIntoRubygems() error {
 		return err
 	}
 
-	return os.Symlink(relPath, filepath.Join(destDir, "bundler-"+bundlerVersion))
+	destFile := filepath.Join(destDir, "bundler-"+bundlerVersion)
+	if found, err := libbuildpack.FileExists(destFile); err != nil {
+		return err
+	} else if found {
+		s.Log.Debug("Skipping linking bundler since destination exists")
+		return nil
+	}
+
+	return os.Symlink(relPath, destFile)
 }
 
 func (s *Supplier) UpdateRubygems() error {
