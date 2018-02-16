@@ -57,6 +57,12 @@ dependencies:
   sha256: 1cd64f1281b04dffb5de4f63b2d9114ef9c82192b1f8ef31825cedbfb6337f5a
   cf_stacks:
   - cflinuxfs2
+- name: node
+  version: 6.13.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-6.13.0-linux-x64-2724bdf3.tgz
+  sha256: 2724bdf3b190545093ade1af057cd92ffbd710f66336f1781613386a4889103d
+  cf_stacks:
+  - cflinuxfs2
 - name: openjdk1.8-latest
   version: 1.8.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/openjdk-1.8.0_162-a0fa818d.tar.gz
@@ -106,21 +112,15 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 - name: rubygems
-  version: 2.7.5
-  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/ruby/rubygems-2.7.5.tgz
-  sha256: 38e02c26ef524688dff1a21075297ce0be6543e12c8210ac6c075dc78983c403
+  version: 2.7.6
+  uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems-2.7.6-67f714a5.tgz
+  sha256: 67f714a582a9ce471bbbcb417374ea9cf9c061271c865dbb0d093f3bc3371eeb
   cf_stacks:
   - cflinuxfs2
 - name: yarn
   version: 1.3.2
   uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn-v1.3.2-6cfe82e5.tar.gz
   sha256: 6cfe82e530ef0837212f13e45c1565ba53f5199eec2527b85ecbcd88bf26821d
-  cf_stacks:
-  - cflinuxfs2
-- name: node
-  version: 6.13.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-6.13.0-linux-x64-2724bdf3.tgz
-  sha256: 2724bdf3b190545093ade1af057cd92ffbd710f66336f1781613386a4889103d
   cf_stacks:
   - cflinuxfs2
 include_files:
