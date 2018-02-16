@@ -7,8 +7,18 @@ source .envrc
 
 GINKGO_NODES=${GINKGO_NODES:-3}
 GINKGO_ATTEMPTS=${GINKGO_ATTEMPTS:-2}
+DISK_LIMIT_ARG=""
+MEM_LIMIT_ARG=""
+
+if [ -n "${CF_BRATS_DISK_QUOTA+x}" ]; then
+  DISK_LIMIT_ARG="-disk=$CF_BRATS_DISK_QUOTA"
+fi
+
+if [ -n "${CF_BRATS_MEM_QUOTA+x}" ]; then
+  MEM_LIMIT_ARG="-memory=$CF_BRATS_MEM_QUOTA"
+fi
 
 cd src/*/brats
 
 echo "Run Buildpack Runtime Acceptance Tests"
-ginkgo -r --flakeAttempts=$GINKGO_ATTEMPTS -nodes $GINKGO_NODES
+ginkgo -r --flakeAttempts=$GINKGO_ATTEMPTS -nodes $GINKGO_NODES -- $DISK_LIMIT_ARG $MEM_LIMIT_ARG
