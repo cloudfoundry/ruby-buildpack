@@ -1,3 +1,13 @@
+v1.7.13 Feb 20, 2018
+=====================
+
+* Add rubygems 2.7.6, remove rubygems 2.7.4
+  (https://www.pivotaltracker.com/story/show/155285561)
+  (https://www.pivotaltracker.com/story/show/154949275)
+
+* Add node 6.13.0, remove node 6.12.3
+  (https://www.pivotaltracker.com/story/show/155196463)
+
 v1.7.12 Feb 09, 2018
 =====================
 
