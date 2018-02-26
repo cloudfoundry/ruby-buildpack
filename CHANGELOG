@@ -1,3 +1,9 @@
+v1.7.14 Feb 26, 2018
+=====================
+
+* Add jruby 9.1.16.0, remove 9.1.15.0
+  (https://www.pivotaltracker.com/story/show/155414392)
+
 v1.7.13 Feb 20, 2018
 =====================
 
