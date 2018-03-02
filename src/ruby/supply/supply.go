@@ -773,6 +773,7 @@ bundle config WITHOUT "%s" > /dev/null
 				if err != nil {
 					return fmt.Errorf("Running 'rake secret'", err)
 				}
+				metadata.SecretKeyBase = strings.TrimSpace(metadata.SecretKeyBase)
 			}
 			scriptContents += fmt.Sprintf("\nexport SECRET_KEY_BASE=${SECRET_KEY_BASE:-%s}\n", metadata.SecretKeyBase)
 		}

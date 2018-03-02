@@ -432,7 +432,7 @@ var _ = Describe("Supply", func() {
 				Context("SECRET_KEY_BASE is not cached", func() {
 					BeforeEach(func() {
 						mockCache.EXPECT().Metadata().Return(&cache.Metadata{})
-						mockCommand.EXPECT().Output(buildDir, "bundle", "exec", "rake", "secret").Return("abcdef", nil)
+						mockCommand.EXPECT().Output(buildDir, "bundle", "exec", "rake", "secret").Return("\n\nabcdef\n\n", nil)
 					})
 					It("writes default SECRET_KEY_BASE to profile.d", func() {
 						Expect(supplier.WriteProfileD("enginename")).To(Succeed())
