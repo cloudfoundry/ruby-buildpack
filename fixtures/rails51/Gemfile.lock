@@ -94,7 +94,7 @@ GEM
     debug_inspector (0.0.2)
     erubi (1.6.0)
     execjs (2.7.0)
-    ffi (1.9.18)
+    ffi (1.9.23)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     httparty (0.15.6)
