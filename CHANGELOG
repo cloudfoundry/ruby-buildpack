@@ -1,3 +1,24 @@
+v1.7.16 Apr 03, 2018
+=====================
+
+* Add node 4.9.1, remove node 4.9.0
+  (https://www.pivotaltracker.com/story/show/156394483)
+
+* Add node 6.14.1, remove node 6.14.0
+  (https://www.pivotaltracker.com/story/show/156394483)
+
+* Add ruby 2.5.1
+  (https://www.pivotaltracker.com/story/show/156373044)
+
+* Add node 4.9.0, remove node 4.8.7
+  (https://www.pivotaltracker.com/story/show/156350231)
+
+* Add node 6.14.0, remove node 6.13.1
+  (https://www.pivotaltracker.com/story/show/156350231)
+
+* Update ffi gem to 1.9.23 in rails51 fixtures
+  (https://www.pivotaltracker.com/story/show/155086373)
+
 v1.7.15 Mar 09, 2018
 =====================
 
