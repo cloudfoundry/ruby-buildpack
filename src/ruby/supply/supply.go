@@ -682,7 +682,7 @@ func (s *Supplier) EnableLDLibraryPathEnv() error {
 		return err
 	}
 
-	scriptContents := fmt.Sprintf(`export %[1]s=%[2]s$([[ ! -z "${%[1]s:-}" ]] && echo ":$%[1]s")`, "LD_LIBRARY_PATH", filepath.Join(s.Stager.BuildDir(), "ld_library_path"))
+	scriptContents := fmt.Sprintf(`export %[1]s="%[2]s$([[ ! -z "${%[1]s:-}" ]] && echo ":$%[1]s")"`, "LD_LIBRARY_PATH", filepath.Join("$HOME", "ld_library_path"))
 	return s.Stager.WriteProfileD("app_lib_path.sh", scriptContents)
 }
 
