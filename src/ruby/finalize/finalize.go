@@ -90,7 +90,10 @@ func Run(f *Finalizer) error {
 		return err
 	}
 	releasePath := filepath.Join(f.Stager.BuildDir(), "tmp", "ruby-buildpack-release-step.yml")
-	libbuildpack.NewYAML().Write(releasePath, data)
+	if err := libbuildpack.NewYAML().Write(releasePath, data); err != nil {
+		f.Log.Error("Error writing release YAML: %v", err)
+		return err
+	}
 
 	return nil
 }

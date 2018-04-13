@@ -1,0 +1,4 @@
+source 'https://rubygems.org'
+ruby "2.2.9"
+gem "cf-app-utils"
+gem "sinatra"
