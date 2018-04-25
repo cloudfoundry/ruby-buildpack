@@ -1,3 +1,24 @@
+v1.7.17 Apr 25, 2018
+=====================
+
+* Update jruby versions
+  - Remove deprecated versions: 'ruby-1.9.3-jruby-1.7.26' and 'ruby-2.0.0-jruby-1.7.26'
+  - Remove 'ruby-2.3.3-jruby-9.1.16.0'
+  - Add 'ruby-2.3.3-jruby-9.1.17.0'
+  (https://www.pivotaltracker.com/story/show/157006756)
+
+* Add node 10.0.0
+  (https://www.pivotaltracker.com/story/show/157065173)
+
+* Add yarn 1.6.0, remove yarn 1.5.1
+  (https://www.pivotaltracker.com/story/show/156786250)
+
+* Fix staging failure when writing a start command fails
+  (https://www.pivotaltracker.com/story/show/156748474)
+
+* Fix incorrect runtime prefix for app/ld_library_path
+  (https://www.pivotaltracker.com/story/show/155928706)
+
 v1.7.16 Apr 03, 2018
 =====================
 
