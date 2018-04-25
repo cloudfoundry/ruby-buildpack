@@ -14,14 +14,6 @@ dependency_deprecation_dates:
   name: node
   date: 2019-04-18
   link: https://github.com/nodejs/LTS
-- version_line: ruby-2.0.0-jruby-1.7.26
-  name: jruby
-  date: 2016-12-31
-  link: https://github.com/jruby/jruby/issues/4112
-- version_line: ruby-1.9.3-jruby-1.7.26
-  name: jruby
-  date: 2016-12-31
-  link: https://github.com/jruby/jruby/issues/4112
 - version_line: 2.2.x
   name: ruby
   date: 2018-04-01
@@ -34,21 +26,9 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 - name: jruby
-  version: ruby-1.9.3-jruby-1.7.26
-  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/jruby-1.7.26_ruby-1.9.3-linux-x64-ce031315.tgz
-  sha256: ac95c765e5258029f54b942706c2ade06de451fadf403653106bc87116ebb7bc
-  cf_stacks:
-  - cflinuxfs2
-- name: jruby
-  version: ruby-2.0.0-jruby-1.7.26
-  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/jruby-1.7.26_ruby-2.0.0-linux-x64-acd1b1d9.tgz
-  sha256: 83c2910fcc92591b91bb4bc3f019ba952ee5203b295a223a473d7baf0bd0e57e
-  cf_stacks:
-  - cflinuxfs2
-- name: jruby
-  version: ruby-2.3.3-jruby-9.1.16.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby-9.1.16.0_ruby-2.3.4-linux-x64-2552c3b7.tgz
-  sha256: 2552c3b7832d6f8ab19b9a48c9b63ff2166349e95da54522a3c6b1448c6a67c2
+  version: ruby-2.3.4-jruby-9.1.17.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby-9.1.17.0_ruby-2.3.4-linux-x64-a5a90199.tgz
+  sha256: a5a9019963f592bb2135a2d38b202c40119fce8c59e379381d9aad8bf1433db4
   cf_stacks:
   - cflinuxfs2
 - name: node
