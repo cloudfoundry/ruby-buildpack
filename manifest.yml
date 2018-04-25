@@ -26,7 +26,7 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 - name: jruby
-  version: ruby-2.3.4-jruby-9.1.17.0
+  version: ruby-2.3.3-jruby-9.1.17.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby-9.1.17.0_ruby-2.3.4-linux-x64-a5a90199.tgz
   sha256: a5a9019963f592bb2135a2d38b202c40119fce8c59e379381d9aad8bf1433db4
   cf_stacks:
