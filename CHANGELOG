@@ -1,3 +1,22 @@
+v1.7.18 May 08, 2018
+=====================
+
+* Add ruby 2.2.10, remove ruby 2.2.8
+  (https://www.pivotaltracker.com/story/show/157255054)
+
+* Add ruby 2.3.7, remove ruby 2.3.5
+  (https://www.pivotaltracker.com/story/show/157255099)
+
+* Add ruby 2.4.4, remove ruby 2.4.2
+  (https://www.pivotaltracker.com/story/show/157255117)
+
+* Add node 6.14.2, remove node 6.14.1
+  (https://www.pivotaltracker.com/story/show/157199825)
+
+* Update openjdk to 1.8.0_172
+  (https://www.pivotaltracker.com/story/show/156971105)
+
+
 v1.7.17 Apr 25, 2018
 =====================
 
