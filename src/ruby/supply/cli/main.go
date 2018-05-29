@@ -28,15 +28,18 @@ func main() {
 		os.Exit(10)
 	}
 
+	installer := libbuildpack.NewInstaller(manifest)
+
 	stager := libbuildpack.NewStager(os.Args[1:], logger, manifest)
 	if err := stager.CheckBuildpackValid(); err != nil {
 		os.Exit(11)
 	}
 
-	if err = manifest.SetAppCacheDir(stager.CacheDir()); err != nil {
+	if err = installer.SetAppCacheDir(stager.CacheDir()); err != nil {
 		logger.Error("Unable to setup app cache dir: %s", err)
 		os.Exit(18)
 	}
+
 	if err = manifest.ApplyOverride(stager.DepsDir()); err != nil {
 		logger.Error("Unable to apply override.yml files: %s", err)
 		os.Exit(17)
@@ -66,12 +69,13 @@ func main() {
 	}
 
 	s := supply.Supplier{
-		Stager:   stager,
-		Manifest: manifest,
-		Log:      logger,
-		Versions: versions.New(stager.BuildDir(), manifest),
-		Cache:    cacher,
-		Command:  &libbuildpack.Command{},
+		Stager:    stager,
+		Manifest:  manifest,
+		Installer: installer,
+		Log:       logger,
+		Versions:  versions.New(stager.BuildDir(), manifest),
+		Cache:     cacher,
+		Command:   &libbuildpack.Command{},
 	}
 
 	err = supply.Run(&s)
@@ -83,8 +87,9 @@ func main() {
 		logger.Error("Error writing config.yml: %s", err.Error())
 		os.Exit(16)
 	}
-	if err = manifest.CleanupAppCache(); err != nil {
-		logger.Error("Unable to apply override.yml files: %s", err)
+
+	if err = installer.CleanupAppCache(); err != nil {
+		logger.Error("Unable to clean up app cache: %s", err)
 		os.Exit(19)
 	}
 }

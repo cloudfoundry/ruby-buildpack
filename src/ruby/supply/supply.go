@@ -25,10 +25,14 @@ type Command interface {
 
 type Manifest interface {
 	AllDependencyVersions(string) []string
-	InstallDependency(libbuildpack.Dependency, string) error
-	InstallOnlyVersion(string, string) error
 	DefaultVersion(string) (libbuildpack.Dependency, error)
 }
+
+type Installer interface {
+	InstallDependency(libbuildpack.Dependency, string) error
+	InstallOnlyVersion(string, string) error
+}
+
 type Versions interface {
 	Engine() (string, error)
 	Version() (string, error)
@@ -59,6 +63,7 @@ type Cache interface {
 type Supplier struct {
 	Stager            Stager
 	Manifest          Manifest
+	Installer         Installer
 	Log               *libbuildpack.Logger
 	Versions          Versions
 	Cache             Cache
@@ -253,7 +258,7 @@ func (s *Supplier) InstallYarn() error {
 	if err != nil {
 		return err
 	}
-	if err := s.Manifest.InstallOnlyVersion("yarn", tempDir); err != nil {
+	if err := s.Installer.InstallOnlyVersion("yarn", tempDir); err != nil {
 		return err
 	}
 	if paths, err := filepath.Glob(filepath.Join(tempDir, "yarn-v*")); err != nil {
@@ -271,7 +276,7 @@ func (s *Supplier) InstallYarn() error {
 }
 
 func (s *Supplier) InstallBundler() error {
-	if err := s.Manifest.InstallOnlyVersion("bundler", filepath.Join(s.Stager.DepDir(), "bundler")); err != nil {
+	if err := s.Installer.InstallOnlyVersion("bundler", filepath.Join(s.Stager.DepDir(), "bundler")); err != nil {
 		return err
 	}
 
@@ -308,7 +313,7 @@ func (s *Supplier) InstallNode() error {
 	dep.Name = "node"
 	dep.Version = ver
 
-	if err := s.Manifest.InstallDependency(dep, tempDir); err != nil {
+	if err := s.Installer.InstallDependency(dep, tempDir); err != nil {
 		return err
 	}
 
@@ -357,7 +362,7 @@ func (s *Supplier) InstallJVM() error {
 	}
 
 	jvmInstallDir := filepath.Join(s.Stager.DepDir(), "jvm")
-	if err := s.Manifest.InstallOnlyVersion("openjdk1.8-latest", jvmInstallDir); err != nil {
+	if err := s.Installer.InstallOnlyVersion("openjdk1.8-latest", jvmInstallDir); err != nil {
 		return err
 	}
 	if err := s.Stager.LinkDirectoryInDepDir(filepath.Join(jvmInstallDir, "bin"), "bin"); err != nil {
@@ -378,7 +383,7 @@ export JRUBY_OPTS=${JRUBY_OPTS:--Xcompile.invokedynamic=false}
 func (s *Supplier) InstallRuby(name, version string) error {
 	installDir := filepath.Join(s.Stager.DepDir(), "ruby")
 
-	if err := s.Manifest.InstallDependency(libbuildpack.Dependency{Name: name, Version: version}, installDir); err != nil {
+	if err := s.Installer.InstallDependency(libbuildpack.Dependency{Name: name, Version: version}, installDir); err != nil {
 		return err
 	}
 
@@ -491,7 +496,7 @@ func (s *Supplier) UpdateRubygems() error {
 		return err
 	}
 
-	if err := s.Manifest.InstallDependency(dep, tempDir); err != nil {
+	if err := s.Installer.InstallDependency(dep, tempDir); err != nil {
 		return err
 	}
 

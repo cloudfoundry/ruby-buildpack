@@ -24,18 +24,19 @@ import (
 
 var _ = Describe("Supply", func() {
 	var (
-		err          error
-		buildDir     string
-		depsDir      string
-		depsIdx      string
-		supplier     *supply.Supplier
-		logger       *libbuildpack.Logger
-		buffer       *bytes.Buffer
-		mockCtrl     *gomock.Controller
-		mockManifest *MockManifest
-		mockVersions *MockVersions
-		mockCommand  *MockCommand
-		mockCache    *MockCache
+		err           error
+		buildDir      string
+		depsDir       string
+		depsIdx       string
+		supplier      *supply.Supplier
+		logger        *libbuildpack.Logger
+		buffer        *bytes.Buffer
+		mockCtrl      *gomock.Controller
+		mockManifest  *MockManifest
+		mockInstaller *MockInstaller
+		mockVersions  *MockVersions
+		mockCommand   *MockCommand
+		mockCache     *MockCache
 	)
 
 	BeforeEach(func() {
@@ -54,6 +55,7 @@ var _ = Describe("Supply", func() {
 
 		mockCtrl = gomock.NewController(GinkgoT())
 		mockManifest = NewMockManifest(mockCtrl)
+		mockInstaller = NewMockInstaller(mockCtrl)
 		mockVersions = NewMockVersions(mockCtrl)
 		mockVersions.EXPECT().Gemfile().AnyTimes().Return(filepath.Join(buildDir, "Gemfile"))
 		mockCommand = NewMockCommand(mockCtrl)
@@ -63,14 +65,16 @@ var _ = Describe("Supply", func() {
 		stager := libbuildpack.NewStager(args, logger, &libbuildpack.Manifest{})
 
 		supplier = &supply.Supplier{
-			Stager:   stager,
-			Manifest: mockManifest,
-			Log:      logger,
-			Versions: mockVersions,
-			Cache:    mockCache,
-			Command:  mockCommand,
+			Stager:    stager,
+			Manifest:  mockManifest,
+			Installer: mockInstaller,
+			Log:       logger,
+			Versions:  mockVersions,
+			Cache:     mockCache,
+			Command:   mockCommand,
 		}
 	})
+
 	JustBeforeEach(func() {
 		Expect(supplier.Setup()).To(Succeed())
 	})
@@ -96,6 +100,7 @@ var _ = Describe("Supply", func() {
 			Expect(os.MkdirAll(filepath.Join(buildDir, "dir"), 0755)).To(Succeed())
 			Expect(ioutil.WriteFile(filepath.Join(buildDir, "dir", "other"), []byte("other"), 0644)).To(Succeed())
 		})
+
 		It("Returns an MD5 of the full contents", func() {
 			Expect(supplier.CalcChecksum()).To(Equal("d8be25466f8d12112d354e1a4add36a3"))
 		})
@@ -106,6 +111,7 @@ var _ = Describe("Supply", func() {
 				Expect(ioutil.WriteFile(filepath.Join(buildDir, ".cloudfoundry", "other"), []byte("other"), 0644)).To(Succeed())
 				Expect(ioutil.WriteFile(filepath.Join(buildDir, ".cloudfoundry", "dir", "other"), []byte("other"), 0644)).To(Succeed())
 			})
+
 			It("excludes .cloudfoundry directory", func() {
 				Expect(supplier.CalcChecksum()).To(Equal("d8be25466f8d12112d354e1a4add36a3"))
 			})
@@ -243,7 +249,7 @@ var _ = Describe("Supply", func() {
 
 		Context("app/.jdk does not exist", func() {
 			BeforeEach(func() {
-				mockManifest.EXPECT().InstallOnlyVersion("openjdk1.8-latest", gomock.Any()).Do(func(_, path string) error {
+				mockInstaller.EXPECT().InstallOnlyVersion("openjdk1.8-latest", gomock.Any()).Do(func(_, path string) error {
 					Expect(os.MkdirAll(filepath.Join(path, "bin"), 0755)).To(Succeed())
 					Expect(ioutil.WriteFile(filepath.Join(path, "bin", "java"), []byte("java.exe"), 0755)).To(Succeed())
 					return nil
@@ -602,7 +608,7 @@ var _ = Describe("Supply", func() {
 				Expect(ioutil.WriteFile(filepath.Join(buildDir, "yarn.lock"), []byte("contents"), 0644)).To(Succeed())
 			})
 			It("installs yarn", func() {
-				mockManifest.EXPECT().InstallOnlyVersion("yarn", gomock.Any()).Do(func(_, tempDir string) error {
+				mockInstaller.EXPECT().InstallOnlyVersion("yarn", gomock.Any()).Do(func(_, tempDir string) error {
 					Expect(os.MkdirAll(filepath.Join(tempDir, "yarn-v1.2.3", "bin"), 0755)).To(Succeed())
 					Expect(ioutil.WriteFile(filepath.Join(tempDir, "yarn-v1.2.3", "bin", "yarn"), []byte("contents"), 0644)).To(Succeed())
 					return nil
@@ -681,7 +687,7 @@ var _ = Describe("Supply", func() {
 
 			It("updates rubygems", func() {
 				mockVersions.EXPECT().Engine().Return("ruby", nil)
-				mockManifest.EXPECT().InstallDependency(gomock.Any(), gomock.Any()).Do(func(dep libbuildpack.Dependency, _ string) {
+				mockInstaller.EXPECT().InstallDependency(gomock.Any(), gomock.Any()).Do(func(dep libbuildpack.Dependency, _ string) {
 					Expect(dep.Name).To(Equal("rubygems"))
 					Expect(dep.Version).To(Equal("2.6.13"))
 				})
