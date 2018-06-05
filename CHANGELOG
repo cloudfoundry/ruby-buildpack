@@ -1,3 +1,15 @@
+v1.7.19 Jun 05, 2018
+=====================
+
+* Add yarn 1.7.0, remove yarn 1.6.0
+  (https://www.pivotaltracker.com/story/show/157827921)
+
+* Add rubygems 2.7.7, remove rubygems 2.7.6
+  (https://www.pivotaltracker.com/story/show/157685124)
+
+* Add bundler 1.16.2, remove bundler 1.16.1
+  (https://www.pivotaltracker.com/story/show/157645319)
+
 v1.7.18 May 08, 2018
 =====================
 
