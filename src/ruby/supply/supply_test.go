@@ -22,6 +22,17 @@ import (
 
 //go:generate mockgen -source=supply.go --destination=mocks_test.go --package=supply_test
 
+type MacTempDir struct{}
+
+func (t *MacTempDir) CopyDirToTemp(dir string) (string, error) {
+	tmpDir, err := ioutil.TempDir("", "supply-tests")
+	Expect(err).To(BeNil())
+	tmpDir = filepath.Join(tmpDir, filepath.Base(dir))
+	os.MkdirAll(tmpDir, 0700)
+	libbuildpack.CopyDirectory(dir, tmpDir)
+	return tmpDir, nil
+}
+
 var _ = Describe("Supply", func() {
 	var (
 		err           error
@@ -37,6 +48,7 @@ var _ = Describe("Supply", func() {
 		mockVersions  *MockVersions
 		mockCommand   *MockCommand
 		mockCache     *MockCache
+		mockTempDir   *MacTempDir
 	)
 
 	BeforeEach(func() {
@@ -60,6 +72,7 @@ var _ = Describe("Supply", func() {
 		mockVersions.EXPECT().Gemfile().AnyTimes().Return(filepath.Join(buildDir, "Gemfile"))
 		mockCommand = NewMockCommand(mockCtrl)
 		mockCache = NewMockCache(mockCtrl)
+		mockTempDir = &MacTempDir{}
 
 		args := []string{buildDir, "", depsDir, depsIdx}
 		stager := libbuildpack.NewStager(args, logger, &libbuildpack.Manifest{})
@@ -72,6 +85,7 @@ var _ = Describe("Supply", func() {
 			Versions:  mockVersions,
 			Cache:     mockCache,
 			Command:   mockCommand,
+			TempDir:   mockTempDir,
 		}
 	})
 

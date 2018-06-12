@@ -54,6 +54,10 @@ type Stager interface {
 	SetStagingEnvironment() error
 }
 
+type TempDir interface {
+	CopyDirToTemp(string) (string, error)
+}
+
 type Cache interface {
 	Metadata() *cache.Metadata
 	Restore() error
@@ -68,6 +72,7 @@ type Supplier struct {
 	Versions          Versions
 	Cache             Cache
 	Command           Command
+	TempDir           TempDir
 	cachedNeedsNode   bool
 	needsNode         bool
 	appHasGemfile     bool
@@ -527,14 +532,18 @@ func (w *IndentedWriter) Write(p []byte) (n int, err error) {
 	return w.Write(p)
 }
 
-func (s *Supplier) copyDirToTemp(dir string) (string, error) {
+type LinuxTempDir struct {
+	Log *libbuildpack.Logger
+}
+
+func (t *LinuxTempDir) CopyDirToTemp(dir string) (string, error) {
 	tempDir, err := ioutil.TempDir("", "app")
 	if err != nil {
 		return "", err
 	}
 	cmd := exec.Command("cp", "-al", dir, tempDir)
 	if output, err := cmd.CombinedOutput(); err != nil {
-		s.Log.Error(string(output))
+		t.Log.Error(string(output))
 		return "", fmt.Errorf("Could not copy build dir to temp: %v", err)
 	}
 	tempDir = filepath.Join(tempDir, filepath.Base(dir))
@@ -549,7 +558,7 @@ func (s *Supplier) InstallGems() error {
 	s.warnBundleConfig()
 	s.warnWindowsGemfile()
 
-	tempDir, err := s.copyDirToTemp(s.Stager.BuildDir())
+	tempDir, err := s.TempDir.CopyDirToTemp(s.Stager.BuildDir())
 	if err != nil {
 		return nil
 	}

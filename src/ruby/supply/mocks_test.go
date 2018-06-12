@@ -421,6 +421,42 @@ func (mr *MockStagerMockRecorder) SetStagingEnvironment() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetStagingEnvironment", reflect.TypeOf((*MockStager)(nil).SetStagingEnvironment))
 }
 
+// MockTempDir is a mock of TempDir interface
+type MockTempDir struct {
+	ctrl     *gomock.Controller
+	recorder *MockTempDirMockRecorder
+}
+
+// MockTempDirMockRecorder is the mock recorder for MockTempDir
+type MockTempDirMockRecorder struct {
+	mock *MockTempDir
+}
+
+// NewMockTempDir creates a new mock instance
+func NewMockTempDir(ctrl *gomock.Controller) *MockTempDir {
+	mock := &MockTempDir{ctrl: ctrl}
+	mock.recorder = &MockTempDirMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use
+func (m *MockTempDir) EXPECT() *MockTempDirMockRecorder {
+	return m.recorder
+}
+
+// CopyDirToTemp mocks base method
+func (m *MockTempDir) CopyDirToTemp(arg0 string) (string, error) {
+	ret := m.ctrl.Call(m, "CopyDirToTemp", arg0)
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CopyDirToTemp indicates an expected call of CopyDirToTemp
+func (mr *MockTempDirMockRecorder) CopyDirToTemp(arg0 interface{}) *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CopyDirToTemp", reflect.TypeOf((*MockTempDir)(nil).CopyDirToTemp), arg0)
+}
+
 // MockCache is a mock of Cache interface
 type MockCache struct {
 	ctrl     *gomock.Controller
