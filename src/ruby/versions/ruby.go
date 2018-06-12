@@ -3,6 +3,7 @@ package versions
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -158,16 +159,39 @@ func (v *Versions) GemMajorVersion(gem string) (int, error) {
 	}
 }
 
+//Should return true if either:
+// (1) the only platform in the Gemfile.lock is windows (mingw/mswin)
+//     (there is no ruby or jruby platform)
+//     -or-
+// (2) the Gemfile.lock line endings are /r/n, rather than just /n
 func (v *Versions) HasWindowsGemfileLock() (bool, error) {
+	gemfileLockPath := v.Gemfile() + ".lock"
+	if good, err := libbuildpack.FileExists(gemfileLockPath); err != nil {
+		return false, err
+	} else if !good {
+		return false, nil
+	}
+	if bytes, err := ioutil.ReadFile(gemfileLockPath); err != nil {
+		return false, err
+	} else if strings.Contains(string(bytes), "\r\n") {
+		return true, nil
+	}
+
 	code := `
 	  return false if !File.exists?(input["gemfilelock"])
 		parsed = Bundler::LockfileParser.new(File.read(input["gemfilelock"]))
-		!parsed.platforms.detect do |platform|
-      /mingw|mswin/.match(platform.os) if platform.is_a?(Gem::Platform)
+		parsed.platforms.detect do |platform|
+		  if platform.is_a?(String)
+        /ruby/.match(platform)
+			elsif platform.is_a?(Gem::Platform)
+			  /java/.match(platform.os)
+			end
     end.nil?
 	`
 
-	data, err := v.run(filepath.Dir(v.Gemfile()), code, map[string]string{"gemfilelock": fmt.Sprintf("%s.lock", v.Gemfile())})
+	data, err := v.run(filepath.Dir(v.Gemfile()),
+		code,
+		map[string]string{"gemfilelock": fmt.Sprintf("%s.lock", v.Gemfile())})
 	if err != nil {
 		return false, err
 	}

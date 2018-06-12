@@ -206,44 +206,86 @@ var _ = Describe("Supply", func() {
 		})
 
 		Context("Windows Gemfile.lock", func() {
-			const gemfileLock = "GEM\n  remote: https://rubygems.org/\n  specs:\n    rack (1.5.2)\n\nPLATFORMS\n  x64-mingw32\n\nDEPENDENCIES\n  rack\n"
-			const newGemfileLock = "new lockfile"
-			BeforeEach(func() {
-				mockVersions.EXPECT().HasWindowsGemfileLock().Return(true, nil)
-				mockManifest.EXPECT().AllDependencyVersions("bundler").Return([]string{"1.2.3"})
-				Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte("source \"https://rubygems.org\"\r\ngem \"rack\"\r\n"), 0644)).To(Succeed())
-				Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile.lock"), []byte(gemfileLock), 0644)).To(Succeed())
+			Context("With Unix Line Endings", func() {
+				const gemfileLock = "GEM\n  remote: https://rubygems.org/\n  specs:\n    rack (1.5.2)\n\nPLATFORMS\n  x64-mingw32\n ruby\n\nDEPENDENCIES\n  rack\n"
+				const newGemfileLock = "new lockfile"
+				BeforeEach(func() {
+					mockVersions.EXPECT().HasWindowsGemfileLock().Return(false, nil)
+					mockManifest.EXPECT().AllDependencyVersions("bundler").Return([]string{"1.2.3"})
+					Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte("source \"https://rubygems.org\"\ngem \"rack\"\n"), 0644)).To(Succeed())
+					Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile.lock"), []byte(gemfileLock), 0644)).To(Succeed())
+				})
+
+				It("runs bundler with existing Gemfile.lock", func() {
+					mockCommand.EXPECT().Run(gomock.Any()).AnyTimes().Do(func(cmd *exec.Cmd) {
+						if cmd.Args[1] == "install" {
+							Expect(filepath.Join(cmd.Dir, "Gemfile")).To(BeAnExistingFile())
+							Expect(filepath.Join(cmd.Dir, "Gemfile.lock")).To(BeAnExistingFile())
+						} else {
+							handleBundleBinstubRegeneration(cmd)
+						}
+					})
+					Expect(supplier.InstallGems()).To(Succeed())
+
+					Expect(ioutil.ReadFile(filepath.Join(buildDir, "Gemfile.lock"))).To(ContainSubstring(gemfileLock))
+					Expect(ioutil.ReadFile(filepath.Join(depsDir, depsIdx, "Gemfile.lock"))).To(ContainSubstring(gemfileLock))
+				})
+
+				It("runs bundler in a copy so it does not change the build directory", func() {
+					installCalled := false
+					mockCommand.EXPECT().Run(gomock.Any()).AnyTimes().Do(func(cmd *exec.Cmd) {
+						if cmd.Args[1] == "install" {
+							Expect(cmd.Dir).ToNot(Equal(buildDir))
+							installCalled = true
+						} else {
+							handleBundleBinstubRegeneration(cmd)
+						}
+					})
+					Expect(supplier.InstallGems()).To(Succeed())
+					Expect(installCalled).To(BeTrue())
+				})
 			})
 
-			It("runs bundler without the Gemfile.lock and copies the Gemfile.lock it creates to the dep directory", func() {
-				mockCommand.EXPECT().Run(gomock.Any()).AnyTimes().Do(func(cmd *exec.Cmd) {
-					if cmd.Args[1] == "install" {
-						Expect(cmd.Args).ToNot(ContainElement("--deployment"))
-						Expect(filepath.Join(cmd.Dir, "Gemfile")).To(BeAnExistingFile())
-						Expect(filepath.Join(cmd.Dir, "Gemfile.lock")).ToNot(BeAnExistingFile())
-						Expect(ioutil.WriteFile(filepath.Join(cmd.Dir, "Gemfile.lock"), []byte(newGemfileLock), 0644)).To(Succeed())
-					} else {
-						handleBundleBinstubRegeneration(cmd)
-					}
+			Context("With Windows Line Endings", func() {
+				const gemfileLock = "GEM\n  remote: https://rubygems.org/\n  specs:\n    rack (1.5.2)\n\nPLATFORMS\n  x64-mingw32\n\nDEPENDENCIES\n  rack\n"
+				const newGemfileLock = "new lockfile"
+				BeforeEach(func() {
+					mockVersions.EXPECT().HasWindowsGemfileLock().Return(true, nil)
+					mockManifest.EXPECT().AllDependencyVersions("bundler").Return([]string{"1.2.3"})
+					Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte("source \"https://rubygems.org\"\r\ngem \"rack\"\r\n"), 0644)).To(Succeed())
+					Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile.lock"), []byte(gemfileLock), 0644)).To(Succeed())
 				})
-				Expect(supplier.InstallGems()).To(Succeed())
 
-				Expect(ioutil.ReadFile(filepath.Join(buildDir, "Gemfile.lock"))).To(ContainSubstring(gemfileLock))
-				Expect(ioutil.ReadFile(filepath.Join(depsDir, depsIdx, "Gemfile.lock"))).To(ContainSubstring(newGemfileLock))
-			})
+				It("runs bundler without the Gemfile.lock and copies the Gemfile.lock it creates to the dep directory", func() {
+					mockCommand.EXPECT().Run(gomock.Any()).AnyTimes().Do(func(cmd *exec.Cmd) {
+						if cmd.Args[1] == "install" {
+							Expect(cmd.Args).ToNot(ContainElement("--deployment"))
+							Expect(filepath.Join(cmd.Dir, "Gemfile")).To(BeAnExistingFile())
+							Expect(filepath.Join(cmd.Dir, "Gemfile.lock")).ToNot(BeAnExistingFile())
+							Expect(ioutil.WriteFile(filepath.Join(cmd.Dir, "Gemfile.lock"), []byte(newGemfileLock), 0644)).To(Succeed())
+						} else {
+							handleBundleBinstubRegeneration(cmd)
+						}
+					})
+					Expect(supplier.InstallGems()).To(Succeed())
 
-			It("runs bundler in a copy so it does not change the build directory", func() {
-				installCalled := false
-				mockCommand.EXPECT().Run(gomock.Any()).AnyTimes().Do(func(cmd *exec.Cmd) {
-					if cmd.Args[1] == "install" {
-						Expect(cmd.Dir).ToNot(Equal(buildDir))
-						installCalled = true
-					} else {
-						handleBundleBinstubRegeneration(cmd)
-					}
+					Expect(ioutil.ReadFile(filepath.Join(buildDir, "Gemfile.lock"))).To(ContainSubstring(gemfileLock))
+					Expect(ioutil.ReadFile(filepath.Join(depsDir, depsIdx, "Gemfile.lock"))).To(ContainSubstring(newGemfileLock))
 				})
-				Expect(supplier.InstallGems()).To(Succeed())
-				Expect(installCalled).To(BeTrue())
+
+				It("runs bundler in a copy so it does not change the build directory", func() {
+					installCalled := false
+					mockCommand.EXPECT().Run(gomock.Any()).AnyTimes().Do(func(cmd *exec.Cmd) {
+						if cmd.Args[1] == "install" {
+							Expect(cmd.Dir).ToNot(Equal(buildDir))
+							installCalled = true
+						} else {
+							handleBundleBinstubRegeneration(cmd)
+						}
+					})
+					Expect(supplier.InstallGems()).To(Succeed())
+					Expect(installCalled).To(BeTrue())
+				})
 			})
 		})
 	})

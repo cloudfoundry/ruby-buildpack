@@ -32,15 +32,45 @@ var _ = Describe("Ruby", func() {
 	})
 
 	Describe("HasWindowsGemfileLock", func() {
-		Context("Gemfile.lock has mingw platform", func() {
+		Context("Gemfile.lock has mingw platform and no ruby platform", func() {
 			BeforeEach(func() {
 				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(windowsGemfileLockFixture), 0644)).To(Succeed())
+				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(windowsOnlyGemfileLockFixture), 0644)).To(Succeed())
 			})
 
 			It("returns true", func() {
 				v := versions.New(tmpDir, manifest)
-				Expect(v.HasWindowsGemfileLock()).To(BeTrue())
+				result, err := v.HasWindowsGemfileLock()
+				Expect(err).To(BeNil())
+				Expect(result).To(BeTrue())
+			})
+		})
+
+		Context("Gemfile.lock has mingw and ruby platforms and windows line endings", func() {
+			BeforeEach(func() {
+				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(windowsEndingsGemfileLockFixture), 0644)).To(Succeed())
+			})
+
+			It("returns true", func() {
+				v := versions.New(tmpDir, manifest)
+				result, err := v.HasWindowsGemfileLock()
+				Expect(err).To(BeNil())
+				Expect(result).To(BeTrue())
+			})
+		})
+
+		Context("Gemfile.lock has mingw platform and a ruby platform", func() {
+			BeforeEach(func() {
+				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(bothGemfileLockFixture), 0644)).To(Succeed())
+			})
+
+			It("returns false", func() {
+				v := versions.New(tmpDir, manifest)
+				result, err := v.HasWindowsGemfileLock()
+				Expect(err).To(BeNil())
+				Expect(result).To(BeFalse())
 			})
 		})
 
@@ -52,7 +82,23 @@ var _ = Describe("Ruby", func() {
 
 			It("returns false", func() {
 				v := versions.New(tmpDir, manifest)
-				Expect(v.HasWindowsGemfileLock()).To(BeFalse())
+				result, err := v.HasWindowsGemfileLock()
+				Expect(err).To(BeNil())
+				Expect(result).To(BeFalse())
+			})
+		})
+
+		Context("Gemfile.lock has jruby platform", func() {
+			BeforeEach(func() {
+				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(jrubyGemfileLockFixture), 0644)).To(Succeed())
+			})
+
+			It("returns false", func() {
+				v := versions.New(tmpDir, manifest)
+				result, err := v.HasWindowsGemfileLock()
+				Expect(err).To(BeNil())
+				Expect(result).To(BeFalse())
 			})
 		})
 
