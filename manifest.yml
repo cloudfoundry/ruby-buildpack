@@ -21,8 +21,8 @@ dependency_deprecation_dates:
 dependencies:
 - name: bundler
   version: 1.16.2
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.16.2-8cdae990.tgz
-  sha256: 8cdae990d8c3aba352de17546cda46257c7abebfcd3718b76c0dd2174980188a
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.16.2.tgz
+  sha256: b490a416e785b4ecadc567a5a42aeb21c5fa6b4c7328483a627befd39eb32fc3
   cf_stacks:
   - cflinuxfs2
 - name: jruby
@@ -35,6 +35,12 @@ dependencies:
   version: 4.9.1
   uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-4.9.1-linux-x64-b71f19bb.tgz
   sha256: b71f19bb8d1b4e62dca68ed60979a726ffb8753eaf1983f254162707c320fcfd
+  cf_stacks:
+  - cflinuxfs2
+- name: node
+  version: 6.14.3
+  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-6.14.3-linux-x64-3b53ee27.tgz
+  sha256: 3b53ee27be926cbdcecf9454bc7f79522d5c70493fdc37502a732e42828b3f20
   cf_stacks:
   - cflinuxfs2
 - name: openjdk1.8-latest
@@ -101,12 +107,6 @@ dependencies:
   version: 1.7.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn-v1.7.0-e7720ee3.tar.gz
   sha256: e7720ee346b2bd7ec32b7e04517643c38648f5022c7981168321ba1636f2dca3
-  cf_stacks:
-  - cflinuxfs2
-- name: node
-  version: 6.14.3
-  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-6.14.3-linux-x64-3b53ee27.tgz
-  sha256: 3b53ee27be926cbdcecf9454bc7f79522d5c70493fdc37502a732e42828b3f20
   cf_stacks:
   - cflinuxfs2
 include_files:
