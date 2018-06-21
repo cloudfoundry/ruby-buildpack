@@ -25,7 +25,7 @@ var _ = Describe("JRuby App", func() {
 
 			By("the buildpack logged it installed a specific version of JRuby", func() {
 				Expect(app.Stdout.String()).To(ContainSubstring("Installing openjdk"))
-				Expect(app.Stdout.String()).To(MatchRegexp("ruby-2.3.\\d+-jruby-9.1.\\d+.0"))
+				Expect(app.Stdout.String()).To(MatchRegexp("ruby-2.3.\\d+-jruby-9.\\d+.\\d+.0"))
 				Expect(app.GetBody("/ruby")).To(MatchRegexp("jruby 2.3.\\d+"))
 			})
 
