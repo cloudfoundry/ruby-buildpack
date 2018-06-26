@@ -301,22 +301,12 @@ func (s *Supplier) InstallNode() error {
 	}
 	nodeInstallDir := filepath.Join(s.Stager.DepDir(), "node")
 
-	version := "4.x"
-	rails51, err := s.Versions.HasGemVersion("rails", ">=5.1.0.beta")
-	if err != nil {
-		return err
-	}
-	if rails51 {
-		version = "6.x"
-	}
-
-	versions := s.Manifest.AllDependencyVersions("node")
-	ver, err := libbuildpack.FindMatchingVersion(version, versions)
+	version, err := libbuildpack.FindMatchingVersion("x", s.Manifest.AllDependencyVersions("node"))
 	if err != nil {
 		return err
 	}
 	dep.Name = "node"
-	dep.Version = ver
+	dep.Version = version
 
 	if err := s.Installer.InstallDependency(dep, tempDir); err != nil {
 		return err
