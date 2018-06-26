@@ -6,10 +6,6 @@ default_versions:
 pre_package: scripts/build.sh
 url_to_dependency_map: []
 dependency_deprecation_dates:
-- version_line: 4.x
-  name: node
-  date: 2018-04-01
-  link: https://github.com/nodejs/LTS
 - version_line: 6.x
   name: node
   date: 2019-04-18
@@ -35,12 +31,6 @@ dependencies:
   version: ruby-2.5.0-jruby-9.2.0.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby-9.2.0.0_ruby-2.5.0-linux-x64-33e9965c.tgz
   sha256: 33e9965c148267d93c3a1b96370eb276098a2a69114d5db20fb608af3c8e8541
-  cf_stacks:
-  - cflinuxfs2
-- name: node
-  version: 4.9.1
-  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-4.9.1-linux-x64-2eccbf91.tgz
-  sha256: 2eccbf917e3418f59b6f74f859436b14347b83a5ac8b5a53c4c45ddebad47134
   cf_stacks:
   - cflinuxfs2
 - name: node
