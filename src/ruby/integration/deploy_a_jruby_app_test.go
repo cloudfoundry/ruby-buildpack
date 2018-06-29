@@ -6,10 +6,11 @@ import (
 
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
+	"io/ioutil"
+	"regexp"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"regexp"
-	"io/ioutil"
 )
 
 var _ = Describe("JRuby App", func() {
@@ -22,7 +23,7 @@ var _ = Describe("JRuby App", func() {
 
 		BeforeEach(func() {
 			dir = filepath.Join(bpDir, "fixtures", "sinatra_jruby")
-			data, err:= ioutil.ReadFile(filepath.Join(dir, "Gemfile"))
+			data, err := ioutil.ReadFile(filepath.Join(dir, "Gemfile"))
 			Expect(err).To(BeNil())
 			re := regexp.MustCompile(`ruby '(\d+.\d+.\d+)', :engine => 'jruby', :engine_version => '(\d+.\d+.\d+.\d+)'`)
 			matches := re.FindStringSubmatch(string(data))
@@ -38,7 +39,7 @@ var _ = Describe("JRuby App", func() {
 
 			By("the buildpack logged it installed a specific version of JRuby", func() {
 				Expect(app.Stdout.String()).To(ContainSubstring("Installing openjdk"))
-				Expect(app.Stdout.String()).To(ContainSubstring(fmt.Sprintf("Installing jruby ruby-%s-jruby-%s", rubyVersion, jrubyVersion)))
+				Expect(app.Stdout.String()).To(ContainSubstring(fmt.Sprintf("Installing jruby %s", jrubyVersion)))
 				Expect(app.GetBody("/ruby")).To(ContainSubstring(fmt.Sprintf("jruby %s", rubyVersion)))
 			})
 

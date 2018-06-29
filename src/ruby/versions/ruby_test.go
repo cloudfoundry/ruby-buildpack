@@ -226,7 +226,7 @@ var _ = Describe("Ruby", func() {
 			})
 			It("returns the requested version", func() {
 				v := versions.New(tmpDir, manifest)
-				Expect(v.JrubyVersion()).To(Equal("ruby-2.3.3-jruby-9.1.12.0"))
+				Expect(v.JrubyVersion()).To(Equal("9.1.12.0"))
 			})
 		})
 
@@ -239,7 +239,7 @@ var _ = Describe("Ruby", func() {
 			AfterEach(func() { os.Unsetenv("BUNDLE_GEMFILE") })
 			It("returns the requested version", func() {
 				v := versions.New(tmpDir, manifest)
-				Expect(v.JrubyVersion()).To(Equal("ruby-2.4.4-jruby-9.2.13.0"))
+				Expect(v.JrubyVersion()).To(Equal("9.2.13.0"))
 			})
 		})
 	})

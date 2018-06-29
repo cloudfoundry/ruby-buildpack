@@ -626,14 +626,14 @@ var _ = Describe("Supply", func() {
 			})
 			Context("version determined from Gemfile", func() {
 				BeforeEach(func() {
-					mockVersions.EXPECT().JrubyVersion().Return("ruby-3.1.2-jruby-2.1.6", nil)
+					mockVersions.EXPECT().JrubyVersion().Return("9.2.0.0", nil)
 				})
 
 				It("returns the engine and version", func() {
 					engine, version, err := supplier.DetermineRuby()
 					Expect(err).ToNot(HaveOccurred())
 					Expect(engine).To(Equal("jruby"))
-					Expect(version).To(Equal("ruby-3.1.2-jruby-2.1.6"))
+					Expect(version).To(Equal("9.2.0.0"))
 				})
 			})
 			Context("version in Gemfile not in manifest", func() {

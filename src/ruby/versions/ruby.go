@@ -79,7 +79,7 @@ func (v *Versions) JrubyVersion() (string, error) {
 		b = Bundler::Dsl.evaluate('%s', '%s.lock', {}).ruby_version
 	  return '' if !b
 
-	  "ruby-#{b.versions_string(b.versions)}-jruby-#{b.versions_string(b.engine_versions)}"
+	  "#{b.versions_string(b.engine_versions)}"
 	`, filepath.Base(gemfile), filepath.Base(gemfile))
 
 	data, err := v.run(filepath.Dir(gemfile), code, []string{})
