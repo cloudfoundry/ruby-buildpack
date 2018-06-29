@@ -3,6 +3,7 @@ package brats_test
 import (
 	"bytes"
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -76,21 +77,38 @@ func CopyBrats(rubyVersion string) *cutlass.App {
 	return cutlass.New(dir)
 }
 
-func CopyBratsJRuby(fullRubyVersion string) *cutlass.App {
-	m := regexp.MustCompile(`ruby-(.*)-jruby-(.*)`).FindStringSubmatch(fullRubyVersion)
-	if len(m) != 3 {
-		panic("Incorrect jruby version " + fullRubyVersion)
+// jruby 9.2.X.X = ruby 2.5.X
+// jruby 9.1.X.X = ruby 2.3.X
+func rubyVersionFromJRubyVersion(jrubyVersion string) (string, error) {
+	jrubyVersionRegex := regexp.MustCompile(`^(9.\d+).\d+.\d+$`)
+	version := jrubyVersionRegex.FindStringSubmatch(jrubyVersion)
+	if version == nil {
+		return "", fmt.Errorf("JRuby version is not of expected format: expected 9.X.X.X, got %s", jrubyVersion)
 	}
-	rubyVersion := m[1]
-	jrubyVersion := m[2]
+	switch version[1] {
+	case "9.2":
+		return "~>2.5", nil
+	case "9.1":
+		return "~>2.3", nil
+	default:
+		return "", fmt.Errorf("Unknown JRuby -> Ruby version mapping for JRuby version %s", jrubyVersion)
+	}
+}
+
+func CopyBratsJRuby(jrubyVersion string) *cutlass.App {
+	rubyVersion, err := rubyVersionFromJRubyVersion(jrubyVersion)
+	Expect(err).ToNot(HaveOccurred())
 
 	dir, err := cutlass.CopyFixture(filepath.Join(bratshelper.Data.BpDir, "fixtures", "brats_jruby"))
 	Expect(err).ToNot(HaveOccurred())
+
 	data, err := ioutil.ReadFile(filepath.Join(dir, "Gemfile"))
 	Expect(err).ToNot(HaveOccurred())
+
 	data = bytes.Replace(data, []byte("<%= ruby_version %>"), []byte(rubyVersion), -1)
 	data = bytes.Replace(data, []byte("<%= engine_version %>"), []byte(jrubyVersion), -1)
 	Expect(ioutil.WriteFile(filepath.Join(dir, "Gemfile"), data, 0644)).To(Succeed())
+
 	return cutlass.New(dir)
 }
 

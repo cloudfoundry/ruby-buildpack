@@ -50,13 +50,13 @@ var _ = Describe("Ruby buildpack", func() {
 		})
 	})
 
-	bratshelper.ForAllSupportedVersions("jruby", CopyBratsJRuby, func(fullRubyVersion string, app *cutlass.App) {
+	bratshelper.ForAllSupportedVersions("jruby", CopyBratsJRuby, func(jrubyVersion string, app *cutlass.App) {
 		app.Memory = "400Mb"
 		app.Disk = "300M"
 		PushApp(app)
 
 		By("installs the correct version of JRuby", func() {
-			Expect(app.Stdout.String()).To(ContainSubstring("Installing jruby " + fullRubyVersion))
+			Expect(app.Stdout.String()).To(ContainSubstring("Installing jruby " + jrubyVersion))
 		})
 		By("runs a simple webserver", func() {
 			Expect(app.GetBody("/")).To(ContainSubstring("Hello, World"))
