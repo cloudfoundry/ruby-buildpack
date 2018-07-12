@@ -53,10 +53,10 @@ dependencies:
   - cflinuxfs2
 - name: ruby
   version: 2.2.10
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.2.10-linux-x64-6645a56b.tgz
-  sha256: 6645a56bb4cfa674b07fba61582214ee46d852f8bf2d8a9a95aecb58141e1583
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.2.10-linux-x64-6d33fe71.tgz
+  sha256: 6d33fe71dfb5d8fd00de9be12b8a965ff8cf36aef3a7a55f42af1c9aae456f3a
   cf_stacks:
-  - cflinuxfs2
+  - cflinuxfs3
 - name: ruby
   version: 2.3.6
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.3.6-linux-x64-e553a918.tgz
