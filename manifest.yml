@@ -77,10 +77,16 @@ dependencies:
   - cflinuxfs2
 - name: ruby
   version: 2.3.7
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.3.7-linux-x64-82bc7652.tgz
-  sha256: 82bc76527f8c1a386009c74cdfda42bde2b655809f60b2061d8f891a4baa629a
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.3.7-linux-x64-cflinuxfs2-4a1281d6.tgz
+  sha256: 4a1281d604432e078c9b6777e4d03694ccb86287573ad90022a6812ed7d3b0c7
   cf_stacks:
   - cflinuxfs2
+- name: ruby
+  version: 2.3.7
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.3.7-linux-x64-cflinuxfs3-0d18937e.tgz
+  sha256: 0d18937e5f06227c8de20dd21077205291c3f30d8bc7d121a8bf397cbe9af0d3
+  cf_stacks:
+  - cflinuxfs3
 - name: ruby
   version: 2.4.3
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.4.3-linux-x64-79b34eab.tgz
