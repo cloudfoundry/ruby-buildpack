@@ -131,14 +131,14 @@ dependencies:
   - cflinuxfs2
 - name: ruby
   version: 2.5.1
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.5.1-linux-x64-cflinuxfs2-e9fb758c.tgz
-  sha256: e9fb758cb6ea8b30a8a3dbaa4db931ab8ab2507de7e71b6de9833ca9c1b3102f
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.5.1-linux-x64-cflinuxfs2-d5a8c75f.tgz
+  sha256: d5a8c75f94328f312e7e062f578df36658c187cab28bbb86151d668f30d43c57
   cf_stacks:
   - cflinuxfs2
 - name: ruby
   version: 2.5.1
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.5.1-linux-x64-cflinuxfs3-4c633b65.tgz
-  sha256: 4c633b651fb621392447edc5c96ddd4ca4f11facbae63267e06234f54d17ddd1
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.5.1-linux-x64-cflinuxfs3-1505ba66.tgz
+  sha256: 1505ba66bd98107a75021a652499591cb23458ba1ec59589155863d35c0deda4
   cf_stacks:
   - cflinuxfs3
 - name: rubygems
