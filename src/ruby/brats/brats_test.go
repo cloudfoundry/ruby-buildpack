@@ -15,7 +15,7 @@ var _ = Describe("Ruby buildpack", func() {
 		return CopyBrats("2.2.x")
 	})
 	bratshelper.StagingWithADepThatIsNotTheLatest("ruby", CopyBrats)
-	bratshelper.StagingWithCustomBuildpackWithCredentialsInDependencies(`ruby\-[\d\.]+\-linux\-x64\-[\da-f]+\.tgz`, CopyBrats)
+	bratshelper.StagingWithCustomBuildpackWithCredentialsInDependencies(`ruby\-[\d\.]+\-linux\-x64\-(cflinuxfs.*-)?[\da-f]+\.tgz`, CopyBrats)
 	bratshelper.DeployAppWithExecutableProfileScript("ruby", CopyBrats)
 	bratshelper.DeployAnAppWithSensitiveEnvironmentVariables(CopyBrats)
 	bratshelper.ForAllSupportedVersions("ruby", CopyBrats, func(rubyVersion string, app *cutlass.App) {
