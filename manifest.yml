@@ -29,14 +29,14 @@ dependencies:
   - cflinuxfs3
 - name: jruby
   version: 9.1.17.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby-9.1.17.0_ruby-2.3-linux-x64-cflinuxfs2-eb382176.tgz
-  sha256: eb382176b04e7b0174862da26e4d4be566605edd2816fff83d86a513195852a5
+  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby-9.1.17.0_ruby-2.3-linux-x64-cflinuxfs2-9db444cf.tgz
+  sha256: 9db444cf96c8810d875da50d2758a6e1bfa272aec1e0e34c7d4786029c381478
   cf_stacks:
   - cflinuxfs2
 - name: jruby
   version: 9.1.17.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby-9.1.17.0_ruby-2.3-linux-x64-cflinuxfs3-47b11ab5.tgz
-  sha256: 47b11ab568bfaf9ac806b4cc9c2b15b33c00df44e19fa1fd641f8aa45e608dd9
+  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby-9.1.17.0_ruby-2.3-linux-x64-cflinuxfs3-5ae0050a.tgz
+  sha256: 5ae0050a83e9d4f779ce1d17ec80a6b66e626f5b30a41614b077f2a0ccdb9a70
   cf_stacks:
   - cflinuxfs3
 - name: jruby
