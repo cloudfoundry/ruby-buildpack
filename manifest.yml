@@ -113,14 +113,14 @@ dependencies:
   - cflinuxfs2
 - name: ruby
   version: 2.4.4
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.4.4-linux-x64-cflinuxfs2-a98a1d54.tgz
-  sha256: a98a1d54eb826aa3a6e3ca127dfc8f0612948df80fc7085b37f5fcc3d19c5d24
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.4.4-linux-x64-cflinuxfs2-c0c4a41e.tgz
+  sha256: c0c4a41eac07252bced3bc38c867fbeb54b20696c77be0ba4786db1556659e1d
   cf_stacks:
   - cflinuxfs2
 - name: ruby
   version: 2.4.4
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.4.4-linux-x64-cflinuxfs3-be282a80.tgz
-  sha256: be282a804c906eef0cfefa2a3119b6c84db1b207ded4886e58dd63604240f778
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.4.4-linux-x64-cflinuxfs3-e17fc3b0.tgz
+  sha256: e17fc3b051766063c199172018c1a971e7b6400027b3ca76eea7cbe57768b693
   cf_stacks:
   - cflinuxfs3
 - name: ruby
