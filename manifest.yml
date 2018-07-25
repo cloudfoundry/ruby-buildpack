@@ -17,14 +17,14 @@ dependency_deprecation_dates:
 dependencies:
 - name: bundler
   version: 1.16.3
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.16.3-cflinuxfs2-3d0af671.tgz
-  sha256: 3d0af6717f6bd9370c3a81bd0642b13cbca4abd19124a9fd71c56ef5dbec8f17
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.16.3-cflinuxfs2-00ba582b.tgz
+  sha256: 00ba582b3698588295a63d86002c7c1ad57b2185392908bad03d6db67905c793
   cf_stacks:
   - cflinuxfs2
 - name: bundler
   version: 1.16.3
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.16.3-cflinuxfs3-14883456.tgz
-  sha256: 1488345642194e9cf1cd2465bf9b8e6d5b9e190e75f665b0a95f4dcf4d14683d
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.16.3-cflinuxfs3-e45641b6.tgz
+  sha256: e45641b6ed63b19dad89ea981928311039a6f93c7b0291553c336e27bec17ea2
   cf_stacks:
   - cflinuxfs3
 - name: jruby
