@@ -69,6 +69,7 @@ dependencies:
   sha256: 9287eda198990c8cfae8a23db725283a040f82555f87086ed5447690a2869f5a
   cf_stacks:
   - cflinuxfs2
+  - cflinuxfs3
 - name: ruby
   version: 2.2.9
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.2.9-linux-x64-6d65b1e2.tgz
