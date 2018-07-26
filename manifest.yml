@@ -21,11 +21,6 @@ dependencies:
   sha256: 8d8ac11e1a091679dc8a12eab5794ba3d9a89dcf5ab014907a05ca6fc4cf1a35
   cf_stacks:
   - cflinuxfs2
-- name: bundler
-  version: 1.16.3
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.16.3-cflinuxfs3-fbda666d.tgz
-  sha256: fbda666da6a90d8cd947155b4548f12c2f374ba9a38c58a6d97b15b1545dca34
-  cf_stacks:
   - cflinuxfs3
 - name: jruby
   version: 9.1.17.0
