@@ -1,3 +1,27 @@
+v1.7.22 Jul 27, 2018
+=====================
+
+* Rebuild ruby 2.2.10, 2.3.7, 2.4.4, 2.5.1
+  for stacks cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/144938923)
+
+* Rebuild node 6.14.3
+  for stacks cflinuxfs3
+
+* Add yarn 1.9.2, remove yarn 1.7.0
+  for stacks cflinuxfs2, cflinuxfs3
+
+* Add rubygems 2.7.7
+  for stacks cflinuxfs3
+
+* Add bundler 6.14.3
+  for stacks cflinuxfs3
+
+* Remove node 4.X.X version line
+  - This version line is deprecated
+  (https://www.pivotaltracker.com/story/show/157362046)
+
+
 v1.7.21 Jun 25, 2018
 =====================
 
