@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"time"
 
-		"github.com/cloudfoundry/libbuildpack"
+	"github.com/cloudfoundry/libbuildpack"
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
 	. "github.com/onsi/ginkgo"
@@ -149,7 +149,7 @@ func AssertUsesProxyDuringStagingIfPresent(fixtureName string) {
 			Expect(err).To(BeNil())
 			defer os.Remove(bpFile)
 
-			traffic, _, err := cutlass.InternetTraffic(
+			traffic, _, _, err := cutlass.InternetTraffic(
 				bpDir,
 				filepath.Join("fixtures", fixtureName),
 				bpFile,
@@ -178,7 +178,7 @@ func AssertNoInternetTraffic(fixtureName string) {
 		Expect(err).To(BeNil())
 		defer os.Remove(bpFile)
 
-		traffic, _, err := cutlass.InternetTraffic(
+		traffic, _, _, err := cutlass.InternetTraffic(
 			bpDir,
 			filepath.Join("fixtures", fixtureName),
 			bpFile,
