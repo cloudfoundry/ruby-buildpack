@@ -16,9 +16,9 @@ dependency_deprecation_dates:
   link: https://www.ruby-lang.org/en/news/2017/04/01/support-of-ruby-2-1-has-ended/
 dependencies:
 - name: bundler
-  version: 1.16.3
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.16.3-cflinuxfs2-8d8ac11e.tgz
-  sha256: 8d8ac11e1a091679dc8a12eab5794ba3d9a89dcf5ab014907a05ca6fc4cf1a35
+  version: 1.16.4
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.16.4-any-stack-7f919b43.tgz
+  sha256: 7f919b4318764d63ab62f3a354ad3d0654f35c3fc83095bed28f704f78e0caf3
   cf_stacks:
   - cflinuxfs2
   - cflinuxfs3
@@ -49,7 +49,7 @@ dependencies:
 - name: node
   version: 6.14.3
   uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-6.14.3-linux-x64-cflinuxfs2-0911c3ae.tgz
-  sha256: '0911c3aeb2c25dd0a41f0225e0c0f2baaa404ffb9cd772166133572f5fb91112'
+  sha256: 0911c3aeb2c25dd0a41f0225e0c0f2baaa404ffb9cd772166133572f5fb91112
   cf_stacks:
   - cflinuxfs2
 - name: node
