@@ -1,3 +1,0 @@
----
-  command: ruby app.rb -p $PORT
-  memory: 1024M
