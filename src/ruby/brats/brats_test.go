@@ -56,7 +56,7 @@ var _ = Describe("Ruby buildpack", func() {
 	})
 
 	bratshelper.ForAllSupportedVersions("jruby", CopyBratsJRuby, func(jrubyVersion string, app *cutlass.App) {
-		app.Memory = "1G"
+		app.Memory = "2G"
 		app.Disk = "300M"
 		app.StartCommand = "ruby app.rb -p $PORT"
 		PushApp(app)
