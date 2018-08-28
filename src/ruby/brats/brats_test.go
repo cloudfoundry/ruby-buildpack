@@ -45,7 +45,7 @@ var _ = Describe("Ruby buildpack", func() {
 			Expect(bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte("Hello, bcrypt"))).ToNot(HaveOccurred())
 		})
 		By("supports bson", func() {
-			Expect(app.GetBody("/bson")).To(ContainSubstring("00040000"))
+			Expect(app.GetBody("/bson")).To(ContainSubstring("\x00\x04\x00\x00"))
 		})
 		By("supports postgres", func() {
 			Expect(app.GetBody("/pg")).To(ContainSubstring("could not connect to server: No such file or directory"))

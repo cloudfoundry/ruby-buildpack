@@ -35,7 +35,7 @@ get '/bcrypt' do
 end
 
 get '/bson' do
-  1024.to_bson.unpack('H*').first
+  1024.to_bson.to_s
 end
 
 get '/pg' do
