@@ -775,7 +775,7 @@ bundle config WITHOUT "%s" > /dev/null
 			if metadata.SecretKeyBase == "" {
 				metadata.SecretKeyBase, err = s.Command.Output(s.Stager.BuildDir(), "bundle", "exec", "rake", "secret")
 				if err != nil {
-					return fmt.Errorf("Running 'rake secret'", err)
+					return fmt.Errorf("Failed to run 'rake secret': %v", err)
 				}
 				metadata.SecretKeyBase = strings.TrimSpace(metadata.SecretKeyBase)
 			}
