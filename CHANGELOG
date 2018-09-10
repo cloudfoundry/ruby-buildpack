@@ -1,3 +1,19 @@
+v1.7.23 Sep 10, 2018
+=====================
+
+* Add yarn 1.9.4, remove yarn 1.9.2
+  (https://www.pivotaltracker.com/story/show/159534896)
+
+* Add openjdk-1.8.0_181, remove openjdk-1.8.0_172
+  (https://www.pivotaltracker.com/story/show/159293112)
+
+* Add bundler 1.16.4, remove bundler 1.16.3
+  (https://www.pivotaltracker.com/story/show/159888816)
+
+* Remove node 6.14.3
+  (https://www.pivotaltracker.com/story/show/159814060)
+
+
 v1.7.22 Jul 27, 2018
 =====================
 
