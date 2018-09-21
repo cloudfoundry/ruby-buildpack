@@ -20,7 +20,7 @@ var _ = Describe("Ruby buildpack", func() {
 	if os.Getenv("CF_STACK") == "cflinuxfs2" {
 		bratshelper.StagingWithADepThatIsNotTheLatest("ruby", CopyBrats)
 	}
-	bratshelper.StagingWithCustomBuildpackWithCredentialsInDependencies(`ruby\-[\d\.]+\-linux\-x64\-(cflinuxfs.*-)?[\da-f]+\.tgz`, CopyBrats)
+	bratshelper.StagingWithCustomBuildpackWithCredentialsInDependencies(CopyBrats)
 	bratshelper.DeployAppWithExecutableProfileScript("ruby", CopyBrats)
 	bratshelper.DeployAnAppWithSensitiveEnvironmentVariables(CopyBrats)
 	bratshelper.ForAllSupportedVersions("ruby", CopyBrats, func(rubyVersion string, app *cutlass.App) {
