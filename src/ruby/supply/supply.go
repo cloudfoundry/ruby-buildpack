@@ -191,7 +191,6 @@ func Run(s *Supplier) error {
 		s.Log.Debug("Below files changed:")
 		s.Log.Debug(filesChanged)
 	}
-
 	return nil
 }
 
