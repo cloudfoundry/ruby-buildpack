@@ -1,0 +1,11 @@
+<h1>Welcome to Rails</h1>
+
+<p>Ruby version: <%= @ruby_version %></p>
+<p>Node version: <%= @node_version %></p>
+
+<p>Dirs:</p>
+<ul>
+  <% @node_dirs.each do |dir| %>
+    <li><%= dir %></li>
+  <% end %>
+</ul>
