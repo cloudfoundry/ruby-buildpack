@@ -72,14 +72,14 @@ var _ = Describe("Finalize", func() {
 		Expect(err).To(BeNil())
 	})
 
-	Describe("AssetGemfileLockExists", func() {
+	Describe("AssertGemfileLockExists", func() {
 		Context("Gemfile.lock exists", func() {
 			BeforeEach(func() {
 				Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile.lock"), []byte("body"), 0644)).To(Succeed())
 				Expect(filepath.Join(buildDir, "Gemfile.lock")).To(BeAnExistingFile())
 			})
 			It("Succeeds", func() {
-				Expect(finalizer.AssetGemfileLockExists()).To(Succeed())
+				Expect(finalizer.AssertGemfileLockExists()).To(Succeed())
 			})
 		})
 		Context("Gemfile.lock is missing", func() {
@@ -87,7 +87,7 @@ var _ = Describe("Finalize", func() {
 				Expect(filepath.Join(buildDir, "Gemfile.lock")).ToNot(BeAnExistingFile())
 			})
 			It("Fails", func() {
-				Expect(finalizer.AssetGemfileLockExists()).To(MatchError("Gemfile.lock required"))
+				Expect(finalizer.AssertGemfileLockExists()).To(MatchError("Gemfile.lock required"))
 			})
 		})
 	})

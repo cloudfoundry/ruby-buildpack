@@ -37,7 +37,7 @@ type Finalizer struct {
 func Run(f *Finalizer) error {
 	f.Log.BeginStep("Finalizing Ruby")
 
-	if err := f.AssetGemfileLockExists(); err != nil {
+	if err := f.AssertGemfileLockExists(); err != nil {
 		f.Log.Error(err.Error())
 		return err
 	}
@@ -124,7 +124,7 @@ func (f *Finalizer) Setup() error {
 	return nil
 }
 
-func (f *Finalizer) AssetGemfileLockExists() error {
+func (f *Finalizer) AssertGemfileLockExists() error {
 	if exists, err := libbuildpack.FileExists(filepath.Join(f.Stager.BuildDir(), "Gemfile.lock")); err != nil {
 		return err
 	} else if !exists {
