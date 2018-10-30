@@ -37,7 +37,12 @@ type Finalizer struct {
 func Run(f *Finalizer) error {
 	f.Log.BeginStep("Finalizing Ruby")
 
-	if err := f.AssertGemfileLockExists(); err != nil {
+	gemfileName := "Gemfile"
+	if os.Getenv("BUNDLE_GEMFILE") != "" {
+		gemfileName = os.Getenv("BUNDLE_GEMFILE")
+	}
+
+	if err := f.AssertGemfileLockExists(gemfileName); err != nil {
 		f.Log.Error(err.Error())
 		return err
 	}
@@ -47,7 +52,7 @@ func Run(f *Finalizer) error {
 		return err
 	}
 
-	if err := f.RestoreGemfileLock(); err != nil {
+	if err := f.RestoreGemfileLock(gemfileName); err != nil {
 		f.Log.Error("Error copying Gemfile.lock to app: %v", err)
 		return err
 	}
@@ -124,26 +129,22 @@ func (f *Finalizer) Setup() error {
 	return nil
 }
 
-func (f *Finalizer) AssertGemfileLockExists() error {
-	if exists, err := libbuildpack.FileExists(filepath.Join(f.Stager.BuildDir(), "Gemfile.lock")); err != nil {
+func (f *Finalizer) AssertGemfileLockExists(gemfileName string) error {
+	if exists, err := libbuildpack.FileExists(filepath.Join(f.Stager.BuildDir(), fmt.Sprintf("%s.lock", gemfileName))); err != nil {
 		return err
 	} else if !exists {
-		return errors.New("Gemfile.lock required")
+		return errors.New(fmt.Sprintf("%s.lock required", gemfileName))
 	}
 	return nil
 }
 
-func (f *Finalizer) RestoreGemfileLock() error {
-	source := filepath.Join(f.Stager.DepDir(), "Gemfile.lock")
-	f.Log.Debug("RestoreGemfileLock; %s", source)
+func (f *Finalizer) RestoreGemfileLock(gemfileName string) error {
+	source := filepath.Join(f.Stager.DepDir(), fmt.Sprintf("%s.lock", gemfileName))
+	f.Log.Debug("Restore GemfileLock; %s", source)
 	if exists, err := libbuildpack.FileExists(source); err != nil {
 		return err
 	} else if exists {
-		gemfile := "Gemfile"
-		if os.Getenv("BUNDLE_GEMFILE") != "" {
-			gemfile = os.Getenv("BUNDLE_GEMFILE")
-		}
-		target := filepath.Join(f.Stager.BuildDir(), gemfile) + ".lock"
+		target := filepath.Join(f.Stager.BuildDir(), fmt.Sprintf("%s.lock", gemfileName))
 		f.Log.Debug("RestoreGemfileLock; exists, copy to %s", target)
 		return os.Rename(source, target)
 	}
@@ -171,7 +172,7 @@ func (f *Finalizer) WriteDatabaseYml() error {
 		return nil
 	}
 	if rails41Plus, err := f.Versions.HasGemVersion("activerecord", ">=4.1.0.beta"); err != nil {
-		return err
+		return fmt.Errorf("Error in determining Gem version: %v", err)
 	} else if rails41Plus {
 		return nil
 	}
@@ -201,6 +202,9 @@ func (f *Finalizer) databaseUrl() string {
 	scheme := ""
 	for k, v := range gems {
 		if a, err := f.Versions.HasGem(k); err == nil && a {
+			if err != nil {
+				fmt.Printf("Err in HasGem: %v", err)
+			}
 			scheme = v
 			break
 		}

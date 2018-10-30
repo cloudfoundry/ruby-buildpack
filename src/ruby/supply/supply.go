@@ -196,12 +196,12 @@ func Run(s *Supplier) error {
 
 func (s *Supplier) Setup() error {
 	if exists, err := libbuildpack.FileExists(s.Versions.Gemfile()); err != nil {
-		return fmt.Errorf("Unable to determine if Gemfile exists: %v", err)
+		return fmt.Errorf("unable to determine if Gemfile exists: %v", err)
 	} else {
 		s.appHasGemfile = exists
 	}
 
-	if exists, err := libbuildpack.FileExists(s.Versions.Gemfile() + ".lock"); err != nil {
+	if exists, err := libbuildpack.FileExists(fmt.Sprintf("%s.lock", s.Versions.Gemfile())); err != nil {
 		return fmt.Errorf("Unable to determine if Gemfile.lock exists: %v", err)
 	} else {
 		s.appHasGemfileLock = exists
@@ -214,14 +214,14 @@ func (s *Supplier) DetermineRuby() (string, string, error) {
 	if !s.appHasGemfile {
 		dep, err := s.Manifest.DefaultVersion("ruby")
 		if err != nil {
-			return "", "", fmt.Errorf("Unable to determine default ruby version: %v", err)
+			return "", "", fmt.Errorf("unable to determine default ruby version: %v", err)
 		}
 		return "ruby", dep.Version, nil
 	}
 
 	engine, err := s.Versions.Engine()
 	if err != nil {
-		return "", "", fmt.Errorf("Unable to determine ruby engine: %v", err)
+		return "", "", fmt.Errorf("unable to determine ruby engine: %v", err)
 	}
 
 	var rubyVersion string
@@ -555,7 +555,7 @@ func (s *Supplier) InstallGems() error {
 	if err != nil {
 		return nil
 	}
-	gemfileLock = filepath.Join(tempDir, gemfileLock) + ".lock"
+	gemfileLock = fmt.Sprintf("%s.lock", filepath.Join(tempDir, gemfileLock))
 
 	if hasFile, err := s.Versions.HasWindowsGemfileLock(); err != nil {
 		return err
@@ -645,9 +645,11 @@ func (s *Supplier) InstallGems() error {
 	gemfileLockTarget := filepath.Join(s.Stager.DepDir(), "Gemfile.lock")
 	if exists, err := libbuildpack.FileExists(gemfileLock); err == nil && exists {
 		s.Log.Debug("SaveGemfileLock; %s -> %s", gemfileLock, gemfileLockTarget)
-		if err := os.Rename(gemfileLock, gemfileLockTarget); err != nil {
+		if err := libbuildpack.CopyFile(gemfileLock, gemfileLockTarget); err != nil {
 			return err
 		}
+	} else if err != nil {
+		fmt.Printf("Error checking if Gemfile.lock exists: %v", err)
 	}
 
 	return os.RemoveAll(tempDir)
@@ -696,9 +698,9 @@ func (s *Supplier) CreateDefaultEnv() error {
 		"RAILS_GROUPS":   "assets",
 		"BUNDLE_WITHOUT": "development:test",
 		"BUNDLE_GEMFILE": "Gemfile",
-		"BUNDLE_BIN":     filepath.Join(s.Stager.DepDir(), "binstubs"),
-		"BUNDLE_CONFIG":  filepath.Join(s.Stager.DepDir(), "bundle_config"),
-		"GEM_HOME":       filepath.Join(s.Stager.DepDir(), "gem_home"),
+		"BUNDLE_BIN":    filepath.Join(s.Stager.DepDir(), "binstubs"),
+		"BUNDLE_CONFIG": filepath.Join(s.Stager.DepDir(), "bundle_config"),
+		"GEM_HOME":      filepath.Join(s.Stager.DepDir(), "gem_home"),
 		"GEM_PATH": strings.Join([]string{
 			filepath.Join(s.Stager.DepDir(), "gem_home"),
 			filepath.Join(s.Stager.DepDir(), "bundler"),
@@ -817,7 +819,7 @@ func (s *Supplier) CalcChecksum() (string, error) {
 }
 
 func (s *Supplier) warnWindowsGemfile() {
-	if body, err := ioutil.ReadFile(filepath.Join(s.Stager.BuildDir(), "Gemfile")); err == nil {
+	if body, err := ioutil.ReadFile(s.Versions.Gemfile()); err == nil {
 		if bytes.Contains(body, []byte("\r\n")) {
 			s.Log.Warning("Windows line endings detected in Gemfile. Your app may fail to stage. Please use UNIX line endings.")
 		}

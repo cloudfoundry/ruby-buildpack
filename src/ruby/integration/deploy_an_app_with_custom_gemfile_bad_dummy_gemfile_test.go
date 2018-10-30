@@ -9,7 +9,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("App with custom Gemfile", func() {
+var _ = Describe("App with custom Gemfile and bad file named 'Gemfile'", func() {
 	var app *cutlass.App
 
 	AfterEach(func() {
@@ -20,7 +20,7 @@ var _ = Describe("App with custom Gemfile", func() {
 	})
 
 	BeforeEach(func() {
-		app = cutlass.New(filepath.Join(bpDir, "fixtures", "custom_gemfile"))
+		app = cutlass.New(filepath.Join(bpDir, "fixtures", "custom_gemfile_bad_dummy_gemfile"))
 	})
 
 	It("uses the version of ruby specified in Gemfile-APP", func() {
