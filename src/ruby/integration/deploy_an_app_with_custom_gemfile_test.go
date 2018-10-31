@@ -4,7 +4,6 @@ import (
 	"path/filepath"
 
 	"github.com/cloudfoundry/libbuildpack/cutlass"
-
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -19,13 +18,25 @@ var _ = Describe("App with custom Gemfile", func() {
 		app = nil
 	})
 
-	BeforeEach(func() {
-		app = cutlass.New(filepath.Join(bpDir, "fixtures", "custom_gemfile"))
+	Describe("When the name of the Gemfile is specified in the manifest via BUNDLE_GEMFILE", func() {
+		BeforeEach(func() {
+			app = cutlass.New(filepath.Join(bpDir, "fixtures", "custom_gemfile"))
+		})
+
+		It("detects the ruby buildpack and uses the version of ruby specified in Gemfile-APP", func() {
+			PushAppAndConfirm(app)
+			Expect(app.Stdout.String()).To(ContainSubstring("Installing ruby 2.2.10"))
+			Expect(app.Stdout.String()).To(ContainSubstring("Installing sinatra 1.4.7"))
+		})
 	})
 
-	It("uses the version of ruby specified in Gemfile-APP", func() {
-		PushAppAndConfirm(app)
-		Expect(app.Stdout.String()).To(ContainSubstring("Installing ruby 2.2.10"))
-		Expect(app.Stdout.String()).To(ContainSubstring("Installing sinatra 1.4.7"))
+	Describe("When the name of the Gemfile is improperly specified in the manifest", func() {
+		BeforeEach(func() {
+			app = cutlass.New(filepath.Join(bpDir, "fixtures", "custom_gemfile_bad_manifest"))
+		})
+
+		It("fails to stage", func() {
+			Expect(app.Push()).NotTo(Succeed())
+		})
 	})
 })
