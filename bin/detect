@@ -1,8 +1,7 @@
 #!/bin/bash
 
-if [ -z "$BUNDLE_GEMFILE" ]; then
-    BUNDLE_GEMFILE="Gemfile"
-fi
+BUNDLE_GEMFILE=${BUNDLE_GEMFILE:-Gemfile}
+
 if [ -f "$1/$BUNDLE_GEMFILE" ]; then
   SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
   echo "ruby $(cat $SCRIPT_DIR/../VERSION)"
