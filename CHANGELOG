@@ -1,3 +1,26 @@
+v1.7.26 Oct 31, 2018
+=====================
+
+* Can supply and finalize with custom-named Gemfile and Gemfile.lock
+  (https://www.pivotaltracker.com/story/show/161122636)
+
+* Add ruby 2.4.5, remove ruby 2.4.3
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/161601057)
+
+* Add ruby 2.3.8, remove ruby 2.3.6
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/161601009)
+
+* Add ruby 2.5.3, remove ruby 2.5.0
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/161601099)
+
+* Add yarn 1.12.1, remove yarn 1.10.1
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/161522145)
+
+
 v1.7.25 Oct 26, 2018
 =====================
 
