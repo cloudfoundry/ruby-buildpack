@@ -2,10 +2,12 @@ package cache_test
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"ruby/cache"
+	"runtime"
 
 	"github.com/cloudfoundry/libbuildpack"
 	"github.com/cloudfoundry/libbuildpack/ansicleaner"
@@ -98,6 +100,11 @@ var _ = Describe("Cache", func() {
 	Describe("Save", func() {
 		var c *cache.Cache
 		BeforeEach(func() {
+			if runtime.GOOS == "darwin" {
+				fmt.Println("\nSkipping Cache test on OSX")
+				Skip("Test Not running on OSX")
+			}
+
 			Expect(os.MkdirAll(filepath.Join(depsDir, depsIdx, "vendor_bundle", "adir", "bdir"), 0755)).To(Succeed())
 			mockYaml.EXPECT().Load(filepath.Join(cacheDir, "metadata.yml"), gomock.Any()).Return(os.ErrNotExist)
 			var err error

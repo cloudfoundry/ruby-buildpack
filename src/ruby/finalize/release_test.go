@@ -84,15 +84,12 @@ var _ = Describe("Finalize", func() {
 			BeforeEach(func() {
 				railsVersion = 4
 			})
-			It("generates web, worker, rake and console process types", func() {
+			It("generates web console process type", func() {
 				data, err := finalizer.GenerateReleaseYaml()
 				Expect(err).NotTo(HaveOccurred())
 				Expect(data).To(Equal(map[string]map[string]string{
-					"default_process_types": map[string]string{
-						"rake":    "bundle exec rake",
-						"console": "bin/rails console",
-						"web":     "bin/rails server -b 0.0.0.0 -p $PORT -e $RAILS_ENV",
-						"worker":  "bundle exec rake jobs:work",
+					"default_process_types": {
+						"web": "bin/rails server -b 0.0.0.0 -p $PORT -e $RAILS_ENV",
 					},
 				}))
 			})
@@ -106,15 +103,12 @@ var _ = Describe("Finalize", func() {
 				BeforeEach(func() {
 					hasThin = false
 				})
-				It("generates web, worker, rake and console process types", func() {
+				It("generates web process type", func() {
 					data, err := finalizer.GenerateReleaseYaml()
 					Expect(err).NotTo(HaveOccurred())
 					Expect(data).To(Equal(map[string]map[string]string{
-						"default_process_types": map[string]string{
-							"rake":    "bundle exec rake",
-							"console": "bundle exec rails console",
-							"web":     "bundle exec rails server -p $PORT",
-							"worker":  "bundle exec rake jobs:work",
+						"default_process_types": {
+							"web": "bundle exec rails server -p $PORT",
 						},
 					}))
 				})
@@ -123,15 +117,12 @@ var _ = Describe("Finalize", func() {
 				BeforeEach(func() {
 					hasThin = true
 				})
-				It("generates web, worker, rake and console process types", func() {
+				It("generates web process type", func() {
 					data, err := finalizer.GenerateReleaseYaml()
 					Expect(err).NotTo(HaveOccurred())
 					Expect(data).To(Equal(map[string]map[string]string{
-						"default_process_types": map[string]string{
-							"rake":    "bundle exec rake",
-							"console": "bundle exec rails console",
-							"web":     "bundle exec thin start -R config.ru -e $RAILS_ENV -p $PORT",
-							"worker":  "bundle exec rake jobs:work",
+						"default_process_types": {
+							"web": "bundle exec thin start -R config.ru -e $RAILS_ENV -p $PORT",
 						},
 					}))
 				})
@@ -145,15 +136,12 @@ var _ = Describe("Finalize", func() {
 				BeforeEach(func() {
 					hasThin = false
 				})
-				It("generates web, worker, rake and console process types", func() {
+				It("generates web process type", func() {
 					data, err := finalizer.GenerateReleaseYaml()
 					Expect(err).NotTo(HaveOccurred())
 					Expect(data).To(Equal(map[string]map[string]string{
-						"default_process_types": map[string]string{
-							"rake":    "bundle exec rake",
-							"console": "bundle exec script/console",
-							"web":     "bundle exec ruby script/server -p $PORT",
-							"worker":  "bundle exec rake jobs:work",
+						"default_process_types": {
+							"web": "bundle exec ruby script/server -p $PORT",
 						},
 					}))
 				})
@@ -162,15 +150,12 @@ var _ = Describe("Finalize", func() {
 				BeforeEach(func() {
 					hasThin = true
 				})
-				It("generates web, worker, rake and console process types", func() {
+				It("generates web console process type", func() {
 					data, err := finalizer.GenerateReleaseYaml()
 					Expect(err).NotTo(HaveOccurred())
 					Expect(data).To(Equal(map[string]map[string]string{
-						"default_process_types": map[string]string{
-							"rake":    "bundle exec rake",
-							"console": "bundle exec script/console",
-							"web":     "bundle exec thin start -e $RAILS_ENV -p $PORT",
-							"worker":  "bundle exec rake jobs:work",
+						"default_process_types": {
+							"web": "bundle exec thin start -e $RAILS_ENV -p $PORT",
 						},
 					}))
 				})
@@ -184,14 +169,12 @@ var _ = Describe("Finalize", func() {
 				BeforeEach(func() {
 					hasThin = false
 				})
-				It("generates web, rake and console process types", func() {
+				It("generates web process type", func() {
 					data, err := finalizer.GenerateReleaseYaml()
 					Expect(err).NotTo(HaveOccurred())
 					Expect(data).To(Equal(map[string]map[string]string{
-						"default_process_types": map[string]string{
-							"rake":    "bundle exec rake",
-							"console": "bundle exec irb",
-							"web":     "bundle exec rackup config.ru -p $PORT",
+						"default_process_types": {
+							"web": "bundle exec rackup config.ru -p $PORT",
 						},
 					}))
 				})
@@ -200,14 +183,12 @@ var _ = Describe("Finalize", func() {
 				BeforeEach(func() {
 					hasThin = true
 				})
-				It("generates web, rake and console process types", func() {
+				It("generates web process type", func() {
 					data, err := finalizer.GenerateReleaseYaml()
 					Expect(err).NotTo(HaveOccurred())
 					Expect(data).To(Equal(map[string]map[string]string{
-						"default_process_types": map[string]string{
-							"rake":    "bundle exec rake",
-							"console": "bundle exec irb",
-							"web":     "bundle exec thin start -R config.ru -e $RACK_ENV -p $PORT",
+						"default_process_types": {
+							"web": "bundle exec thin start -R config.ru -e $RACK_ENV -p $PORT",
 						},
 					}))
 				})
@@ -219,14 +200,11 @@ var _ = Describe("Finalize", func() {
 				hasThin = false
 				railsVersion = 0
 			})
-			It("generates rake and console process types", func() {
+			It("no default process types", func() {
 				data, err := finalizer.GenerateReleaseYaml()
 				Expect(err).NotTo(HaveOccurred())
 				Expect(data).To(Equal(map[string]map[string]string{
-					"default_process_types": map[string]string{
-						"rake":    "bundle exec rake",
-						"console": "bundle exec irb",
-					},
+					"default_process_types": {},
 				}))
 			})
 		})

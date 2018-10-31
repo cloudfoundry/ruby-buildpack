@@ -31,24 +31,15 @@ func (f *Finalizer) GenerateReleaseYaml() (map[string]map[string]string, error) 
 	if err != nil {
 		return nil, err
 	}
-	processTypes := map[string]string{
-		"rake":    "bundle exec rake",
-		"console": "bundle exec irb",
-	}
+	processTypes := map[string]string{}
 	if hasRails4 {
-		processTypes["worker"] = "bundle exec rake jobs:work"
-		processTypes["console"] = "bin/rails console"
 		processTypes["web"] = "bin/rails server -b 0.0.0.0 -p $PORT -e $RAILS_ENV"
 	} else if hasRails3 {
-		processTypes["worker"] = "bundle exec rake jobs:work"
-		processTypes["console"] = "bundle exec rails console"
 		processTypes["web"] = "bundle exec rails server -p $PORT"
 		if hasThin {
 			processTypes["web"] = "bundle exec thin start -R config.ru -e $RAILS_ENV -p $PORT"
 		}
 	} else if hasRails2 {
-		processTypes["worker"] = "bundle exec rake jobs:work"
-		processTypes["console"] = "bundle exec script/console"
 		processTypes["web"] = "bundle exec ruby script/server -p $PORT"
 		if hasThin {
 			processTypes["web"] = "bundle exec thin start -e $RAILS_ENV -p $PORT"
