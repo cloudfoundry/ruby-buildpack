@@ -26,7 +26,7 @@ var _ = Describe("running supply nodejs buildpack before the ruby buildpack", fu
 
 			app = cutlass.New(filepath.Join(bpDir, "fixtures", "rails5"))
 			app.Buildpacks = []string{
-				"https://github.com/cloudfoundry/nodejs-buildpack#develop",
+				"https://github.com/cloudfoundry/nodejs-buildpack#master",
 				"ruby_buildpack",
 			}
 			app.Disk = "1G"
