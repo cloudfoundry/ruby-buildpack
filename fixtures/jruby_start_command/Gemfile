@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
-ruby '2.5.0', :engine => 'jruby', :engine_version => '9.2.1.0'
+ruby '2.5.0', :engine => 'jruby', :engine_version => '9.2.2.0'
 
 gem 'sinatra'
