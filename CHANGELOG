@@ -1,3 +1,22 @@
+v1.7.27 Nov 15, 2018
+=====================
+
+* Add jruby 9.2.4.0, remove jruby 9.2.0.0
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/161937451)
+
+* Add yarn 1.12.3, remove yarn 1.12.1
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/161784171)
+
+* Set buildpack when pushing twice
+      - Pushing with --no-start fails on the second push when no buildpack
+        is specified in PCF 1.12, our new lts version
+
+* Add rubygems 2.7.8, remove rubygems 2.7.7
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/161672493)
+
 v1.7.26 Oct 31, 2018
 =====================
 
