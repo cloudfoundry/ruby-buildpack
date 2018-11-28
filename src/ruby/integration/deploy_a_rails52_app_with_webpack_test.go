@@ -9,7 +9,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = FDescribe("Rails 5.2 (Webpack/Yarn) App", func() {
+var _ = Describe("Rails 5.2 (Webpack/Yarn) App", func() {
 	var app *cutlass.App
 	AfterEach(func() { app = DestroyApp(app) })
 
