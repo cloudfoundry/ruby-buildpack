@@ -1,0 +1,6 @@
+---
+applications:
+- name: mynewapp
+  command: RAILS_ENV=production bundle exec rails s -p 8080
+  #services:
+    #- some_postgres_instance
