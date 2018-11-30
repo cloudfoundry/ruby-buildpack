@@ -324,7 +324,7 @@ var _ = Describe("Finalize", func() {
 					})
 					It("runs assets:precompile with DATABASE_URL", func() {
 						Expect(finalizer.PrecompileAssets()).To(Succeed())
-						Expect(cmds).To(HaveLen(2))
+						Expect(cmds).To(HaveLen(3))
 						Expect(cmds[1].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:precompile"}))
 						Expect(cmds[1].Env).To(ContainElement("DATABASE_URL=://user:pass@127.0.0.1/dbname"))
 					})
@@ -363,21 +363,21 @@ var _ = Describe("Finalize", func() {
 					})
 					It("runs assets:precompile with DATABASE_URL", func() {
 						Expect(finalizer.PrecompileAssets()).To(Succeed())
-						Expect(cmds).To(HaveLen(3))
+						Expect(cmds).To(HaveLen(4))
 						Expect(cmds[1].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:precompile"}))
 						Expect(cmds[1].Env).To(ContainElement("DATABASE_URL=://user:pass@127.0.0.1/dbname"))
 
-						Expect(cmds[2].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:clean"}))
+						Expect(cmds[3].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:clean"}))
 					})
 				})
 				Context("No manifest files exist in public/assets/", func() {
 					It("runs assets:precompile with DATABASE_URL", func() {
 						Expect(finalizer.PrecompileAssets()).To(Succeed())
-						Expect(cmds).To(HaveLen(3))
+						Expect(cmds).To(HaveLen(4))
 						Expect(cmds[1].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:precompile"}))
 						Expect(cmds[1].Env).To(ContainElement("DATABASE_URL=://user:pass@127.0.0.1/dbname"))
 
-						Expect(cmds[2].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:clean"}))
+						Expect(cmds[3].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:clean"}))
 					})
 				})
 
@@ -396,7 +396,7 @@ var _ = Describe("Finalize", func() {
 					AfterEach(func() { os.Unsetenv("SECRET_KEY_BASE") })
 					It("passes SECRET_KEY_BASE through", func() {
 						Expect(finalizer.PrecompileAssets()).To(Succeed())
-						Expect(cmds).To(HaveLen(3))
+						Expect(cmds).To(HaveLen(4))
 						Expect(cmds[1].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:precompile"}))
 						Expect(findAllWithPrefix("SECRET_KEY_BASE=", cmds[1].Env)).To(Equal([]string{"SECRET_KEY_BASE=existing-key"}))
 					})
@@ -404,7 +404,7 @@ var _ = Describe("Finalize", func() {
 				Context("SECRET_KEY_BASE is NOT set", func() {
 					It("sets a dummy key", func() {
 						Expect(finalizer.PrecompileAssets()).To(Succeed())
-						Expect(cmds).To(HaveLen(3))
+						Expect(cmds).To(HaveLen(4))
 						Expect(cmds[1].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:precompile"}))
 						Expect(findAllWithPrefix("SECRET_KEY_BASE=", cmds[1].Env)).To(Equal([]string{"SECRET_KEY_BASE=dummy-staging-key"}))
 					})

@@ -268,7 +268,7 @@ func (f *Finalizer) PrecompileAssets() error {
 		return nil
 	}
 
-	if f.RailsVersion > 4 {
+	if f.RailsVersion >= 4 {
 		f.Log.Info("Cleaning assets")
 		cmd = exec.Command("bundle", "exec", "rake", "assets:clean")
 		cmd.Dir = f.Stager.BuildDir()
