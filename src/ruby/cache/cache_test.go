@@ -6,11 +6,11 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"ruby/cache"
 	"runtime"
 
 	"github.com/cloudfoundry/libbuildpack"
 	"github.com/cloudfoundry/libbuildpack/ansicleaner"
+	"github.com/cloudfoundry/ruby-buildpack/src/ruby/cache"
 	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"

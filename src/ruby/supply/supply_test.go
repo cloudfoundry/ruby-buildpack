@@ -8,9 +8,11 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+
 	reflect "reflect"
-	"ruby/cache"
-	"ruby/supply"
+
+	"github.com/cloudfoundry/ruby-buildpack/src/ruby/cache"
+	"github.com/cloudfoundry/ruby-buildpack/src/ruby/supply"
 
 	"github.com/cloudfoundry/libbuildpack"
 	"github.com/cloudfoundry/libbuildpack/ansicleaner"

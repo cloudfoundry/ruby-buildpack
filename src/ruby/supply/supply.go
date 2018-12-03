@@ -10,10 +10,10 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
-	"ruby/cache"
 	"strings"
 
 	"github.com/cloudfoundry/libbuildpack"
+	"github.com/cloudfoundry/ruby-buildpack/src/ruby/cache"
 	"github.com/kr/text"
 )
 
@@ -698,9 +698,9 @@ func (s *Supplier) CreateDefaultEnv() error {
 		"RAILS_GROUPS":   "assets",
 		"BUNDLE_WITHOUT": "development:test",
 		"BUNDLE_GEMFILE": "Gemfile",
-		"BUNDLE_BIN":    filepath.Join(s.Stager.DepDir(), "binstubs"),
-		"BUNDLE_CONFIG": filepath.Join(s.Stager.DepDir(), "bundle_config"),
-		"GEM_HOME":      filepath.Join(s.Stager.DepDir(), "gem_home"),
+		"BUNDLE_BIN":     filepath.Join(s.Stager.DepDir(), "binstubs"),
+		"BUNDLE_CONFIG":  filepath.Join(s.Stager.DepDir(), "bundle_config"),
+		"GEM_HOME":       filepath.Join(s.Stager.DepDir(), "gem_home"),
 		"GEM_PATH": strings.Join([]string{
 			filepath.Join(s.Stager.DepDir(), "gem_home"),
 			filepath.Join(s.Stager.DepDir(), "bundler"),

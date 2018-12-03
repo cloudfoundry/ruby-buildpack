@@ -1,14 +1,13 @@
 package main
 
 import (
-
-	// _ "ruby/hooks"
 	"os"
 	"path/filepath"
-	"ruby/cache"
-	"ruby/supply"
-	"ruby/versions"
 	"time"
+
+	"github.com/cloudfoundry/ruby-buildpack/src/ruby/cache"
+	"github.com/cloudfoundry/ruby-buildpack/src/ruby/supply"
+	"github.com/cloudfoundry/ruby-buildpack/src/ruby/versions"
 
 	"github.com/cloudfoundry/libbuildpack"
 )

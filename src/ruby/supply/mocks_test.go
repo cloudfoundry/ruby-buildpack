@@ -5,12 +5,13 @@
 package supply_test
 
 import (
-	libbuildpack "github.com/cloudfoundry/libbuildpack"
-	gomock "github.com/golang/mock/gomock"
 	io "io"
 	exec "os/exec"
 	reflect "reflect"
-	cache "ruby/cache"
+
+	libbuildpack "github.com/cloudfoundry/libbuildpack"
+	cache "github.com/cloudfoundry/ruby-buildpack/src/ruby/cache"
+	gomock "github.com/golang/mock/gomock"
 )
 
 // MockCommand is a mock of Command interface

@@ -7,17 +7,23 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"ruby/finalize"
 	"strings"
+	"testing"
 
 	"github.com/cloudfoundry/libbuildpack"
 	"github.com/cloudfoundry/libbuildpack/ansicleaner"
+	"github.com/cloudfoundry/ruby-buildpack/src/ruby/finalize"
 	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
 
 //go:generate mockgen -source=finalize.go --destination=mocks_finalize_test.go --package=finalize_test
+
+func TestGinkgo(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "Finalize")
+}
 
 var _ = Describe("Finalize", func() {
 	var (

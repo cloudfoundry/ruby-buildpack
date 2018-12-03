@@ -4,7 +4,8 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"ruby/versions"
+
+	"github.com/cloudfoundry/ruby-buildpack/src/ruby/versions"
 
 	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"

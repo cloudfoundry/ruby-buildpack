@@ -4,12 +4,11 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
-	"ruby/finalize"
-	"ruby/versions"
-	// _ "ruby/hooks"
 	"time"
 
 	"github.com/cloudfoundry/libbuildpack"
+	"github.com/cloudfoundry/ruby-buildpack/src/ruby/finalize"
+	"github.com/cloudfoundry/ruby-buildpack/src/ruby/versions"
 )
 
 func main() {
