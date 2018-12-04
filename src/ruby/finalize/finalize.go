@@ -256,19 +256,18 @@ func (f *Finalizer) PrecompileAssets() error {
 	cmd.Env = env
 	err := f.Command.Run(cmd)
 	if err != nil {
-		fmt.Printf("errrr: %s", err)
 		return err
 	}
 
 	f.Log.Info("Asset precompilation completed (%v)", time.Since(startTime))
 
-	cleanCmd := exec.Command("bundle", "exec", "rake", "-n", "assets:clean")
-	cleanCmd.Dir = f.Stager.BuildDir()
-	if err := f.Command.Run(cleanCmd); err != nil {
-		return nil
-	}
-
 	if f.RailsVersion >= 4 {
+
+		cleanCmd := exec.Command("bundle", "exec", "rake", "-n", "assets:clean")
+		cleanCmd.Dir = f.Stager.BuildDir()
+		if err := f.Command.Run(cleanCmd); err != nil {
+			return nil
+		}
 		f.Log.Info("Cleaning assets")
 		cmd = exec.Command("bundle", "exec", "rake", "assets:clean")
 		cmd.Dir = f.Stager.BuildDir()
