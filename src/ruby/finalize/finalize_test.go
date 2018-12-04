@@ -330,7 +330,7 @@ var _ = Describe("Finalize", func() {
 					})
 					It("runs assets:precompile with DATABASE_URL", func() {
 						Expect(finalizer.PrecompileAssets()).To(Succeed())
-						Expect(cmds).To(HaveLen(3))
+						Expect(cmds).To(HaveLen(2))
 						Expect(cmds[1].Args).To(Equal([]string{"bundle", "exec", "rake", "assets:precompile"}))
 						Expect(cmds[1].Env).To(ContainElement("DATABASE_URL=://user:pass@127.0.0.1/dbname"))
 					})
