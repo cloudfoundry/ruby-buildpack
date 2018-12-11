@@ -35,6 +35,7 @@ func (m *MockStager) EXPECT() *MockStagerMockRecorder {
 
 // BuildDir mocks base method
 func (m *MockStager) BuildDir() string {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "BuildDir")
 	ret0, _ := ret[0].(string)
 	return ret0
@@ -42,11 +43,13 @@ func (m *MockStager) BuildDir() string {
 
 // BuildDir indicates an expected call of BuildDir
 func (mr *MockStagerMockRecorder) BuildDir() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BuildDir", reflect.TypeOf((*MockStager)(nil).BuildDir))
 }
 
 // DepsIdx mocks base method
 func (m *MockStager) DepsIdx() string {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DepsIdx")
 	ret0, _ := ret[0].(string)
 	return ret0
@@ -54,11 +57,13 @@ func (m *MockStager) DepsIdx() string {
 
 // DepsIdx indicates an expected call of DepsIdx
 func (mr *MockStagerMockRecorder) DepsIdx() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DepsIdx", reflect.TypeOf((*MockStager)(nil).DepsIdx))
 }
 
 // DepDir mocks base method
 func (m *MockStager) DepDir() string {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DepDir")
 	ret0, _ := ret[0].(string)
 	return ret0
@@ -66,6 +71,7 @@ func (m *MockStager) DepDir() string {
 
 // DepDir indicates an expected call of DepDir
 func (mr *MockStagerMockRecorder) DepDir() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DepDir", reflect.TypeOf((*MockStager)(nil).DepDir))
 }
 
@@ -94,6 +100,7 @@ func (m *MockCommand) EXPECT() *MockCommandMockRecorder {
 
 // Run mocks base method
 func (m *MockCommand) Run(arg0 *exec.Cmd) error {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Run", arg0)
 	ret0, _ := ret[0].(error)
 	return ret0
@@ -101,5 +108,6 @@ func (m *MockCommand) Run(arg0 *exec.Cmd) error {
 
 // Run indicates an expected call of Run
 func (mr *MockCommandMockRecorder) Run(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Run", reflect.TypeOf((*MockCommand)(nil).Run), arg0)
 }
