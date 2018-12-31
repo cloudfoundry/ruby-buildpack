@@ -1,3 +1,27 @@
+v1.7.29 Dec 31, 2018
+=====================
+
+* Add bundler 1.17.3, remove bundler 1.17.2
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/162854170)
+
+* Add node 6.16.0, remove node 6.15.1
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/162848357)
+
+* Add rubygems 3.0.1, remove rubygems 3.0.0
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/162826519)
+
+* Add rubygems 3.0.0, remove rubygems 2.7.8
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/162752226)
+
+* Rebuild bundler 1.17.2
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/162575159)
+
+
 v1.7.28 Dec 11, 2018
 =====================
 
