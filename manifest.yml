@@ -161,13 +161,13 @@ dependencies:
   cf_stacks:
   - cflinuxfs3
 - name: rubygems
-  version: 3.0.1
-  uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems-3.0.1-any-stack-cade41c2.tgz
-  sha256: cade41c23eb8949e6d6f44c4c56f93801c326087e0cafd7301578b2b538a618e
+  version: 3.0.2
+  uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems-3.0.2-any-stack-ad7433a4.tgz
+  sha256: ad7433a46617d4d96e4c39c38602068c6a4715b3b3ef638600e4302c5bb84de0
   cf_stacks:
   - cflinuxfs2
   - cflinuxfs3
-  source: https://rubygems.org/rubygems/rubygems-3.0.1.tgz
+  source: https://rubygems.org/rubygems/rubygems-3.0.2.tgz
 - name: yarn
   version: 1.12.3
   uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn-1.12.3-any-stack-02cd4b58.tar.gz
