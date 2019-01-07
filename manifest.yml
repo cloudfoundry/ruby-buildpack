@@ -16,13 +16,13 @@ dependency_deprecation_dates:
   link: https://www.ruby-lang.org/en/news/2017/04/01/support-of-ruby-2-1-has-ended/
 dependencies:
 - name: bundler
-  version: 1.17.3
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.17.3-any-stack-76bd0d84.tgz
-  sha256: 76bd0d84ef7a81263239a8e62c223892326d1d906c70f33f70f16e0305cccab7
+  version: 2.0.1
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-2.0.1-any-stack-1250531b.tgz
+  sha256: 1250531b5d830c5600494e365b7d72fc3953e6922f7048088f3117f372593b24
   cf_stacks:
   - cflinuxfs2
   - cflinuxfs3
-  source: http://github.com/bundler/bundler/tree/v1.17.3
+  source: http://github.com/bundler/bundler/tree/v2.0.1
 - name: jruby
   version: 9.1.17.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby-9.1.17.0_ruby-2.3-linux-x64-cflinuxfs2-028bd5cf.tgz
