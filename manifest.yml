@@ -168,6 +168,20 @@ dependencies:
   sha256: 5d5a8f8cdfe44d9136dc7098771b32054c8dd8cd048638c4997e24e19d2675e0
   cf_stacks:
   - cflinuxfs3
+- name: ruby
+  version: 2.6.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.6.0-linux-x64-cflinuxfs2-bb08812e.tgz
+  sha256: bb08812e05668f0687353b9063498b83fb13d7d4d4a781dd05a7df6ee64ad062
+  cf_stacks:
+  - cflinuxfs2
+  source: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.0.tar.gz
+- name: ruby
+  version: 2.6.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.6.0-linux-x64-cflinuxfs3-3a900cde.tgz
+  sha256: 3a900cdeb9e4c08c97d0408824ac97f1f2b003fbdadae0ddceb737702349a1ff
+  cf_stacks:
+  - cflinuxfs3
+  source: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.0.tar.gz
 - name: rubygems
   version: 3.0.2
   uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems-3.0.2-any-stack-ad7433a4.tgz
