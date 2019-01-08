@@ -25,8 +25,8 @@ dependencies:
   source: http://github.com/bundler/bundler/tree/v1.17.3
 - name: bundler
   version: 2.0.1
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-2.0.1-any-stack-ad085965.tgz
-  sha256: ad08596578f0a6638a91078fb9e0507fbc271568b4d91c39401558af40a952fc
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-2.0.1-any-stack-fcffef5f.tgz
+  sha256: fcffef5fc452f72f1dcd5ef9f2fa5fb95ed5f35603dc40a5a4dff2336234bfb8
   cf_stacks:
   - cflinuxfs2
   - cflinuxfs3
