@@ -17,8 +17,8 @@ dependency_deprecation_dates:
 dependencies:
 - name: bundler
   version: 1.17.3
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.17.3-any-stack-1e32c7d5.tgz
-  sha256: 1e32c7d5c0f0512ea99d6c565baa194906697fd2f358b0704f2451e7b6857514
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.17.3-any-stack-c6b956b3.tgz
+  sha256: c6b956b39e9f1ab77fbcba75b4ddb7760c3dc0b7fe6ee50fccab0f402cae9770
   cf_stacks:
   - cflinuxfs2
   - cflinuxfs3
