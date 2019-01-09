@@ -12,7 +12,7 @@ output_dir=$(mktemp -d -t supplyXXX)
 
 pushd $BUILDPACK_DIR
 echo "-----> Running go build supply"
-GOROOT=$GoInstallDir/go $GoInstallDir/go/bin/go build -o $output_dir/supply ./src/ruby/supply/cli
+GOROOT=$GoInstallDir/go $GoInstallDir/go/bin/go build -mod=vendor -o $output_dir/supply ./src/ruby/supply/cli
 popd
 
 $output_dir/supply "$BUILD_DIR" "$CACHE_DIR" "$DEPS_DIR" "$DEPS_IDX"
