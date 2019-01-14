@@ -9,14 +9,14 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	reflect "reflect"
+	"reflect"
 
 	"github.com/cloudfoundry/ruby-buildpack/src/ruby/cache"
 	"github.com/cloudfoundry/ruby-buildpack/src/ruby/supply"
 
 	"github.com/cloudfoundry/libbuildpack"
 	"github.com/cloudfoundry/libbuildpack/ansicleaner"
-	gomock "github.com/golang/mock/gomock"
+	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
 	// . "github.com/onsi/ginkgo/extensions/table"
 	. "github.com/onsi/gomega"
@@ -68,12 +68,21 @@ var _ = Describe("Supply", func() {
 		logger = libbuildpack.NewLogger(ansicleaner.New(buffer))
 
 		mockCtrl = gomock.NewController(GinkgoT())
+
 		mockManifest = NewMockManifest(mockCtrl)
+		mockManifest.EXPECT().AllDependencyVersions("bundler").Return([]string{"1.17.2"}).AnyTimes()
+
 		mockInstaller = NewMockInstaller(mockCtrl)
+
 		mockVersions = NewMockVersions(mockCtrl)
 		mockVersions.EXPECT().Gemfile().AnyTimes().Return(filepath.Join(buildDir, "Gemfile"))
+		mockVersions.EXPECT().GetBundlerVersion().Return("1.17.2").AnyTimes()
+		mockVersions.EXPECT().SetBundlerVersion(gomock.Any()).AnyTimes()
+
 		mockCommand = NewMockCommand(mockCtrl)
+
 		mockCache = NewMockCache(mockCtrl)
+
 		mockTempDir = &MacTempDir{}
 
 		args := []string{buildDir, "", depsDir, depsIdx}
@@ -105,7 +114,25 @@ var _ = Describe("Supply", func() {
 		Expect(err).To(BeNil())
 	})
 
-	PIt("InstallBundler", func() {})
+	Describe("InstallBundler", func() {
+
+		var tempSupplier supply.Supplier
+
+		BeforeEach(func() {
+			tempSupplier = *supplier
+			mockStager := NewMockStager(mockCtrl)
+			tempSupplier.Stager = mockStager
+
+			mockInstaller.EXPECT().InstallDependency(libbuildpack.Dependency{Name: "bundler", Version: "1.17.2"}, gomock.Any())
+			mockStager.EXPECT().LinkDirectoryInDepDir(gomock.Any(), gomock.Any())
+			mockStager.EXPECT().DepDir().AnyTimes()
+		})
+
+		It("installs bundler version matching constraint given", func() {
+			Expect(tempSupplier.InstallBundler()).To(Succeed())
+		})
+	})
+
 	PIt("InstallNode", func() {})
 	PIt("InstallRuby", func() {})
 
@@ -160,7 +187,6 @@ var _ = Describe("Supply", func() {
 			BeforeEach(func() {
 				mockVersions.EXPECT().HasWindowsGemfileLock().Return(false, nil)
 				mockCommand.EXPECT().Run(gomock.Any()).AnyTimes().Do(handleBundleBinstubRegeneration)
-				mockManifest.EXPECT().AllDependencyVersions("bundler").Return([]string{"1.2.3"})
 				Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte("source \"https://rubygems.org\"\r\ngem \"rack\"\r\n"), 0644)).To(Succeed())
 			})
 
@@ -186,16 +212,20 @@ var _ = Describe("Supply", func() {
 
 					return nil
 				})
-				mockManifest.EXPECT().AllDependencyVersions("bundler").Return([]string{"1.2.3"})
 				Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte("source \"https://rubygems.org\"\ngem \"rack\"\n"), 0644)).To(Succeed())
 			})
-			AfterEach(func() { os.Unsetenv("BUNDLE_CONFIG") })
+
+			AfterEach(func() {
+				os.Unsetenv("BUNDLE_CONFIG")
+			})
 
 			itRegeneratesBundleBinstub()
+
 			It("Does not warn the user", func() {
 				Expect(supplier.InstallGems()).To(Succeed())
 				Expect(buffer.String()).ToNot(ContainSubstring(windowsWarning))
 			})
+
 			It("does not change .bundle/config", func() {
 				Expect(os.MkdirAll(filepath.Join(buildDir, ".bundle"), 0755)).To(Succeed())
 				Expect(ioutil.WriteFile(filepath.Join(buildDir, ".bundle", "config"), []byte("orig content"), 0644)).To(Succeed())
@@ -213,7 +243,6 @@ var _ = Describe("Supply", func() {
 				const newGemfileLock = "new lockfile"
 				BeforeEach(func() {
 					mockVersions.EXPECT().HasWindowsGemfileLock().Return(false, nil)
-					mockManifest.EXPECT().AllDependencyVersions("bundler").Return([]string{"1.2.3"})
 					Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte("source \"https://rubygems.org\"\ngem \"rack\"\n"), 0644)).To(Succeed())
 					Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile.lock"), []byte(gemfileLock), 0644)).To(Succeed())
 				})
@@ -253,7 +282,6 @@ var _ = Describe("Supply", func() {
 				const newGemfileLock = "new lockfile"
 				BeforeEach(func() {
 					mockVersions.EXPECT().HasWindowsGemfileLock().Return(true, nil)
-					mockManifest.EXPECT().AllDependencyVersions("bundler").Return([]string{"1.2.3"})
 					Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte("source \"https://rubygems.org\"\r\ngem \"rack\"\r\n"), 0644)).To(Succeed())
 					Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile.lock"), []byte(gemfileLock), 0644)).To(Succeed())
 				})
@@ -816,20 +844,22 @@ var _ = Describe("Supply", func() {
 			Expect(string(fileContents)).To(HavePrefix("#!/usr/bin/env ruby"))
 		})
 	})
+
 	Describe("SymlinkBundlerIntoRubygems", func() {
 		var depDir string
+
 		BeforeEach(func() {
 			depDir = filepath.Join(depsDir, depsIdx)
 			mockVersions.EXPECT().RubyEngineVersion().Return("2.3.4", nil)
-			mockManifest.EXPECT().AllDependencyVersions("bundler").Return([]string{"1.2.3"})
 
-			Expect(os.MkdirAll(filepath.Join(depDir, "bundler", "gems", "bundler-1.2.3"), 0755)).To(Succeed())
-			Expect(ioutil.WriteFile(filepath.Join(depDir, "bundler", "gems", "bundler-1.2.3", "file"), []byte("my content"), 0644)).To(Succeed())
+			Expect(os.MkdirAll(filepath.Join(depDir, "bundler", "gems", "bundler-1.17.2"), 0755)).To(Succeed())
+			Expect(ioutil.WriteFile(filepath.Join(depDir, "bundler", "gems", "bundler-1.17.2", "file"), []byte("my content"), 0644)).To(Succeed())
 		})
+
 		It("Creates a symlink from the installed ruby's gem directory to the installed bundler gem", func() {
 			Expect(supplier.SymlinkBundlerIntoRubygems()).To(Succeed())
 
-			fileContents, err := ioutil.ReadFile(filepath.Join(depDir, "ruby", "lib", "ruby", "gems", "2.3.4", "gems", "bundler-1.2.3", "file"))
+			fileContents, err := ioutil.ReadFile(filepath.Join(depDir, "ruby", "lib", "ruby", "gems", "2.3.4", "gems", "bundler-1.17.2", "file"))
 			Expect(err).ToNot(HaveOccurred())
 			Expect(string(fileContents)).To(HavePrefix("my content"))
 		})

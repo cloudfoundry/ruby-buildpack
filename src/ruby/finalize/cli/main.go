@@ -50,7 +50,7 @@ func main() {
 	f := finalize.Finalizer{
 		Stager:   stager,
 		Log:      logger,
-		Versions: versions.New(stager.BuildDir(), manifest),
+		Versions: versions.New(stager.BuildDir(), stager.DepDir(), manifest),
 		Command:  &libbuildpack.Command{},
 	}
 

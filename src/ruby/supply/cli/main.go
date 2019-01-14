@@ -72,7 +72,7 @@ func main() {
 		Manifest:  manifest,
 		Installer: installer,
 		Log:       logger,
-		Versions:  versions.New(stager.BuildDir(), manifest),
+		Versions:  versions.New(stager.BuildDir(), stager.DepDir(), manifest),
 		Cache:     cacher,
 		Command:   &libbuildpack.Command{},
 		TempDir:   &supply.LinuxTempDir{Log: logger},

@@ -3,6 +3,7 @@ package versions
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/Masterminds/semver"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -19,21 +20,88 @@ type Manifest interface {
 }
 
 type Versions struct {
-	buildDir    string
-	manifest    Manifest
-	cachedSpecs map[string]string
+	buildDir       string
+	depDir         string
+	manifest       Manifest
+	cachedSpecs    map[string]string
+	bundlerVersion string
 }
 
-func New(buildDir string, manifest Manifest) *Versions {
+func New(buildDir string, depDir string, manifest Manifest) *Versions {
+	bundlerVersions := manifest.AllDependencyVersions("bundler")
+	bundlerVersion := ""
+	if len(bundlerVersions) > 0 {
+		bundlerVersion = bundlerVersions[len(bundlerVersions)-1]
+	}
 	return &Versions{
-		buildDir: buildDir,
-		manifest: manifest,
+		buildDir:       buildDir,
+		depDir:         depDir,
+		manifest:       manifest,
+		bundlerVersion: bundlerVersion,
 	}
 }
 
 type output struct {
 	Error  string      `json:"error"`
 	Output interface{} `json:"output"`
+}
+
+func (v *Versions) SetBundlerVersion(version string) {
+	v.bundlerVersion = version
+}
+
+func (v *Versions) GetBundlerVersion() string {
+	return v.bundlerVersion
+}
+
+func (v *Versions) CheckRubyAndBundlerVersions() (bool, error) {
+	engine, err := v.Engine()
+	if err != nil {
+		return false, err
+	}
+
+	if engine == "jruby" {
+		return true, nil
+	}
+
+	gemfileRubyVersion, err := v.Version()
+	if err != nil {
+		return false, err
+	}
+
+	if gemfileRubyVersion == "" {
+		dep, err := v.manifest.DefaultVersion("ruby")
+		if err != nil {
+			return false, err
+		}
+		gemfileRubyVersion = dep.Version
+	}
+
+	rubyConstraint, err := semver.NewConstraint("<= 2.2.X")
+	if err != nil {
+		return false, err
+	}
+
+	bundlerConstraint, err := semver.NewConstraint(">= 2.X.X")
+	if err != nil {
+		return false, err
+	}
+
+	bundlerSemver, err := semver.NewVersion(v.bundlerVersion)
+	if err != nil {
+		return false, err
+	}
+
+	rubySemver, err := semver.NewVersion(gemfileRubyVersion)
+	if err != nil {
+		return false, err
+	}
+
+	if engine == "ruby" && rubyConstraint.Check(rubySemver) && bundlerConstraint.Check(bundlerSemver) {
+		return false, nil
+	}
+
+	return true, nil
 }
 
 func (v *Versions) Engine() (string, error) {
@@ -247,14 +315,20 @@ func (v *Versions) run(dir, code string, in interface{}) (interface{}, error) {
 		end
 	`, code)
 
-	cmd := exec.Command("ruby", "-rjson", "-rbundler", "-e", code)
+	args := []string{"-rjson", "-e", code}
+	if strings.Contains(code, "Bundler::") {
+		bundlerPath := filepath.Join(v.depDir, "bundler", "gems", fmt.Sprintf("bundler-%s", v.bundlerVersion), "lib")
+		args = append([]string{fmt.Sprintf("-I%s", bundlerPath), "-rbundler"}, args...)
+	}
+
+	cmd := exec.Command("ruby", args...)
 	cmd.Dir = dir
 	cmd.Stdin = strings.NewReader(string(data))
 	body, err := cmd.Output()
 	if err != nil {
-		fmt.Println(body)
 		return "", err
 	}
+
 	output := struct {
 		Error string      `json:"error"`
 		Data  interface{} `json:"data"`

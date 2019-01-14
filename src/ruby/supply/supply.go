@@ -34,6 +34,9 @@ type Installer interface {
 }
 
 type Versions interface {
+	SetBundlerVersion(string)
+	GetBundlerVersion() string
+	CheckRubyAndBundlerVersions() (bool, error)
 	Engine() (string, error)
 	Version() (string, error)
 	JrubyVersion() (string, error)
@@ -280,15 +283,26 @@ func (s *Supplier) InstallYarn() error {
 }
 
 func (s *Supplier) InstallBundler() error {
-	if err := s.Installer.InstallOnlyVersion("bundler", filepath.Join(s.Stager.DepDir(), "bundler")); err != nil {
+	if !s.appHasGemfile {
+		return s.installBundlerVersion(s.Versions.GetBundlerVersion())
+	}
+
+	if err := s.installBundlerVersion("2.X.X"); err != nil {
 		return err
 	}
 
-	if err := s.Stager.LinkDirectoryInDepDir(filepath.Join(s.Stager.DepDir(), "bundler", "bin"), "bin"); err != nil {
+	if ok, err := s.Versions.CheckRubyAndBundlerVersions(); err != nil {
+		return err
+	} else if ok {
+		return nil
+	}
+
+	if err := os.RemoveAll(filepath.Join(s.Stager.DepDir(), "bundler")); err != nil {
 		return err
 	}
 
-	return nil
+	s.Log.Warning("Bundler 2 is not compatible with the requested version of ruby. Trying Bundler 1...")
+	return s.installBundlerVersion("1.X.X")
 }
 
 func (s *Supplier) InstallNode() error {
@@ -388,6 +402,7 @@ func (s *Supplier) InstallRuby(name, version string) error {
 	if err := os.Symlink("ruby", filepath.Join(s.Stager.DepDir(), "ruby", "bin", "ruby.exe")); err != nil {
 		return err
 	}
+
 	return s.Stager.LinkDirectoryInDepDir(filepath.Join(s.Stager.DepDir(), "ruby", "bin"), "bin")
 }
 
@@ -427,11 +442,8 @@ func (s *Supplier) SymlinkBundlerIntoRubygems() error {
 	if err != nil {
 		return fmt.Errorf("Unable to determine ruby engine: %s", err)
 	}
-	versions := s.Manifest.AllDependencyVersions("bundler")
-	if len(versions) != 1 {
-		return fmt.Errorf("expect 1 version of bundler, found %d", len(versions))
-	}
-	bundlerVersion := versions[0]
+
+	bundlerVersion := s.Versions.GetBundlerVersion()
 
 	destDir := filepath.Join(s.Stager.DepDir(), "ruby", "lib", "ruby", "gems", rubyEngineVersion, "gems")
 	if err := os.MkdirAll(destDir, 0755); err != nil {
@@ -582,8 +594,7 @@ func (s *Supplier) InstallGems() error {
 		args = append(args, "--deployment")
 	}
 
-	version := s.Manifest.AllDependencyVersions("bundler")
-	s.Log.BeginStep("Installing dependencies using bundler %s", version[0])
+	s.Log.BeginStep("Installing dependencies using bundler %s", s.Versions.GetBundlerVersion())
 	s.Log.Info("Running: bundle %s", strings.Join(args, " "))
 
 	env := os.Environ()
@@ -702,8 +713,8 @@ func (s *Supplier) CreateDefaultEnv() error {
 		"BUNDLE_CONFIG":  filepath.Join(s.Stager.DepDir(), "bundle_config"),
 		"GEM_HOME":       filepath.Join(s.Stager.DepDir(), "gem_home"),
 		"GEM_PATH": strings.Join([]string{
-			filepath.Join(s.Stager.DepDir(), "gem_home"),
 			filepath.Join(s.Stager.DepDir(), "bundler"),
+			filepath.Join(s.Stager.DepDir(), "gem_home"),
 		}, ":"),
 	}
 
@@ -719,9 +730,9 @@ func (s *Supplier) AddPostRubyInstallDefaultEnv(engine string) error {
 	environmentDefaults := map[string]string{
 		"BUNDLE_PATH": filepath.Join(s.Stager.DepDir(), "vendor_bundle", engine, rubyEngineVersion),
 		"GEM_PATH": strings.Join([]string{
+			filepath.Join(s.Stager.DepDir(), "bundler"),
 			filepath.Join(s.Stager.DepDir(), "vendor_bundle", engine, rubyEngineVersion),
 			filepath.Join(s.Stager.DepDir(), "gem_home"),
-			filepath.Join(s.Stager.DepDir(), "bundler"),
 		}, ":"),
 	}
 	s.Log.Debug("Setting post ruby install env: %v", environmentDefaults)
@@ -830,4 +841,23 @@ func (s *Supplier) warnBundleConfig() {
 	if exists, err := libbuildpack.FileExists(filepath.Join(s.Stager.BuildDir(), ".bundle", "config")); err == nil && exists {
 		s.Log.Warning("You have the `.bundle/config` file checked into your repository\nIt contains local state like the location of the installed bundle\nas well as configured git local gems, and other settings that should\nnot be shared between multiple checkouts of a single repo. Please\nremove the `.bundle/` folder from your repo and add it to your `.gitignore` file.")
 	}
+}
+
+func (s *Supplier) installBundlerVersion(constraint string) error {
+	version, err := libbuildpack.FindMatchingVersion(constraint, s.Manifest.AllDependencyVersions("bundler"))
+	if err != nil {
+		return fmt.Errorf("failure to install Bundler matching constraint, %s: %s", constraint, err)
+	}
+
+	if err := s.Installer.InstallDependency(libbuildpack.Dependency{Name: "bundler", Version: version}, filepath.Join(s.Stager.DepDir(), "bundler")); err != nil {
+		return err
+	}
+
+	if err := s.Stager.LinkDirectoryInDepDir(filepath.Join(s.Stager.DepDir(), "bundler", "bin"), "bin"); err != nil {
+		return err
+	}
+
+	s.Versions.SetBundlerVersion(version)
+
+	return nil
 }

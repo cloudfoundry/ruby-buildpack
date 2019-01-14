@@ -27,6 +27,7 @@ var _ = Describe("App with No Gemfile", func() {
 		BeforeEach(func() {
 			app.Buildpacks = []string{"ruby_buildpack"}
 		})
+
 		It("fails in finalize", func() {
 			Expect(app.Push()).ToNot(Succeed())
 			Expect(app.ConfirmBuildpack(buildpackVersion)).To(Succeed())
@@ -41,6 +42,7 @@ var _ = Describe("App with No Gemfile", func() {
 			}
 			app.Buildpacks = []string{"ruby_buildpack", "binary_buildpack"}
 		})
+		
 		It("deploys", func() {
 			PushAppAndConfirm(app)
 			Expect(app.Stdout.String()).To(ContainSubstring("Installing ruby"))

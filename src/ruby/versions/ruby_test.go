@@ -16,18 +16,22 @@ import (
 
 var _ = Describe("Ruby", func() {
 	var (
-		mockCtrl *gomock.Controller
-		manifest *MockManifest
-		tmpDir   string
+		mockCtrl     *gomock.Controller
+		mockManifest *MockManifest
+		tmpDir       string
+		depDir       string
 	)
 	BeforeEach(func() {
 		mockCtrl = gomock.NewController(GinkgoT())
-		manifest = NewMockManifest(mockCtrl)
+		mockManifest = NewMockManifest(mockCtrl)
+		mockManifest.EXPECT().AllDependencyVersions("bundler").Return([]string{"1.17.2"}).AnyTimes()
 
 		var err error
 		tmpDir, err = ioutil.TempDir("", "versions.ruby")
+		depDir, err = ioutil.TempDir("", "tmpDepdir")
 		Expect(err).ToNot(HaveOccurred())
 	})
+
 	AfterEach(func() {
 		mockCtrl.Finish()
 	})
@@ -40,7 +44,7 @@ var _ = Describe("Ruby", func() {
 			})
 
 			It("returns true", func() {
-				v := versions.New(tmpDir, manifest)
+				v := versions.New(tmpDir, depDir, mockManifest)
 				result, err := v.HasWindowsGemfileLock()
 				Expect(err).To(BeNil())
 				Expect(result).To(BeTrue())
@@ -54,7 +58,7 @@ var _ = Describe("Ruby", func() {
 			})
 
 			It("returns true", func() {
-				v := versions.New(tmpDir, manifest)
+				v := versions.New(tmpDir, depDir, mockManifest)
 				result, err := v.HasWindowsGemfileLock()
 				Expect(err).To(BeNil())
 				Expect(result).To(BeTrue())
@@ -68,7 +72,7 @@ var _ = Describe("Ruby", func() {
 			})
 
 			It("returns false", func() {
-				v := versions.New(tmpDir, manifest)
+				v := versions.New(tmpDir, depDir, mockManifest)
 				result, err := v.HasWindowsGemfileLock()
 				Expect(err).To(BeNil())
 				Expect(result).To(BeFalse())
@@ -82,7 +86,7 @@ var _ = Describe("Ruby", func() {
 			})
 
 			It("returns false", func() {
-				v := versions.New(tmpDir, manifest)
+				v := versions.New(tmpDir, depDir, mockManifest)
 				result, err := v.HasWindowsGemfileLock()
 				Expect(err).To(BeNil())
 				Expect(result).To(BeFalse())
@@ -96,7 +100,7 @@ var _ = Describe("Ruby", func() {
 			})
 
 			It("returns false", func() {
-				v := versions.New(tmpDir, manifest)
+				v := versions.New(tmpDir, depDir, mockManifest)
 				result, err := v.HasWindowsGemfileLock()
 				Expect(err).To(BeNil())
 				Expect(result).To(BeFalse())
@@ -105,7 +109,7 @@ var _ = Describe("Ruby", func() {
 
 		Context("Gemfile.lock does not exist", func() {
 			It("returns false", func() {
-				v := versions.New(tmpDir, manifest)
+				v := versions.New(tmpDir, depDir, mockManifest)
 				Expect(v.HasWindowsGemfileLock()).To(BeFalse())
 			})
 		})
@@ -118,7 +122,7 @@ var _ = Describe("Ruby", func() {
 			})
 
 			It("returns ruby", func() {
-				v := versions.New(tmpDir, manifest)
+				v := versions.New(tmpDir, depDir, mockManifest)
 				Expect(v.Engine()).To(Equal("ruby"))
 			})
 		})
@@ -129,7 +133,7 @@ var _ = Describe("Ruby", func() {
 			})
 
 			It("returns jruby", func() {
-				v := versions.New(tmpDir, manifest)
+				v := versions.New(tmpDir, depDir, mockManifest)
 				Expect(v.Engine()).To(Equal("jruby"))
 			})
 		})
@@ -140,14 +144,14 @@ var _ = Describe("Ruby", func() {
 			})
 
 			It("returns ruby", func() {
-				v := versions.New(tmpDir, manifest)
+				v := versions.New(tmpDir, depDir, mockManifest)
 				Expect(v.Engine()).To(Equal("ruby"))
 			})
 		})
 
 		Context("gemfile doesn't exist", func() {
 			It("returns ruby", func() {
-				v := versions.New(tmpDir, manifest)
+				v := versions.New(tmpDir, depDir, mockManifest)
 				Expect(v.Engine()).To(Equal("ruby"))
 			})
 		})
@@ -157,7 +161,7 @@ var _ = Describe("Ruby", func() {
 				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte("ruby '2.2.3'\nputs 'Hello'\nSTDERR.puts 'Bye'\n"), 0644)).To(Succeed())
 			})
 			It("stdout from gemfile does not create problems", func() {
-				v := versions.New(tmpDir, manifest)
+				v := versions.New(tmpDir, depDir, mockManifest)
 				Expect(v.Engine()).To(Equal("ruby"))
 			})
 		})
@@ -170,14 +174,14 @@ var _ = Describe("Ruby", func() {
 			})
 
 			It("returns highest matching version", func() {
-				manifest.EXPECT().AllDependencyVersions("ruby").Return([]string{"1.2.3", "2.2.3", "2.2.4", "2.2.1", "2.3.3", "3.1.2"})
-				v := versions.New(tmpDir, manifest)
+				mockManifest.EXPECT().AllDependencyVersions("ruby").Return([]string{"1.2.3", "2.2.3", "2.2.4", "2.2.1", "2.3.3", "3.1.2"})
+				v := versions.New(tmpDir, depDir, mockManifest)
 				Expect(v.Version()).To(Equal("2.2.4"))
 			})
 
 			It("errors if no matching versions", func() {
-				manifest.EXPECT().AllDependencyVersions("ruby").Return([]string{"1.2.3", "3.1.2"})
-				v := versions.New(tmpDir, manifest)
+				mockManifest.EXPECT().AllDependencyVersions("ruby").Return([]string{"1.2.3", "3.1.2"})
+				v := versions.New(tmpDir, depDir, mockManifest)
 				_, err := v.Version()
 				Expect(err).To(MatchError("Running ruby: No Matching versions, ruby ~> 2.2.0 not found in this buildpack"))
 			})
@@ -189,8 +193,8 @@ var _ = Describe("Ruby", func() {
 			})
 
 			It("returns the default version from the manifest", func() {
-				manifest.EXPECT().AllDependencyVersions("ruby").Return([]string{"1.2.3", "2.2.3", "2.2.4", "2.2.1", "3.1.2"})
-				v := versions.New(tmpDir, manifest)
+				mockManifest.EXPECT().AllDependencyVersions("ruby").Return([]string{"1.2.3", "2.2.3", "2.2.4", "2.2.1", "3.1.2"})
+				v := versions.New(tmpDir, depDir, mockManifest)
 				version, err := v.Version()
 				Expect(err).NotTo(HaveOccurred())
 				Expect(version).To(Equal(""))
@@ -206,14 +210,14 @@ var _ = Describe("Ruby", func() {
 			AfterEach(func() { os.Unsetenv("BUNDLE_GEMFILE") })
 
 			It("returns highest matching version", func() {
-				manifest.EXPECT().AllDependencyVersions("ruby").Return([]string{"1.2.3", "2.2.3", "2.2.4", "2.2.1", "2.3.3", "3.1.2"})
-				v := versions.New(tmpDir, manifest)
+				mockManifest.EXPECT().AllDependencyVersions("ruby").Return([]string{"1.2.3", "2.2.3", "2.2.4", "2.2.1", "2.3.3", "3.1.2"})
+				v := versions.New(tmpDir, depDir, mockManifest)
 				Expect(v.Version()).To(Equal("2.3.3"))
 			})
 
 			It("errors if no matching versions", func() {
-				manifest.EXPECT().AllDependencyVersions("ruby").Return([]string{"1.2.3", "2.2.0", "3.1.2"})
-				v := versions.New(tmpDir, manifest)
+				mockManifest.EXPECT().AllDependencyVersions("ruby").Return([]string{"1.2.3", "2.2.0", "3.1.2"})
+				v := versions.New(tmpDir, depDir, mockManifest)
 				_, err := v.Version()
 				Expect(err).To(MatchError("Running ruby: No Matching versions, ruby ~> 2.3.0 not found in this buildpack"))
 			})
@@ -226,7 +230,7 @@ var _ = Describe("Ruby", func() {
 				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby '2.3.3', :engine => 'jruby', :engine_version => '9.1.12.0'`), 0644)).To(Succeed())
 			})
 			It("returns the requested version", func() {
-				v := versions.New(tmpDir, manifest)
+				v := versions.New(tmpDir, depDir, mockManifest)
 				Expect(v.JrubyVersion()).To(Equal("9.1.12.0"))
 			})
 		})
@@ -239,7 +243,7 @@ var _ = Describe("Ruby", func() {
 			})
 			AfterEach(func() { os.Unsetenv("BUNDLE_GEMFILE") })
 			It("returns the requested version", func() {
-				v := versions.New(tmpDir, manifest)
+				v := versions.New(tmpDir, depDir, mockManifest)
 				Expect(v.JrubyVersion()).To(Equal("9.2.13.0"))
 			})
 		})
@@ -247,7 +251,7 @@ var _ = Describe("Ruby", func() {
 
 	Describe("RubyEngineVersion", func() {
 		It("returns the gem simplified ruby version", func() {
-			v := versions.New(tmpDir, manifest)
+			v := versions.New(tmpDir, depDir, mockManifest)
 			version, err := v.RubyEngineVersion()
 			Expect(err).NotTo(HaveOccurred())
 			Expect(version).To(MatchRegexp("^\\d+\\.\\d+.0$"))
@@ -275,12 +279,12 @@ BUNDLED WITH
 		})
 
 		It("returns true for roda", func() {
-			v := versions.New(tmpDir, manifest)
+			v := versions.New(tmpDir, depDir, mockManifest)
 			Expect(v.HasGem("roda")).To(BeTrue())
 		})
 
 		It("returns false for rails", func() {
-			v := versions.New(tmpDir, manifest)
+			v := versions.New(tmpDir, depDir, mockManifest)
 			Expect(v.HasGem("rails")).To(BeFalse())
 		})
 	})
@@ -303,17 +307,17 @@ DEPENDENCIES
 		})
 
 		It("returns 2 for rack", func() {
-			v := versions.New(tmpDir, manifest)
+			v := versions.New(tmpDir, depDir, mockManifest)
 			Expect(v.GemMajorVersion("rack")).To(Equal(2))
 		})
 
 		It("returns 4 for roda", func() {
-			v := versions.New(tmpDir, manifest)
+			v := versions.New(tmpDir, depDir, mockManifest)
 			Expect(v.GemMajorVersion("roda")).To(Equal(4))
 		})
 
 		It("returns -1 for rails", func() {
-			v := versions.New(tmpDir, manifest)
+			v := versions.New(tmpDir, depDir, mockManifest)
 			Expect(v.GemMajorVersion("rails")).To(Equal(-1))
 		})
 	})
@@ -339,35 +343,35 @@ BUNDLED WITH
 		})
 
 		It("returns true for >=2.28.0 for roda", func() {
-			v := versions.New(tmpDir, manifest)
+			v := versions.New(tmpDir, depDir, mockManifest)
 			match, err := v.HasGemVersion("roda", ">=2.28.0")
 			Expect(err).ToNot(HaveOccurred())
 			Expect(match).To(BeTrue())
 		})
 
 		It("returns false for <2.28.0 for roda", func() {
-			v := versions.New(tmpDir, manifest)
+			v := versions.New(tmpDir, depDir, mockManifest)
 			match, err := v.HasGemVersion("roda", "<2.28.0")
 			Expect(err).ToNot(HaveOccurred())
 			Expect(match).To(BeFalse())
 		})
 
 		It("returns true for >=2.2.0, <=3.0.0 for roda", func() {
-			v := versions.New(tmpDir, manifest)
+			v := versions.New(tmpDir, depDir, mockManifest)
 			match, err := v.HasGemVersion("roda", ">=2.2.0", "<=3.0.0")
 			Expect(err).ToNot(HaveOccurred())
 			Expect(match).To(BeTrue())
 		})
 
 		It("returns false for >=2.2.0, <=2.3.0 for roda", func() {
-			v := versions.New(tmpDir, manifest)
+			v := versions.New(tmpDir, depDir, mockManifest)
 			match, err := v.HasGemVersion("roda", ">=2.2.0", "<=2.3.0")
 			Expect(err).ToNot(HaveOccurred())
 			Expect(match).To(BeFalse())
 		})
 
 		It("returns false for rails", func() {
-			v := versions.New(tmpDir, manifest)
+			v := versions.New(tmpDir, depDir, mockManifest)
 			match, err := v.HasGemVersion("rails", "1.0.0")
 			Expect(err).ToNot(HaveOccurred())
 			Expect(match).To(BeFalse())
@@ -377,7 +381,7 @@ BUNDLED WITH
 	Describe("VersionConstraint", func() {
 		var v *versions.Versions
 		BeforeEach(func() {
-			v = versions.New(tmpDir, manifest)
+			v = versions.New(tmpDir, depDir, mockManifest)
 		})
 
 		It("returns true for 2.28.1 >=2.28.0", func() {
