@@ -34,6 +34,7 @@ func (m *MockVersions) EXPECT() *MockVersionsMockRecorder {
 
 // HasGem mocks base method
 func (m *MockVersions) HasGem(arg0 string) (bool, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "HasGem", arg0)
 	ret0, _ := ret[0].(bool)
 	ret1, _ := ret[1].(error)
@@ -42,11 +43,13 @@ func (m *MockVersions) HasGem(arg0 string) (bool, error) {
 
 // HasGem indicates an expected call of HasGem
 func (mr *MockVersionsMockRecorder) HasGem(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HasGem", reflect.TypeOf((*MockVersions)(nil).HasGem), arg0)
 }
 
 // GemMajorVersion mocks base method
 func (m *MockVersions) GemMajorVersion(arg0 string) (int, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GemMajorVersion", arg0)
 	ret0, _ := ret[0].(int)
 	ret1, _ := ret[1].(error)
@@ -55,11 +58,13 @@ func (m *MockVersions) GemMajorVersion(arg0 string) (int, error) {
 
 // GemMajorVersion indicates an expected call of GemMajorVersion
 func (mr *MockVersionsMockRecorder) GemMajorVersion(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GemMajorVersion", reflect.TypeOf((*MockVersions)(nil).GemMajorVersion), arg0)
 }
 
 // HasGemVersion mocks base method
 func (m *MockVersions) HasGemVersion(arg0 string, arg1 ...string) (bool, error) {
+	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
 	for _, a := range arg1 {
 		varargs = append(varargs, a)
@@ -72,16 +77,7 @@ func (m *MockVersions) HasGemVersion(arg0 string, arg1 ...string) (bool, error) 
 
 // HasGemVersion indicates an expected call of HasGemVersion
 func (mr *MockVersionsMockRecorder) HasGemVersion(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HasGemVersion", reflect.TypeOf((*MockVersions)(nil).HasGemVersion), varargs...)
-}
-
-// SetBundlerVersion mocks base method
-func (m *MockVersions) SetBundlerVersion(arg0 string) {
-	m.ctrl.Call(m, "SetBundlerVersion", arg0)
-}
-
-// SetBundlerVersion indicates an expected call of SetBundlerVersion
-func (mr *MockVersionsMockRecorder) SetBundlerVersion(arg0 interface{}) *gomock.Call {
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetBundlerVersion", reflect.TypeOf((*MockVersions)(nil).SetBundlerVersion), arg0)
 }
