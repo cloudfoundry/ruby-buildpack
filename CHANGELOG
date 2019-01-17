@@ -1,3 +1,27 @@
+v1.7.30 Jan 17, 2019
+=====================
+
+* Add bundler 2.0.1
+  (https://www.pivotaltracker.com/story/show/162976046)
+
+* Vendor with Go Modules
+  - Fix performance regression when the buildpack is executed directly
+    from github by re-vendoring source code
+  (https://www.pivotaltracker.com/story/show/162654926)
+
+* Add yarn 1.13.0, remove yarn 1.12.3
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/163083614)
+
+* Add ruby 2.6.0
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/163068800)
+
+* Add rubygems 3.0.2, remove rubygems 3.0.1
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/162898690)
+
+
 v1.7.29 Dec 31, 2018
 =====================
 
