@@ -54,7 +54,7 @@ func (v *Versions) GetBundlerVersion() string {
 	return v.bundlerVersion
 }
 
-func (v *Versions) CheckRubyAndBundlerVersions() (bool, error) {
+func (v *Versions) CheckBundler2Compatibility() (bool, error) {
 	engine, err := v.Engine()
 	if err != nil {
 		return false, err
@@ -82,22 +82,12 @@ func (v *Versions) CheckRubyAndBundlerVersions() (bool, error) {
 		return false, err
 	}
 
-	bundlerConstraint, err := semver.NewConstraint(">= 2.X.X")
-	if err != nil {
-		return false, err
-	}
-
-	bundlerSemver, err := semver.NewVersion(v.bundlerVersion)
-	if err != nil {
-		return false, err
-	}
-
 	rubySemver, err := semver.NewVersion(gemfileRubyVersion)
 	if err != nil {
 		return false, err
 	}
 
-	if engine == "ruby" && rubyConstraint.Check(rubySemver) && bundlerConstraint.Check(bundlerSemver) {
+	if engine == "ruby" && rubyConstraint.Check(rubySemver) {
 		return false, nil
 	}
 

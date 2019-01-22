@@ -36,7 +36,7 @@ type Installer interface {
 type Versions interface {
 	SetBundlerVersion(string)
 	GetBundlerVersion() string
-	CheckRubyAndBundlerVersions() (bool, error)
+	CheckBundler2Compatibility() (bool, error)
 	Engine() (string, error)
 	Version() (string, error)
 	JrubyVersion() (string, error)
@@ -283,26 +283,31 @@ func (s *Supplier) InstallYarn() error {
 }
 
 func (s *Supplier) InstallBundler() error {
-	if !s.appHasGemfile {
-		return s.installBundlerVersion(s.Versions.GetBundlerVersion())
-	}
-
-	if err := s.installBundlerVersion("2.X.X"); err != nil {
+	bundlerOneVersion, err := s.installBundlerOne()
+	if err != nil {
 		return err
 	}
+	s.Versions.SetBundlerVersion(bundlerOneVersion)
 
-	if ok, err := s.Versions.CheckRubyAndBundlerVersions(); err != nil {
+	if !s.appHasGemfile {
+		return nil
+	}
+
+	bundlerTwoVersion, err := s.installBundlerTwo()
+	if err != nil {
+		return err
+	}
+	s.Versions.SetBundlerVersion(bundlerTwoVersion)
+
+	if ok, err := s.Versions.CheckBundler2Compatibility(); err != nil {
 		return err
 	} else if ok {
 		return nil
 	}
 
-	if err := os.RemoveAll(filepath.Join(s.Stager.DepDir(), "bundler")); err != nil {
-		return err
-	}
-
-	s.Log.Warning("Bundler 2 is not compatible with the requested version of ruby. Trying Bundler 1...")
-	return s.installBundlerVersion("1.X.X")
+	s.Log.Warning("Ruby version not compatible with Bundler 2")
+	s.Versions.SetBundlerVersion(bundlerOneVersion)
+	return s.uninstallBundlerTwo()
 }
 
 func (s *Supplier) InstallNode() error {
@@ -843,21 +848,69 @@ func (s *Supplier) warnBundleConfig() {
 	}
 }
 
-func (s *Supplier) installBundlerVersion(constraint string) error {
-	version, err := libbuildpack.FindMatchingVersion(constraint, s.Manifest.AllDependencyVersions("bundler"))
+func (s *Supplier) installBundlerOne() (string, error) {
+	version, err := libbuildpack.FindMatchingVersion("1.X.X", s.Manifest.AllDependencyVersions("bundler"))
 	if err != nil {
-		return fmt.Errorf("failure to install Bundler matching constraint, %s: %s", constraint, err)
+		return "", fmt.Errorf("failure to install Bundler matching constraint, 1.X.X: %s", err)
 	}
 
 	if err := s.Installer.InstallDependency(libbuildpack.Dependency{Name: "bundler", Version: version}, filepath.Join(s.Stager.DepDir(), "bundler")); err != nil {
-		return err
+		return "", err
 	}
 
 	if err := s.Stager.LinkDirectoryInDepDir(filepath.Join(s.Stager.DepDir(), "bundler", "bin"), "bin"); err != nil {
+		return "", err
+	}
+
+	return version, nil
+}
+
+func (s *Supplier) installBundlerTwo() (string, error) {
+	version, err := libbuildpack.FindMatchingVersion("2.X.X", s.Manifest.AllDependencyVersions("bundler"))
+	if err != nil {
+		return "", fmt.Errorf("failure to install Bundler matching constraint, 2.X.X: %s", err)
+	}
+
+	installDir := filepath.Join(s.Stager.DepDir(), "bundler2")
+
+	if err := s.Installer.InstallDependency(libbuildpack.Dependency{Name: "bundler", Version: version}, installDir); err != nil {
+		return "", err
+	}
+	defer os.RemoveAll(installDir)
+
+	gemName := fmt.Sprintf("bundler-%s", version)
+
+	destDir := filepath.Join(s.Stager.DepDir(), "bundler", "gems", gemName)
+	if err := os.MkdirAll(destDir, 0777); err != nil {
+		return "", err
+	}
+
+	if err := libbuildpack.CopyDirectory(filepath.Join(installDir, "gems", gemName), destDir); err != nil {
+		return "", err
+	}
+
+	if err := libbuildpack.CopyFile(filepath.Join(installDir, "specifications", gemName+".gemspec"), filepath.Join(s.Stager.DepDir(), "bundler", "specifications", gemName+".gemspec")); err != nil {
+		return "", err
+	}
+
+	return version, nil
+}
+
+func (s *Supplier) uninstallBundlerTwo() error {
+	version, err := libbuildpack.FindMatchingVersion("2.X.X", s.Manifest.AllDependencyVersions("bundler"))
+	if err != nil {
+		return fmt.Errorf("failure to install Bundler matching constraint, 2.X.X: %s", err)
+	}
+
+	gemName := fmt.Sprintf("bundler-%s", version)
+
+	if err := os.RemoveAll(filepath.Join(s.Stager.DepDir(), "bundler", "gems", gemName)); err != nil {
 		return err
 	}
 
-	s.Versions.SetBundlerVersion(version)
+	if err := os.RemoveAll(filepath.Join(s.Stager.DepDir(), "bundler", "specifications", gemName+".gemspec")); err != nil {
+		return err
+	}
 
 	return nil
 }

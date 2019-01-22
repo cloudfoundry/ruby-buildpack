@@ -1,0 +1,5 @@
+---
+applications:
+- name: sinatra_jruby_web_app
+  memory: 512M
+  command: jruby -S bundle exec rackup config.ru -p $PORT
