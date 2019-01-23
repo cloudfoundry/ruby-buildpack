@@ -1,3 +1,15 @@
+v1.7.31 Jan 23, 2019
+=====================
+
+* Use built version of go 1.11.4 in online unbuilt/URL buildpack
+  (https://www.pivotaltracker.com/story/show/163089977)
+
+* Fix bundler 2 installation
+  - Always install bundler 1
+  - Allow bundler 2 to automatically select bundler version to use assuming ruby version >= 2.3
+  (https://www.pivotaltracker.com/story/show/163379014)
+
+
 v1.7.30 Jan 17, 2019
 =====================
 
