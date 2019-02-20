@@ -1,3 +1,14 @@
+v1.7.33 Feb 20, 2019
+=====================
+
+* Exit out when an unsupported stack is used
+  (https://www.pivotaltracker.com/story/show/164076510)
+
+* Add jruby 9.2.6.0, remove jruby 9.2.5.0
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/163887213)
+
+
 v1.7.32 Feb 08, 2019
 =====================
 
