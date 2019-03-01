@@ -88,6 +88,8 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
   - cflinuxfs3
+  source: https://java-buildpack.cloudfoundry.org/openjdk/trusty/x86_64/openjdk-1.8.0_192.tar.gz
+  source_sha256: 44873f0aaf087bea7b744639f1bd7d98db5d28a88953b72b178abdf0a7c27d08
 - name: ruby
   version: 2.2.9
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.2.9-linux-x64-6d65b1e2.tgz
