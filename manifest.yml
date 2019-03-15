@@ -252,14 +252,14 @@ dependencies:
   source: https://rubygems.org/rubygems/rubygems-3.0.3.tgz
   source_sha256: be3a7abc31e91de667406e84cd15265b73fc502268a1dd09404214a49b4acb2c
 - name: yarn
-  version: 1.15.1
-  uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn-1.15.1-any-stack-c63f402b.tar.gz
-  sha256: c63f402bcbf7499f015fe50f05f8b8d5f63fab08a10e4f78eb440baf54aac167
+  version: 1.15.2
+  uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn-1.15.2-any-stack-c4feca9b.tar.gz
+  sha256: c4feca9ba5d6bf1e820e8828609d3de733edf0e4722d17ed7ce493ed39f61abd
   cf_stacks:
   - cflinuxfs2
   - cflinuxfs3
-  source: https://github.com/yarnpkg/yarn/releases/download/v1.15.1/yarn-v1.15.1.tar.gz
-  source_sha256: c63f402bcbf7499f015fe50f05f8b8d5f63fab08a10e4f78eb440baf54aac167
+  source: https://github.com/yarnpkg/yarn/releases/download/v1.15.2/yarn-v1.15.2.tar.gz
+  source_sha256: c4feca9ba5d6bf1e820e8828609d3de733edf0e4722d17ed7ce493ed39f61abd
 include_files:
 - CHANGELOG
 - CONTRIBUTING.md
