@@ -1,3 +1,27 @@
+v1.7.35 Mar 20, 2019
+=====================
+
+* Add ruby 2.5.5, remove ruby 2.5.1
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/164698728)
+  (https://www.pivotaltracker.com/story/show/164607786)
+
+* Add yarn 1.15.2, remove yarn 1.13.0
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/164657895)
+  (https://www.pivotaltracker.com/story/show/164518593)
+
+* Bump ruby to 2.6.1
+  (https://www.pivotaltracker.com/story/show/164607809)
+
+* Add ruby 2.6.2, remove ruby 2.6.0
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/164607809)
+
+* Add rubygems 3.0.3, remove rubygems 3.0.2
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/164388659)
+
 v1.7.34 Mar 01, 2019
 =====================
 
