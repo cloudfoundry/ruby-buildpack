@@ -22,4 +22,4 @@ fi
 cd src/*/brats
 
 echo "Run Buildpack Runtime Acceptance Tests"
-ginkgo -r --flakeAttempts=$GINKGO_ATTEMPTS -nodes $GINKGO_NODES -- $DISK_LIMIT_ARG $MEM_LIMIT_ARG
+ginkgo -r -mod=vendor --flakeAttempts=$GINKGO_ATTEMPTS -nodes $GINKGO_NODES -- $DISK_LIMIT_ARG $MEM_LIMIT_ARG
