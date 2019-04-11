@@ -81,6 +81,14 @@ dependencies:
   - cflinuxfs3
   source: https://nodejs.org/dist/v6.17.1/node-v6.17.1.tar.gz
   source_sha256: 6fa487c5c6770cc7ca0567c0e532d6bcdf0f5d1aebdceb169ecfb66984459dea
+- name: node
+  version: 10.15.3
+  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-10.15.3-linux-x64-cflinuxfs3-52dbc618.tgz
+  sha256: 52dbc618aa035840763c991688de7aeed0be2eff9d115cddcd09e09055266620
+  cf_stacks:
+  - cflinuxfs3
+  source: https://nodejs.org/dist/v10.15.3/node-v10.15.3.tar.gz
+  source_sha256: db460a63d057ac015b75bb6a879fcbe2fefaaf22afa4b6f6445b9db61ce2270d
 - name: openjdk1.8-latest
   version: 1.8.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/openjdk-1.8.0_192-6254bacb.tar.gz
