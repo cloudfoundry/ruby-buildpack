@@ -44,8 +44,7 @@ func main() {
 		os.Exit(17)
 	}
 
-	err = libbuildpack.RunBeforeCompile(stager)
-	if err != nil {
+	if err := libbuildpack.RunBeforeCompile(stager); err != nil {
 		logger.Error("Before Compile: %s", err.Error())
 		os.Exit(12)
 	}
@@ -55,8 +54,7 @@ func main() {
 		os.Exit(13)
 	}
 
-	err = stager.SetStagingEnvironment()
-	if err != nil {
+	if err := stager.SetStagingEnvironment(); err != nil {
 		logger.Error("Unable to setup environment variables: %s", err.Error())
 		os.Exit(14)
 	}

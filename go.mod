@@ -8,5 +8,8 @@ require (
 	github.com/kr/text v0.1.0
 	github.com/onsi/ginkgo v1.8.0
 	github.com/onsi/gomega v1.4.3
-	golang.org/x/crypto v0.0.0-20181203042331-505ab145d0a9
+	golang.org/x/crypto v0.0.0-20190411141940-e7b772b7007a
+	golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3 // indirect
+	golang.org/x/sys v0.0.0-20190410235845-0ad05ae3009d // indirect
+	golang.org/x/tools v0.0.0-20190410211219-2538eef75904 // indirect
 )
