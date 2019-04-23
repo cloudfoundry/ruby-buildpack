@@ -1,3 +1,10 @@
+v1.7.38 Apr 23, 2019
+=====================
+
+* Add ruby 2.6.3, remove ruby 2.6.1
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/165546727)
+
 v1.7.37 Apr 23, 2019
 =====================
 
