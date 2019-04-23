@@ -1,3 +1,20 @@
+v1.7.37 Apr 23, 2019
+=====================
+
+* Add node 10.15.3
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/164408746)
+
+* Enable multiple node dependencies
+  - Defaults to version 6
+  - Parses version from package.json
+  (https://www.pivotaltracker.com/story/show/165216936)
+
+* Add jruby 9.2.7.0, remove jruby 9.2.6.0
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/165224918)
+
+
 v1.7.36 Apr 08, 2019
 =====================
 
