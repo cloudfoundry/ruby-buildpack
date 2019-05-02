@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"crypto/md5"
 	"fmt"
-	"github.com/cloudfoundry/ruby-buildpack/src/ruby/package_json"
 	"io"
 	"io/ioutil"
 	"os"
@@ -312,36 +311,25 @@ func (s *Supplier) InstallBundler() error {
 }
 
 func (s *Supplier) InstallNode() error {
-	var version string
-	constraint := package_json.DefaultNodeVersion
-	var err error
-	pkgJSONPath := filepath.Join(s.Stager.BuildDir(), package_json.PackageJson)
-
-	if _, err := os.Stat(pkgJSONPath); err == nil {
-		constraint, err = package_json.GetNodeFromPackageJSON(pkgJSONPath, s.Log)
-		if err != nil {
-			return err
-		}
-	}
-	version, err = libbuildpack.FindMatchingVersion(constraint, s.Manifest.AllDependencyVersions("node"))
-
-	if err != nil {
-		return err
-	}
-
 	var dep libbuildpack.Dependency
-	dep.Name = "node"
-	dep.Version = version
+
 	tempDir, err := ioutil.TempDir("", "node")
 	if err != nil {
 		return err
 	}
+	nodeInstallDir := filepath.Join(s.Stager.DepDir(), "node")
+
+	version, err := libbuildpack.FindMatchingVersion("x", s.Manifest.AllDependencyVersions("node"))
+	if err != nil {
+		return err
+	}
+	dep.Name = "node"
+	dep.Version = version
 
 	if err := s.Installer.InstallDependency(dep, tempDir); err != nil {
 		return err
 	}
 
-	nodeInstallDir := filepath.Join(s.Stager.DepDir(), "node")
 	if err := os.Rename(filepath.Join(tempDir, fmt.Sprintf("node-v%s-linux-x64", dep.Version)), nodeInstallDir); err != nil {
 		return err
 	}

@@ -18,7 +18,7 @@ var _ = Describe("Rails 5.2 (Webpack/Yarn) App", func() {
 		app.SetEnv("BP_DEBUG", "1")
 	})
 
-	It("Installs node6 and runs", func() {
+	It("Installs node and runs", func() {
 		PushAppAndConfirm(app)
 
 		Expect(app.GetBody("/")).To(ContainSubstring("Hello, Rails!"))

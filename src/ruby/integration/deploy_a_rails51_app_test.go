@@ -20,9 +20,9 @@ var _ = Describe("Rails 5.1 (Webpack/Yarn) App", func() {
 		app.SetEnv("BP_DEBUG", "1")
 	})
 
-	It("Installs node6 and runs", func() {
+	It("Installs node and runs", func() {
 		PushAppAndConfirm(app)
-		Expect(app.Stdout.String()).To(ContainSubstring("Installing node 6."))
+		Expect(app.Stdout.String()).To(ContainSubstring("Installing node"))
 
 		Expect(app.GetBody("/")).To(ContainSubstring("Hello World"))
 		Eventually(app.Stdout.String).Should(ContainSubstring(`Started GET "/" for`))
