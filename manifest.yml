@@ -66,21 +66,21 @@ dependencies:
   source: https://s3.amazonaws.com/jruby.org/downloads/9.2.7.0/jruby-src-9.2.7.0.tar.gz
   source_sha256: fadd9437cbc950e5ae96dc3e7f1558480c071837a2ea58887800f9feb6d37e6c
 - name: node
-  version: 10.15.3
-  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-10.15.3-linux-x64-cflinuxfs3-52dbc618.tgz
-  sha256: 52dbc618aa035840763c991688de7aeed0be2eff9d115cddcd09e09055266620
-  cf_stacks:
-    - cflinuxfs3
-  source: https://nodejs.org/dist/v10.15.3/node-v10.15.3.tar.gz
-  source_sha256: db460a63d057ac015b75bb6a879fcbe2fefaaf22afa4b6f6445b9db61ce2270d
-- name: node
   version: 10.15.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-10.15.0-linux-x64-cflinuxfs2-d1a7fed0.tgz
   sha256: d1a7fed0e8d379dbd588f67cba937ab87021360e43d8960466f73ece91f6ea41
   cf_stacks:
-    - cflinuxfs2
+  - cflinuxfs2
   source: https://nodejs.org/dist/v10.15.0/node-v10.15.0.tar.gz
   source_sha256: dbe467e3dabb6854fcb0cd96e04082268cb1e313ce97a4b7100b2ed152b0a0ab
+- name: node
+  version: 10.15.3
+  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node-10.15.3-linux-x64-cflinuxfs3-52dbc618.tgz
+  sha256: 52dbc618aa035840763c991688de7aeed0be2eff9d115cddcd09e09055266620
+  cf_stacks:
+  - cflinuxfs3
+  source: https://nodejs.org/dist/v10.15.3/node-v10.15.3.tar.gz
+  source_sha256: db460a63d057ac015b75bb6a879fcbe2fefaaf22afa4b6f6445b9db61ce2270d
 - name: openjdk1.8-latest
   version: 1.8.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/openjdk-1.8.0_192-6254bacb.tar.gz
@@ -252,14 +252,14 @@ dependencies:
   source: https://rubygems.org/rubygems/rubygems-3.0.3.tgz
   source_sha256: be3a7abc31e91de667406e84cd15265b73fc502268a1dd09404214a49b4acb2c
 - name: yarn
-  version: 1.15.2
-  uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn-1.15.2-any-stack-c4feca9b.tar.gz
-  sha256: c4feca9ba5d6bf1e820e8828609d3de733edf0e4722d17ed7ce493ed39f61abd
+  version: 1.16.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn-1.16.0-any-stack-df202627.tar.gz
+  sha256: df202627d9a70cf09ef2fb11cb298cb619db1b958590959d6f6e571b50656029
   cf_stacks:
   - cflinuxfs2
   - cflinuxfs3
-  source: https://github.com/yarnpkg/yarn/releases/download/v1.15.2/yarn-v1.15.2.tar.gz
-  source_sha256: c4feca9ba5d6bf1e820e8828609d3de733edf0e4722d17ed7ce493ed39f61abd
+  source: https://github.com/yarnpkg/yarn/releases/download/v1.16.0/yarn-v1.16.0.tar.gz
+  source_sha256: df202627d9a70cf09ef2fb11cb298cb619db1b958590959d6f6e571b50656029
 include_files:
 - CHANGELOG
 - CONTRIBUTING.md
