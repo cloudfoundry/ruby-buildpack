@@ -83,13 +83,13 @@ dependencies:
   source_sha256: db460a63d057ac015b75bb6a879fcbe2fefaaf22afa4b6f6445b9db61ce2270d
 - name: openjdk1.8-latest
   version: 1.8.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/manual-binaries/jruby/openjdk-1.8.0_192-6254bacb.tar.gz
-  sha256: 6254bacb4d9e6cae1e8fdd44f06bbb2c6f26081f937e3786e6c53aea57f94a4d
+  uri: https://java-buildpack.cloudfoundry.org/openjdk-jdk/trusty/x86_64/openjdk-jdk-1.8.0_212-trusty.tar.gz
+  sha256: 0749e51942641f369a9411ba27207fbf74b8836f1fb19a3d85cee55e13387a9c
   cf_stacks:
   - cflinuxfs2
   - cflinuxfs3
-  source: https://java-buildpack.cloudfoundry.org/openjdk/trusty/x86_64/openjdk-1.8.0_192.tar.gz
-  source_sha256: 44873f0aaf087bea7b744639f1bd7d98db5d28a88953b72b178abdf0a7c27d08
+  source: https://java-buildpack.cloudfoundry.org/openjdk-jdk/trusty/x86_64/openjdk-jdk-1.8.0_212-trusty.tar.gz
+  source_sha256: 0749e51942641f369a9411ba27207fbf74b8836f1fb19a3d85cee55e13387a9c
 - name: ruby
   version: 2.2.9
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.2.9-linux-x64-6d65b1e2.tgz
