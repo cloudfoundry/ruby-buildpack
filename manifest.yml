@@ -164,16 +164,16 @@ dependencies:
   source_sha256: 6737741ae6ffa61174c8a3dcdd8ba92bc38827827ab1d7ea1ec78bc3cefc5198
 - name: ruby
   version: 2.4.6
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.4.6-linux-x64-cflinuxfs2-8c8a0e57.tgz
-  sha256: 8c8a0e572f11dcc85539d0c5a3958b7c669506f6900d12fdc2f438c6d66ca778
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.4.6-linux-x64-cflinuxfs2-3f9ed717.tgz
+  sha256: 3f9ed717d4c7e5aa1a871518c051487f78567af7ea71ea6ff3bab1b30078663f
   cf_stacks:
   - cflinuxfs2
   source: https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.6.tar.gz
   source_sha256: de0dc8097023716099f7c8a6ffc751511b90de7f5694f401b59f2d071db910be
 - name: ruby
   version: 2.4.6
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.4.6-linux-x64-cflinuxfs3-00cf6004.tgz
-  sha256: 00cf6004d3ed982615413f67ee5117389374fa7eecaee152b29fb85df9eca5c0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.4.6-linux-x64-cflinuxfs3-9761fb0d.tgz
+  sha256: 9761fb0d5fe44ba5dce2ea5de77c933a147398a6dc6425ab5aa35eebfa0927f0
   cf_stacks:
   - cflinuxfs3
   source: https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.6.tar.gz
