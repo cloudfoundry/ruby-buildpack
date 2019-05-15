@@ -1,3 +1,18 @@
+v1.7.39 May 15, 2019
+=====================
+
+* Update the openjdk dependency to 1.8.0_212
+  (https://www.pivotaltracker.com/story/show/165405673)
+
+* Add yarn 1.16.0, remove yarn 1.15.2
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/165924485)
+
+* Remove logic that was added to support both Node 6.x and 10x, and set default version of node to 10.x
+  (https://www.pivotaltracker.com/story/show/164990934)
+
+* update install_go.sh script to use go 1.12.4
+
 v1.7.38 Apr 23, 2019
 =====================
 
