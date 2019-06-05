@@ -1,3 +1,10 @@
+v1.7.40 Jun 05, 2019
+=====================
+
+* Add node 10.16.0, remove node 10.15.3
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/166317034)
+
 v1.7.39 May 15, 2019
 =====================
 
