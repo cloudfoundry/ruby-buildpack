@@ -1,17 +1,11 @@
-ANewHope::Application.routes.draw do
-  resources :notes
-  root 'notes#index'
-
-  get 'env' => 'env#show'
-
-  get 'browse' => 'browse#show'
-  get 'browse/*path' => 'browse#show'
-
+Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
+
+  root 'hello#home'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

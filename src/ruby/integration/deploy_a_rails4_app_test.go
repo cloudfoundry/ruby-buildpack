@@ -22,7 +22,7 @@ var _ = Describe("Rails 4 App", func() {
 			app = cutlass.New(filepath.Join(bpDir, "fixtures", "rails4"))
 			PushAppAndConfirm(app)
 
-			Expect(app.GetBody("/")).To(ContainSubstring("The Kessel Run"))
+			Expect(app.GetBody("/")).To(ContainSubstring("Hello world!"))
 			Expect(app.Stdout.String()).To(ContainSubstring("Copy [/"))
 		})
 
@@ -38,7 +38,7 @@ var _ = Describe("Rails 4 App", func() {
 			Expect(app.Stdout.String()).To(ContainSubstring("Installing node 10."))
 			Expect(app.Stdout.String()).To(ContainSubstring("Download [https://"))
 
-			Expect(app.GetBody("/")).To(ContainSubstring("The Kessel Run"))
+			Expect(app.GetBody("/")).To(ContainSubstring("Hello world!"))
 		})
 
 		Context("app has non vendored dependencies", func() {
@@ -48,7 +48,7 @@ var _ = Describe("Rails 4 App", func() {
 
 				PushAppAndConfirm(app)
 
-				Expect(app.GetBody("/")).To(ContainSubstring("The Kessel Run"))
+				Expect(app.GetBody("/")).To(ContainSubstring("Hello world!"))
 			})
 
 			AssertUsesProxyDuringStagingIfPresent("rails4_not_vendored")

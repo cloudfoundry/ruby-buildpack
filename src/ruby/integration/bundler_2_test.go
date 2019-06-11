@@ -18,11 +18,4 @@ var _ = Describe("CF Ruby Buildpack", func() {
 		PushAppAndConfirm(app)
 		Expect(app.Stdout.String()).To(ContainSubstring("Using bundler 2"))
 	})
-
-	It("does not use bundler 2 when ruby < 2.3", func() {
-		app = cutlass.New(filepath.Join(bpDir, "fixtures", "ruby_2.2_bundler_2"))
-		app.SetEnv("BP_DEBUG", "1")
-		PushAppAndConfirm(app)
-		Expect(app.Stdout.String()).To(ContainSubstring("Using bundler 1"))
-	})
 })

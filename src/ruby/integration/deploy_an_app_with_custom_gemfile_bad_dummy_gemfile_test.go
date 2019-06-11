@@ -25,7 +25,7 @@ var _ = Describe("App with custom Gemfile and bad file named 'Gemfile'", func() 
 
 	It("uses the version of ruby specified in Gemfile-APP", func() {
 		PushAppAndConfirm(app)
-		Expect(app.Stdout.String()).To(ContainSubstring("Installing ruby 2.2.10"))
+		Expect(app.Stdout.String()).To(ContainSubstring("Installing ruby 2.6"))
 		Expect(app.Stdout.String()).To(ContainSubstring("Installing sinatra 1.4.7"))
 	})
 })

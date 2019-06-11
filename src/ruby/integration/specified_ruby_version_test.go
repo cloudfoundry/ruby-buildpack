@@ -21,7 +21,7 @@ var _ = Describe("CF Ruby Buildpack", func() {
 		PushAppAndConfirm(app)
 
 		By("uses the specified ruby version", func() {
-			Expect(app.Stdout.String()).To(ContainSubstring("Installing ruby 2.2."))
+			Expect(app.Stdout.String()).To(ContainSubstring("Installing ruby 2.4."))
 		})
 
 		By("running a task", func() {
@@ -33,7 +33,7 @@ var _ = Describe("CF Ruby Buildpack", func() {
 				_, err := app.RunTask(`echo "RUNNING A TASK: $(ruby --version)"`)
 				Expect(err).ToNot(HaveOccurred())
 
-				Eventually(app.Stdout.String).Should(ContainSubstring("RUNNING A TASK: ruby 2.2."))
+				Eventually(app.Stdout.String).Should(ContainSubstring("RUNNING A TASK: ruby 2.4."))
 			})
 		})
 	})
