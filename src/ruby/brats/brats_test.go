@@ -14,7 +14,7 @@ var _ = Describe("Ruby buildpack", func() {
 	bratshelper.UnbuiltBuildpack("ruby", CopyBrats)
 	bratshelper.DeployingAnAppWithAnUpdatedVersionOfTheSameBuildpack(CopyBrats)
 	bratshelper.StagingWithBuildpackThatSetsEOL("ruby", func(_ string) *cutlass.App {
-		return CopyBrats("2.2.x")
+		return CopyBrats("2.4.x")
 	})
 	//TODO: Old versions of ruby were not available on cflinuxfs3. Bring this test back when possible.
 	if os.Getenv("CF_STACK") == "cflinuxfs2" {
