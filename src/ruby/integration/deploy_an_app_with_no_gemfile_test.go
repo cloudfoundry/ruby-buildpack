@@ -42,7 +42,7 @@ var _ = Describe("App with No Gemfile", func() {
 			}
 			app.Buildpacks = []string{"ruby_buildpack", "binary_buildpack"}
 		})
-		
+
 		It("deploys", func() {
 			PushAppAndConfirm(app)
 			Expect(app.Stdout.String()).To(ContainSubstring("Installing ruby"))
