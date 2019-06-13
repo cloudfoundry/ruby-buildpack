@@ -12,8 +12,8 @@ dependency_deprecation_dates:
   link: https://github.com/nodejs/LTS
 - version_line: 2.4.x
   name: ruby
-  date: 2020-03-31
-  link: https://www.ruby-lang.org/en/news/2019/03/31/support-of-ruby-2-3-has-ended/
+  date: 2020-04-01
+  link: https://www.ruby-lang.org/en/news/2019/04/01/ruby-2-4-6-released/ 
 dependencies:
 - name: bundler
   version: 1.17.3
