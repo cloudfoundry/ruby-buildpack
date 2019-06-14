@@ -13,7 +13,7 @@ dependency_deprecation_dates:
 - version_line: 2.4.x
   name: ruby
   date: 2020-04-01
-  link: https://www.ruby-lang.org/en/news/2019/04/01/ruby-2-4-6-released/ 
+  link: https://www.ruby-lang.org/en/news/2019/04/01/ruby-2-4-6-released/
 dependencies:
 - name: bundler
   version: 1.17.3
@@ -187,14 +187,14 @@ dependencies:
   source: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.3.tar.gz
   source_sha256: 577fd3795f22b8d91c1d4e6733637b0394d4082db659fccf224c774a2b1c82fb
 - name: rubygems
-  version: 3.0.3
-  uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems-3.0.3-any-stack-be3a7abc.tgz
-  sha256: be3a7abc31e91de667406e84cd15265b73fc502268a1dd09404214a49b4acb2c
+  version: 3.0.4
+  uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems-3.0.4-any-stack-8292d0fb.tgz
+  sha256: 8292d0fb2e4dc6e074bb053894eb41f2ef533adcb088b7081450ae3cf62fe277
   cf_stacks:
   - cflinuxfs2
   - cflinuxfs3
-  source: https://rubygems.org/rubygems/rubygems-3.0.3.tgz
-  source_sha256: be3a7abc31e91de667406e84cd15265b73fc502268a1dd09404214a49b4acb2c
+  source: https://rubygems.org/rubygems/rubygems-3.0.4.tgz
+  source_sha256: 8292d0fb2e4dc6e074bb053894eb41f2ef533adcb088b7081450ae3cf62fe277
 - name: yarn
   version: 1.16.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn-1.16.0-any-stack-df202627.tar.gz
