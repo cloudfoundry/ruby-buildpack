@@ -1,3 +1,11 @@
+v1.7.41 Jun 19, 2019
+=====================
+
+* Remove ruby 2.3 and 2.2
+  - Update integration tests
+  - Set 2.4 as default version
+  (https://www.pivotaltracker.com/story/show/165296435)
+
 v1.7.40 Jun 05, 2019
 =====================
 
