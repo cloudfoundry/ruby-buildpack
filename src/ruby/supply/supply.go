@@ -45,6 +45,7 @@ type Versions interface {
 	VersionConstraint(version string, constraints ...string) (bool, error)
 	HasWindowsGemfileLock() (bool, error)
 	Gemfile() string
+	BundledWithVersion() (string, error)
 }
 
 type Stager interface {
@@ -618,8 +619,23 @@ func (s *Supplier) InstallGems() error {
 		return err
 	}
 
-	s.Log.Info("Cleaning up the bundler cache.")
+	// Read Gemfile.lock to see if Bundler With version is >2, and not equal to the current bundler version
+	// See: https://stackoverflow.com/questions/56680065/heroku-installs-bundler-then-throws-error-bundler-2-0-1
+	if s.appHasGemfileLock {
+		bundledWithVersion, err := s.Versions.BundledWithVersion()
+		if err != nil {
+			return fmt.Errorf("could not read Bundled With version from gemfile.lock: %s", err)
+		}
 
+		if bundledWithVersion != s.Versions.GetBundlerVersion() && strings.HasPrefix(bundledWithVersion, "2") {
+			if err := s.removeIncompatibleBundledWithVersion(bundledWithVersion); err != nil {
+				return fmt.Errorf("could not remove Bundled With from end of "+
+					"gemfile.lock: %s", err)
+			}
+		}
+	}
+
+	s.Log.Info("Cleaning up the bundler cache.")
 	cmd = exec.Command("bundle", "clean")
 	cmd.Dir = tempDir
 	cmd.Stdout = text.NewIndentWriter(os.Stdout, []byte("       "))
@@ -669,6 +685,22 @@ func (s *Supplier) InstallGems() error {
 	}
 
 	return os.RemoveAll(tempDir)
+}
+
+func (s *Supplier) removeIncompatibleBundledWithVersion(bundledWithVersion string) error {
+	s.Log.Warning(fmt.Sprintf(`Your Gemfile.lock was bundled with bundler %s, which is incompatible with the current bundler version (%s).`, bundledWithVersion, s.Versions.GetBundlerVersion()))
+	s.Log.Warning(`Deleting "Bundled With" from the Gemfile.lock`)
+
+	gemfileLockPath := s.Versions.Gemfile() + ".lock"
+	file, err := ioutil.ReadFile(gemfileLockPath)
+	if err != nil {
+		return fmt.Errorf("failed to read gemfile.lock: %s", err)
+	}
+
+	match := regexp.MustCompile(`BUNDLED WITH\s+(\w|\.|-)+\n`)
+	output := match.ReplaceAll(file, []byte(""))
+
+	return ioutil.WriteFile(gemfileLockPath, output, 0666)
 }
 
 func (s *Supplier) regenerateBundlerBinStub(appDir string) error {

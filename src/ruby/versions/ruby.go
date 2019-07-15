@@ -3,13 +3,14 @@ package versions
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/Masterminds/semver"
 	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/Masterminds/semver"
 
 	"github.com/cloudfoundry/libbuildpack"
 )
@@ -330,4 +331,17 @@ func (v *Versions) run(dir, code string, in interface{}) (interface{}, error) {
 		return "", fmt.Errorf("Running ruby: %s", output.Error)
 	}
 	return output.Data, nil
+}
+
+func (v *Versions) BundledWithVersion() (string, error) {
+	code := fmt.Sprintf(`b = Bundler::LockfileParser.new(File.read("Gemfile.lock")).bundler_version if File.exists?("Gemfile.lock")
+
+	return '' unless defined? b.version
+	b.version.to_s`)
+
+	data, err := v.run(filepath.Dir(v.Gemfile()), code, []string{})
+	if err != nil {
+		return "", fmt.Errorf("failed to read Bundled With version: %s", err)
+	}
+	return data.(string), nil
 }

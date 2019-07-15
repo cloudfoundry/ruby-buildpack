@@ -402,4 +402,49 @@ BUNDLED WITH
 			Expect(match).To(BeFalse())
 		})
 	})
+
+	Describe("BundledWithVersion", func() {
+		Context("Gemfile.lock has a Bundled With version", func() {
+			BeforeEach(func() {
+				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(`
+PLATFORMS
+   ruby
+
+BUNDLED WITH
+   1.15.3`), 0644)).To(Succeed())
+			})
+
+			It("returns the requested version", func() {
+				v := versions.New(tmpDir, depDir, mockManifest)
+				Expect(v.BundledWithVersion()).To(Equal("1.15.3"))
+			})
+		})
+
+		Context("Gemfile.lock doesn't have a Bundled With version", func() {
+			BeforeEach(func() {
+				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(`
+PLATFORMS
+   ruby
+`), 0644)).To(Succeed())
+			})
+
+			It("returns the requested version", func() {
+				v := versions.New(tmpDir, depDir, mockManifest)
+				Expect(v.BundledWithVersion()).To(Equal(""))
+			})
+		})
+
+		Context("There is no Gemfile.lock", func() {
+			BeforeEach(func() {
+				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+			})
+
+			It("returns the requested version", func() {
+				v := versions.New(tmpDir, depDir, mockManifest)
+				Expect(v.BundledWithVersion()).To(Equal(""))
+			})
+		})
+	})
 })
