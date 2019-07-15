@@ -18,6 +18,7 @@ import (
 	"github.com/cloudfoundry/libbuildpack/ansicleaner"
 	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
+
 	// . "github.com/onsi/ginkgo/extensions/table"
 	. "github.com/onsi/gomega"
 )
@@ -243,6 +244,7 @@ var _ = Describe("Supply", func() {
 				const newGemfileLock = "new lockfile"
 				BeforeEach(func() {
 					mockVersions.EXPECT().HasWindowsGemfileLock().Return(false, nil)
+					mockVersions.EXPECT().BundledWithVersion().Return("", nil)
 					Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte("source \"https://rubygems.org\"\ngem \"rack\"\n"), 0644)).To(Succeed())
 					Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile.lock"), []byte(gemfileLock), 0644)).To(Succeed())
 				})
@@ -281,6 +283,7 @@ var _ = Describe("Supply", func() {
 				const gemfileLock = "GEM\n  remote: https://rubygems.org/\n  specs:\n    rack (1.5.2)\n\nPLATFORMS\n  x64-mingw32\n\nDEPENDENCIES\n  rack\n"
 				const newGemfileLock = "new lockfile"
 				BeforeEach(func() {
+					mockVersions.EXPECT().BundledWithVersion().Return("", nil)
 					mockVersions.EXPECT().HasWindowsGemfileLock().Return(true, nil)
 					Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte("source \"https://rubygems.org\"\r\ngem \"rack\"\r\n"), 0644)).To(Succeed())
 					Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile.lock"), []byte(gemfileLock), 0644)).To(Succeed())
