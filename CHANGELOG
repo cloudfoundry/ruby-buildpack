@@ -1,3 +1,14 @@
+v1.7.42 Jul 16, 2019
+=====================
+
+* Removes Bundled With from Gemfile.lock if bundled with an earlier version of Bundler 2
+  - This addresses a bug in bundler, where Bundler 2.0.2 will error out if trying to run  with a Gemfile packaged with Bundler 2.0.1
+  (https://www.pivotaltracker.com/story/show/167301748)
+
+* Add yarn 1.17.3, remove yarn 1.16.0
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/167268056)
+
 v1.7.41 Jun 19, 2019
 =====================
 
