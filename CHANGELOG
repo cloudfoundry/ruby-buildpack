@@ -1,3 +1,21 @@
+v1.7.43 Aug 27, 2019
+=====================
+
+* Add rubygems 3.0.6, remove rubygems 3.0.4
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/167942109)
+  (https://www.pivotaltracker.com/story/show/167940289)
+
+* Add node 10.16.3, remove node 10.16.0
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/167933824)
+  (https://www.pivotaltracker.com/story/show/167747493)
+  (https://www.pivotaltracker.com/story/show/167631078)
+
+* Add jruby 9.2.8.0, remove jruby 9.2.7.0
+  for stack(s) cflinuxfs2, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/167854219)
+
 v1.7.42 Jul 16, 2019
 =====================
 
