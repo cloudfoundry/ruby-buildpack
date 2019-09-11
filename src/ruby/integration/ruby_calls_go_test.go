@@ -38,7 +38,7 @@ var _ = Describe("running supply go buildpack before the ruby buildpack", func()
 			Expect(app.Stdout.String()).To(MatchRegexp("Installing ruby \\d+\\.\\d+\\.\\d+"))
 
 			Expect(app.GetBody("/")).To(MatchRegexp("RUBY_VERSION IS \\d+\\.\\d+\\.\\d+"))
-			Expect(app.GetBody("/")).To(MatchRegexp("go version go\\d+\\.\\d+\\.\\d+"))
+			Expect(app.GetBody("/")).To(MatchRegexp("go version go\\d+\\.\\d+(\\.\\d+)?"))
 		})
 	})
 })
