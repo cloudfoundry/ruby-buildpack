@@ -7,11 +7,11 @@
     "babel-preset-env": "^1.2.1",
     "coffee-loader": "^0.7.3",
     "coffee-script": "^1.12.4",
-    "compression-webpack-plugin": "^0.3.2",
+    "compression-webpack-plugin": "^1.0.0",
     "glob": "^7.1.1",
     "path-complete-extname": "^0.1.0",
     "rails-erb-loader": "^3.2.0",
-    "webpack": "^2.2.1",
+    "webpack": "^3.0.0",
     "webpack-merge": "^4.0.0"
   },
   "devDependencies": {
