@@ -1,8 +1,6 @@
 package brats_test
 
 import (
-	"os"
-
 	"github.com/cloudfoundry/libbuildpack/bratshelper"
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 	. "github.com/onsi/ginkgo"
@@ -16,10 +14,6 @@ var _ = Describe("Ruby buildpack", func() {
 	bratshelper.StagingWithBuildpackThatSetsEOL("ruby", func(_ string) *cutlass.App {
 		return CopyBrats("2.4.x")
 	})
-	//TODO: Old versions of ruby were not available on cflinuxfs3. Bring this test back when possible.
-	if os.Getenv("CF_STACK") == "cflinuxfs2" {
-		bratshelper.StagingWithADepThatIsNotTheLatest("ruby", CopyBrats)
-	}
 	bratshelper.StagingWithCustomBuildpackWithCredentialsInDependencies(CopyBrats)
 	bratshelper.DeployAppWithExecutableProfileScript("ruby", CopyBrats)
 	bratshelper.DeployAnAppWithSensitiveEnvironmentVariables(CopyBrats)
