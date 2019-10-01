@@ -167,14 +167,6 @@ dependencies:
   source: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.3.tar.gz
   source_sha256: 577fd3795f22b8d91c1d4e6733637b0394d4082db659fccf224c774a2b1c82fb
 - name: ruby
-  version: 2.6.3
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.6.3-linux-x64-cflinuxfs3-5f783afa.tgz
-  sha256: 5f783afaa368ec9450da8b15aa4b543b186e42d98f2baf6fdb68309b6ce187f2
-  cf_stacks:
-  - cflinuxfs3
-  source: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.3.tar.gz
-  source_sha256: 577fd3795f22b8d91c1d4e6733637b0394d4082db659fccf224c774a2b1c82fb
-- name: ruby
   version: 2.6.4
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.6.4-linux-x64-cflinuxfs2-4e86bc8e.tgz
   sha256: 4e86bc8e27ffb2b553d974e7e9e238b8b6a0140f251803ba9f65ed2afb4d8f48
@@ -190,6 +182,14 @@ dependencies:
   - cflinuxfs3
   source: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.4.tar.gz
   source_sha256: 4fc1d8ba75505b3797020a6ffc85a8bcff6adc4dabae343b6572bf281ee17937
+- name: ruby
+  version: 2.6.5
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.6.5-linux-x64-cflinuxfs3-a23c26ec.tgz
+  sha256: a23c26ec93e34ca05328390107ff40034b5103afb91194ebf70f66f0c0866db4
+  cf_stacks:
+  - cflinuxfs3
+  source: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.5.tar.gz
+  source_sha256: 66976b716ecc1fd34f9b7c3c2b07bbd37631815377a2e3e85a5b194cfdcbed7d
 - name: rubygems
   version: 3.0.6
   uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems-3.0.6-any-stack-1a97a90e.tgz
