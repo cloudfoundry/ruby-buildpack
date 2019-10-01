@@ -1,3 +1,28 @@
+v1.8.0 Oct 01, 2019
+=====================
+
+* Remove cflinuxfs2
+  Fixes #116
+  (https://www.pivotaltracker.com/story/show/166710434)
+
+* Add yarn 1.19.0, Remove yarn 1.17.3
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/168822467)
+  (https://www.pivotaltracker.com/story/show/168822467)
+
+* Add ruby 2.4.8
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/168867575)
+
+* Add ruby 2.6.5
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/168867584)
+
+* Add ruby 2.5.7
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/168867581)
+
+
 v1.7.44 Sep 13, 2019
 =====================
 
