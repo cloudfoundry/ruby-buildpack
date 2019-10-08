@@ -26,7 +26,7 @@ var _ = Describe("running supply buildpacks before the ruby buildpack", func() {
 				Skip("API version does not have multi-buildpack support")
 			}
 
-			app = cutlass.New(filepath.Join(bpDir, "fixtures", "fake_supply_ruby_app"))
+			app = cutlass.New(Fixtures("fake_supply_ruby_app"))
 			app.Buildpacks = []string{
 				"https://github.com/cloudfoundry/dotnet-core-buildpack#master",
 				"ruby_buildpack",
@@ -50,7 +50,7 @@ var _ = Describe("running supply buildpacks before the ruby buildpack", func() {
 			}
 
 			var err error
-			tmpDir, err = cutlass.CopyFixture(filepath.Join(bpDir, "fixtures", "test_cache_ruby_app"))
+			tmpDir, err = cutlass.CopyFixture(Fixtures("test_cache_ruby_app"))
 			Expect(err).To(BeNil())
 			app = cutlass.New(tmpDir)
 

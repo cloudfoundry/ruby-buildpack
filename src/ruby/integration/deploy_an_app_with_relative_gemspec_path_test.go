@@ -1,8 +1,6 @@
 package integration_test
 
 import (
-	"path/filepath"
-
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
 	. "github.com/onsi/ginkgo"
@@ -14,7 +12,7 @@ var _ = Describe("App with relative gemspec path", func() {
 	AfterEach(func() { app = DestroyApp(app) })
 
 	BeforeEach(func() {
-		app = cutlass.New(filepath.Join(bpDir, "fixtures", "relative_gemspec_path"))
+		app = cutlass.New(Fixtures("relative_gemspec_path"))
 	})
 
 	It("loads the gem with the relative gemspec path", func() {

@@ -1,8 +1,6 @@
 package integration_test
 
 import (
-	"path/filepath"
-
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
 	. "github.com/onsi/ginkgo"
@@ -14,7 +12,7 @@ var _ = Describe("requiring execjs", func() {
 	AfterEach(func() { app = DestroyApp(app) })
 
 	BeforeEach(func() {
-		app = cutlass.New(filepath.Join(bpDir, "fixtures", "with_execjs"))
+		app = cutlass.New(Fixtures("with_execjs"))
 		app.SetEnv("BP_DEBUG", "1")
 	})
 

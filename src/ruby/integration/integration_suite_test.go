@@ -117,6 +117,14 @@ func SkipUnlessCached() {
 	}
 }
 
+func Fixtures(names ...string) string {
+	root, err := cutlass.FindRoot()
+	Expect(err).NotTo(HaveOccurred())
+
+	names = append([]string{root, "fixtures"}, names...)
+	return filepath.Join(names...)
+}
+
 func DestroyApp(app *cutlass.App) *cutlass.App {
 	if app != nil {
 		app.Destroy()
@@ -151,7 +159,7 @@ func AssertUsesProxyDuringStagingIfPresent(fixtureName string) {
 
 			traffic, _, _, err := cutlass.InternetTraffic(
 				bpDir,
-				filepath.Join("fixtures", fixtureName),
+				Fixtures(fixtureName),
 				bpFile,
 				[]string{"HTTP_PROXY=" + proxy.URL, "HTTPS_PROXY=" + proxy.URL},
 			)
@@ -180,7 +188,7 @@ func AssertNoInternetTraffic(fixtureName string) {
 
 		traffic, _, _, err := cutlass.InternetTraffic(
 			bpDir,
-			filepath.Join("fixtures", fixtureName),
+			Fixtures(fixtureName),
 			bpFile,
 			[]string{},
 		)

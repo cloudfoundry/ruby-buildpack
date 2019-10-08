@@ -1,8 +1,6 @@
 package integration_test
 
 import (
-	"path/filepath"
-
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
 	. "github.com/onsi/ginkgo"
@@ -14,7 +12,7 @@ var _ = Describe("pushing a rails51 webpacker app with sprockets", func() {
 	AfterEach(func() { app = DestroyApp(app) })
 
 	BeforeEach(func() {
-		app = cutlass.New(filepath.Join(bpDir, "fixtures", "rails51_webpacker"))
+		app = cutlass.New(Fixtures("rails51_webpacker"))
 	})
 
 	It("compiles assets with webpacker", func() {

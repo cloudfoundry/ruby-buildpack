@@ -1,8 +1,6 @@
 package integration_test
 
 import (
-	"path/filepath"
-
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
 	. "github.com/onsi/ginkgo"
@@ -14,7 +12,7 @@ var _ = Describe("Rails 5.2 (Webpack/Yarn) App", func() {
 	AfterEach(func() { app = DestroyApp(app) })
 
 	BeforeEach(func() {
-		app = cutlass.New(filepath.Join(bpDir, "fixtures", "rails52_webpack_no_sprockets"))
+		app = cutlass.New(Fixtures("rails52_webpack_no_sprockets"))
 		app.SetEnv("BP_DEBUG", "1")
 	})
 

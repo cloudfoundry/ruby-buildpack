@@ -1,8 +1,6 @@
 package integration_test
 
 import (
-	"path/filepath"
-
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
 	. "github.com/onsi/ginkgo"
@@ -14,7 +12,7 @@ var _ = Describe("pushing an app a second time", func() {
 	AfterEach(func() { app = DestroyApp(app) })
 
 	BeforeEach(func() {
-		app = cutlass.New(filepath.Join(bpDir, "fixtures", "sinatra"))
+		app = cutlass.New(Fixtures("sinatra"))
 		app.SetEnv("BP_DEBUG", "true")
 		app.Buildpacks = []string{"ruby_buildpack"}
 	})

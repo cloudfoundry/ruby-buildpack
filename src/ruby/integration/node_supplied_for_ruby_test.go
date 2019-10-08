@@ -1,8 +1,6 @@
 package integration_test
 
 import (
-	"path/filepath"
-
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
 	. "github.com/onsi/ginkgo"
@@ -24,7 +22,7 @@ var _ = Describe("running supply nodejs buildpack before the ruby buildpack", fu
 				Skip("API version does not have multi-buildpack support")
 			}
 
-			app = cutlass.New(filepath.Join(bpDir, "fixtures", "rails5"))
+			app = cutlass.New(Fixtures("rails5"))
 			app.Buildpacks = []string{
 				"https://github.com/cloudfoundry/nodejs-buildpack#master",
 				"ruby_buildpack",

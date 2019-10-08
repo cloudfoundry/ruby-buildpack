@@ -1,8 +1,6 @@
 package integration_test
 
 import (
-	"path/filepath"
-
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
 	. "github.com/onsi/ginkgo"
@@ -16,7 +14,7 @@ var _ = Describe("CF Ruby Buildpack", func() {
 	Context("in an online environment", func() {
 		BeforeEach(func() {
 			SkipUnlessUncached()
-			app = cutlass.New(filepath.Join(bpDir, "fixtures", "with_readline"))
+			app = cutlass.New(Fixtures("with_readline"))
 		})
 
 		It("", func() {

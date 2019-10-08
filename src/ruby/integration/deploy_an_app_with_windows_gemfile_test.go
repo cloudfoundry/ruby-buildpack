@@ -1,8 +1,6 @@
 package integration_test
 
 import (
-	"path/filepath"
-
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
 	. "github.com/onsi/ginkgo"
@@ -15,7 +13,7 @@ var _ = Describe("App with windows Gemfile", func() {
 
 	Context("with windows line endings", func() {
 		BeforeEach(func() {
-			app = cutlass.New(filepath.Join(bpDir, "fixtures", "windows-with-windows-lineendings"))
+			app = cutlass.New(Fixtures("windows-with-windows-lineendings"))
 			app.SetEnv("BP_DEBUG", "1")
 		})
 
@@ -29,7 +27,7 @@ var _ = Describe("App with windows Gemfile", func() {
 
 	Context("with windows as the only platform", func() {
 		BeforeEach(func() {
-			app = cutlass.New(filepath.Join(bpDir, "fixtures", "windows-only"))
+			app = cutlass.New(Fixtures("windows-only"))
 			app.SetEnv("BP_DEBUG", "1")
 		})
 
@@ -42,7 +40,7 @@ var _ = Describe("App with windows Gemfile", func() {
 	Context("with linux line endings and ruby as an additional platform", func() {
 		BeforeEach(func() {
 			SkipUnlessUncached()
-			app = cutlass.New(filepath.Join(bpDir, "fixtures", "windows-with-linux-lineendings"))
+			app = cutlass.New(Fixtures("windows-with-linux-lineendings"))
 		})
 
 		It("does not remove Gemfile.lock", func() {

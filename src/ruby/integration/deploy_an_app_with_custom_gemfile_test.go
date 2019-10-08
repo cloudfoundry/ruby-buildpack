@@ -1,8 +1,6 @@
 package integration_test
 
 import (
-	"path/filepath"
-
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -20,7 +18,7 @@ var _ = Describe("App with custom Gemfile", func() {
 
 	Describe("When the name of the Gemfile is specified in the manifest via BUNDLE_GEMFILE", func() {
 		BeforeEach(func() {
-			app = cutlass.New(filepath.Join(bpDir, "fixtures", "custom_gemfile"))
+			app = cutlass.New(Fixtures("custom_gemfile"))
 		})
 
 		It("detects the ruby buildpack and uses the version of ruby specified in Gemfile-APP", func() {
@@ -32,7 +30,7 @@ var _ = Describe("App with custom Gemfile", func() {
 
 	Describe("When the name of the Gemfile is improperly specified in the manifest", func() {
 		BeforeEach(func() {
-			app = cutlass.New(filepath.Join(bpDir, "fixtures", "custom_gemfile_bad_manifest"))
+			app = cutlass.New(Fixtures("custom_gemfile_bad_manifest"))
 		})
 
 		It("fails to stage", func() {

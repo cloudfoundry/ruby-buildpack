@@ -2,7 +2,6 @@ package integration_test
 
 import (
 	"os/exec"
-	"path/filepath"
 
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
@@ -16,7 +15,7 @@ var _ = Describe("Rails 5.1 (Webpack/Yarn) App", func() {
 	AfterEach(func() { app = DestroyApp(app) })
 
 	BeforeEach(func() {
-		app = cutlass.New(filepath.Join(bpDir, "fixtures", "rails51"))
+		app = cutlass.New(Fixtures("rails51"))
 		app.SetEnv("BP_DEBUG", "1")
 	})
 

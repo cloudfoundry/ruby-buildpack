@@ -1,8 +1,6 @@
 package integration_test
 
 import (
-	"path/filepath"
-
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
 	. "github.com/onsi/ginkgo"
@@ -20,7 +18,7 @@ var _ = Describe("App with custom Gemfile and bad file named 'Gemfile'", func() 
 	})
 
 	BeforeEach(func() {
-		app = cutlass.New(filepath.Join(bpDir, "fixtures", "custom_gemfile_bad_dummy_gemfile"))
+		app = cutlass.New(Fixtures("custom_gemfile_bad_dummy_gemfile"))
 	})
 
 	It("uses the version of ruby specified in Gemfile-APP", func() {

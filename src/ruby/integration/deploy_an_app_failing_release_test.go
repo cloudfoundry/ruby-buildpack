@@ -1,8 +1,6 @@
 package integration_test
 
 import (
-	"path/filepath"
-
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
 	. "github.com/onsi/ginkgo"
@@ -20,7 +18,7 @@ var _ = Describe("App which will fail generating release YAML (because tmp isn't
 	})
 
 	BeforeEach(func() {
-		app = cutlass.New(filepath.Join(bpDir, "fixtures", "fail_release"))
+		app = cutlass.New(Fixtures("fail_release"))
 	})
 
 	Context("Single/Final buildpack", func() {

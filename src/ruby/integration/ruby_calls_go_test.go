@@ -1,8 +1,6 @@
 package integration_test
 
 import (
-	"path/filepath"
-
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
 	. "github.com/onsi/ginkgo"
@@ -23,7 +21,7 @@ var _ = Describe("running supply go buildpack before the ruby buildpack", func()
 			if ok, err := cutlass.ApiGreaterThan("2.65.1"); err != nil || !ok {
 				Skip("API version does not have multi-buildpack support")
 			}
-			app = cutlass.New(filepath.Join(bpDir, "fixtures", "ruby_calls_go"))
+			app = cutlass.New(Fixtures("ruby_calls_go"))
 			app.Buildpacks = []string{
 				"https://github.com/cloudfoundry/go-buildpack#develop",
 				"ruby_buildpack",

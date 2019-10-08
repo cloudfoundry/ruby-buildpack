@@ -22,7 +22,7 @@ var _ = Describe("JRuby App", func() {
 		var dir, rubyVersion, jrubyVersion string
 
 		BeforeEach(func() {
-			dir = filepath.Join(bpDir, "fixtures", "sinatra_jruby")
+			dir = Fixtures("sinatra_jruby")
 			data, err := ioutil.ReadFile(filepath.Join(dir, "Gemfile"))
 			Expect(err).To(BeNil())
 			re := regexp.MustCompile(`ruby '(\d+.\d+.\d+)', :engine => 'jruby', :engine_version => '(\d+.\d+.\d+.\d+)'`)
@@ -57,7 +57,7 @@ var _ = Describe("JRuby App", func() {
 
 	Context("with a jruby start command", func() {
 		BeforeEach(func() {
-			app = cutlass.New(filepath.Join(bpDir, "fixtures", "jruby_start_command"))
+			app = cutlass.New(Fixtures("jruby_start_command"))
 			app.Memory = "512M"
 		})
 
@@ -68,7 +68,7 @@ var _ = Describe("JRuby App", func() {
 
 	Context("with a jruby app that uses bundler 1", func() {
 		BeforeEach(func() {
-			app = cutlass.New(filepath.Join(bpDir, "fixtures", "jruby_bundler_1"))
+			app = cutlass.New(Fixtures("jruby_bundler_1"))
 			app.Memory = "512M"
 		})
 
