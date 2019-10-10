@@ -1,3 +1,15 @@
+v1.8.1 Oct 10, 2019
+====================
+
+* Add yarn 1.19.1, remove yarn 1.19.0
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/169010397)
+
+* Add ruby 2.4.9, remove ruby 2.4.6
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/168900839)
+
+
 v1.8.0 Oct 01, 2019
 =====================
 
