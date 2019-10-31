@@ -1,3 +1,21 @@
+v1.8.2 Oct 31, 2019
+====================
+
+* Update ruby version in jruby fixtures
+  (https://www.pivotaltracker.com/story/show/169468495)
+
+* Bump version to 1.8.2
+  (https://www.pivotaltracker.com/story/show/169386191)
+
+* Add jruby 9.2.9.0, remove jruby 9.2.8.0
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/169468495)
+
+* Add node 10.17.0, remove node 10.16.3
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/169300322)
+
+
 v1.8.1 Oct 10, 2019
 ====================
 
