@@ -18,12 +18,4 @@ var _ = Describe("CF Ruby Buildpack", func() {
 		Expect(app.Stdout.String()).To(ContainSubstring("Using bundler 2"))
 		Expect(app.Stdout.String()).To(ContainSubstring(`Deleting "Bundled With" from the Gemfile.lock`))
 	})
-
-	It("works with current version of bundler 2", func() {
-		app = cutlass.New(Fixtures("bundler_2_0_2"))
-		app.SetEnv("BP_DEBUG", "1")
-		PushAppAndConfirm(app)
-		Expect(app.Stdout.String()).To(ContainSubstring("Using bundler 2"))
-		Expect(app.Stdout.String()).NotTo(ContainSubstring(`Deleting "Bundled With" from the Gemfile.lock`))
-	})
 })
