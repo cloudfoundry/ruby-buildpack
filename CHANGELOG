@@ -1,3 +1,38 @@
+v1.8.5 Dec 20, 2019
+====================
+
+* Add bundler 2.1.2, remove bundler 2.1.1
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/170394256)
+
+* Add bundler 2.1.1, remove bundler 2.1.0
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/170351414)
+
+* Add node 10.18.0, remove node 10.17.0
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/170349784)
+
+* Add bundler 2.1.0, remove bundler 2.0.2
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/170301753)
+
+* Revert rubygems updates due to https://github.com/rubygems/rubygems/issues/3030
+  (https://www.pivotaltracker.com/story/show/170308120)
+
+* Add rubygems 3.1.1, remove rubygems 3.1.0
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/170308120)
+
+* Add rubygems 3.1.0, remove rubygems 3.0.6
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/170304776)
+
+* Add yarn 1.21.1, remove yarn 1.21.0
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/170241478)
+
+
 v1.8.4 Dec 09, 2019
 ====================
 
