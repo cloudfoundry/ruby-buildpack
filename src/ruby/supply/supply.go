@@ -516,8 +516,7 @@ func (s *Supplier) UpdateRubygems() error {
 		return err
 	}
 
-	rubygemsDir := filepath.Join(tempDir, fmt.Sprintf("rubygems-%s", dep.Version))
-	if output, err := s.Command.Output(rubygemsDir, "ruby", "setup.rb"); err != nil {
+	if output, err := s.Command.Output(tempDir, "ruby", "setup.rb"); err != nil {
 		s.Log.Error(output)
 		return fmt.Errorf("Could not install rubygems: %v", err)
 	}
