@@ -697,9 +697,9 @@ var _ = Describe("Supply", func() {
 				Expect(ioutil.WriteFile(filepath.Join(buildDir, "yarn.lock"), []byte("contents"), 0644)).To(Succeed())
 			})
 			It("installs yarn", func() {
-				mockInstaller.EXPECT().InstallOnlyVersion("yarn", gomock.Any()).Do(func(_, tempDir string) error {
-					Expect(os.MkdirAll(filepath.Join(tempDir, "yarn-v1.2.3", "bin"), 0755)).To(Succeed())
-					Expect(ioutil.WriteFile(filepath.Join(tempDir, "yarn-v1.2.3", "bin", "yarn"), []byte("contents"), 0644)).To(Succeed())
+				mockInstaller.EXPECT().InstallOnlyVersion("yarn", gomock.Any()).Do(func(_, installDir string) error {
+					Expect(os.MkdirAll(filepath.Join(installDir, "bin"), 0755)).To(Succeed())
+					Expect(ioutil.WriteFile(filepath.Join(installDir, "bin", "yarn"), []byte("contents"), 0644)).To(Succeed())
 					return nil
 				})
 				Expect(supplier.InstallYarn()).To(Succeed())
