@@ -1,3 +1,11 @@
+v1.8.9 Feb 03, 2020
+====================
+
+* Add ruby 2.7.0
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/170952880)
+
+
 v1.8.8 Jan 16, 2020
 ====================
 
