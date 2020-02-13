@@ -3,13 +3,13 @@ module github.com/cloudfoundry/ruby-buildpack
 require (
 	github.com/Masterminds/semver v1.5.0
 	github.com/blang/semver v3.5.1+incompatible
-	github.com/cloudfoundry/libbuildpack v0.0.0-20191216200928-f551f3c60d86
-	github.com/golang/mock v1.3.1
+	github.com/cloudfoundry/libbuildpack v0.0.0-20200213200052-4a4f896a503e
+	github.com/golang/mock v1.4.0
 	github.com/kr/text v0.1.0
-	github.com/onsi/ginkgo v1.11.0
-	github.com/onsi/gomega v1.7.2-0.20191118193045-1526230ca7de
+	github.com/onsi/ginkgo v1.12.0
+	github.com/onsi/gomega v1.8.1
 	golang.org/x/crypto v0.0.0-20190605123033-f99c8df09eb5
-	golang.org/x/sys v0.0.0-20191224085550-c709ea063b76 // indirect
+	golang.org/x/sys v0.0.0-20200212091648-12a6c2dcc1e4 // indirect
 )
 
 go 1.13
