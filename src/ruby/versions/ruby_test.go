@@ -160,6 +160,7 @@ var _ = Describe("Ruby", func() {
 			BeforeEach(func() {
 				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte("ruby '2.2.3'\nputs 'Hello'\nSTDERR.puts 'Bye'\n"), 0644)).To(Succeed())
 			})
+
 			It("stdout from gemfile does not create problems", func() {
 				v := versions.New(tmpDir, depDir, mockManifest)
 				Expect(v.Engine()).To(Equal("ruby"))

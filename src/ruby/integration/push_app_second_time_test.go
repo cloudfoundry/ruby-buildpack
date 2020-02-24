@@ -13,7 +13,6 @@ var _ = Describe("pushing an app a second time", func() {
 
 	BeforeEach(func() {
 		app = cutlass.New(Fixtures("sinatra"))
-		app.SetEnv("BP_DEBUG", "true")
 		app.Buildpacks = []string{"ruby_buildpack"}
 	})
 

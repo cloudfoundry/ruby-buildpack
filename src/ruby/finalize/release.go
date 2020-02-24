@@ -32,24 +32,23 @@ func (f *Finalizer) GenerateReleaseYaml() (map[string]map[string]string, error) 
 		return nil, err
 	}
 	processTypes := map[string]string{}
-	if hasRails4 {
+	switch {
+	case hasRails4:
 		processTypes["web"] = "bin/rails server -b 0.0.0.0 -p $PORT -e $RAILS_ENV"
-	} else if hasRails3 {
+	case hasRails3 && hasThin:
+		processTypes["web"] = "bundle exec thin start -R config.ru -e $RAILS_ENV -p $PORT"
+	case hasRails3:
 		processTypes["web"] = "bundle exec rails server -p $PORT"
-		if hasThin {
-			processTypes["web"] = "bundle exec thin start -R config.ru -e $RAILS_ENV -p $PORT"
-		}
-	} else if hasRails2 {
+	case hasRails2 && hasThin:
+		processTypes["web"] = "bundle exec thin start -e $RAILS_ENV -p $PORT"
+	case hasRails2:
 		processTypes["web"] = "bundle exec ruby script/server -p $PORT"
-		if hasThin {
-			processTypes["web"] = "bundle exec thin start -e $RAILS_ENV -p $PORT"
-		}
-	} else if hasRack {
+	case hasRack && hasThin:
+		processTypes["web"] = "bundle exec thin start -R config.ru -e $RACK_ENV -p $PORT"
+	case hasRack:
 		processTypes["web"] = "bundle exec rackup config.ru -p $PORT"
-		if hasThin {
-			processTypes["web"] = "bundle exec thin start -R config.ru -e $RACK_ENV -p $PORT"
-		}
 	}
+
 	return map[string]map[string]string{
 		"default_process_types": processTypes,
 	}, nil

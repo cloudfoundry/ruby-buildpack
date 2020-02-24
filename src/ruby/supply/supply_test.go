@@ -77,8 +77,7 @@ var _ = Describe("Supply", func() {
 
 		mockVersions = NewMockVersions(mockCtrl)
 		mockVersions.EXPECT().Gemfile().AnyTimes().Return(filepath.Join(buildDir, "Gemfile"))
-		mockVersions.EXPECT().GetBundlerVersion().Return("1.17.2").AnyTimes()
-		mockVersions.EXPECT().SetBundlerVersion(gomock.Any()).AnyTimes()
+		mockVersions.EXPECT().GetBundlerVersion().Return("1.17.2", nil).AnyTimes()
 
 		mockCommand = NewMockCommand(mockCtrl)
 
@@ -127,15 +126,15 @@ var _ = Describe("Supply", func() {
 			mockInstaller.EXPECT().InstallDependency(libbuildpack.Dependency{Name: "bundler", Version: "1.17.2"}, gomock.Any())
 			mockStager.EXPECT().LinkDirectoryInDepDir(gomock.Any(), gomock.Any())
 			mockStager.EXPECT().DepDir().AnyTimes()
+
+			err := ioutil.WriteFile(filepath.Join(buildDir, "Gemfile.lock"), []byte("BUNDLED WITH\n    1.16.4"), 0644)
+			Expect(err).NotTo(HaveOccurred())
 		})
 
 		It("installs bundler version matching constraint given", func() {
 			Expect(tempSupplier.InstallBundler()).To(Succeed())
 		})
 	})
-
-	PIt("InstallNode", func() {})
-	PIt("InstallRuby", func() {})
 
 	Describe("CalcChecksum", func() {
 		BeforeEach(func() {
@@ -163,9 +162,12 @@ var _ = Describe("Supply", func() {
 	})
 
 	Describe("InstallGems", func() {
-		const windowsWarning = "**WARNING** Windows line endings detected in Gemfile. Your app may fail to stage. Please use UNIX line endings."
+		BeforeEach(func() {
+			mockVersions.EXPECT().RubyEngineVersion().AnyTimes().Return("2.5.0", nil)
+			mockVersions.EXPECT().Engine().AnyTimes().Return("ruby", nil)
+		})
 
-		PIt("BACK FILL", func() {})
+		const windowsWarning = "**WARNING** Windows line endings detected in Gemfile. Your app may fail to stage. Please use UNIX line endings."
 
 		handleBundleBinstubRegeneration := func(cmd *exec.Cmd) error {
 			if len(cmd.Args) > 5 && reflect.DeepEqual(cmd.Args[0:5], []string{"bundle", "binstubs", "bundler", "--force", "--path"}) {
@@ -239,6 +241,10 @@ var _ = Describe("Supply", func() {
 		})
 
 		Context("Windows Gemfile.lock", func() {
+			BeforeEach(func() {
+				mockVersions.EXPECT().RubyEngineVersion().AnyTimes().Return("2.5.0", nil)
+			})
+
 			Context("With Unix Line Endings", func() {
 				const gemfileLock = "GEM\n  remote: https://rubygems.org/\n  specs:\n    rack (1.5.2)\n\nPLATFORMS\n  x64-mingw32\n ruby\n\nDEPENDENCIES\n  rack\n"
 				const newGemfileLock = "new lockfile"
@@ -515,10 +521,14 @@ var _ = Describe("Supply", func() {
 			Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte{}, 0644)).To(Succeed())
 			Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile.lock"), []byte{}, 0644)).To(Succeed())
 		})
+
 		Describe("SecretKeyBase", func() {
+			BeforeEach(func() {
+				mockVersions.EXPECT().RubyEngineVersion().AnyTimes().Return("2.5.0", nil)
+			})
+
 			Context("Rails >= 4.1", func() {
 				BeforeEach(func() {
-					mockVersions.EXPECT().RubyEngineVersion().Return("2.3.19", nil)
 					mockVersions.EXPECT().HasGemVersion("rails", ">=4.1.0.beta1").Return(true, nil)
 				})
 
@@ -526,6 +536,7 @@ var _ = Describe("Supply", func() {
 					BeforeEach(func() {
 						mockCache.EXPECT().Metadata().Return(&cache.Metadata{SecretKeyBase: "foobar"})
 					})
+
 					It("writes the cached SECRET_KEY_BASE to profile.d", func() {
 						Expect(supplier.WriteProfileD("enginename")).To(Succeed())
 						contents, err := ioutil.ReadFile(filepath.Join(depsDir, depsIdx, "profile.d", "ruby.sh"))
@@ -547,11 +558,12 @@ var _ = Describe("Supply", func() {
 					})
 				})
 			})
+
 			Context("NOT Rails >= 4.1", func() {
 				BeforeEach(func() {
-					mockVersions.EXPECT().RubyEngineVersion().Return("2.3.19", nil)
 					mockVersions.EXPECT().HasGemVersion("rails", ">=4.1.0.beta1").Return(false, nil)
 				})
+
 				It("does not set default SECRET_KEY_BASE in profile.d", func() {
 					Expect(supplier.WriteProfileD("enginename")).To(Succeed())
 					contents, err := ioutil.ReadFile(filepath.Join(depsDir, depsIdx, "profile.d", "ruby.sh"))
@@ -563,7 +575,7 @@ var _ = Describe("Supply", func() {
 
 		Describe("Default Rails ENVS", func() {
 			BeforeEach(func() {
-				mockVersions.EXPECT().RubyEngineVersion().Return("2.3.19", nil)
+				mockVersions.EXPECT().RubyEngineVersion().AnyTimes().Return("2.3.19", nil)
 				mockVersions.EXPECT().HasGemVersion("rails", ">=4.1.0.beta1").Return(false, nil)
 			})
 
@@ -602,9 +614,10 @@ var _ = Describe("Supply", func() {
 			Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte{}, 0644)).To(Succeed())
 			Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile.lock"), []byte{}, 0644)).To(Succeed())
 		})
+
 		Context("MRI", func() {
 			BeforeEach(func() {
-				mockVersions.EXPECT().Engine().Return("ruby", nil)
+				mockVersions.EXPECT().Engine().AnyTimes().Return("ruby", nil)
 			})
 
 			Context("version determined from Gemfile", func() {
@@ -657,6 +670,7 @@ var _ = Describe("Supply", func() {
 			BeforeEach(func() {
 				mockVersions.EXPECT().Engine().Return("jruby", nil)
 			})
+
 			Context("version determined from Gemfile", func() {
 				BeforeEach(func() {
 					mockVersions.EXPECT().JrubyVersion().Return("9.2.0.0", nil)
@@ -669,6 +683,7 @@ var _ = Describe("Supply", func() {
 					Expect(version).To(Equal("9.2.0.0"))
 				})
 			})
+
 			Context("version in Gemfile not in manifest", func() {
 				BeforeEach(func() {
 					mockVersions.EXPECT().JrubyVersion().Return("", errors.New(""))
@@ -680,10 +695,12 @@ var _ = Describe("Supply", func() {
 				})
 			})
 		})
+
 		Context("other", func() {
 			BeforeEach(func() {
 				mockVersions.EXPECT().Engine().Return("rubinius", nil)
 			})
+
 			It("returns an error", func() {
 				_, _, err := supplier.DetermineRuby()
 				Expect(err).To(HaveOccurred())
@@ -823,7 +840,10 @@ var _ = Describe("Supply", func() {
 			Expect(ioutil.WriteFile(filepath.Join(depDir, "bin", "anotherscript"), []byte("#!//bin/ruby\n\n\n"), 0755)).To(Succeed())
 			Expect(os.MkdirAll(filepath.Join(depDir, "bin", "__ruby__"), 0755)).To(Succeed())
 			Expect(os.Symlink(filepath.Join(depDir, "bin", "__ruby__"), filepath.Join(depDir, "bin", "__ruby__SYMLINK"))).To(Succeed())
+
+			mockVersions.EXPECT().Engine().AnyTimes().Return("ruby", nil)
 		})
+
 		It("changes them to #!/usr/bin/env ruby", func() {
 			Expect(supplier.RewriteShebangs()).To(Succeed())
 
@@ -836,6 +856,7 @@ var _ = Describe("Supply", func() {
 			Expect(string(fileContents)).To(HavePrefix("#!/usr/bin/env ruby"))
 			Expect(string(secondFileContents)).To(HavePrefix("#!/usr/bin/env ruby"))
 		})
+
 		It(`also finds files in vendor_bundle/ruby/*/bin/*`, func() {
 			Expect(os.MkdirAll(filepath.Join(depDir, "vendor_bundle", "ruby", "2.4.0", "bin"), 0755)).To(Succeed())
 			Expect(ioutil.WriteFile(filepath.Join(depDir, "vendor_bundle", "ruby", "2.4.0", "bin", "somescript"), []byte("#!/usr/bin/ruby\n\n\n"), 0755)).To(Succeed())
@@ -853,6 +874,7 @@ var _ = Describe("Supply", func() {
 
 		BeforeEach(func() {
 			depDir = filepath.Join(depsDir, depsIdx)
+			mockVersions.EXPECT().Engine().AnyTimes().Return("ruby", nil)
 			mockVersions.EXPECT().RubyEngineVersion().Return("2.3.4", nil)
 
 			Expect(os.MkdirAll(filepath.Join(depDir, "bundler", "gems", "bundler-1.17.2"), 0755)).To(Succeed())

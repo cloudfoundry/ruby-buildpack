@@ -34,9 +34,7 @@ type Installer interface {
 }
 
 type Versions interface {
-	SetBundlerVersion(string)
-	GetBundlerVersion() string
-	CheckBundler2Compatibility() (bool, error)
+	GetBundlerVersion() (string, error)
 	Engine() (string, error)
 	Version() (string, error)
 	JrubyVersion() (string, error)
@@ -136,12 +134,17 @@ func Run(s *Supplier) error {
 	}
 
 	if err := s.AddPostRubyInstallDefaultEnv(engine); err != nil {
-		s.Log.Error("Unable to add bundler and gem path to default environment: %s", err.Error())
+		s.Log.Error("Unable to add gem path to default environment: %s", err.Error())
 		return err
 	}
 
 	if err := s.UpdateRubygems(); err != nil {
 		s.Log.Error("Unable to update rubygems: %s", err.Error())
+		return err
+	}
+
+	if err := s.AddPostRubyGemsInstallDefaultEnv(engine); err != nil {
+		s.Log.Error("Unable to add bundler path to default environment: %s", err.Error())
 		return err
 	}
 
@@ -274,31 +277,25 @@ func (s *Supplier) InstallYarn() error {
 }
 
 func (s *Supplier) InstallBundler() error {
-	bundlerOneVersion, err := s.installBundlerOne()
+	contents, err := ioutil.ReadFile(fmt.Sprintf("%s.lock", s.Versions.Gemfile()))
 	if err != nil {
-		return err
-	}
-	s.Versions.SetBundlerVersion(bundlerOneVersion)
-
-	if !s.appHasGemfile {
-		return nil
+		if !os.IsNotExist(err) {
+			return err
+		}
 	}
 
-	bundlerTwoVersion, err := s.installBundlerTwo()
-	if err != nil {
-		return err
-	}
-	s.Versions.SetBundlerVersion(bundlerTwoVersion)
+	re := regexp.MustCompile(`BUNDLED WITH\s*(\d+\.\d+\.\d+)`)
+	matches := re.FindStringSubmatch(string(contents))
 
-	if ok, err := s.Versions.CheckBundler2Compatibility(); err != nil {
-		return err
-	} else if ok {
-		return nil
+	if len(matches) != 2 {
+		matches = []string{"", "2"}
 	}
 
-	s.Log.Warning("Ruby version not compatible with Bundler 2")
-	s.Versions.SetBundlerVersion(bundlerOneVersion)
-	return s.uninstallBundlerTwo()
+	if strings.HasPrefix(matches[1], "2") {
+		return s.installBundler("2.x.x")
+	}
+
+	return s.installBundler("1.x.x")
 }
 
 func (s *Supplier) InstallNode() error {
@@ -376,7 +373,7 @@ export JRUBY_OPTS=${JRUBY_OPTS:--Xcompile.invokedynamic=false}
 }
 
 func (s *Supplier) InstallRuby(name, version string) error {
-	installDir := filepath.Join(s.Stager.DepDir(), "ruby")
+	installDir := filepath.Join(s.Stager.DepDir(), name)
 
 	if err := s.Installer.InstallDependency(libbuildpack.Dependency{Name: name, Version: version}, installDir); err != nil {
 		return err
@@ -386,19 +383,48 @@ func (s *Supplier) InstallRuby(name, version string) error {
 		return err
 	}
 
-	if err := os.Symlink("ruby", filepath.Join(s.Stager.DepDir(), "ruby", "bin", "ruby.exe")); err != nil {
+	if err := os.Symlink("ruby", filepath.Join(installDir, "bin", "ruby.exe")); err != nil {
 		return err
 	}
 
-	return s.Stager.LinkDirectoryInDepDir(filepath.Join(s.Stager.DepDir(), "ruby", "bin"), "bin")
+	return s.Stager.LinkDirectoryInDepDir(filepath.Join(installDir, "bin"), "bin")
+}
+
+func (s *Supplier) VendorBundlePath() (string, error) {
+	bundlerVersion, err := s.Versions.GetBundlerVersion()
+	if err != nil {
+		return "", err
+	}
+
+	if strings.HasPrefix(bundlerVersion, "2.1") {
+		return "vendor_bundle", nil
+	}
+
+	engine, err := s.Versions.Engine()
+	if err != nil {
+		return "", fmt.Errorf("Unable to determine ruby engine: %s", err)
+	}
+
+	rubyEngineVersion, err := s.Versions.RubyEngineVersion()
+	if err != nil {
+		return "", fmt.Errorf("Unable to determine ruby engine version: %s", err)
+	}
+
+	return filepath.Join("vendor_bundle", engine, rubyEngineVersion), nil
 }
 
 func (s *Supplier) RewriteShebangs() error {
+	engine, err := s.Versions.Engine()
+	if err != nil {
+		return err
+	}
+
 	files1, err := filepath.Glob(filepath.Join(s.Stager.DepDir(), "bin", "*"))
 	if err != nil {
 		return err
 	}
-	files2, err := filepath.Glob(filepath.Join(s.Stager.DepDir(), "vendor_bundle", "ruby", "*", "bin", "*"))
+
+	files2, err := filepath.Glob(filepath.Join(s.Stager.DepDir(), "vendor_bundle", engine, "*", "bin", "*"))
 	if err != nil {
 		return err
 	}
@@ -409,11 +435,13 @@ func (s *Supplier) RewriteShebangs() error {
 		} else if fileInfo.IsDir() {
 			continue
 		}
+
 		fileContents, err := ioutil.ReadFile(file)
 		if err != nil {
 			return err
 		}
-		shebangRegex := regexp.MustCompile(`^#!/.*/ruby.*`)
+
+		shebangRegex := regexp.MustCompile(`^#!/.*ruby.*`)
 		fileContents = shebangRegex.ReplaceAll(fileContents, []byte("#!/usr/bin/env ruby"))
 		if err := ioutil.WriteFile(file, fileContents, 0755); err != nil {
 			return err
@@ -425,14 +453,22 @@ func (s *Supplier) RewriteShebangs() error {
 func (s *Supplier) SymlinkBundlerIntoRubygems() error {
 	s.Log.Debug("SymlinkBundlerIntoRubygems")
 
+	engine, err := s.Versions.Engine()
+	if err != nil {
+		return err
+	}
+
 	rubyEngineVersion, err := s.Versions.RubyEngineVersion()
 	if err != nil {
 		return fmt.Errorf("Unable to determine ruby engine: %s", err)
 	}
 
-	bundlerVersion := s.Versions.GetBundlerVersion()
+	bundlerVersion, err := s.Versions.GetBundlerVersion()
+	if err != nil {
+		return err
+	}
 
-	destDir := filepath.Join(s.Stager.DepDir(), "ruby", "lib", "ruby", "gems", rubyEngineVersion, "gems")
+	destDir := filepath.Join(s.Stager.DepDir(), engine, "lib", "ruby", "gems", rubyEngineVersion, "gems")
 	if err := os.MkdirAll(destDir, 0755); err != nil {
 		return err
 	}
@@ -573,24 +609,66 @@ func (s *Supplier) InstallGems() error {
 		libbuildpack.CopyFile(filepath.Join(s.Stager.BuildDir(), ".bundle", "config"), filepath.Join(tempDir, ".bundle", "config"))
 	}
 
-	args := []string{"install", "--without", os.Getenv("BUNDLE_WITHOUT"), "--jobs=4", "--retry=4", "--path", filepath.Join(s.Stager.DepDir(), "vendor_bundle"), "--binstubs", filepath.Join(s.Stager.DepDir(), "binstubs")}
+	vendorBundlePath, err := s.VendorBundlePath()
+	if err != nil {
+		return err
+	}
+
+	cmd := exec.Command("bundle", "config", "set", "path", filepath.Join(s.Stager.DepDir(), vendorBundlePath))
+	cmd.Dir = tempDir
+	if err := s.Command.Run(cmd); err != nil {
+		return err
+	}
+
+	cmd = exec.Command("bundle", "config", "set", "without", os.Getenv("BUNDLE_WITHOUT"))
+	cmd.Dir = tempDir
+	if err := s.Command.Run(cmd); err != nil {
+		return err
+	}
+
+	cmd = exec.Command("bundle", "config", "set", "bin", filepath.Join(s.Stager.DepDir(), "binstubs"))
+	cmd.Dir = tempDir
+	if err := s.Command.Run(cmd); err != nil {
+		return err
+	}
+
+	args := []string{
+		"install",
+		"--jobs=4",
+		"--retry=4",
+	}
 	if exists, err := libbuildpack.FileExists(gemfileLock); err != nil {
 		return err
 	} else if exists {
-		args = append(args, "--deployment")
+		cmd = exec.Command("bundle", "config", "set", "deployment", "true")
+		cmd.Dir = tempDir
+		if err := s.Command.Run(cmd); err != nil {
+			return err
+		}
 	}
 
-	s.Log.BeginStep("Installing dependencies using bundler %s", s.Versions.GetBundlerVersion())
+	bundlerVersion, err := s.Versions.GetBundlerVersion()
+	if err != nil {
+		return err
+	}
+
+	s.Log.BeginStep("Installing dependencies using bundler %s", bundlerVersion)
 	s.Log.Info("Running: bundle %s", strings.Join(args, " "))
 
 	env := os.Environ()
 	env = append(env, "NOKOGIRI_USE_SYSTEM_LIBRARIES=true")
 
-	cmd := exec.Command("bundle", args...)
+	cmd = exec.Command("bundle", args...)
 	cmd.Dir = tempDir
 	cmd.Stdout = text.NewIndentWriter(os.Stdout, []byte("       "))
 	cmd.Stderr = text.NewIndentWriter(os.Stderr, []byte("       "))
 	cmd.Env = env
+	if err := s.Command.Run(cmd); err != nil {
+		return err
+	}
+
+	cmd = exec.Command("bundle", "binstubs", "--all", "--force")
+	cmd.Dir = tempDir
 	if err := s.Command.Run(cmd); err != nil {
 		return err
 	}
@@ -607,7 +685,12 @@ func (s *Supplier) InstallGems() error {
 			return fmt.Errorf("could not read Bundled With version from gemfile.lock: %s", err)
 		}
 
-		if bundledWithVersion != s.Versions.GetBundlerVersion() && strings.HasPrefix(bundledWithVersion, "2") {
+		bundlerVersion, err := s.Versions.GetBundlerVersion()
+		if err != nil {
+			return err
+		}
+
+		if bundledWithVersion != bundlerVersion && strings.HasPrefix(bundledWithVersion, "2") {
 			if err := s.removeIncompatibleBundledWithVersion(bundledWithVersion); err != nil {
 				return fmt.Errorf("could not remove Bundled With from end of "+
 					"gemfile.lock: %s", err)
@@ -668,7 +751,12 @@ func (s *Supplier) InstallGems() error {
 }
 
 func (s *Supplier) removeIncompatibleBundledWithVersion(bundledWithVersion string) error {
-	s.Log.Warning(fmt.Sprintf(`Your Gemfile.lock was bundled with bundler %s, which is incompatible with the current bundler version (%s).`, bundledWithVersion, s.Versions.GetBundlerVersion()))
+	bundlerVersion, err := s.Versions.GetBundlerVersion()
+	if err != nil {
+		return err
+	}
+
+	s.Log.Warning(fmt.Sprintf(`Your Gemfile.lock was bundled with bundler %s, which is incompatible with the current bundler version (%s).`, bundledWithVersion, bundlerVersion))
 	s.Log.Warning(`Deleting "Bundled With" from the Gemfile.lock`)
 
 	gemfileLockPath := s.Versions.Gemfile() + ".lock"
@@ -741,16 +829,28 @@ func (s *Supplier) CreateDefaultEnv() error {
 func (s *Supplier) AddPostRubyInstallDefaultEnv(engine string) error {
 	rubyEngineVersion, err := s.Versions.RubyEngineVersion()
 	if err != nil {
-		s.Log.Error("Unable to determine ruby engine: %s", err.Error())
 		return err
 	}
+
 	environmentDefaults := map[string]string{
-		"BUNDLE_PATH": filepath.Join(s.Stager.DepDir(), "vendor_bundle", engine, rubyEngineVersion),
 		"GEM_PATH": strings.Join([]string{
 			filepath.Join(s.Stager.DepDir(), "bundler"),
 			filepath.Join(s.Stager.DepDir(), "vendor_bundle", engine, rubyEngineVersion),
 			filepath.Join(s.Stager.DepDir(), "gem_home"),
 		}, ":"),
+	}
+	s.Log.Debug("Setting post ruby install env: %v", environmentDefaults)
+	return s.writeEnvFiles(environmentDefaults, true)
+}
+
+func (s *Supplier) AddPostRubyGemsInstallDefaultEnv(engine string) error {
+	vendorBundlePath, err := s.VendorBundlePath()
+	if err != nil {
+		return err
+	}
+
+	environmentDefaults := map[string]string{
+		"BUNDLE_PATH": filepath.Join(s.Stager.DepDir(), vendorBundlePath),
 	}
 	s.Log.Debug("Setting post ruby install env: %v", environmentDefaults)
 	return s.writeEnvFiles(environmentDefaults, true)
@@ -776,6 +876,8 @@ func (s *Supplier) WriteProfileD(engine string) error {
 		return err
 	}
 
+	vendorBundlePath := "vendor_bundle"
+
 	depsIdx := s.Stager.DepsIdx()
 	scriptContents := fmt.Sprintf(`
 export LANG=${LANG:-en_US.UTF-8}
@@ -783,16 +885,25 @@ export RAILS_ENV=${RAILS_ENV:-production}
 export RACK_ENV=${RACK_ENV:-production}
 export RAILS_SERVE_STATIC_FILES=${RAILS_SERVE_STATIC_FILES:-enabled}
 export RAILS_LOG_TO_STDOUT=${RAILS_LOG_TO_STDOUT:-enabled}
-export BUNDLE_GEMFILE=${BUNDLE_GEMFILE:-$HOME/Gemfile}
 
 export GEM_HOME=${GEM_HOME:-$DEPS_DIR/%s/gem_home}
 export GEM_PATH=${GEM_PATH:-$DEPS_DIR/%s/vendor_bundle/%s/%s:$DEPS_DIR/%s/gem_home:$DEPS_DIR/%s/bundler}
-export BUNDLE_PATH=${BUNDLE_PATH:-$DEPS_DIR/%s/vendor_bundle/%s/%s}
+
+export BUNDLE_GEMFILE=${BUNDLE_GEMFILE:-$HOME/Gemfile}
+export BUNDLE_PATH=$DEPS_DIR/%s/%s
+export BUNDLE_BIN=$DEPS_DIR/%s/binstubs
 
 ## Change to current DEPS_DIR
-bundle config PATH "$DEPS_DIR/%s/vendor_bundle" > /dev/null
+bundle config PATH "$DEPS_DIR/%s/%s" > /dev/null
 bundle config WITHOUT "%s" > /dev/null
-`, depsIdx, depsIdx, engine, rubyEngineVersion, depsIdx, depsIdx, depsIdx, engine, rubyEngineVersion, depsIdx, os.Getenv("BUNDLE_WITHOUT"))
+bundle config BIN "$DEPS_DIR/%s/binstubs" > /dev/null
+`, depsIdx,
+		depsIdx, engine, rubyEngineVersion, depsIdx, depsIdx,
+		depsIdx, vendorBundlePath,
+		depsIdx,
+		depsIdx, vendorBundlePath,
+		os.Getenv("BUNDLE_WITHOUT"),
+		depsIdx)
 
 	if s.appHasGemfile && s.appHasGemfileLock {
 		hasRails41, err := s.Versions.HasGemVersion("rails", ">=4.1.0.beta1")
@@ -860,67 +971,17 @@ func (s *Supplier) warnBundleConfig() {
 	}
 }
 
-func (s *Supplier) installBundlerOne() (string, error) {
-	version, err := libbuildpack.FindMatchingVersion("1.X.X", s.Manifest.AllDependencyVersions("bundler"))
+func (s *Supplier) installBundler(constraint string) error {
+	version, err := libbuildpack.FindMatchingVersion(constraint, s.Manifest.AllDependencyVersions("bundler"))
 	if err != nil {
-		return "", fmt.Errorf("failure to install Bundler matching constraint, 1.X.X: %s", err)
+		return fmt.Errorf("failure to install Bundler matching constraint, %s: %s", constraint, err)
 	}
 
 	if err := s.Installer.InstallDependency(libbuildpack.Dependency{Name: "bundler", Version: version}, filepath.Join(s.Stager.DepDir(), "bundler")); err != nil {
-		return "", err
-	}
-
-	if err := s.Stager.LinkDirectoryInDepDir(filepath.Join(s.Stager.DepDir(), "bundler", "bin"), "bin"); err != nil {
-		return "", err
-	}
-
-	return version, nil
-}
-
-func (s *Supplier) installBundlerTwo() (string, error) {
-	version, err := libbuildpack.FindMatchingVersion("2.X.X", s.Manifest.AllDependencyVersions("bundler"))
-	if err != nil {
-		return "", fmt.Errorf("failure to install Bundler matching constraint, 2.X.X: %s", err)
-	}
-
-	installDir := filepath.Join(s.Stager.DepDir(), "bundler2")
-
-	if err := s.Installer.InstallDependency(libbuildpack.Dependency{Name: "bundler", Version: version}, installDir); err != nil {
-		return "", err
-	}
-	defer os.RemoveAll(installDir)
-
-	gemName := fmt.Sprintf("bundler-%s", version)
-
-	destDir := filepath.Join(s.Stager.DepDir(), "bundler", "gems", gemName)
-	if err := os.MkdirAll(destDir, 0777); err != nil {
-		return "", err
-	}
-
-	if err := libbuildpack.CopyDirectory(filepath.Join(installDir, "gems", gemName), destDir); err != nil {
-		return "", err
-	}
-
-	if err := libbuildpack.CopyFile(filepath.Join(installDir, "specifications", gemName+".gemspec"), filepath.Join(s.Stager.DepDir(), "bundler", "specifications", gemName+".gemspec")); err != nil {
-		return "", err
-	}
-
-	return version, nil
-}
-
-func (s *Supplier) uninstallBundlerTwo() error {
-	version, err := libbuildpack.FindMatchingVersion("2.X.X", s.Manifest.AllDependencyVersions("bundler"))
-	if err != nil {
-		return fmt.Errorf("failure to install Bundler matching constraint, 2.X.X: %s", err)
-	}
-
-	gemName := fmt.Sprintf("bundler-%s", version)
-
-	if err := os.RemoveAll(filepath.Join(s.Stager.DepDir(), "bundler", "gems", gemName)); err != nil {
 		return err
 	}
 
-	if err := os.RemoveAll(filepath.Join(s.Stager.DepDir(), "bundler", "specifications", gemName+".gemspec")); err != nil {
+	if err := s.Stager.LinkDirectoryInDepDir(filepath.Join(s.Stager.DepDir(), "bundler", "bin"), "bin"); err != nil {
 		return err
 	}
 

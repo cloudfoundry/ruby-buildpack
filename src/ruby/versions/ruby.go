@@ -1,16 +1,16 @@
 package versions
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
-
-	"github.com/Masterminds/semver"
 
 	"github.com/cloudfoundry/libbuildpack"
 )
@@ -47,52 +47,26 @@ type output struct {
 	Output interface{} `json:"output"`
 }
 
-func (v *Versions) SetBundlerVersion(version string) {
-	v.bundlerVersion = version
-}
+func (v *Versions) GetBundlerVersion() (string, error) {
+	stdout := bytes.NewBuffer(nil)
 
-func (v *Versions) GetBundlerVersion() string {
-	return v.bundlerVersion
-}
+	cmd := exec.Command("bundle", "version")
+	cmd.Dir = filepath.Dir(v.Gemfile())
+	cmd.Stdout = stdout
 
-func (v *Versions) CheckBundler2Compatibility() (bool, error) {
-	engine, err := v.Engine()
+	err := cmd.Run()
 	if err != nil {
-		return false, err
+		return "", err
 	}
 
-	if engine == "jruby" {
-		return true, nil
+	re := regexp.MustCompile(`Bundler version (\d+\.\d+\.\d+) .*`)
+	match := re.FindStringSubmatch(stdout.String())
+
+	if len(match) != 2 {
+		return "", fmt.Errorf("failed to determine bundler version from output: %s", stdout)
 	}
 
-	gemfileRubyVersion, err := v.Version()
-	if err != nil {
-		return false, err
-	}
-
-	if gemfileRubyVersion == "" {
-		dep, err := v.manifest.DefaultVersion("ruby")
-		if err != nil {
-			return false, err
-		}
-		gemfileRubyVersion = dep.Version
-	}
-
-	rubyConstraint, err := semver.NewConstraint("<= 2.2.X")
-	if err != nil {
-		return false, err
-	}
-
-	rubySemver, err := semver.NewVersion(gemfileRubyVersion)
-	if err != nil {
-		return false, err
-	}
-
-	if engine == "ruby" && rubyConstraint.Check(rubySemver) {
-		return false, nil
-	}
-
-	return true, nil
+	return match[1], nil
 }
 
 func (v *Versions) Engine() (string, error) {
@@ -283,7 +257,8 @@ func (v *Versions) Gemfile() string {
 	if os.Getenv("BUNDLE_GEMFILE") != "" {
 		gemfile = os.Getenv("BUNDLE_GEMFILE")
 	}
-	return filepath.Join(v.buildDir, gemfile)
+	path := filepath.Join(v.buildDir, gemfile)
+	return path
 }
 
 func (v *Versions) run(dir, code string, in interface{}) (interface{}, error) {
@@ -317,7 +292,7 @@ func (v *Versions) run(dir, code string, in interface{}) (interface{}, error) {
 	cmd.Stdin = strings.NewReader(string(data))
 	body, err := cmd.Output()
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("%s: %s", err, body)
 	}
 
 	output := struct {

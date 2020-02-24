@@ -35,6 +35,7 @@ func (m *MockManifest) EXPECT() *MockManifestMockRecorder {
 
 // AllDependencyVersions mocks base method
 func (m *MockManifest) AllDependencyVersions(arg0 string) []string {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AllDependencyVersions", arg0)
 	ret0, _ := ret[0].([]string)
 	return ret0
@@ -42,11 +43,13 @@ func (m *MockManifest) AllDependencyVersions(arg0 string) []string {
 
 // AllDependencyVersions indicates an expected call of AllDependencyVersions
 func (mr *MockManifestMockRecorder) AllDependencyVersions(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AllDependencyVersions", reflect.TypeOf((*MockManifest)(nil).AllDependencyVersions), arg0)
 }
 
 // DefaultVersion mocks base method
 func (m *MockManifest) DefaultVersion(arg0 string) (libbuildpack.Dependency, error) {
+	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DefaultVersion", arg0)
 	ret0, _ := ret[0].(libbuildpack.Dependency)
 	ret1, _ := ret[1].(error)
@@ -55,5 +58,6 @@ func (m *MockManifest) DefaultVersion(arg0 string) (libbuildpack.Dependency, err
 
 // DefaultVersion indicates an expected call of DefaultVersion
 func (mr *MockManifestMockRecorder) DefaultVersion(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DefaultVersion", reflect.TypeOf((*MockManifest)(nil).DefaultVersion), arg0)
 }

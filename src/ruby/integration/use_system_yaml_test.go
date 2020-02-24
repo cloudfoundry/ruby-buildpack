@@ -13,7 +13,6 @@ var _ = Describe("app using system yaml library", func() {
 
 	BeforeEach(func() {
 		app = cutlass.New(Fixtures("sinatra"))
-		app.SetEnv("BP_DEBUG", "1")
 	})
 
 	It("displays metasyntactic variables as yaml", func() {

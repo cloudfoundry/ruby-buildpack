@@ -2,7 +2,6 @@ package cache_test
 
 import (
 	"bytes"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -101,7 +100,6 @@ var _ = Describe("Cache", func() {
 		var c *cache.Cache
 		BeforeEach(func() {
 			if runtime.GOOS == "darwin" {
-				fmt.Println("\nSkipping Cache test on OSX")
 				Skip("Test Not running on OSX")
 			}
 

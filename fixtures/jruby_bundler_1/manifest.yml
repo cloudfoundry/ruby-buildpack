@@ -1,4 +1,3 @@
 ---
 applications:
 - name: sinatra_jruby_web_app
-  command: jruby -S bundle exec rackup config.ru -p $PORT

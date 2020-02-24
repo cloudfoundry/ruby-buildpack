@@ -13,7 +13,6 @@ var _ = Describe("Rails 5.2 (Webpack/Yarn) App", func() {
 
 	BeforeEach(func() {
 		app = cutlass.New(Fixtures("rails52_webpack_no_sprockets"))
-		app.SetEnv("BP_DEBUG", "1")
 	})
 
 	It("Installs node and runs", func() {

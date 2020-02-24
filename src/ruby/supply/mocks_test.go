@@ -215,45 +215,19 @@ func (m *MockVersions) EXPECT() *MockVersionsMockRecorder {
 	return m.recorder
 }
 
-// SetBundlerVersion mocks base method
-func (m *MockVersions) SetBundlerVersion(arg0 string) {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "SetBundlerVersion", arg0)
-}
-
-// SetBundlerVersion indicates an expected call of SetBundlerVersion
-func (mr *MockVersionsMockRecorder) SetBundlerVersion(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetBundlerVersion", reflect.TypeOf((*MockVersions)(nil).SetBundlerVersion), arg0)
-}
-
 // GetBundlerVersion mocks base method
-func (m *MockVersions) GetBundlerVersion() string {
+func (m *MockVersions) GetBundlerVersion() (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetBundlerVersion")
 	ret0, _ := ret[0].(string)
-	return ret0
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // GetBundlerVersion indicates an expected call of GetBundlerVersion
 func (mr *MockVersionsMockRecorder) GetBundlerVersion() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBundlerVersion", reflect.TypeOf((*MockVersions)(nil).GetBundlerVersion))
-}
-
-// CheckBundler2Compatibility mocks base method
-func (m *MockVersions) CheckBundler2Compatibility() (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CheckBundler2Compatibility")
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// CheckBundler2Compatibility indicates an expected call of CheckBundler2Compatibility
-func (mr *MockVersionsMockRecorder) CheckBundler2Compatibility() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CheckBundler2Compatibility", reflect.TypeOf((*MockVersions)(nil).CheckBundler2Compatibility))
 }
 
 // Engine mocks base method

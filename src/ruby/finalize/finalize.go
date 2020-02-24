@@ -72,11 +72,6 @@ func Run(f *Finalizer) error {
 		return err
 	}
 
-	if err := f.PrecompileAssets(); err != nil {
-		f.Log.Error("Error precompiling assets: %v", err)
-		return err
-	}
-
 	f.BestPracticeWarnings()
 
 	if err := f.DeleteVendorBundle(); err != nil {
@@ -86,6 +81,11 @@ func Run(f *Finalizer) error {
 
 	if err := f.CopyToAppBin(); err != nil {
 		f.Log.Error("Error creating files in bin: %v", err)
+		return err
+	}
+
+	if err := f.PrecompileAssets(); err != nil {
+		f.Log.Error("Error precompiling assets: %v", err)
 		return err
 	}
 

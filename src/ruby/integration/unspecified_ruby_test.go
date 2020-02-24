@@ -13,7 +13,6 @@ var _ = Describe("CF Ruby Buildpack", func() {
 
 	BeforeEach(func() {
 		app = cutlass.New(Fixtures("unspecified_ruby"))
-		app.SetEnv("BP_DEBUG", "1")
 	})
 
 	It("uses the default ruby version when ruby version is not specified", func() {
