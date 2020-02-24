@@ -1,6 +1,7 @@
 package integration_test
 
 import (
+	"bytes"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -82,7 +83,15 @@ func TestIntegration(t *testing.T) {
 }
 
 func PushAppAndConfirm(app *cutlass.App) {
-	Expect(app.Push()).To(Succeed())
+	Expect(app.Push()).To(Succeed(), func() string {
+		buffer := bytes.NewBuffer(nil)
+		cmd := exec.Command("cf", "logs", app.Name, "--recent")
+		cmd.Stdout = buffer
+		cmd.Stderr = buffer
+		cmd.Run()
+
+		return buffer.String()
+	})
 	Eventually(app.InstanceStates, 20*time.Second).Should(Equal([]string{"RUNNING"}))
 	Expect(app.ConfirmBuildpack(buildpackVersion)).To(Succeed())
 }
