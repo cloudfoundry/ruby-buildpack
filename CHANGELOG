@@ -1,3 +1,17 @@
+v1.8.11 Mar 02, 2020
+=====================
+
+* Add jruby 9.2.10.0, remove jruby 9.2.9.0
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/171343617)
+
+* Adds logs output when push fails
+  (https://www.pivotaltracker.com/story/show/171364379)
+
+* Resolves issue with bundler 2.1 and ruby versions
+  (https://www.pivotaltracker.com/story/show/171364379)
+
+
 v1.8.10 Feb 10, 2020
 =====================
 
