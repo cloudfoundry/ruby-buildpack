@@ -71,30 +71,22 @@ var _ = Describe("App with dependencies installed in vendor/cache", func() {
 		}
 
 		err = cf.Execute(pexec.Execution{
-			Args:   []string{"create-space", "offline"},
-			Stdout: os.Stdout,
-			Stderr: os.Stderr,
+			Args: []string{"create-space", "offline"},
 		})
 		Expect(err).NotTo(HaveOccurred())
 
 		err = cf.Execute(pexec.Execution{
-			Args:   []string{"target", "-o", org, "-s", "offline"},
-			Stdout: os.Stdout,
-			Stderr: os.Stderr,
+			Args: []string{"target", "-o", org, "-s", "offline"},
 		})
 		Expect(err).NotTo(HaveOccurred())
 
 		err = cf.Execute(pexec.Execution{
-			Args:   []string{"create-security-group", "offline", config.Name()},
-			Stdout: os.Stdout,
-			Stderr: os.Stderr,
+			Args: []string{"create-security-group", "offline", config.Name()},
 		})
 		Expect(err).NotTo(HaveOccurred())
 
 		err = cf.Execute(pexec.Execution{
-			Args:   []string{"bind-security-group", "offline", org, "offline", "--lifecycle", "staging"},
-			Stdout: os.Stdout,
-			Stderr: os.Stderr,
+			Args: []string{"bind-security-group", "offline", org, "offline", "--lifecycle", "staging"},
 		})
 		Expect(err).NotTo(HaveOccurred())
 	})
@@ -103,23 +95,17 @@ var _ = Describe("App with dependencies installed in vendor/cache", func() {
 		app = DestroyApp(app)
 
 		err := cf.Execute(pexec.Execution{
-			Args:   []string{"target", "-o", org, "-s", space},
-			Stdout: os.Stdout,
-			Stderr: os.Stderr,
+			Args: []string{"target", "-o", org, "-s", space},
 		})
 		Expect(err).NotTo(HaveOccurred())
 
 		err = cf.Execute(pexec.Execution{
-			Args:   []string{"delete-space", "offline", "-f"},
-			Stdout: os.Stdout,
-			Stderr: os.Stderr,
+			Args: []string{"delete-space", "offline", "-f"},
 		})
 		Expect(err).NotTo(HaveOccurred())
 
 		err = cf.Execute(pexec.Execution{
-			Args:   []string{"delete-security-group", "offline", "-f"},
-			Stdout: os.Stdout,
-			Stderr: os.Stderr,
+			Args: []string{"delete-security-group", "offline", "-f"},
 		})
 		Expect(err).NotTo(HaveOccurred())
 
