@@ -637,6 +637,13 @@ func (s *Supplier) InstallGems() error {
 		"--jobs=4",
 		"--retry=4",
 	}
+
+	if exists, err := libbuildpack.FileExists(filepath.Join(s.Stager.BuildDir(), "vendor", "cache")); err != nil {
+		return err
+	} else if exists {
+		args = append(args, "--local")
+	}
+
 	if exists, err := libbuildpack.FileExists(gemfileLock); err != nil {
 		return err
 	} else if exists {
