@@ -1,3 +1,32 @@
+v1.8.16 Apr 22, 2020
+=====================
+
+* Add ruby 2.7.1
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/172320810)
+
+* Add ruby 2.6.6, remove ruby 2.6.4
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/172320804)
+
+* Add ruby 2.5.8, remove ruby 2.5.6
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/172317988)
+
+* Support removal of Ruby 2.4.x line
+  (https://www.pivotaltracker.com/story/show/172262472)
+
+* Add node 10.20.1, remove node 10.19.0
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/172279103)
+  (https://www.pivotaltracker.com/story/show/172229352)
+
+* Merge pull request #124 from cloudfoundry/remove-ruby-2.4
+  Deprecate Ruby 2.4.x
+
+* Deprecate Ruby 2.4.x
+  (https://www.pivotaltracker.com/story/show/171609722)
+
 v1.8.15 Apr 02, 2020
 =====================
 
