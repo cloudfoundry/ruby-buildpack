@@ -69,8 +69,8 @@ dependencies:
   source_sha256: '0749e51942641f369a9411ba27207fbf74b8836f1fb19a3d85cee55e13387a9c'
 - name: ruby
   version: 2.5.7
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby-2.5.7-linux-x64-cflinuxfs3-01b7d7a8.tgz
-  sha256: 01b7d7a8a3031f15079e0ca1245e002575f47c8943f68508d86ba4f46ac24190
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_2.5.7_linux_x64_cflinuxfs3_8ee74636.tgz
+  sha256: 8ee7463635739d48ba823a2cda6bcef9914d04c0f6bd6c5fb00bcff5ed7c408e
   cf_stacks:
   - cflinuxfs3
   source: https://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.7.tar.gz
