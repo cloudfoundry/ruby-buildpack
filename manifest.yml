@@ -45,8 +45,8 @@ dependencies:
   source_sha256: b66d7c14f85075afdabb5ebf5950804c5a5d5c1d05ab833f580f04ee709b5773
 - name: jruby
   version: 9.2.11.1
-  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.2.11.1-ruby-2.5_linux_x64_cflinuxfs3_f6e02bcf.tgz
-  sha256: f6e02bcf02b7b33c48965b5c89adab4a2a9ebe20d345fd73d11cb4b1804df83f
+  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.2.11.1-ruby-2.5_linux_x64_cflinuxfs3_8d356264.tgz
+  sha256: 8d356264eabc60d71a9ade1169bec6f12b656453387ed9bbdf3cc106d1134ccc
   cf_stacks:
   - cflinuxfs3
   source: https://s3.amazonaws.com/jruby.org/downloads/9.2.11.1/jruby-src-9.2.11.1.tar.gz
