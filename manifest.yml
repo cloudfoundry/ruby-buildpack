@@ -21,12 +21,12 @@ dependency_deprecation_dates:
 dependencies:
 - name: bundler
   version: 1.17.3
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.17.3-any-stack-b7502506.tgz
-  sha256: b7502506bb8ab5312d4efa208d39dca4a5830762ba6b4b094a72e9aa69702341
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler_1.17.3_linux_noarch_any-stack_f67a27c7.tgz
+  sha256: f67a27c75fd262566e915b6e3005663cdd4a4ec5cf79e633bc39187f5f40f0bd
   cf_stacks:
   - cflinuxfs3
   source: http://github.com/bundler/bundler/tree/v1.17.3
-  source_sha256: a34cf18749cc92e25329fc11418bf7800853b74e1e39f82223841114d84d58de
+  source_sha256: bc4bf75b548b27451aa9f443b18c46a739dd22ad79f7a5f90b485376a67dc352
 - name: bundler
   version: 2.1.4
   uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-2.1.4-any-stack-df7bed89.tgz
