@@ -29,8 +29,8 @@ dependencies:
   source_sha256: bc4bf75b548b27451aa9f443b18c46a739dd22ad79f7a5f90b485376a67dc352
 - name: bundler
   version: 2.1.4
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-2.1.4-any-stack-df7bed89.tgz
-  sha256: df7bed898d3de06ddeee32f1df71a25a86e653587c13245dfd0b0e006098be79
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler_2.1.4_linux_noarch_any-stack_d17dcc07.tgz
+  sha256: d17dcc07a6fd5a0eb9361a1837d410226f2b81c2ceb75976e07f7859971c0ce3
   cf_stacks:
   - cflinuxfs3
   source: https://github.com/bundler/bundler/tree/v2.1.4
