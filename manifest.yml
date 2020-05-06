@@ -21,12 +21,12 @@ dependency_deprecation_dates:
 dependencies:
 - name: bundler
   version: 1.17.3
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.17.3-any-stack-b7502506.tgz
-  sha256: b7502506bb8ab5312d4efa208d39dca4a5830762ba6b4b094a72e9aa69702341
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler_1.17.3_linux_noarch_any-stack_f67a27c7.tgz
+  sha256: f67a27c75fd262566e915b6e3005663cdd4a4ec5cf79e633bc39187f5f40f0bd
   cf_stacks:
   - cflinuxfs3
   source: http://github.com/bundler/bundler/tree/v1.17.3
-  source_sha256: a34cf18749cc92e25329fc11418bf7800853b74e1e39f82223841114d84d58de
+  source_sha256: bc4bf75b548b27451aa9f443b18c46a739dd22ad79f7a5f90b485376a67dc352
 - name: bundler
   version: 2.1.4
   uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-2.1.4-any-stack-df7bed89.tgz
@@ -37,16 +37,16 @@ dependencies:
   source_sha256: 50014d21d6712079da4d6464de12bb93c278f87c9200d0b60ba99f32c25af489
 - name: jruby
   version: 9.1.17.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby-9.1.17.0_ruby-2.3-linux-x64-cflinuxfs3-609fa2e1.tgz
-  sha256: 609fa2e1886bec7d3a34c7858625c1182a3dfe367ea9765333ce71eccf918e40
+  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.1.17.0-ruby-2.3_linux_x64_cflinuxfs3_debfadeb.tgz
+  sha256: debfadeb344af001ec783c3c0879710faaa67dac64c4347f794eb4d5e83be109
   cf_stacks:
   - cflinuxfs3
   source: https://s3.amazonaws.com/jruby.org/downloads/9.1.17.0/jruby-src-9.1.17.0.tar.gz
   source_sha256: b66d7c14f85075afdabb5ebf5950804c5a5d5c1d05ab833f580f04ee709b5773
 - name: jruby
   version: 9.2.11.1
-  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.2.11.1-ruby-2.5_linux_x64_cflinuxfs3_f6e02bcf.tgz
-  sha256: f6e02bcf02b7b33c48965b5c89adab4a2a9ebe20d345fd73d11cb4b1804df83f
+  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.2.11.1-ruby-2.5_linux_x64_cflinuxfs3_8d356264.tgz
+  sha256: 8d356264eabc60d71a9ade1169bec6f12b656453387ed9bbdf3cc106d1134ccc
   cf_stacks:
   - cflinuxfs3
   source: https://s3.amazonaws.com/jruby.org/downloads/9.2.11.1/jruby-src-9.2.11.1.tar.gz
