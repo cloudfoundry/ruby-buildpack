@@ -9,6 +9,7 @@ import (
 
 var _ = Describe("CF Ruby Buildpack", func() {
 	var app *cutlass.App
+
 	AfterEach(func() { app = DestroyApp(app) })
 
 	It("works with old version of bundler 2", func() {
