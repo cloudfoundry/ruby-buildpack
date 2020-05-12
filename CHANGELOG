@@ -1,3 +1,27 @@
+v1.8.18 May 12, 2020
+=====================
+
+* Add rubygems 3.1.3, remove rubygems 3.1.2
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/172663146)
+
+* Rebuild bundler 2.1.4
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/171287298)
+
+* Rebuild bundler 1.17.3
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/168950405)
+
+* Rebuild jruby 9.1.17.0
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/172627234)
+
+* Rebuild jruby 9.2.11.1
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/172627191)
+
+
 v1.8.17 Apr 23, 2020
 =====================
 
