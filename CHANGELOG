@@ -1,3 +1,9 @@
+v1.8.19 May 19, 2020
+=====================
+
+* Merge pull request #130 from cloudfoundry/pr-by-releng-bot-1589396124
+  Updating version for jruby for 9.2.X
+
 v1.8.18 May 12, 2020
 =====================
 
