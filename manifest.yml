@@ -77,8 +77,8 @@ dependencies:
   source_sha256: 0b2d0d5e3451b6ab454f81b1bfca007407c0548dea403f1eba2e429da4add6d4
 - name: ruby
   version: 2.5.8
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_2.5.8_linux_x64_cflinuxfs3_738900ea.tgz
-  sha256: 738900eab9e0cb8139415556d4022d6d9c4947ed7c46f78862785028f45fa239
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_2.5.8_linux_x64_cflinuxfs3_3dba0259.tgz
+  sha256: 3dba0259334a540f87fb8322a67550acbf5aa974e0f21dc47d6b71fb76edb3de
   cf_stacks:
   - cflinuxfs3
   source: https://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.8.tar.gz
