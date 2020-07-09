@@ -8,7 +8,6 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"testing"
 
 	"github.com/cloudfoundry/libbuildpack"
 	"github.com/cloudfoundry/libbuildpack/ansicleaner"
@@ -19,11 +18,6 @@ import (
 )
 
 //go:generate mockgen -source=finalize.go --destination=mocks_finalize_test.go --package=finalize_test
-
-func TestGinkgo(t *testing.T) {
-	RegisterFailHandler(Fail)
-	RunSpecs(t, "Finalize")
-}
 
 var _ = Describe("Finalize", func() {
 	var (
