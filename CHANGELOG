@@ -1,3 +1,13 @@
+v1.8.21 Jul 09, 2020
+=====================
+
+* Bump Ginkgo version, and update test to abide by new Ginkgo rules
+
+* Add jruby 9.2.12.0, remove jruby 9.2.11.1
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/173614005)
+
+
 v1.8.20 Jun 09, 2020
 =====================
 
