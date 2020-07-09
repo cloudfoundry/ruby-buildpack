@@ -12,6 +12,7 @@ type Versions interface {
 
 func (f *Finalizer) GenerateReleaseYaml() (map[string]map[string]string, error) {
 	hasThin, err := f.Versions.HasGem("thin")
+
 	if err != nil {
 		return nil, err
 	}
