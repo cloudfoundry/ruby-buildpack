@@ -1,3 +1,17 @@
+v1.8.26 Oct 12, 2020
+=====================
+
+* Add ruby 2.7.2, remove ruby 2.7.0
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/175143530)
+
+* Add yarn 1.22.10, remove yarn 1.22.5
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/175143529)
+
+* Update libbuildpack
+
+
 v1.8.25 Sep 23, 2020
 =====================
 
