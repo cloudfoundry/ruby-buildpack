@@ -708,6 +708,22 @@ var _ = Describe("Supply", func() {
 		})
 	})
 
+	Describe("RemoveUnusedRubyVersions", func() {
+		selectedRubyVersion := "1.3.3"
+		selectedRubyEngine := "some-ruby-engine"
+		BeforeEach(func() {
+			Expect(os.MkdirAll(filepath.Join(depsDir, depsIdx, "vendor_bundle", selectedRubyEngine, "1.2.0"), 0755)).To(Succeed())
+			Expect(os.MkdirAll(filepath.Join(depsDir, depsIdx, "vendor_bundle", selectedRubyEngine, "1.3.0"), 0755)).To(Succeed())
+		})
+		FContext("multiple Ruby major+minor versions in dep dir", func() {
+			It("removes the version that is not currently selected", func() {
+				Expect(supplier.RemoveUnusedRubyVersions(selectedRubyEngine, selectedRubyVersion)).To(Succeed())
+
+				Expect(filepath.Join(depsDir, depsIdx, "vendor_bundle", selectedRubyEngine, "1.2.0")).ToNot(BeADirectory())
+			})
+		})
+	})
+
 	Describe("InstallYarn", func() {
 		Context("app has yarn.lock file", func() {
 			BeforeEach(func() {

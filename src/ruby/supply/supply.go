@@ -128,6 +128,12 @@ func Run(s *Supplier) error {
 		}
 	}
 
+	// Search cache dir for sub-directories which don't match current ruby version.
+	if err := s.RemoveUnusedRubyVersions(engine, rubyVersion); err != nil {
+		s.Log.Error("Unable to remove unused ruby: %s", err.Error())
+		return err
+	}
+
 	if err := s.InstallRuby(engine, rubyVersion); err != nil {
 		s.Log.Error("Unable to install ruby: %s", err.Error())
 		return err
@@ -255,6 +261,28 @@ func (s *Supplier) DetermineRuby() (string, string, error) {
 		return "", "", fmt.Errorf("Sorry, we do not support engine: %s", engine)
 	}
 	return engine, rubyVersion, nil
+}
+
+func (s *Supplier) RemoveUnusedRubyVersions(engine, version string) error {
+
+	splitVersion := strings.Split(version, ".")
+	majorMinorVersion := strings.Join([]string{splitVersion[0], splitVersion[1], "0"}, ".")
+
+	matches, err := filepath.Glob(filepath.Join(s.Stager.DepDir(), "vendor_bundle", engine, "*"))
+	if err != nil {
+		return err
+	}
+
+	for _, match := range matches {
+		if match != majorMinorVersion {
+			err := os.RemoveAll(match)
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
 }
 
 func (s *Supplier) InstallYarn() error {
