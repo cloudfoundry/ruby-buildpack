@@ -17,7 +17,7 @@ var _ = Describe("pushing an app a second time", func() {
 	})
 
 	RestoringVendorBundle := "Restoring vendor_bundle from cache"
-	DownloadRegexp := `Download \[.*/bundler\-.*\.tgz\]`
+	DownloadRegexp := `Download \[.*/bundler[\-_].*\.tgz\]`
 	CopyRegexp := `Copy \[.*/bundler\-.*\.tgz\]`
 
 	It("uses the cache and runs", func() {

@@ -264,7 +264,6 @@ func (s *Supplier) DetermineRuby() (string, string, error) {
 }
 
 func (s *Supplier) RemoveUnusedRubyVersions(engine, version string) error {
-
 	splitVersion := strings.Split(version, ".")
 	majorMinorVersion := strings.Join([]string{splitVersion[0], splitVersion[1], "0"}, ".")
 
@@ -425,7 +424,7 @@ func (s *Supplier) VendorBundlePath() (string, error) {
 		return "", err
 	}
 
-	if strings.HasPrefix(bundlerVersion, "2.1") {
+	if strings.HasPrefix(bundlerVersion, "2.") {
 		return "vendor_bundle", nil
 	}
 
