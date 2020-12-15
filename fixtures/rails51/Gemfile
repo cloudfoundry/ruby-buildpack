@@ -2,13 +2,13 @@ source 'https://rubygems.org'
 
 ruby '~> 2.5'
 
-git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
-  "https://github.com/#{repo_name}.git"
-end
+# git_source(:github) do |repo_name|
+#   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
+#   "https://github.com/#{repo_name}.git"
+# end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.0.beta1'
+gem 'rails', '~> 5.1.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
@@ -36,13 +36,14 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'license_finder', github: 'pivotal/LicenseFinder'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution
   # and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.7.0'
-  gem 'license_finder', github: 'pivotal/LicenseFinder'
   gem 'selenium-webdriver'
 end
 
