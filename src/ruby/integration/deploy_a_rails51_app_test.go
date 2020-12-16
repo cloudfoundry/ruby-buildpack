@@ -17,6 +17,7 @@ var _ = Describe("Rails 5.1 (Webpack/Yarn) App", func() {
 	BeforeEach(func() {
 		app = cutlass.New(Fixtures("rails51"))
 		app.SetEnv("BP_DEBUG", "1")
+		app.Disk = "500M"
 	})
 
 	It("Installs node and runs", func() {
