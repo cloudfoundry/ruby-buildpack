@@ -273,7 +273,7 @@ func (s *Supplier) RemoveUnusedRubyVersions(engine, version string) error {
 	}
 
 	for _, match := range matches {
-		if match != majorMinorVersion {
+		if !strings.HasSuffix(match, majorMinorVersion) {
 			err := os.RemoveAll(match)
 			if err != nil {
 				return err
