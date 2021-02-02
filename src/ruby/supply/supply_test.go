@@ -720,6 +720,7 @@ var _ = Describe("Supply", func() {
 				Expect(supplier.RemoveUnusedRubyVersions(selectedRubyEngine, selectedRubyVersion)).To(Succeed())
 
 				Expect(filepath.Join(depsDir, depsIdx, "vendor_bundle", selectedRubyEngine, "1.2.0")).ToNot(BeADirectory())
+				Expect(filepath.Join(depsDir, depsIdx, "vendor_bundle", selectedRubyEngine, "1.3.0")).To(BeADirectory())
 			})
 		})
 	})
