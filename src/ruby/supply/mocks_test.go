@@ -5,38 +5,39 @@
 package supply_test
 
 import (
-	libbuildpack "github.com/cloudfoundry/libbuildpack"
-	cache "github.com/cloudfoundry/ruby-buildpack/src/ruby/cache"
-	gomock "github.com/golang/mock/gomock"
 	io "io"
 	exec "os/exec"
 	reflect "reflect"
+
+	libbuildpack "github.com/cloudfoundry/libbuildpack"
+	cache "github.com/cloudfoundry/ruby-buildpack/src/ruby/cache"
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockCommand is a mock of Command interface
+// MockCommand is a mock of Command interface.
 type MockCommand struct {
 	ctrl     *gomock.Controller
 	recorder *MockCommandMockRecorder
 }
 
-// MockCommandMockRecorder is the mock recorder for MockCommand
+// MockCommandMockRecorder is the mock recorder for MockCommand.
 type MockCommandMockRecorder struct {
 	mock *MockCommand
 }
 
-// NewMockCommand creates a new mock instance
+// NewMockCommand creates a new mock instance.
 func NewMockCommand(ctrl *gomock.Controller) *MockCommand {
 	mock := &MockCommand{ctrl: ctrl}
 	mock.recorder = &MockCommandMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockCommand) EXPECT() *MockCommandMockRecorder {
 	return m.recorder
 }
 
-// Execute mocks base method
+// Execute mocks base method.
 func (m *MockCommand) Execute(arg0 string, arg1, arg2 io.Writer, arg3 string, arg4 ...string) error {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1, arg2, arg3}
@@ -48,14 +49,14 @@ func (m *MockCommand) Execute(arg0 string, arg1, arg2 io.Writer, arg3 string, ar
 	return ret0
 }
 
-// Execute indicates an expected call of Execute
+// Execute indicates an expected call of Execute.
 func (mr *MockCommandMockRecorder) Execute(arg0, arg1, arg2, arg3 interface{}, arg4 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1, arg2, arg3}, arg4...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Execute", reflect.TypeOf((*MockCommand)(nil).Execute), varargs...)
 }
 
-// Output mocks base method
+// Output mocks base method.
 func (m *MockCommand) Output(arg0, arg1 string, arg2 ...string) (string, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0, arg1}
@@ -68,14 +69,14 @@ func (m *MockCommand) Output(arg0, arg1 string, arg2 ...string) (string, error) 
 	return ret0, ret1
 }
 
-// Output indicates an expected call of Output
+// Output indicates an expected call of Output.
 func (mr *MockCommandMockRecorder) Output(arg0, arg1 interface{}, arg2 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0, arg1}, arg2...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Output", reflect.TypeOf((*MockCommand)(nil).Output), varargs...)
 }
 
-// Run mocks base method
+// Run mocks base method.
 func (m *MockCommand) Run(arg0 *exec.Cmd) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Run", arg0)
@@ -83,36 +84,36 @@ func (m *MockCommand) Run(arg0 *exec.Cmd) error {
 	return ret0
 }
 
-// Run indicates an expected call of Run
+// Run indicates an expected call of Run.
 func (mr *MockCommandMockRecorder) Run(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Run", reflect.TypeOf((*MockCommand)(nil).Run), arg0)
 }
 
-// MockManifest is a mock of Manifest interface
+// MockManifest is a mock of Manifest interface.
 type MockManifest struct {
 	ctrl     *gomock.Controller
 	recorder *MockManifestMockRecorder
 }
 
-// MockManifestMockRecorder is the mock recorder for MockManifest
+// MockManifestMockRecorder is the mock recorder for MockManifest.
 type MockManifestMockRecorder struct {
 	mock *MockManifest
 }
 
-// NewMockManifest creates a new mock instance
+// NewMockManifest creates a new mock instance.
 func NewMockManifest(ctrl *gomock.Controller) *MockManifest {
 	mock := &MockManifest{ctrl: ctrl}
 	mock.recorder = &MockManifestMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockManifest) EXPECT() *MockManifestMockRecorder {
 	return m.recorder
 }
 
-// AllDependencyVersions mocks base method
+// AllDependencyVersions mocks base method.
 func (m *MockManifest) AllDependencyVersions(arg0 string) []string {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AllDependencyVersions", arg0)
@@ -120,13 +121,13 @@ func (m *MockManifest) AllDependencyVersions(arg0 string) []string {
 	return ret0
 }
 
-// AllDependencyVersions indicates an expected call of AllDependencyVersions
+// AllDependencyVersions indicates an expected call of AllDependencyVersions.
 func (mr *MockManifestMockRecorder) AllDependencyVersions(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AllDependencyVersions", reflect.TypeOf((*MockManifest)(nil).AllDependencyVersions), arg0)
 }
 
-// DefaultVersion mocks base method
+// DefaultVersion mocks base method.
 func (m *MockManifest) DefaultVersion(arg0 string) (libbuildpack.Dependency, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DefaultVersion", arg0)
@@ -135,36 +136,36 @@ func (m *MockManifest) DefaultVersion(arg0 string) (libbuildpack.Dependency, err
 	return ret0, ret1
 }
 
-// DefaultVersion indicates an expected call of DefaultVersion
+// DefaultVersion indicates an expected call of DefaultVersion.
 func (mr *MockManifestMockRecorder) DefaultVersion(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DefaultVersion", reflect.TypeOf((*MockManifest)(nil).DefaultVersion), arg0)
 }
 
-// MockInstaller is a mock of Installer interface
+// MockInstaller is a mock of Installer interface.
 type MockInstaller struct {
 	ctrl     *gomock.Controller
 	recorder *MockInstallerMockRecorder
 }
 
-// MockInstallerMockRecorder is the mock recorder for MockInstaller
+// MockInstallerMockRecorder is the mock recorder for MockInstaller.
 type MockInstallerMockRecorder struct {
 	mock *MockInstaller
 }
 
-// NewMockInstaller creates a new mock instance
+// NewMockInstaller creates a new mock instance.
 func NewMockInstaller(ctrl *gomock.Controller) *MockInstaller {
 	mock := &MockInstaller{ctrl: ctrl}
 	mock.recorder = &MockInstallerMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockInstaller) EXPECT() *MockInstallerMockRecorder {
 	return m.recorder
 }
 
-// InstallDependency mocks base method
+// InstallDependency mocks base method.
 func (m *MockInstaller) InstallDependency(arg0 libbuildpack.Dependency, arg1 string) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "InstallDependency", arg0, arg1)
@@ -172,13 +173,13 @@ func (m *MockInstaller) InstallDependency(arg0 libbuildpack.Dependency, arg1 str
 	return ret0
 }
 
-// InstallDependency indicates an expected call of InstallDependency
+// InstallDependency indicates an expected call of InstallDependency.
 func (mr *MockInstallerMockRecorder) InstallDependency(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InstallDependency", reflect.TypeOf((*MockInstaller)(nil).InstallDependency), arg0, arg1)
 }
 
-// InstallOnlyVersion mocks base method
+// InstallOnlyVersion mocks base method.
 func (m *MockInstaller) InstallOnlyVersion(arg0, arg1 string) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "InstallOnlyVersion", arg0, arg1)
@@ -186,51 +187,51 @@ func (m *MockInstaller) InstallOnlyVersion(arg0, arg1 string) error {
 	return ret0
 }
 
-// InstallOnlyVersion indicates an expected call of InstallOnlyVersion
+// InstallOnlyVersion indicates an expected call of InstallOnlyVersion.
 func (mr *MockInstallerMockRecorder) InstallOnlyVersion(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InstallOnlyVersion", reflect.TypeOf((*MockInstaller)(nil).InstallOnlyVersion), arg0, arg1)
 }
 
-// MockVersions is a mock of Versions interface
+// MockVersions is a mock of Versions interface.
 type MockVersions struct {
 	ctrl     *gomock.Controller
 	recorder *MockVersionsMockRecorder
 }
 
-// MockVersionsMockRecorder is the mock recorder for MockVersions
+// MockVersionsMockRecorder is the mock recorder for MockVersions.
 type MockVersionsMockRecorder struct {
 	mock *MockVersions
 }
 
-// NewMockVersions creates a new mock instance
+// NewMockVersions creates a new mock instance.
 func NewMockVersions(ctrl *gomock.Controller) *MockVersions {
 	mock := &MockVersions{ctrl: ctrl}
 	mock.recorder = &MockVersionsMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockVersions) EXPECT() *MockVersionsMockRecorder {
 	return m.recorder
 }
 
-// GetBundlerVersion mocks base method
-func (m *MockVersions) GetBundlerVersion() (string, error) {
+// BundledWithVersion mocks base method.
+func (m *MockVersions) BundledWithVersion() (string, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetBundlerVersion")
+	ret := m.ctrl.Call(m, "BundledWithVersion")
 	ret0, _ := ret[0].(string)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetBundlerVersion indicates an expected call of GetBundlerVersion
-func (mr *MockVersionsMockRecorder) GetBundlerVersion() *gomock.Call {
+// BundledWithVersion indicates an expected call of BundledWithVersion.
+func (mr *MockVersionsMockRecorder) BundledWithVersion() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBundlerVersion", reflect.TypeOf((*MockVersions)(nil).GetBundlerVersion))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BundledWithVersion", reflect.TypeOf((*MockVersions)(nil).BundledWithVersion))
 }
 
-// Engine mocks base method
+// Engine mocks base method.
 func (m *MockVersions) Engine() (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Engine")
@@ -239,58 +240,42 @@ func (m *MockVersions) Engine() (string, error) {
 	return ret0, ret1
 }
 
-// Engine indicates an expected call of Engine
+// Engine indicates an expected call of Engine.
 func (mr *MockVersionsMockRecorder) Engine() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Engine", reflect.TypeOf((*MockVersions)(nil).Engine))
 }
 
-// Version mocks base method
-func (m *MockVersions) Version() (string, error) {
+// Gemfile mocks base method.
+func (m *MockVersions) Gemfile() string {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Version")
+	ret := m.ctrl.Call(m, "Gemfile")
+	ret0, _ := ret[0].(string)
+	return ret0
+}
+
+// Gemfile indicates an expected call of Gemfile.
+func (mr *MockVersionsMockRecorder) Gemfile() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Gemfile", reflect.TypeOf((*MockVersions)(nil).Gemfile))
+}
+
+// GetBundlerVersion mocks base method.
+func (m *MockVersions) GetBundlerVersion() (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetBundlerVersion")
 	ret0, _ := ret[0].(string)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// Version indicates an expected call of Version
-func (mr *MockVersionsMockRecorder) Version() *gomock.Call {
+// GetBundlerVersion indicates an expected call of GetBundlerVersion.
+func (mr *MockVersionsMockRecorder) GetBundlerVersion() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Version", reflect.TypeOf((*MockVersions)(nil).Version))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBundlerVersion", reflect.TypeOf((*MockVersions)(nil).GetBundlerVersion))
 }
 
-// JrubyVersion mocks base method
-func (m *MockVersions) JrubyVersion() (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "JrubyVersion")
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// JrubyVersion indicates an expected call of JrubyVersion
-func (mr *MockVersionsMockRecorder) JrubyVersion() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "JrubyVersion", reflect.TypeOf((*MockVersions)(nil).JrubyVersion))
-}
-
-// RubyEngineVersion mocks base method
-func (m *MockVersions) RubyEngineVersion() (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "RubyEngineVersion")
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// RubyEngineVersion indicates an expected call of RubyEngineVersion
-func (mr *MockVersionsMockRecorder) RubyEngineVersion() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RubyEngineVersion", reflect.TypeOf((*MockVersions)(nil).RubyEngineVersion))
-}
-
-// HasGemVersion mocks base method
+// HasGemVersion mocks base method.
 func (m *MockVersions) HasGemVersion(gem string, constraints ...string) (bool, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{gem}
@@ -303,14 +288,74 @@ func (m *MockVersions) HasGemVersion(gem string, constraints ...string) (bool, e
 	return ret0, ret1
 }
 
-// HasGemVersion indicates an expected call of HasGemVersion
+// HasGemVersion indicates an expected call of HasGemVersion.
 func (mr *MockVersionsMockRecorder) HasGemVersion(gem interface{}, constraints ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{gem}, constraints...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HasGemVersion", reflect.TypeOf((*MockVersions)(nil).HasGemVersion), varargs...)
 }
 
-// VersionConstraint mocks base method
+// HasWindowsGemfileLock mocks base method.
+func (m *MockVersions) HasWindowsGemfileLock() (bool, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "HasWindowsGemfileLock")
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// HasWindowsGemfileLock indicates an expected call of HasWindowsGemfileLock.
+func (mr *MockVersionsMockRecorder) HasWindowsGemfileLock() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HasWindowsGemfileLock", reflect.TypeOf((*MockVersions)(nil).HasWindowsGemfileLock))
+}
+
+// JrubyVersion mocks base method.
+func (m *MockVersions) JrubyVersion() (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "JrubyVersion")
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// JrubyVersion indicates an expected call of JrubyVersion.
+func (mr *MockVersionsMockRecorder) JrubyVersion() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "JrubyVersion", reflect.TypeOf((*MockVersions)(nil).JrubyVersion))
+}
+
+// RubyEngineVersion mocks base method.
+func (m *MockVersions) RubyEngineVersion() (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RubyEngineVersion")
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RubyEngineVersion indicates an expected call of RubyEngineVersion.
+func (mr *MockVersionsMockRecorder) RubyEngineVersion() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RubyEngineVersion", reflect.TypeOf((*MockVersions)(nil).RubyEngineVersion))
+}
+
+// Version mocks base method.
+func (m *MockVersions) Version() (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Version")
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Version indicates an expected call of Version.
+func (mr *MockVersionsMockRecorder) Version() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Version", reflect.TypeOf((*MockVersions)(nil).Version))
+}
+
+// VersionConstraint mocks base method.
 func (m *MockVersions) VersionConstraint(version string, constraints ...string) (bool, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{version}
@@ -323,81 +368,37 @@ func (m *MockVersions) VersionConstraint(version string, constraints ...string) 
 	return ret0, ret1
 }
 
-// VersionConstraint indicates an expected call of VersionConstraint
+// VersionConstraint indicates an expected call of VersionConstraint.
 func (mr *MockVersionsMockRecorder) VersionConstraint(version interface{}, constraints ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{version}, constraints...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "VersionConstraint", reflect.TypeOf((*MockVersions)(nil).VersionConstraint), varargs...)
 }
 
-// HasWindowsGemfileLock mocks base method
-func (m *MockVersions) HasWindowsGemfileLock() (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "HasWindowsGemfileLock")
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// HasWindowsGemfileLock indicates an expected call of HasWindowsGemfileLock
-func (mr *MockVersionsMockRecorder) HasWindowsGemfileLock() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HasWindowsGemfileLock", reflect.TypeOf((*MockVersions)(nil).HasWindowsGemfileLock))
-}
-
-// Gemfile mocks base method
-func (m *MockVersions) Gemfile() string {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Gemfile")
-	ret0, _ := ret[0].(string)
-	return ret0
-}
-
-// Gemfile indicates an expected call of Gemfile
-func (mr *MockVersionsMockRecorder) Gemfile() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Gemfile", reflect.TypeOf((*MockVersions)(nil).Gemfile))
-}
-
-// BundledWithVersion mocks base method
-func (m *MockVersions) BundledWithVersion() (string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "BundledWithVersion")
-	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// BundledWithVersion indicates an expected call of BundledWithVersion
-func (mr *MockVersionsMockRecorder) BundledWithVersion() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BundledWithVersion", reflect.TypeOf((*MockVersions)(nil).BundledWithVersion))
-}
-
-// MockStager is a mock of Stager interface
+// MockStager is a mock of Stager interface.
 type MockStager struct {
 	ctrl     *gomock.Controller
 	recorder *MockStagerMockRecorder
 }
 
-// MockStagerMockRecorder is the mock recorder for MockStager
+// MockStagerMockRecorder is the mock recorder for MockStager.
 type MockStagerMockRecorder struct {
 	mock *MockStager
 }
 
-// NewMockStager creates a new mock instance
+// NewMockStager creates a new mock instance.
 func NewMockStager(ctrl *gomock.Controller) *MockStager {
 	mock := &MockStager{ctrl: ctrl}
 	mock.recorder = &MockStagerMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockStager) EXPECT() *MockStagerMockRecorder {
 	return m.recorder
 }
 
-// BuildDir mocks base method
+// BuildDir mocks base method.
 func (m *MockStager) BuildDir() string {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "BuildDir")
@@ -405,13 +406,13 @@ func (m *MockStager) BuildDir() string {
 	return ret0
 }
 
-// BuildDir indicates an expected call of BuildDir
+// BuildDir indicates an expected call of BuildDir.
 func (mr *MockStagerMockRecorder) BuildDir() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BuildDir", reflect.TypeOf((*MockStager)(nil).BuildDir))
 }
 
-// DepDir mocks base method
+// DepDir mocks base method.
 func (m *MockStager) DepDir() string {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DepDir")
@@ -419,13 +420,13 @@ func (m *MockStager) DepDir() string {
 	return ret0
 }
 
-// DepDir indicates an expected call of DepDir
+// DepDir indicates an expected call of DepDir.
 func (mr *MockStagerMockRecorder) DepDir() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DepDir", reflect.TypeOf((*MockStager)(nil).DepDir))
 }
 
-// DepsIdx mocks base method
+// DepsIdx mocks base method.
 func (m *MockStager) DepsIdx() string {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DepsIdx")
@@ -433,13 +434,13 @@ func (m *MockStager) DepsIdx() string {
 	return ret0
 }
 
-// DepsIdx indicates an expected call of DepsIdx
+// DepsIdx indicates an expected call of DepsIdx.
 func (mr *MockStagerMockRecorder) DepsIdx() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DepsIdx", reflect.TypeOf((*MockStager)(nil).DepsIdx))
 }
 
-// LinkDirectoryInDepDir mocks base method
+// LinkDirectoryInDepDir mocks base method.
 func (m *MockStager) LinkDirectoryInDepDir(arg0, arg1 string) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "LinkDirectoryInDepDir", arg0, arg1)
@@ -447,41 +448,13 @@ func (m *MockStager) LinkDirectoryInDepDir(arg0, arg1 string) error {
 	return ret0
 }
 
-// LinkDirectoryInDepDir indicates an expected call of LinkDirectoryInDepDir
+// LinkDirectoryInDepDir indicates an expected call of LinkDirectoryInDepDir.
 func (mr *MockStagerMockRecorder) LinkDirectoryInDepDir(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LinkDirectoryInDepDir", reflect.TypeOf((*MockStager)(nil).LinkDirectoryInDepDir), arg0, arg1)
 }
 
-// WriteEnvFile mocks base method
-func (m *MockStager) WriteEnvFile(arg0, arg1 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WriteEnvFile", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// WriteEnvFile indicates an expected call of WriteEnvFile
-func (mr *MockStagerMockRecorder) WriteEnvFile(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WriteEnvFile", reflect.TypeOf((*MockStager)(nil).WriteEnvFile), arg0, arg1)
-}
-
-// WriteProfileD mocks base method
-func (m *MockStager) WriteProfileD(arg0, arg1 string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "WriteProfileD", arg0, arg1)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// WriteProfileD indicates an expected call of WriteProfileD
-func (mr *MockStagerMockRecorder) WriteProfileD(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WriteProfileD", reflect.TypeOf((*MockStager)(nil).WriteProfileD), arg0, arg1)
-}
-
-// SetStagingEnvironment mocks base method
+// SetStagingEnvironment mocks base method.
 func (m *MockStager) SetStagingEnvironment() error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SetStagingEnvironment")
@@ -489,36 +462,64 @@ func (m *MockStager) SetStagingEnvironment() error {
 	return ret0
 }
 
-// SetStagingEnvironment indicates an expected call of SetStagingEnvironment
+// SetStagingEnvironment indicates an expected call of SetStagingEnvironment.
 func (mr *MockStagerMockRecorder) SetStagingEnvironment() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetStagingEnvironment", reflect.TypeOf((*MockStager)(nil).SetStagingEnvironment))
 }
 
-// MockTempDir is a mock of TempDir interface
+// WriteEnvFile mocks base method.
+func (m *MockStager) WriteEnvFile(arg0, arg1 string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "WriteEnvFile", arg0, arg1)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// WriteEnvFile indicates an expected call of WriteEnvFile.
+func (mr *MockStagerMockRecorder) WriteEnvFile(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WriteEnvFile", reflect.TypeOf((*MockStager)(nil).WriteEnvFile), arg0, arg1)
+}
+
+// WriteProfileD mocks base method.
+func (m *MockStager) WriteProfileD(arg0, arg1 string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "WriteProfileD", arg0, arg1)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// WriteProfileD indicates an expected call of WriteProfileD.
+func (mr *MockStagerMockRecorder) WriteProfileD(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "WriteProfileD", reflect.TypeOf((*MockStager)(nil).WriteProfileD), arg0, arg1)
+}
+
+// MockTempDir is a mock of TempDir interface.
 type MockTempDir struct {
 	ctrl     *gomock.Controller
 	recorder *MockTempDirMockRecorder
 }
 
-// MockTempDirMockRecorder is the mock recorder for MockTempDir
+// MockTempDirMockRecorder is the mock recorder for MockTempDir.
 type MockTempDirMockRecorder struct {
 	mock *MockTempDir
 }
 
-// NewMockTempDir creates a new mock instance
+// NewMockTempDir creates a new mock instance.
 func NewMockTempDir(ctrl *gomock.Controller) *MockTempDir {
 	mock := &MockTempDir{ctrl: ctrl}
 	mock.recorder = &MockTempDirMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockTempDir) EXPECT() *MockTempDirMockRecorder {
 	return m.recorder
 }
 
-// CopyDirToTemp mocks base method
+// CopyDirToTemp mocks base method.
 func (m *MockTempDir) CopyDirToTemp(arg0 string) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CopyDirToTemp", arg0)
@@ -527,36 +528,36 @@ func (m *MockTempDir) CopyDirToTemp(arg0 string) (string, error) {
 	return ret0, ret1
 }
 
-// CopyDirToTemp indicates an expected call of CopyDirToTemp
+// CopyDirToTemp indicates an expected call of CopyDirToTemp.
 func (mr *MockTempDirMockRecorder) CopyDirToTemp(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CopyDirToTemp", reflect.TypeOf((*MockTempDir)(nil).CopyDirToTemp), arg0)
 }
 
-// MockCache is a mock of Cache interface
+// MockCache is a mock of Cache interface.
 type MockCache struct {
 	ctrl     *gomock.Controller
 	recorder *MockCacheMockRecorder
 }
 
-// MockCacheMockRecorder is the mock recorder for MockCache
+// MockCacheMockRecorder is the mock recorder for MockCache.
 type MockCacheMockRecorder struct {
 	mock *MockCache
 }
 
-// NewMockCache creates a new mock instance
+// NewMockCache creates a new mock instance.
 func NewMockCache(ctrl *gomock.Controller) *MockCache {
 	mock := &MockCache{ctrl: ctrl}
 	mock.recorder = &MockCacheMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockCache) EXPECT() *MockCacheMockRecorder {
 	return m.recorder
 }
 
-// Metadata mocks base method
+// Metadata mocks base method.
 func (m *MockCache) Metadata() *cache.Metadata {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Metadata")
@@ -564,13 +565,13 @@ func (m *MockCache) Metadata() *cache.Metadata {
 	return ret0
 }
 
-// Metadata indicates an expected call of Metadata
+// Metadata indicates an expected call of Metadata.
 func (mr *MockCacheMockRecorder) Metadata() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Metadata", reflect.TypeOf((*MockCache)(nil).Metadata))
 }
 
-// Restore mocks base method
+// Restore mocks base method.
 func (m *MockCache) Restore() error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Restore")
@@ -578,13 +579,13 @@ func (m *MockCache) Restore() error {
 	return ret0
 }
 
-// Restore indicates an expected call of Restore
+// Restore indicates an expected call of Restore.
 func (mr *MockCacheMockRecorder) Restore() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Restore", reflect.TypeOf((*MockCache)(nil).Restore))
 }
 
-// Save mocks base method
+// Save mocks base method.
 func (m *MockCache) Save() error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Save")
@@ -592,7 +593,7 @@ func (m *MockCache) Save() error {
 	return ret0
 }
 
-// Save indicates an expected call of Save
+// Save indicates an expected call of Save.
 func (mr *MockCacheMockRecorder) Save() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Save", reflect.TypeOf((*MockCache)(nil).Save))

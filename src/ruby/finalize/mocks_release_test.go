@@ -5,49 +5,35 @@
 package finalize_test
 
 import (
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockVersions is a mock of Versions interface
+// MockVersions is a mock of Versions interface.
 type MockVersions struct {
 	ctrl     *gomock.Controller
 	recorder *MockVersionsMockRecorder
 }
 
-// MockVersionsMockRecorder is the mock recorder for MockVersions
+// MockVersionsMockRecorder is the mock recorder for MockVersions.
 type MockVersionsMockRecorder struct {
 	mock *MockVersions
 }
 
-// NewMockVersions creates a new mock instance
+// NewMockVersions creates a new mock instance.
 func NewMockVersions(ctrl *gomock.Controller) *MockVersions {
 	mock := &MockVersions{ctrl: ctrl}
 	mock.recorder = &MockVersionsMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockVersions) EXPECT() *MockVersionsMockRecorder {
 	return m.recorder
 }
 
-// HasGem mocks base method
-func (m *MockVersions) HasGem(arg0 string) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "HasGem", arg0)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// HasGem indicates an expected call of HasGem
-func (mr *MockVersionsMockRecorder) HasGem(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HasGem", reflect.TypeOf((*MockVersions)(nil).HasGem), arg0)
-}
-
-// GemMajorVersion mocks base method
+// GemMajorVersion mocks base method.
 func (m *MockVersions) GemMajorVersion(arg0 string) (int, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GemMajorVersion", arg0)
@@ -56,13 +42,28 @@ func (m *MockVersions) GemMajorVersion(arg0 string) (int, error) {
 	return ret0, ret1
 }
 
-// GemMajorVersion indicates an expected call of GemMajorVersion
+// GemMajorVersion indicates an expected call of GemMajorVersion.
 func (mr *MockVersionsMockRecorder) GemMajorVersion(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GemMajorVersion", reflect.TypeOf((*MockVersions)(nil).GemMajorVersion), arg0)
 }
 
-// HasGemVersion mocks base method
+// HasGem mocks base method.
+func (m *MockVersions) HasGem(arg0 string) (bool, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "HasGem", arg0)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// HasGem indicates an expected call of HasGem.
+func (mr *MockVersionsMockRecorder) HasGem(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HasGem", reflect.TypeOf((*MockVersions)(nil).HasGem), arg0)
+}
+
+// HasGemVersion mocks base method.
 func (m *MockVersions) HasGemVersion(arg0 string, arg1 ...string) (bool, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -75,7 +76,7 @@ func (m *MockVersions) HasGemVersion(arg0 string, arg1 ...string) (bool, error) 
 	return ret0, ret1
 }
 
-// HasGemVersion indicates an expected call of HasGemVersion
+// HasGemVersion indicates an expected call of HasGemVersion.
 func (mr *MockVersionsMockRecorder) HasGemVersion(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
