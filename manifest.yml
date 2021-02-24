@@ -14,10 +14,10 @@ dependency_deprecation_dates:
   name: node
   date: 2021-04-01
   link: https://github.com/nodejs/Release
-- version_line: 2.7.x
+- version_line: 2.5.x
   name: ruby
-  date: 2023-04-01
-  link: https://www.ruby-lang.org/en/news/2020/03/31/ruby-2-7-1-released/
+  date: 2021-03-31
+  link: https://www.ruby-lang.org/en/downloads/branches/
 dependencies:
 - name: bundler
   version: 1.17.3
