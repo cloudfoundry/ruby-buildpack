@@ -72,9 +72,6 @@ var _ = Describe("Ruby buildpack", func() {
 			Expect(err).ToNot(HaveOccurred())
 			Expect(bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte("Hello, bcrypt"))).ToNot(HaveOccurred())
 		})
-		By("supports bson", func() {
-			Expect(app.GetBody("/bson")).To(ContainSubstring("00040000"))
-		})
 		By("supports postgres", func() {
 			Expect(app.GetBody("/pg")).To(ContainSubstring("The connection attempt failed."))
 		})

@@ -2,7 +2,6 @@ require 'sinatra'
 require 'nokogiri'
 require 'eventmachine'
 require 'bcrypt'
-require 'bson'
 require 'jdbc/mysql'
 require 'jdbc/postgres'
 
@@ -31,10 +30,6 @@ end
 
 get '/bcrypt' do
   BCrypt::Password.create('Hello, bcrypt')
-end
-
-get '/bson' do
-  1024.to_bson.unpack('H*').first
 end
 
 get '/pg' do
