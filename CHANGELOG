@@ -1,3 +1,15 @@
+v1.8.34 Mar 16, 2021
+=====================
+
+* Add rubygems 3.2.14, remove rubygems 3.2.13
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/177256377)
+
+* Add bundler 2.2.14, remove bundler 2.2.13
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/177256368)
+
+
 v1.8.33 Mar 04, 2021
 =====================
 
