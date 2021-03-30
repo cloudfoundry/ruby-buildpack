@@ -58,8 +58,8 @@ github.com/chzyer/logex v1.1.10/go.mod h1:+Ywpsq7O8HXn0nuIou7OrIPyXbp3wmkHB+jjWR
 github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e/go.mod h1:nSuG5e5PlCu98SY8svDHJxuZscDgtXS6KTTbou5AhLI=
 github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1/go.mod h1:Q3SI9o4m/ZMnBNeIyt5eFwwo7qiLfzFZmjNmxjkiQlU=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
-github.com/cloudfoundry/libbuildpack v0.0.0-20210323164547-db1370f20819 h1:67gt7puvDDQ1opKAceepB9UR2oc8EuHjOea560ch4+s=
-github.com/cloudfoundry/libbuildpack v0.0.0-20210323164547-db1370f20819/go.mod h1:dCbtrQH33YO8GdeMP0iBGPEC8rS/xt8iDf4pdPqswXM=
+github.com/cloudfoundry/libbuildpack v0.0.0-20210329182058-6cf3b596d556 h1:s/kggyN6QmsURbt9l3jMqI0ddKMTeCi2CdPYneqv75o=
+github.com/cloudfoundry/libbuildpack v0.0.0-20210329182058-6cf3b596d556/go.mod h1:alGr1nuVAVycbvRQ5Juovsb1Ko3WuCr75LAUaAashdU=
 github.com/cloudfoundry/packit v0.0.7 h1:10j4d31TrJVCahe04A3bQ7QJUO3rpBLvQ+NGFXzg7os=
 github.com/cloudfoundry/packit v0.0.7/go.mod h1:KCQ69DsYeruJQfZy2pxNR9ozg1OFKEYCFvUHl37t1+Q=
 github.com/cncf/udpa/go v0.0.0-20191209042840-269d4d468f6f/go.mod h1:M8M6+tZqaGXZJjfX53e64911xZQV5JYwmTeXPW+k8Sc=
@@ -358,8 +358,8 @@ github.com/stretchr/testify v1.4.0 h1:2E4SXV/wtOkTonXsotYi4li6zVWxYlZuYNCXe9XRJy
 github.com/stretchr/testify v1.4.0/go.mod h1:j7eGeouHqKxXV5pUuKE4zz7dFj8WfuZ+81PSLYec5m4=
 github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/subosito/gotenv v1.2.0/go.mod h1:N0PQaV/YGNqwC0u51sEeR/aUtSLEXKX9iv69rRypqCw=
-github.com/tidwall/gjson v1.7.1 h1:hwkZ6V1/EF8FxNhKJrIXQwSscyl2yWCZ1SkOCQYHSHA=
-github.com/tidwall/gjson v1.7.1/go.mod h1:5/xDoumyyDNerp2U36lyolv46b3uF/9Bu6OfyQ9GImk=
+github.com/tidwall/gjson v1.7.4 h1:19cchw8FOxkG5mdLRkGf9jqIqEyqdZhPqW60XfyFxk8=
+github.com/tidwall/gjson v1.7.4/go.mod h1:5/xDoumyyDNerp2U36lyolv46b3uF/9Bu6OfyQ9GImk=
 github.com/tidwall/match v1.0.3 h1:FQUVvBImDutD8wJLN6c5eMzWtjgONK9MwIBCOrUJKeE=
 github.com/tidwall/match v1.0.3/go.mod h1:eRSPERbgtNPcGhD8UCthc6PmLEQXEWd3PRB5JTxsfmM=
 github.com/tidwall/pretty v1.1.0 h1:K3hMW5epkdAVwibsQEfR/7Zj0Qgt4DxtNumTq/VloO8=
