@@ -80,7 +80,7 @@ golang.org/x/crypto/blowfish
 golang.org/x/net/html
 golang.org/x/net/html/atom
 golang.org/x/net/html/charset
-# golang.org/x/sys v0.0.0-20210326220804-49726bf1d181
+# golang.org/x/sys v0.0.0-20210331175145-43e1dd70ce54
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 # golang.org/x/text v0.3.4
