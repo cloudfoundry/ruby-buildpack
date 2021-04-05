@@ -1,3 +1,27 @@
+v1.8.36 Apr 05, 2021
+=====================
+
+* Add ruby 2.6.7, remove ruby 2.6.5
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/177625006)
+
+* Add ruby 2.5.9, remove ruby 2.5.7
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/177625009)
+
+* Add ruby 3.0.1
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/177625003)
+
+* Add ruby 2.7.3, remove ruby 2.7.1
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/177624989)
+
+* Add jruby 9.2.17.0, remove jruby 9.2.16.0
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/177550243)
+
+
 v1.8.35 Mar 24, 2021
 =====================
 
