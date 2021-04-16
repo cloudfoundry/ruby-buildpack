@@ -1,3 +1,22 @@
+v1.8.37 Apr 16, 2021
+=====================
+
+* Add rubygems 3.2.16, remove rubygems 3.2.15
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/177697358)
+
+* Add bundler 2.2.16, remove bundler 2.2.15
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/177697234)
+
+* Merge pull request #229 from bbodenmiller/patch-1
+  Improve formatting
+
+* Add node 10.24.1, remove node 10.24.0
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/177654217)
+
+
 v1.8.36 Apr 05, 2021
 =====================
 
