@@ -12,7 +12,7 @@ var _ = Describe("Ruby buildpack", func() {
 	bratshelper.UnbuiltBuildpack("ruby", CopyBrats)
 	bratshelper.DeployingAnAppWithAnUpdatedVersionOfTheSameBuildpack(CopyBrats)
 	bratshelper.StagingWithBuildpackThatSetsEOL("ruby", func(_ string) *cutlass.App {
-		return CopyBrats("2.7.x")
+		return CopyBrats("2.6.x")
 	})
 	bratshelper.StagingWithCustomBuildpackWithCredentialsInDependencies(CopyBrats)
 	bratshelper.DeployAppWithExecutableProfileScript("ruby", CopyBrats)

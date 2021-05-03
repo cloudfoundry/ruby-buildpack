@@ -9,7 +9,8 @@ require (
 	github.com/onsi/ginkgo v1.16.1
 	github.com/onsi/gomega v1.11.0
 	golang.org/x/crypto v0.0.0-20201002170205-7f63de1d35b0
-	golang.org/x/sys v0.0.0-20210426230700-d19ff857e887 // indirect
+	golang.org/x/sys v0.0.0-20210503080704-8803ae5d1324 // indirect
+	golang.org/x/tools v0.1.0 // indirect
 )
 
 go 1.13

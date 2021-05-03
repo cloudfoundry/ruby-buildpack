@@ -15,7 +15,7 @@ var _ = Describe("Rails 5.2 (Webpack/Yarn) App", func() {
 		app = cutlass.New(Fixtures("rails52_webpack_no_sprockets"))
 	})
 
-	It("Installs node and runs", func() {
+	PIt("Installs node and runs", func() {
 		PushAppAndConfirm(app)
 
 		Expect(app.GetBody("/")).To(ContainSubstring("Hello, Rails!"))

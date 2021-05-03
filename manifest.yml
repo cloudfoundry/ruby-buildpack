@@ -6,6 +6,10 @@ default_versions:
 pre_package: scripts/build.sh
 url_to_dependency_map: []
 dependency_deprecation_dates:
+- version_line: 2.6.x
+  name: ruby
+  date: 2022-02-28
+  link: https://www.ruby-lang.org/en/downloads/branches
 - version_line: 10.x
   name: node
   date: 2021-04-30
