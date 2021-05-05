@@ -34,7 +34,7 @@ var _ = Describe("running supply nodejs buildpack before the ruby buildpack", fu
 			PushAppAndConfirm(app)
 
 			Expect(app.Stdout.String()).To(ContainSubstring("Nodejs Buildpack version"))
-			Expect(app.Stdout.String()).To(ContainSubstring("Installing node 14."))
+			Expect(app.Stdout.String()).To(ContainSubstring("Installing node 10."))
 
 			body, err := app.GetBody("/")
 			Expect(err).To(BeNil())
