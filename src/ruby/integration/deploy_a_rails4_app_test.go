@@ -35,7 +35,7 @@ var _ = Describe("Rails 4 App", func() {
 		It("app has dependencies", func() {
 			app = cutlass.New(Fixtures("rails4"))
 			PushAppAndConfirm(app)
-			Expect(app.Stdout.String()).To(ContainSubstring("Installing node 10."))
+			Expect(app.Stdout.String()).To(ContainSubstring("Installing node 14."))
 			Expect(app.Stdout.String()).To(ContainSubstring("Download [https://"))
 
 			Expect(app.GetBody("/")).To(ContainSubstring("Hello world!"))

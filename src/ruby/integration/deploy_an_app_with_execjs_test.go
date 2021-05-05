@@ -18,7 +18,7 @@ var _ = Describe("requiring execjs", func() {
 
 	It("installs node and execjs", func() {
 		PushAppAndConfirm(app)
-		Expect(app.Stdout.String()).To(ContainSubstring("Installing node 10."))
+		Expect(app.Stdout.String()).To(ContainSubstring("Installing node 14."))
 		Expect(app).To(HaveUnchangedAppdir("BuildDir Checksum Before Supply", "BuildDir Checksum After Supply"))
 
 		Expect(app.GetBody("/")).To(ContainSubstring("Successfully required execjs"))
