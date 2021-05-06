@@ -13,6 +13,7 @@ var _ = Describe("pushing a rails51 webpacker app with sprockets", func() {
 
 	BeforeEach(func() {
 		app = cutlass.New(Fixtures("rails51_webpacker"))
+		app.Disk = "1G"
 	})
 
 	It("compiles assets with webpacker", func() {
