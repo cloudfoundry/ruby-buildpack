@@ -1,3 +1,22 @@
+v1.8.38 May 07, 2021
+=====================
+
+* Add bundler 2.2.17, remove bundler 2.2.16
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/178037102)
+
+* Add rubygems 3.2.17, remove rubygems 3.2.16
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/178037083)
+
+* Add node 14.16.1
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/177654221)
+
+* Bump brats tests from 2.5.x to 2.7.x
+
+* Remove ruby versions 2.5.x
+
 v1.8.37 Apr 16, 2021
 =====================
 
