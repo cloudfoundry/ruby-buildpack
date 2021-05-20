@@ -46,6 +46,9 @@ function main() {
     echo "       **ERROR** Could not download go"
     exit 1
   fi
+
+  GoInstallDir="${dir}"
+  export GoInstallDir
 }
 
 main "${@:-}"
