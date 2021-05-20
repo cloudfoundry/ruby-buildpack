@@ -1,25 +1,30 @@
 #!/usr/bin/env bash
-set -euo pipefail
 
-cd "$( dirname "${BASH_SOURCE[0]}" )/.."
-source .envrc
-./scripts/install_tools.sh
+set -e
+set -u
+set -o pipefail
 
-GINKGO_NODES=${GINKGO_NODES:-3}
-GINKGO_ATTEMPTS=${GINKGO_ATTEMPTS:-2}
-export CF_STACK=${CF_STACK:-cflinuxfs3}
-DISK_LIMIT_ARG=""
-MEM_LIMIT_ARG=""
+ROOTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+readonly ROOTDIR
 
-if [ -n "${CF_BRATS_DISK_QUOTA+x}" ]; then
-  DISK_LIMIT_ARG="-disk=$CF_BRATS_DISK_QUOTA"
-fi
+source "${ROOTDIR}/.envrc"
 
-if [ -n "${CF_BRATS_MEM_QUOTA+x}" ]; then
-  MEM_LIMIT_ARG="-memory=$CF_BRATS_MEM_QUOTA"
-fi
+function main() {
+  local src
+  src="$(find "${ROOTDIR}/src/" -type d -depth 1)"
 
-cd src/*/brats
+  "${ROOTDIR}/scripts/install_tools.sh"
 
-echo "Run Buildpack Runtime Acceptance Tests"
-ginkgo -r -mod=vendor --flakeAttempts=$GINKGO_ATTEMPTS -nodes $GINKGO_NODES -- $DISK_LIMIT_ARG $MEM_LIMIT_ARG
+
+  echo "Run Buildpack Runtime Acceptance Tests"
+
+  CF_STACK="${CF_STACK:-cflinuxfs3}" \
+    ginkgo \
+      -r \
+      -mod vendor \
+      --flakeAttempts "${GINKGO_ATTEMPTS:-2}" \
+      -nodes "${GINKGO_NODES:-3}" \
+        "${src}/brats"
+}
+
+main "${@:-}"
