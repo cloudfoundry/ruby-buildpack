@@ -11,7 +11,7 @@ source "${ROOTDIR}/.envrc"
 
 function main() {
   local src
-  src="$(find "${ROOTDIR}/src/" -type d -depth 1)"
+  src="$(find "${ROOTDIR}/src" -type d -mindepth 1 -maxdepth 1)"
 
   "${ROOTDIR}/scripts/install_tools.sh"
 

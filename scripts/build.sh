@@ -9,7 +9,7 @@ readonly ROOTDIR
 
 function main() {
   local src
-  src="$(find "${ROOTDIR}/src/" -type d -depth 1)"
+  src="$(find "${ROOTDIR}/src" -type d -mindepth 1 -maxdepth 1)"
 
   for name in supply finalize; do
     GOOS=linux \
