@@ -6,14 +6,6 @@ default_versions:
 pre_package: scripts/build.sh
 url_to_dependency_map: []
 dependency_deprecation_dates:
-- version_line: 10.x
-  name: node
-  date: 2021-04-30
-  link: https://github.com/nodejs/LTS
-- version_line: 10.x.x
-  name: node
-  date: 2021-04-01
-  link: https://github.com/nodejs/Release
 - version_line: 14.x.x
   name: node
   date: 2023-04-30
@@ -55,14 +47,6 @@ dependencies:
   - cflinuxfs3
   source: https://s3.amazonaws.com/jruby.org/downloads/9.2.17.0/jruby-src-9.2.17.0.tar.gz
   source_sha256: 8700ae9097cfba0b37e1709c4a0baf996fdd2d76260eaf53a60f79f05af760e7
-- name: node
-  version: 10.24.1
-  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_10.24.1_linux_x64_cflinuxfs3_80ce1404.tgz
-  sha256: 80ce1404d759d8838741d1e32fad9fac3a3f601dd15b38d27a54c7fd7211710e
-  cf_stacks:
-  - cflinuxfs3
-  source: https://nodejs.org/dist/v10.24.1/node-v10.24.1.tar.gz
-  source_sha256: 95c7cfc4b5ad0b5a62bd553b30840db66f21217fbeb769ab27dac8019a4ebe5d
 - name: node
   version: 14.17.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_14.17.0_linux_x64_cflinuxfs3_2ebd327c.tgz
