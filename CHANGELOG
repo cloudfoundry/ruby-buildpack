@@ -1,3 +1,19 @@
+v1.8.40 Jun 02, 2021
+=====================
+
+* remove node version line 10
+
+* Add rubygems 3.2.19, remove rubygems 3.2.17
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/178288929)
+  (https://www.pivotaltracker.com/story/show/178352704)
+
+* Add bundler 2.2.19, remove bundler 2.2.17
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/178289508)
+  (https://www.pivotaltracker.com/story/show/178352564)
+
+
 v1.8.39 May 18, 2021
 =====================
 
