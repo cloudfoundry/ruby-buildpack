@@ -273,15 +273,14 @@ PLATFORMS
 
 DEPENDENCIES
   roda
-
-BUNDLED WITH
-   1.15.3
-			`), 0644)).To(Succeed())
+`), 0644)).To(Succeed())
 		})
 
 		It("returns true for roda", func() {
 			v := versions.New(tmpDir, depDir, mockManifest)
-			Expect(v.HasGem("roda")).To(BeTrue())
+			found, err := v.HasGem("roda")
+			Expect(err).NotTo(HaveOccurred())
+			Expect(found).To(BeTrue())
 		})
 
 		It("returns false for rails", func() {
@@ -304,7 +303,7 @@ PLATFORMS
 
 DEPENDENCIES
   roda
-			`), 0644)).To(Succeed())
+`), 0644)).To(Succeed())
 		})
 
 		It("returns 2 for rack", func() {
@@ -337,10 +336,7 @@ PLATFORMS
 
 DEPENDENCIES
   roda
-
-BUNDLED WITH
-   1.15.3
-			`), 0644)).To(Succeed())
+`), 0644)).To(Succeed())
 		})
 
 		It("returns true for >=2.28.0 for roda", func() {
@@ -413,12 +409,12 @@ PLATFORMS
    ruby
 
 BUNDLED WITH
-   1.15.3`), 0644)).To(Succeed())
+   2.1.3`), 0644)).To(Succeed())
 			})
 
 			It("returns the requested version", func() {
 				v := versions.New(tmpDir, depDir, mockManifest)
-				Expect(v.BundledWithVersion()).To(Equal("1.15.3"))
+				Expect(v.BundledWithVersion()).To(Equal("2.1.3"))
 			})
 		})
 
