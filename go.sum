@@ -58,8 +58,6 @@ github.com/chzyer/logex v1.1.10/go.mod h1:+Ywpsq7O8HXn0nuIou7OrIPyXbp3wmkHB+jjWR
 github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e/go.mod h1:nSuG5e5PlCu98SY8svDHJxuZscDgtXS6KTTbou5AhLI=
 github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1/go.mod h1:Q3SI9o4m/ZMnBNeIyt5eFwwo7qiLfzFZmjNmxjkiQlU=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
-github.com/cloudfoundry/libbuildpack v0.0.0-20210622170028-d2e89e1337a5 h1:HN+Q//5hW83ktCg4HGJDpfUk03uK0doPOkQGq+df25o=
-github.com/cloudfoundry/libbuildpack v0.0.0-20210622170028-d2e89e1337a5/go.mod h1:/ko8Uf06xLsjfml9GZedOclxCgLMQhc5iEZcMXrpB/g=
 github.com/cloudfoundry/libbuildpack v0.0.0-20210708152203-15eca34c201e h1:wHWxm+lgis0OusPtG7o2pKS5S2JwUH6jx2K7IKZzM/I=
 github.com/cloudfoundry/libbuildpack v0.0.0-20210708152203-15eca34c201e/go.mod h1:/ko8Uf06xLsjfml9GZedOclxCgLMQhc5iEZcMXrpB/g=
 github.com/cloudfoundry/packit v0.0.7 h1:10j4d31TrJVCahe04A3bQ7QJUO3rpBLvQ+NGFXzg7os=
