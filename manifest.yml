@@ -24,13 +24,13 @@ dependencies:
   source: http://github.com/bundler/bundler/tree/v1.17.3
   source_sha256: a34cf18749cc92e25329fc11418bf7800853b74e1e39f82223841114d84d58de
 - name: bundler
-  version: 2.2.24
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler_2.2.24_linux_noarch_any-stack_9d9ec740.tgz
-  sha256: 9d9ec740236899fa7fe187e16017155e4a071b1b3afd53af939130f7a548094c
+  version: 2.2.25
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler_2.2.25_linux_noarch_any-stack_88744670.tgz
+  sha256: 88744670e80eec3283ce7b887989c5b29cac69018366eccf17256c1f95f22ac2
   cf_stacks:
   - cflinuxfs3
-  source: https://github.com/rubygems/rubygems/tree/v2.2.24
-  source_sha256: c2f894a38a27de2635ed48f29bedb252c4160f99b3d773d54865790a71fd6cf4
+  source: https://github.com/rubygems/rubygems/tree/v2.2.25
+  source_sha256: 422237ffbbf2ceb05e696df7abb1bd1a82b5b1823eb2aeb6193312a60c319d8d
 - name: jruby
   version: 9.1.17.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.1.17.0-ruby-2.3_linux_x64_cflinuxfs3_31e7e929.tgz
