@@ -1,3 +1,31 @@
+v1.8.45 Aug 23, 2021
+=====================
+
+* Add bundler 2.2.26, remove bundler 2.2.25
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/179253428)
+
+* Add rubygems 3.2.26, remove rubygems 3.2.25
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/179253263)
+
+* Add node 14.17.5, remove node 14.17.4
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/179196629)
+
+* Add rubygems 3.2.25, remove rubygems 3.2.24
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/179075503)
+
+* Add bundler 2.2.25, remove bundler 2.2.24
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/179075341)
+
+* Add node 14.17.4, remove node 14.17.3
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/179058593)
+
+
 v1.8.44 Jul 20, 2021
 =====================
 
