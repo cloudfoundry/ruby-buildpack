@@ -194,7 +194,6 @@ func (v *Versions) GemMajorVersion(gem string) (int, error) {
 
 //Should return true if either:
 // (1) the only platform in the Gemfile.lock is windows (mingw/mswin)
-//     (there is no ruby or jruby platform)
 //     -or-
 // (2) the Gemfile.lock line endings are /r/n, rather than just /n
 func (v *Versions) HasWindowsGemfileLock() (bool, error) {
@@ -204,31 +203,28 @@ func (v *Versions) HasWindowsGemfileLock() (bool, error) {
 	} else if !good {
 		return false, nil
 	}
-	if bytes, err := ioutil.ReadFile(gemfileLockPath); err != nil {
+	contents, err := ioutil.ReadFile(gemfileLockPath)
+	if err != nil {
 		return false, err
-	} else if strings.Contains(string(bytes), "\r\n") {
+	} else if strings.Contains(string(contents), "\r\n") {
 		return true, nil
 	}
 
-	code := `
-	  return false if !File.exists?(input["gemfilelock"])
-		parsed = Bundler::LockfileParser.new(File.read(input["gemfilelock"]))
-		parsed.platforms.detect do |platform|
-		  if platform.is_a?(String)
-        /ruby/.match(platform)
-			elsif platform.is_a?(Gem::Platform)
-			  /java/.match(platform.os)
-			end
-    end.nil?
-	`
-
-	data, err := v.run(filepath.Dir(v.Gemfile()),
-		code,
-		map[string]string{"gemfilelock": fmt.Sprintf("%s.lock", v.Gemfile())})
-	if err != nil {
-		return false, err
+	// ruby Bundler::LockfileParser is not used as it seems to completely ignore
+	// platforms like linux.
+	// https://github.com/rubygems/rubygems/blob/v3.2.26/bundler/lib/bundler/rubygems_ext.rb#L179-L185
+	re := regexp.MustCompile("\nPLATFORMS\n((?:.+\n)*)")
+	match := re.FindStringSubmatch(string(contents))
+	if len(match) != 2 {
+		return false, nil
 	}
-	return data.(bool), nil
+	platforms := strings.Fields(match[1])
+	for _, p := range platforms {
+		if !strings.Contains(p, "mswin") && !strings.Contains(p, "mingw") {
+			return false, nil
+		}
+	}
+	return true, nil
 }
 
 func (v *Versions) specs() (map[string]string, error) {
