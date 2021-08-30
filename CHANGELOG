@@ -1,3 +1,12 @@
+v1.8.46 Aug 30, 2021
+=====================
+
+* Windows platform check: check explicitly for windows
+  Since Bundler 2.2.x, the behavior of platform section has
+  changed.
+  https://github.com/cloudfoundry/ruby-buildpack/issues/301
+
+
 v1.8.45 Aug 23, 2021
 =====================
 
