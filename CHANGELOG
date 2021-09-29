@@ -1,3 +1,29 @@
+v1.8.47 Sep 29, 2021
+=====================
+
+* Auto merge pull request 339
+
+* Add yarn 1.22.12, remove yarn 1.22.10
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/179753501)
+  (https://www.pivotaltracker.com/story/show/179012448)
+
+* Add node 14.18.0, remove node 14.17.5
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/179736417)
+  (https://www.pivotaltracker.com/story/show/179422584)
+
+* Add bundler 2.2.28, remove bundler 2.2.26
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/179693916)
+  (https://www.pivotaltracker.com/story/show/179461574)
+
+* Add rubygems 3.2.28, remove rubygems 3.2.26
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/179693812)
+  (https://www.pivotaltracker.com/story/show/179461478)
+
+
 v1.8.46 Aug 30, 2021
 =====================
 
