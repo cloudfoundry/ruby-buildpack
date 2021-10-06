@@ -82,6 +82,7 @@ func CopyBrats(rubyVersion string) *cutlass.App {
 	return cutlass.New(dir)
 }
 
+// jruby 9.3.X.X = ruby 2.6.X
 // jruby 9.2.X.X = ruby 2.5.X
 // jruby 9.1.X.X = ruby 2.3.X
 func rubyVersionFromJRubyVersion(jrubyVersion string) (string, error) {
@@ -91,6 +92,8 @@ func rubyVersionFromJRubyVersion(jrubyVersion string) (string, error) {
 		return "", fmt.Errorf("JRuby version is not of expected format: expected 9.X.X.X, got %s", jrubyVersion)
 	}
 	switch version[1] {
+	case "9.3":
+		return "~>2.6", nil
 	case "9.2":
 		return "~>2.5", nil
 	case "9.1":
