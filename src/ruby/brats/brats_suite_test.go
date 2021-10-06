@@ -131,7 +131,7 @@ func createGemfileLockFile(jrubyVersion string, fixtureDir string) error {
 
 	var buffer []byte
 	switch version[1] {
-	case "9.2":
+	case "9.2", "9.3":
 		buffer = []byte(`GEM
   remote: https://rubygems.org/
   specs:
