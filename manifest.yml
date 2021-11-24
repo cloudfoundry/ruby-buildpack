@@ -72,14 +72,6 @@ dependencies:
   source: https://java-buildpack.cloudfoundry.org/openjdk-jdk/trusty/x86_64/openjdk-jdk-1.8.0_212-trusty.tar.gz
   source_sha256: '0749e51942641f369a9411ba27207fbf74b8836f1fb19a3d85cee55e13387a9c'
 - name: ruby
-  version: 2.6.7
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_2.6.7_linux_x64_cflinuxfs3_db90addb.tgz
-  sha256: db90addb4e177bad7478f345e1c4cc4de4eb8326aad5a566678014a0b54c6403
-  cf_stacks:
-  - cflinuxfs3
-  source: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.7.tar.gz
-  source_sha256: e4227e8b7f65485ecb73397a83e0d09dcd39f25efd411c782b69424e55c7a99e
-- name: ruby
   version: 2.6.8
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_2.6.8_linux_x64_cflinuxfs3_74e0625a.tgz
   sha256: 74e0625a365c91e6f578f574f6cb0eb09cab95a080df5900437701aae35a522c
@@ -87,6 +79,14 @@ dependencies:
   - cflinuxfs3
   source: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.8.tar.gz
   source_sha256: 1807b78577bc08596a390e8a41aede37b8512190e05c133b17d0501791a8ca6d
+- name: ruby
+  version: 2.6.9
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_2.6.9_linux_x64_cflinuxfs3_26506fac.tgz
+  sha256: 26506facf6485a84552489e5b54557a6b73a16265533e8f20928b66eaf030322
+  cf_stacks:
+  - cflinuxfs3
+  source: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.9.tar.gz
+  source_sha256: eb7bae7aac64bf9eb2153710a4cafae450ccbb62ae6f63d573e1786178b0efbb
 - name: ruby
   version: 2.7.3
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_2.7.3_linux_x64_cflinuxfs3_daf118b9.tgz
