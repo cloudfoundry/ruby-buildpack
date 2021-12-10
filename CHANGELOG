@@ -1,3 +1,53 @@
+v1.8.49 Dec 10, 2021
+=====================
+
+* Bump github.com/onsi/gomega from 1.16.0 to 1.17.0
+  Bumps [github.com/onsi/gomega](https://github.com/onsi/gomega) from 1.16.0 to 1.17.0.
+  - [Release notes](https://github.com/onsi/gomega/releases)
+  - [Changelog](https://github.com/onsi/gomega/blob/master/CHANGELOG.md)
+  - [Commits](https://github.com/onsi/gomega/compare/v1.16.0...v1.17.0)
+  
+  ---
+  updated-dependencies:
+  - dependency-name: github.com/onsi/gomega
+    dependency-type: direct:production
+    update-type: version-update:semver-minor
+  ...
+
+* Add ruby 3.0.3, remove ruby 3.0.1
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/180426069)
+
+* Add ruby 2.7.5, remove ruby 2.7.3
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/180426058)
+
+* Add ruby 2.6.9, remove ruby 2.6.7
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/180426021)
+
+* Add jruby 9.3.2.0, remove jruby 9.3.1.0
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/180509982)
+
+* Add jruby 9.2.20.1, remove jruby 9.2.19.0
+  for stack(s) cflinuxfs3
+
+* Add rubygems 3.2.33, remove rubygems 3.2.29
+  for stack(s) cflinuxfs3
+
+* Add bundler 2.2.33, remove bundler 2.2.29
+  for stack(s) cflinuxfs3
+
+* Add node 14.18.2, remove node 14.18.1
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/180480654)
+
+* Readme: Update packager install instructions
+
+* Update libbuildpack
+
+
 v1.8.48 Oct 18, 2021
 =====================
 
