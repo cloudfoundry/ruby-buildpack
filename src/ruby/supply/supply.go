@@ -354,7 +354,7 @@ func (s *Supplier) NeedsNode() bool {
 	if s.isNodeInstalled() {
 		s.Log.BeginStep("Skipping install of nodejs since it has been supplied")
 	} else {
-		for _, name := range []string{"webpacker", "execjs"} {
+		for _, name := range []string{"webpacker", "execjs", "cssbundling-rails", "jsbundling-rails"} {
 			s.Log.Debug("Test %s in gemfile", name)
 			hasgem, err := s.Versions.HasGemVersion(name, ">=0.0.0")
 			if err == nil && hasgem {

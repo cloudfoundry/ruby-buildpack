@@ -775,7 +775,25 @@ var _ = Describe("Supply", func() {
 					Expect(supplier.NeedsNode()).To(BeTrue())
 				})
 			})
-			Context("neither webpacker nor execjs are installed", func() {
+			Context("cssbundling-rails is installed", func() {
+				BeforeEach(func() {
+					mockVersions.EXPECT().HasGemVersion("cssbundling-rails", ">=0.0.0").Return(true, nil)
+					mockVersions.EXPECT().HasGemVersion(gomock.Any(), ">=0.0.0").AnyTimes().Return(false, nil)
+				})
+				It("returns true", func() {
+					Expect(supplier.NeedsNode()).To(BeTrue())
+				})
+			})
+			Context("jsbundling-rails is installed", func() {
+				BeforeEach(func() {
+					mockVersions.EXPECT().HasGemVersion("jsbundling-rails", ">=0.0.0").Return(true, nil)
+					mockVersions.EXPECT().HasGemVersion(gomock.Any(), ">=0.0.0").AnyTimes().Return(false, nil)
+				})
+				It("returns true", func() {
+					Expect(supplier.NeedsNode()).To(BeTrue())
+				})
+			})
+			Context("none of webpacker, execjs, cssbundling-rails, or jsbundling-rails are installed", func() {
 				BeforeEach(func() {
 					mockVersions.EXPECT().HasGemVersion(gomock.Any(), ">=0.0.0").AnyTimes().Return(false, nil)
 				})
