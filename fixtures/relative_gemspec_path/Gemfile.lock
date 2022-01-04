@@ -21,6 +21,3 @@ PLATFORMS
 DEPENDENCIES
   hola!
   sinatra
-
-BUNDLED WITH
-   1.12.5

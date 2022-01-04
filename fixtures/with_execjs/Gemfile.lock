@@ -17,6 +17,3 @@ PLATFORMS
 DEPENDENCIES
   execjs
   sinatra
-
-BUNDLED WITH
-   1.14.6
