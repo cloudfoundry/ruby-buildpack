@@ -687,6 +687,22 @@ func (s *Supplier) InstallGems() error {
 		return err
 	}
 
+	// Read Gemfile.lock to see if Bundler With version is >2, and not equal to the current bundler version
+	// See: https://stackoverflow.com/questions/56680065/heroku-installs-bundler-then-throws-error-bundler-2-0-1
+	if s.appHasGemfileLock {
+		bundledWithVersion, err := s.Versions.BundledWithVersion()
+		if err != nil {
+			return fmt.Errorf("could not read Bundled With version from gemfile.lock: %s", err)
+		}
+
+		if bundledWithVersion != bundlerVersion && strings.HasPrefix(bundledWithVersion, "2") {
+			if err := s.removeIncompatibleBundledWithVersion(bundledWithVersion); err != nil {
+				return fmt.Errorf("could not remove Bundled With from end of "+
+					"gemfile.lock: %s", err)
+			}
+		}
+	}
+
 	s.Log.BeginStep("Installing dependencies using bundler %s", bundlerVersion)
 	s.Log.Info("Running: bundle %s", strings.Join(args, " "))
 
@@ -710,27 +726,6 @@ func (s *Supplier) InstallGems() error {
 
 	if err := s.regenerateBundlerBinStub(tempDir); err != nil {
 		return err
-	}
-
-	// Read Gemfile.lock to see if Bundler With version is >2, and not equal to the current bundler version
-	// See: https://stackoverflow.com/questions/56680065/heroku-installs-bundler-then-throws-error-bundler-2-0-1
-	if s.appHasGemfileLock {
-		bundledWithVersion, err := s.Versions.BundledWithVersion()
-		if err != nil {
-			return fmt.Errorf("could not read Bundled With version from gemfile.lock: %s", err)
-		}
-
-		bundlerVersion, err := s.Versions.GetBundlerVersion()
-		if err != nil {
-			return err
-		}
-
-		if bundledWithVersion != bundlerVersion && strings.HasPrefix(bundledWithVersion, "2") {
-			if err := s.removeIncompatibleBundledWithVersion(bundledWithVersion); err != nil {
-				return fmt.Errorf("could not remove Bundled With from end of "+
-					"gemfile.lock: %s", err)
-			}
-		}
 	}
 
 	s.Log.Info("Cleaning up the bundler cache.")
