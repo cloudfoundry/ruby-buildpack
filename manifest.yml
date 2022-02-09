@@ -12,7 +12,19 @@ dependency_deprecation_dates:
   link: https://github.com/nodejs/Release
 - version_line: 2.6.x
   name: ruby
-  date: 2022-02-28
+  date: 2022-03-31
+  link: https://www.ruby-lang.org/en/downloads/branches
+- version_line: 2.7.x
+  name: ruby
+  date: 2023-03-31
+  link: https://www.ruby-lang.org/en/downloads/branches
+- version_line: 3.0.x
+  name: ruby
+  date: 2024-03-31
+  link: https://www.ruby-lang.org/en/downloads/branches
+- version_line: 3.1.x
+  name: ruby
+  date: 2025-03-31
   link: https://www.ruby-lang.org/en/downloads/branches
 - version_line: 3.1.x
   name: ruby
