@@ -1,3 +1,19 @@
+v1.8.51 Feb 11, 2022
+=====================
+
+* Add ruby 3.1.0
+
+* Add bundler 2.3.7, remove bundler 2.3.4
+
+* Add rubygems 3.3.7, remove rubygems 3.3.4
+
+* Add node 16.14.0, remove node 14.18.2
+
+* Add jruby 9.3.3.0, remove jruby 9.3.2.0
+
+* Install node.js if cssbundling-rails or jsbundling-rails gems are used
+
+
 v1.8.50 Jan 06, 2022
 =====================
 
@@ -18,7 +34,7 @@ v1.8.49 Dec 10, 2021
   - [Release notes](https://github.com/onsi/gomega/releases)
   - [Changelog](https://github.com/onsi/gomega/blob/master/CHANGELOG.md)
   - [Commits](https://github.com/onsi/gomega/compare/v1.16.0...v1.17.0)
-  
+
   ---
   updated-dependencies:
   - dependency-name: github.com/onsi/gomega
@@ -1948,11 +1964,11 @@ v1.6.9 Nov 16, 2015
 
 * Add support for JRuby 9.0.4.0 (Remove support for JRuby 9.0.3.0)
   (https://www.pivotaltracker.com/story/show/108125524)
-    
+
 * Developers should be given detailed, helpful instructions when they attempt
   to stage an application whose dependency is not found in the manifest.
   (https://www.pivotaltracker.com/story/show/107939104)
-    
+
 * Replace `JAVA_TOOL_OPTIONS` with `JAVA_MEM` to avoid JRuby overriding
   (https://github.com/heroku/heroku-buildpack-ruby/commit/694c3039e710778d6286989ba6a006fd582b88c1)
 
