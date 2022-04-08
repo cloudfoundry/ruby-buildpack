@@ -1,3 +1,19 @@
+v1.8.53 Apr 08, 2022
+=====================
+
+* Deprecate Ruby 2.6. Update fixtures.
+
+* Add rubygems 3.3.11, remove rubygems 3.3.8 for stack(s) cflinuxfs3
+
+* Add bundler 2.3.11, remove bundler 2.3.8 for stack(s) cflinuxfs3
+
+* Add jruby 9.3.4.0, remove jruby 9.3.3.0 for stack(s) cflinuxfs3
+
+* Add node 16.14.2, remove node 16.14.0 for stack(s) cflinuxfs3
+
+* Add yarn 1.22.18, remove yarn 1.22.17 for stack(s) cflinuxfs3
+
+
 v1.8.52 Mar 08, 2022
 =====================
 
