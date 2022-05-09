@@ -2,7 +2,7 @@ module github.com/cloudfoundry/ruby-buildpack
 
 require (
 	github.com/blang/semver v3.5.1+incompatible
-	github.com/cloudfoundry/libbuildpack v0.0.0-20220329192604-c8ccbfd4cb8d
+	github.com/cloudfoundry/libbuildpack v0.0.0-20220509111721-05ef1d6ca1f1
 	github.com/cloudfoundry/packit v0.0.7
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/golang/mock v1.6.0
