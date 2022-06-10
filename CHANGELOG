@@ -1,3 +1,15 @@
+v1.8.55 Jun 10, 2022
+=====================
+
+* Add bundler 2.3.15, remove bundler 2.3.13 for stack(s) cflinuxfs3
+
+* Add rubygems 3.3.15, remove rubygems 3.3.13 for stack(s) cflinuxfs3
+
+* Add node 16.15.1, remove node 16.15.0 for stack(s) cflinuxfs3
+
+* Add yarn 1.22.19, remove yarn 1.22.18 for stack(s) cflinuxfs3
+
+
 v1.8.54 May 06, 2022
 =====================
 
