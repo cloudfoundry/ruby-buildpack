@@ -135,53 +135,25 @@ func createGemfileLockFile(jrubyVersion string, fixtureDir string) error {
 		buffer = []byte(`GEM
   remote: https://rubygems.org/
   specs:
-    bcrypt (3.1.16-java)
+    bcrypt (3.1.18-java)
     eventmachine (1.2.7-java)
-    jdbc-mysql (8.0.17)
-    jdbc-postgres (42.2.14)
+    jdbc-mysql (8.0.27)
+    jdbc-postgres (42.2.25)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     nokogiri (1.11.1-java)
       racc (~> 1.4)
-    racc (1.5.2-java)
-    rack (2.2.3)
-    rack-protection (2.1.0)
+    racc (1.6.0-java)
+    rack (2.2.3.1)
+    rack-protection (2.2.0)
       rack
-    ruby2_keywords (0.0.4)
-    sinatra (2.1.0)
+    ruby2_keywords (0.0.5)
+    sinatra (2.2.0)
       mustermann (~> 1.0)
       rack (~> 2.2)
-      rack-protection (= 2.1.0)
+      rack-protection (= 2.2.0)
       tilt (~> 2.0)
     tilt (2.0.10)
-
-PLATFORMS
-  universal-java-11
-
-DEPENDENCIES
-  bcrypt
-  eventmachine
-  jdbc-mysql
-  jdbc-postgres
-  nokogiri
-  sinatra`)
-	case "9.1":
-		buffer = []byte(`GEM
-  remote: https://rubygems.org/
-  specs:
-    bcrypt (3.1.10-java)
-    eventmachine (1.0.7-java)
-    jdbc-mysql (5.1.35)
-    jdbc-postgres (9.4.1200)
-    nokogiri (1.6.6.2-java)
-    rack (1.6.1)
-    rack-protection (1.5.3)
-      rack
-    sinatra (1.4.6)
-      rack (~> 1.4)
-      rack-protection (~> 1.4)
-      tilt (>= 1.3, < 3)
-    tilt (2.0.1)
 
 PLATFORMS
   java
