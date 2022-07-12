@@ -39,12 +39,14 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.8.0)
+    concurrent-ruby (1.1.9)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.2.1)
     hashery (2.1.1)
     hike (1.2.3)
-    i18n (0.6.11)
+    i18n (0.9.5)
+      concurrent-ruby (~> 1.0)
     journey (1.0.4)
     jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
