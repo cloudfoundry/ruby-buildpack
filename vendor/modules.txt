@@ -4,7 +4,7 @@ code.cloudfoundry.org/lager
 github.com/Masterminds/semver
 # github.com/blang/semver v3.5.1+incompatible
 github.com/blang/semver
-# github.com/cloudfoundry/libbuildpack v0.0.0-20220901111341-9026a345fd26
+# github.com/cloudfoundry/libbuildpack v0.0.0-20221007111339-12da67d8a8c4
 github.com/cloudfoundry/libbuildpack
 github.com/cloudfoundry/libbuildpack/ansicleaner
 github.com/cloudfoundry/libbuildpack/bratshelper
