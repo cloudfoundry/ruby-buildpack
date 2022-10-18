@@ -131,7 +131,7 @@ func createGemfileLockFile(jrubyVersion string, fixtureDir string) error {
 
 	var buffer []byte
 	switch version[1] {
-	case "9.2", "9.3":
+	case "9.2":
 		buffer = []byte(`GEM
   remote: https://rubygems.org/
   specs:
@@ -139,24 +139,58 @@ func createGemfileLockFile(jrubyVersion string, fixtureDir string) error {
     eventmachine (1.2.7-java)
     jdbc-mysql (8.0.27)
     jdbc-postgres (42.2.25)
-    mustermann (1.1.1)
+    mustermann (2.0.2)
       ruby2_keywords (~> 0.0.1)
-    nokogiri (1.11.1-java)
+    nokogiri (1.12.5-java)
       racc (~> 1.4)
     racc (1.6.0-java)
-    rack (2.2.3.1)
-    rack-protection (2.2.0)
+    rack (2.2.4)
+    rack-protection (2.2.2)
       rack
     ruby2_keywords (0.0.5)
-    sinatra (2.2.0)
-      mustermann (~> 1.0)
+    sinatra (2.2.2)
+      mustermann (~> 2.0)
       rack (~> 2.2)
-      rack-protection (= 2.2.0)
+      rack-protection (= 2.2.2)
       tilt (~> 2.0)
-    tilt (2.0.10)
+    tilt (2.0.11)
 
 PLATFORMS
-  java
+  universal-java-1.8
+
+DEPENDENCIES
+  bcrypt
+  eventmachine
+  jdbc-mysql
+  jdbc-postgres
+  nokogiri
+  sinatra`)
+	case "9.3":
+		buffer = []byte(`GEM
+  remote: https://rubygems.org/
+  specs:
+    bcrypt (3.1.18-java)
+    eventmachine (1.2.7-java)
+    jdbc-mysql (8.0.27)
+    jdbc-postgres (42.2.25)
+    mustermann (3.0.0)
+      ruby2_keywords (~> 0.0.1)
+    nokogiri (1.13.8-java)
+      racc (~> 1.4)
+    racc (1.6.0-java)
+    rack (2.2.4)
+    rack-protection (3.0.2)
+      rack
+    ruby2_keywords (0.0.5)
+    sinatra (3.0.2)
+      mustermann (~> 3.0)
+      rack (~> 2.2, >= 2.2.4)
+      rack-protection (= 3.0.2)
+      tilt (~> 2.0)
+    tilt (2.0.11)
+
+PLATFORMS
+  universal-java-1.8
 
 DEPENDENCIES
   bcrypt
