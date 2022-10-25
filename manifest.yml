@@ -56,13 +56,13 @@ dependencies:
   source: https://s3.amazonaws.com/jruby.org/downloads/9.3.9.0/jruby-src-9.3.9.0.tar.gz
   source_sha256: 5e10f5fafa9a7a20ba4cb7504cc3b6e8db3263a601e89602c3c26dfab2e3ac8e
 - name: node
-  version: 18.1.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_18.1.0_linux_x64_cflinuxfs3_e4208add.tgz
-  sha256: e4208adda3210e3686944516dbbc13dc4932481da39fb731ca9b95639170e087
+  version: 18.2.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_18.2.0_linux_x64_cflinuxfs3_c6192f75.tgz
+  sha256: c6192f750a53f4c79d7f1e562b0ba919408a3639ad245bb8e6872159e68e67c7
   cf_stacks:
   - cflinuxfs3
-  source: https://nodejs.org/dist/v18.1.0/node-v18.1.0.tar.gz
-  source_sha256: a7359bf6427dd5b1fd897c878b64ad0278ecd4037947b1567c40f96c5d5513ef
+  source: https://nodejs.org/dist/v18.2.0/node-v18.2.0.tar.gz
+  source_sha256: bb9c117814341676edbfd7c79cfaaac2d809e760a65fe9afe050245d55bb7ca7
 - name: openjdk1.8-latest
   version: 1.8.0
   uri: https://java-buildpack.cloudfoundry.org/openjdk-jdk/trusty/x86_64/openjdk-jdk-1.8.0_212-trusty.tar.gz
