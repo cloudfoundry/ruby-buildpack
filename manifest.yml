@@ -6,9 +6,9 @@ default_versions:
 pre_package: scripts/build.sh
 url_to_dependency_map: []
 dependency_deprecation_dates:
-- version_line: 16.x.x
+- version_line: 18.x.x
   name: node
-  date: 2024-04-30
+  date: 2025-04-30
   link: https://github.com/nodejs/Release
 - version_line: 2.7.x
   name: ruby
@@ -32,13 +32,13 @@ dependencies:
   source: http://github.com/bundler/bundler/tree/v1.17.3
   source_sha256: a34cf18749cc92e25329fc11418bf7800853b74e1e39f82223841114d84d58de
 - name: bundler
-  version: 2.3.24
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler_2.3.24_linux_noarch_any-stack_d09f0eee.tgz
-  sha256: d09f0eee85267c1dd62778d24caff136f7efe2ddb720b735bdd296871b269f3b
+  version: 2.3.25
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler_2.3.25_linux_noarch_any-stack_105508cd.tgz
+  sha256: 105508cd7d3e1904f7e8c5aaf9df9b4c7d832c5e42ddb31b04b1872d45b3f188
   cf_stacks:
   - cflinuxfs3
-  source: https://github.com/rubygems/rubygems/tree/master/bundlertree/v2.3.24
-  source_sha256: eaa2eb8c3892e870f979252b2196bd77eb551e1dbf3cdc4eb164ba01ec4438c4
+  source: https://github.com/rubygems/rubygems/tree/master/bundlertree/v2.3.25
+  source_sha256: fd81ec4635c4189b66fd0789537d5cb38b3810b70765f6e1e82dda15b97591ad
 - name: jruby
   version: 9.2.21.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.2.21.0-ruby-2.5_linux_x64_cflinuxfs3_612b3fbf.tgz
@@ -48,21 +48,21 @@ dependencies:
   source: https://s3.amazonaws.com/jruby.org/downloads/9.2.21.0/jruby-src-9.2.21.0.tar.gz
   source_sha256: 11549eec6447ff82d28839645a9b73d3ec4bba2a9c88bfb4407282dea86ed81f
 - name: jruby
-  version: 9.3.8.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.3.8.0-ruby-2.6_linux_x64_cflinuxfs3_d5d73cc2.tgz
-  sha256: d5d73cc2ffd0e505d667fe045f1a701589796cca13f3a97f7e1e20b9ffbf0501
+  version: 9.3.9.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.3.9.0-ruby-2.6_linux_x64_cflinuxfs3_cbf4a951.tgz
+  sha256: cbf4a95148b4b95507f5a6a3163d6689a7412d7ec4c0455cbe91e45e06ae3ea1
   cf_stacks:
   - cflinuxfs3
-  source: https://s3.amazonaws.com/jruby.org/downloads/9.3.8.0/jruby-src-9.3.8.0.tar.gz
-  source_sha256: 5c1fbdda42d158ac2486134906805ee3fdd4ef647d70bb051e51eccd4e040ec7
+  source: https://s3.amazonaws.com/jruby.org/downloads/9.3.9.0/jruby-src-9.3.9.0.tar.gz
+  source_sha256: 5e10f5fafa9a7a20ba4cb7504cc3b6e8db3263a601e89602c3c26dfab2e3ac8e
 - name: node
-  version: 16.18.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_16.18.0_linux_x64_cflinuxfs3_f365ce0a.tgz
-  sha256: f365ce0adcb99c116b987519ce776b627c18c864f29584a96c3bae345a320344
+  version: 18.12.1
+  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_18.12.1_linux_x64_cflinuxfs3_e4fbb4e4.tgz
+  sha256: e4fbb4e44f376230b9cab86f220b8d4525e46014ab18d9522cbfa17749ed2689
   cf_stacks:
   - cflinuxfs3
-  source: https://nodejs.org/dist/v16.18.0/node-v16.18.0.tar.gz
-  source_sha256: 276c8a469bd4013c5842ee4166fb9b0087e5ee252a7c932d97e274b77ba73e70
+  source: https://nodejs.org/dist/v18.12.1/node-v18.12.1.tar.gz
+  source_sha256: ba8174dda00d5b90943f37c6a180a1d37c861d91e04a4cb38dc1c0c74981c186
 - name: openjdk1.8-latest
   version: 1.8.0
   uri: https://java-buildpack.cloudfoundry.org/openjdk-jdk/trusty/x86_64/openjdk-jdk-1.8.0_212-trusty.tar.gz
@@ -120,13 +120,13 @@ dependencies:
   source: https://cache.ruby-lang.org/pub/ruby/3.1/ruby-3.1.2.tar.gz
   source_sha256: 61843112389f02b735428b53bb64cf988ad9fb81858b8248e22e57336f24a83e
 - name: rubygems
-  version: 3.3.24
-  uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems_3.3.24_linux_noarch_any-stack_1a3d3475.tgz
-  sha256: 1a3d34751de00dfea51ad594dd27b478b71e48cb08c49a454fd88307be45ada2
+  version: 3.3.25
+  uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems_3.3.25_linux_noarch_any-stack_c02fe51f.tgz
+  sha256: c02fe51fe9a58e47dcda714ee612a42af256c255fbdcd52bb256ec691b1495d3
   cf_stacks:
   - cflinuxfs3
-  source: https://rubygems.org/rubygems/rubygems-3.3.24.tgz
-  source_sha256: 15e2bc2625843fe7328db41156b556b54d7af9cd57438e33de11e9b8177d9102
+  source: https://rubygems.org/rubygems/rubygems-3.3.25.tgz
+  source_sha256: 79f0f8594a3b856cdd37215128aa86cc6ab5ab26d4fed0d9ded4117e9a66d8cd
 - name: yarn
   version: 1.22.19
   uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn_1.22.19_linux_noarch_any-stack_b005c5ea.tgz
