@@ -6,6 +6,7 @@ gem 'nokogiri'
 gem 'sinatra'
 gem 'eventmachine'
 gem 'bcrypt'
+gem 'webrick'
 
 gem 'jdbc-mysql'
 gem 'jdbc-postgres'
