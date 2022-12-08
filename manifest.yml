@@ -40,14 +40,6 @@ dependencies:
   source: https://github.com/rubygems/rubygems/tree/master/bundlertree/v2.3.26
   source_sha256: 1ee53cdf61e728ad82c6dbff06cfcd8551d5422e88e86203f0e2dbe9ae999e09
 - name: jruby
-  version: 9.2.21.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.2.21.0-ruby-2.5_linux_x64_cflinuxfs3_612b3fbf.tgz
-  sha256: 612b3fbf9473f790574466db48f0609570d57f7536900e613c43e2b2163ed99c
-  cf_stacks:
-  - cflinuxfs3
-  source: https://s3.amazonaws.com/jruby.org/downloads/9.2.21.0/jruby-src-9.2.21.0.tar.gz
-  source_sha256: 11549eec6447ff82d28839645a9b73d3ec4bba2a9c88bfb4407282dea86ed81f
-- name: jruby
   version: 9.3.9.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.3.9.0-ruby-2.6_linux_x64_cflinuxfs3_cbf4a951.tgz
   sha256: cbf4a95148b4b95507f5a6a3163d6689a7412d7ec4c0455cbe91e45e06ae3ea1

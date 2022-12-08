@@ -84,7 +84,6 @@ func CopyBrats(rubyVersion string) *cutlass.App {
 
 // jruby 9.4.X.X = ruby 3.1.X
 // jruby 9.3.X.X = ruby 2.6.X
-// jruby 9.2.X.X = ruby 2.5.X
 func rubyVersionFromJRubyVersion(jrubyVersion string) (string, error) {
 	jrubyVersionRegex := regexp.MustCompile(`^(9.\d+).\d+.\d+$`)
 	version := jrubyVersionRegex.FindStringSubmatch(jrubyVersion)
@@ -96,8 +95,6 @@ func rubyVersionFromJRubyVersion(jrubyVersion string) (string, error) {
 		return "~>3.1", nil
 	case "9.3":
 		return "~>2.6", nil
-	case "9.2":
-		return "~>2.5", nil
 	default:
 		return "", fmt.Errorf("Unknown JRuby -> Ruby version mapping for JRuby version %s", jrubyVersion)
 	}
@@ -131,42 +128,6 @@ func createGemfileLockFile(jrubyVersion string, fixtureDir string) error {
 
 	var buffer []byte
 	switch version[1] {
-	case "9.2":
-		buffer = []byte(`GEM
-  remote: https://rubygems.org/
-  specs:
-    bcrypt (3.1.18-java)
-    eventmachine (1.2.7-java)
-    jdbc-mysql (8.0.27)
-    jdbc-postgres (42.2.25)
-    mustermann (2.0.2)
-      ruby2_keywords (~> 0.0.1)
-    nokogiri (1.12.5-java)
-      racc (~> 1.4)
-    racc (1.6.0-java)
-    rack (2.2.4)
-    rack-protection (2.2.3)
-      rack
-    ruby2_keywords (0.0.5)
-    sinatra (2.2.3)
-      mustermann (~> 2.0)
-      rack (~> 2.2)
-      rack-protection (= 2.2.3)
-      tilt (~> 2.0)
-    tilt (2.0.11)
-    webrick (1.7.0)
-
-PLATFORMS
-  universal-java-1.8
-
-DEPENDENCIES
-  bcrypt
-  eventmachine
-  jdbc-mysql
-  jdbc-postgres
-  nokogiri
-  sinatra
-  webrick`)
 	case "9.3", "9.4":
 		buffer = []byte(`GEM
   remote: https://rubygems.org/
