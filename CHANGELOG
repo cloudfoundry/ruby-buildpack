@@ -1,3 +1,33 @@
+v1.8.61 Dec 09, 2022
+=====================
+
+* Remove EOL'd jruby 9.2 (#612)
+
+* Add jruby 9.4.0.0
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/183926892)
+
+* Add ruby 2.7.7, remove ruby 2.7.5
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/183904439)
+
+* Add ruby 3.1.3, remove ruby 3.1.1
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/183904461)
+
+* Add bundler 2.3.26, remove bundler 2.3.25
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/183824072)
+
+* Add rubygems 3.3.26, remove rubygems 3.3.25
+  for stack(s) cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/183824077)
+
+* Test fixtures: Updates rails5 Gemfile.lock to resolve C compilation issues
+
+* Test fixtures: Removes integration tests for Rails 4 has been out of support since Aug. 2019
+
+
 v1.8.60 Nov 16, 2022
 =====================
 
