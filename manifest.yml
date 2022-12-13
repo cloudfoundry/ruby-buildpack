@@ -33,9 +33,10 @@ dependencies:
   source_sha256: a34cf18749cc92e25329fc11418bf7800853b74e1e39f82223841114d84d58de
 - name: bundler
   version: 2.3.26
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler_2.3.26_linux_noarch_any-stack_5bee2ccc.tgz
-  sha256: 5bee2cccb44ec0ef20b02419ebbca372ed19823e83d9c0e97b04f9355f1d6b22
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler_2.3.26_linux_noarch_any-stack_67702804.tgz
+  sha256: 67702804974b82a8831e8240cc02c74637573290830dd9bc50aa32b5e9c94b1f
   cf_stacks:
+  - cflinuxfs4
   - cflinuxfs3
   source: https://github.com/rubygems/rubygems/tree/master/bundlertree/v2.3.26
   source_sha256: 1ee53cdf61e728ad82c6dbff06cfcd8551d5422e88e86203f0e2dbe9ae999e09
