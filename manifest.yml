@@ -146,9 +146,10 @@ dependencies:
   source_sha256: 5ea498a35f4cd15875200a52dde42b6eb179e1264e17d78732c3a57cd1c6ab9e
 - name: rubygems
   version: 3.3.26
-  uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems_3.3.26_linux_noarch_any-stack_d705dbe2.tgz
-  sha256: d705dbe22ec3f25c15775de5f159b84fc0738d0d4dd5ba656eb721b492444230
+  uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems_3.3.26_linux_noarch_any-stack_d25db09d.tgz
+  sha256: d25db09d62a34a6805ee5f09a22965333311f763a817dfec6a6bf40049ede7ab
   cf_stacks:
+  - cflinuxfs4
   - cflinuxfs3
   source: https://rubygems.org/rubygems/rubygems-3.3.26.tgz
   source_sha256: 9b17a53a000a599926cf1ef19e9d2a35f87b436ae6500225eebe55db320dc68c
