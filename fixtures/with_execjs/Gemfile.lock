@@ -10,6 +10,7 @@ GEM
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
     tilt (2.0.6)
+    webrick (1.7.0)
 
 PLATFORMS
   ruby
@@ -17,3 +18,4 @@ PLATFORMS
 DEPENDENCIES
   execjs
   sinatra
+  webrick

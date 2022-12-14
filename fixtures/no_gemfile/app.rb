@@ -1,9 +1,16 @@
-require 'webrick'
+# Most bare-bones app
+# webrick isn't part of stdlib in ruby 3.x
+require 'socket'
 
-server = WEBrick::HTTPServer.new(Port: ENV.fetch('PORT', 8080))
-server.mount_proc '/' do |req, res|
-  res.body = "Ruby Version: #{RUBY_VERSION}"
-end
+server = TCPServer.new(ENV.fetch('PORT', 8080))
+response = "Ruby Version: #{RUBY_VERSION}"
 
-trap('INT') { server.stop }
-server.start
+loop {
+  client = server.accept
+  headers = ["HTTP/1.1 200 OK",
+            "Content-Type: text/html",
+            "Content-Length: #{response.length}\r\n\r\n"].join("\r\n")
+  client.puts headers
+  client.puts response
+  client.close
+}
