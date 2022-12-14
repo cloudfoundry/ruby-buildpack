@@ -2,9 +2,12 @@ GEM
   remote: https://rubygems.org/
   specs:
     colorize (0.8.1)
+    webrick (1.7.0)
 
 PLATFORMS
   ruby
+  x86_64-linux
 
 DEPENDENCIES
   colorize
+  webrick

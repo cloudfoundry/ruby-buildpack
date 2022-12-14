@@ -22,7 +22,7 @@ var _ = Describe("running supply nodejs buildpack before the ruby buildpack", fu
 				Skip("API version does not have multi-buildpack support")
 			}
 
-			app = cutlass.New(Fixtures("rails5"))
+			app = cutlass.New(Fixtures("rails6"))
 			app.Buildpacks = []string{
 				"https://github.com/cloudfoundry/nodejs-buildpack#master",
 				"ruby_buildpack",
@@ -34,13 +34,12 @@ var _ = Describe("running supply nodejs buildpack before the ruby buildpack", fu
 			PushAppAndConfirm(app)
 
 			Expect(app.Stdout.String()).To(ContainSubstring("Nodejs Buildpack version"))
-			Expect(app.Stdout.String()).To(ContainSubstring("Installing node 16."))
+			Expect(app.Stdout.String()).To(ContainSubstring("Installing node 18."))
 
 			body, err := app.GetBody("/")
 			Expect(err).To(BeNil())
-			Expect(body).To(ContainSubstring("Ruby version: ruby 2."))
-			Expect(body).To(ContainSubstring("Node version: v16."))
-			Expect(body).To(ContainSubstring("/home/vcap/deps/0/node"))
+			Expect(body).To(ContainSubstring("Ruby version: ruby 3."))
+			Expect(body).To(ContainSubstring("Node version: v18."))
 
 			Expect(app.Stdout.String()).To(ContainSubstring("Skipping install of nodejs since it has been supplied"))
 		})
