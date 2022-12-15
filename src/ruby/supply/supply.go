@@ -411,10 +411,6 @@ func (s *Supplier) InstallRuby(name, version string) error {
 		return err
 	}
 
-	if err := os.Symlink("ruby", filepath.Join(installDir, "bin", "ruby.exe")); err != nil {
-		return err
-	}
-
 	return s.Stager.LinkDirectoryInDepDir(filepath.Join(installDir, "bin"), "bin")
 }
 
