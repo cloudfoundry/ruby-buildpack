@@ -12,7 +12,7 @@ var _ = Describe("Ruby buildpack", func() {
 	bratshelper.UnbuiltBuildpack("ruby", CopyBrats)
 	bratshelper.DeployingAnAppWithAnUpdatedVersionOfTheSameBuildpack(CopyBrats)
 	bratshelper.StagingWithBuildpackThatSetsEOL("ruby", func(_ string) *cutlass.App {
-		return CopyBrats("2.7.x")
+		return CopyBrats("3.1.x")
 	})
 	bratshelper.StagingWithCustomBuildpackWithCredentialsInDependencies(CopyBrats)
 	bratshelper.DeployAppWithExecutableProfileScript("ruby", CopyBrats)
@@ -42,10 +42,16 @@ var _ = Describe("Ruby buildpack", func() {
 			Expect(app.GetBody("/bson")).To(ContainSubstring("\x00\x04\x00\x00"))
 		})
 		By("supports postgres", func() {
-			Expect(app.GetBody("/pg")).To(ContainSubstring("could not connect to server: No such file or directory"))
+			Expect(app.GetBody("/pg")).To(ContainSubstring("No such file or directory"))
 		})
 		By("supports mysql2", func() {
-			Expect(app.GetBody("/mysql2")).To(ContainSubstring("Unknown MySQL server host 'testing'"))
+			Expect(app.GetBody("/mysql2")).To(
+				Or(
+					// cflinuxfs3 and cflinuxfs4 have different libmysql versions, so diff msgs
+					ContainSubstring("Unknown MySQL server host 'testing'"),
+					ContainSubstring("Unknown server host 'testing'"),
+				),
+			)
 		})
 	})
 

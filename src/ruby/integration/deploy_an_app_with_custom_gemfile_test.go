@@ -23,8 +23,8 @@ var _ = Describe("App with custom Gemfile", func() {
 
 		It("detects the ruby buildpack and uses the version of ruby specified in Gemfile-APP", func() {
 			PushAppAndConfirm(app)
-			Expect(app.Stdout.String()).To(ContainSubstring("Installing ruby 2.7"))
-			Expect(app.Stdout.String()).To(ContainSubstring("Installing sinatra 2.2.0"))
+			Expect(app.Stdout.String()).To(ContainSubstring("Installing ruby 3.1"))
+			Expect(app.Stdout.String()).To(ContainSubstring("Installing sinatra 3.0.4"))
 		})
 	})
 
