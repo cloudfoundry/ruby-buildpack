@@ -38,7 +38,10 @@ var _ = Describe("App with No Gemfile", func() {
 			if !ApiHasMultiBuildpack() {
 				Skip("API does not have multi buildpack support")
 			}
-			app.Buildpacks = []string{"ruby_buildpack", "binary_buildpack"}
+			app.Buildpacks = []string{
+				"ruby_buildpack",
+				"https://github.com/cloudfoundry/binary-buildpack#master",
+			}
 			app.HealthCheck = "process"
 		})
 
