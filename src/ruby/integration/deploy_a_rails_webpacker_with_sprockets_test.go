@@ -17,6 +17,7 @@ var _ = Describe("pushing a rails webpacker app with sprockets", func() {
 	BeforeEach(func() {
 		app = cutlass.New(Fixtures("rails6"))
 		app.Disk = "1G"
+		app.SetEnv("BP_DEBUG", "1")
 	})
 
 	It("compiles assets with webpacker", func() {
