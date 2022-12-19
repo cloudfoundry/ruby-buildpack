@@ -24,14 +24,6 @@ dependency_deprecation_dates:
   link: https://www.ruby-lang.org/en/news/2021/12/25/ruby-3-1-0-released/
 dependencies:
 - name: bundler
-  version: 1.17.3
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler-1.17.3-any-stack-b7502506.tgz
-  sha256: b7502506bb8ab5312d4efa208d39dca4a5830762ba6b4b094a72e9aa69702341
-  cf_stacks:
-  - cflinuxfs3
-  source: http://github.com/bundler/bundler/tree/v1.17.3
-  source_sha256: a34cf18749cc92e25329fc11418bf7800853b74e1e39f82223841114d84d58de
-- name: bundler
   version: 2.3.26
   uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler_2.3.26_linux_noarch_any-stack_67702804.tgz
   sha256: 67702804974b82a8831e8240cc02c74637573290830dd9bc50aa32b5e9c94b1f
