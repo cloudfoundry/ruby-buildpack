@@ -65,15 +65,4 @@ var _ = Describe("JRuby App", func() {
 			PushAppAndConfirm(app)
 		})
 	})
-
-	Context("with a jruby app that uses bundler 1", func() {
-		BeforeEach(func() {
-			app = cutlass.New(Fixtures("jruby_bundler_1"))
-			app.Memory = "512M"
-		})
-
-		It("stages and runs successfully", func() {
-			PushAppAndConfirm(app)
-		})
-	})
 })

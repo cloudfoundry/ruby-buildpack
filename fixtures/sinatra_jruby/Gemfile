@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.6.8', :engine => 'jruby', :engine_version => '9.3.9.0'
+ruby '3.1.0', :engine => 'jruby', :engine_version => '9.4.0.0'
 
 gem 'sinatra'
+gem 'webrick'
