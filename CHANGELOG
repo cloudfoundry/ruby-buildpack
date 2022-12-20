@@ -1,3 +1,18 @@
+v1.9.0 Dec 20, 2022
+=====================
+
+* Add support for cflinuxfs4 stack
+
+* Update default ruby version to 3.1
+
+* Remove deprecated bundler 1.x version line (#650)
+
+* supply: remove ruby.exe symlinking
+  This seems to be from a heroku era effort to support windows.
+
+* openjdk8: update dependency
+
+
 v1.8.61 Dec 09, 2022
 =====================
 
