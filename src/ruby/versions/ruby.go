@@ -72,7 +72,7 @@ func (v *Versions) GetBundlerVersion() (string, error) {
 func (v *Versions) Engine() (string, error) {
 	gemfile := v.Gemfile()
 	code := fmt.Sprintf(`
-		b = Bundler::Dsl.evaluate('%s', '%s.lock', {}).ruby_version if File.exists?('%s')
+		b = Bundler::Dsl.evaluate('%s', '%s.lock', {}).ruby_version if File.exist?('%s')
 	  return 'ruby' if !b
 		b.engine
 	`, filepath.Base(gemfile), filepath.Base(gemfile), filepath.Base(gemfile))
@@ -305,7 +305,7 @@ func (v *Versions) run(dir, code string, in interface{}) (interface{}, error) {
 }
 
 func (v *Versions) BundledWithVersion() (string, error) {
-	code := fmt.Sprintf(`b = Bundler::LockfileParser.new(File.read("Gemfile.lock")).bundler_version if File.exists?("Gemfile.lock")
+	code := fmt.Sprintf(`b = Bundler::LockfileParser.new(File.read("Gemfile.lock")).bundler_version if File.exist?("Gemfile.lock")
 
 	return '' unless defined? b.version
 	b.version.to_s`)
