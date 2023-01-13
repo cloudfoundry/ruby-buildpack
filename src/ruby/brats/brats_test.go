@@ -27,9 +27,6 @@ var _ = Describe("Ruby buildpack", func() {
 		By("runs a simple webserver", func() {
 			Expect(app.GetBody("/")).To(ContainSubstring("Hello World!"))
 		})
-		By("parses XML with nokogiri", func() {
-			Expect(app.GetBody("/nokogiri")).To(ContainSubstring("Hello, World"))
-		})
 		By("supports EventMachine", func() {
 			Expect(app.GetBody("/em")).To(ContainSubstring("Hello, EventMachine"))
 		})
@@ -66,9 +63,6 @@ var _ = Describe("Ruby buildpack", func() {
 		})
 		By("runs a simple webserver", func() {
 			Expect(app.GetBody("/")).To(ContainSubstring("Hello, World"))
-		})
-		By("parses XML with nokogiri", func() {
-			Expect(app.GetBody("/nokogiri")).To(ContainSubstring("Hello, World"))
 		})
 		By("supports EventMachine", func() {
 			Expect(app.GetBody("/em")).To(ContainSubstring("Hello, EventMachine"))

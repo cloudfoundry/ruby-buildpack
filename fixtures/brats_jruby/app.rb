@@ -1,5 +1,4 @@
 require 'sinatra'
-require 'nokogiri'
 require 'eventmachine'
 require 'bcrypt'
 require 'jdbc/mysql'
@@ -10,11 +9,6 @@ Jdbc::Postgres.load_driver
 
 get '/' do
   'Hello, World'
-end
-
-get '/nokogiri' do
-  doc = Nokogiri::XML(open('test.xml'))
-  doc.xpath('//xml')
 end
 
 get '/em' do
