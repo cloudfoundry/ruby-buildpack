@@ -2,7 +2,6 @@ require 'bcrypt'
 require 'bson'
 require 'eventmachine'
 require 'mysql2'
-require 'nokogiri'
 require 'pg'
 require 'sinatra'
 
@@ -12,11 +11,6 @@ end
 
 get '/version' do
   RUBY_VERSION
-end
-
-get '/nokogiri' do
-  doc = Nokogiri::XML(open('test.xml'))
-  doc.xpath('//xml')
 end
 
 get '/em' do

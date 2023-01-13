@@ -138,17 +138,14 @@ func createGemfileLockFile(jrubyVersion string, fixtureDir string) error {
     jdbc-postgres (42.2.25)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
-    nokogiri (1.13.9-java)
-      racc (~> 1.4)
-    racc (1.6.0-java)
-    rack (2.2.4)
-    rack-protection (3.0.4)
+    rack (2.2.5)
+    rack-protection (3.0.5)
       rack
     ruby2_keywords (0.0.5)
-    sinatra (3.0.4)
+    sinatra (3.0.5)
       mustermann (~> 3.0)
       rack (~> 2.2, >= 2.2.4)
-      rack-protection (= 3.0.4)
+      rack-protection (= 3.0.5)
       tilt (~> 2.0)
     tilt (2.0.11)
     webrick (1.7.0)
@@ -161,7 +158,6 @@ DEPENDENCIES
   eventmachine
   jdbc-mysql
   jdbc-postgres
-  nokogiri
   sinatra
   webrick`)
 	default:
