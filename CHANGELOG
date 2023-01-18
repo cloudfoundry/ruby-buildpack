@@ -1,3 +1,25 @@
+v1.9.1 Jan 18, 2023
+====================
+
+* Add node 18.13.0, remove node 18.12.1
+  for stack(s) cflinuxfs4, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/184166535)
+
+* Add ruby 3.2.0 (#665)
+  for stack(s) cflinuxfs4, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/184161371)
+
+* Add bundler 2.4.4, remove bundler 2.3.26 (#664)
+  for stack(s) cflinuxfs4, cflinuxfs3
+  (https://www.pivotaltracker.com/story/show/184171890)
+  (https://www.pivotaltracker.com/story/show/184128753)
+  (https://www.pivotaltracker.com/story/show/184241102)
+
+* Add rubygems 3.4.4, remove rubygems 3.3.26 (#673, #659)
+  (https://www.pivotaltracker.com/story/show/184171850)
+  (https://www.pivotaltracker.com/story/show/184241169)
+  (https://www.pivotaltracker.com/story/show/184128744)
+
 v1.9.0 Dec 20, 2022
 =====================
 
