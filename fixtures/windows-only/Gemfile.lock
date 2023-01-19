@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    rack (1.5.2)
+    rack (1.6.13)
     rack-protection (1.5.2)
       rack
     sinatra (1.4.4)
@@ -12,6 +12,7 @@ GEM
     webrick (1.7.0)
 
 PLATFORMS
+  ruby
   x64-mingw32
 
 DEPENDENCIES
