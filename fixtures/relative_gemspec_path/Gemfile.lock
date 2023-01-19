@@ -6,7 +6,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    rack (1.6.4)
+    rack (1.6.13)
     rack-protection (1.5.3)
       rack
     sinatra (1.4.7)
