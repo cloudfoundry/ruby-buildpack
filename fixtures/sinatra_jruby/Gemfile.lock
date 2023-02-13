@@ -23,7 +23,7 @@ DEPENDENCIES
   webrick
 
 RUBY VERSION
-   ruby 3.1.0p0 (jruby 9.4.10.0)
+   ruby 3.1.0p0 (jruby 9.4.1.0)
 
 BUNDLED WITH
    2.3.16
