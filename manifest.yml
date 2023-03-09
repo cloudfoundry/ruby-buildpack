@@ -28,14 +28,14 @@ dependency_deprecation_dates:
   link: https://www.ruby-lang.org/en/news/2022/12/25/ruby-3-2-0-released/
 dependencies:
 - name: bundler
-  version: 2.4.7
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler_2.4.7_linux_noarch_any-stack_3a0e5343.tgz
-  sha256: 3a0e534351c34b288ab907e384606a788c97c95f2372e0dd9147c8820ce6be2c
+  version: 2.4.8
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler_2.4.8_linux_noarch_any-stack_50736afd.tgz
+  sha256: 50736afddeee07d0e4e743e3c0f1aa2745712f43f701ee8980993238b5a25d4b
   cf_stacks:
   - cflinuxfs4
   - cflinuxfs3
-  source: https://github.com/rubygems/rubygems/tree/master/bundlertree/v2.4.7
-  source_sha256: b1941d6405890fb3da1fcaacf8d0d64eee427776019ce18856cf863b13fd1fb9
+  source: https://github.com/rubygems/rubygems/tree/master/bundlertree/v2.4.8
+  source_sha256: fe82d6f893f2173e13232926e2b9ceb6f67027c7f166bfc1e3d6ec7d9699a164
 - name: jruby
   version: 9.3.10.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.3.10.0-ruby-2.6_linux_x64_cflinuxfs3_12c293b9.tgz
@@ -182,14 +182,14 @@ dependencies:
   source: https://cache.ruby-lang.org/pub/ruby/3.2/ruby-3.2.1.tar.gz
   source_sha256: 13d67901660ee3217dbd9dd56059346bd4212ce64a69c306ef52df64935f8dbd
 - name: rubygems
-  version: 3.4.7
-  uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems_3.4.7_linux_noarch_any-stack_87739631.tgz
-  sha256: 87739631006e3c7421d9fb5667afb78e2b646e9e9db57a43d40664c312bb1492
+  version: 3.4.8
+  uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems_3.4.8_linux_noarch_any-stack_2a442c26.tgz
+  sha256: 2a442c262add4b223f5b465b96f8950ddddbc8b0263ff16777691e5e962cb8de
   cf_stacks:
   - cflinuxfs4
   - cflinuxfs3
-  source: https://rubygems.org/rubygems/rubygems-3.4.7.tgz
-  source_sha256: 8769c4bbe7bab84718bba812173cc222f4ae084e559b9b19133b93ec188c0b23
+  source: https://rubygems.org/rubygems/rubygems-3.4.8.tgz
+  source_sha256: d05943649349246564bc198a58d06a351693b68e9c8823ae4042babaae9da2d4
 - name: yarn
   version: 1.22.19
   uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn_1.22.19_linux_noarch_any-stack_86fa7399.tgz
