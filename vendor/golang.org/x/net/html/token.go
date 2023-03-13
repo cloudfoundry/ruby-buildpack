@@ -616,11 +616,7 @@ func (z *Tokenizer) readComment() {
 	for {
 		c := z.readByte()
 		if z.err != nil {
-			// Ignore up to two dashes at EOF.
-			if dashCount > 2 {
-				dashCount = 2
-			}
-			z.data.end = z.raw.end - dashCount
+			z.data.end = z.calculateAbruptCommentDataEnd()
 			return
 		}
 		switch c {
@@ -636,18 +632,50 @@ func (z *Tokenizer) readComment() {
 			if dashCount >= 2 {
 				c = z.readByte()
 				if z.err != nil {
-					z.data.end = z.raw.end
+					z.data.end = z.calculateAbruptCommentDataEnd()
 					return
-				}
-				if c == '>' {
+				} else if c == '>' {
 					z.data.end = z.raw.end - len("--!>")
 					return
+				} else if c == '-' {
+					dashCount = 1
+					beginning = false
+					continue
 				}
 			}
 		}
 		dashCount = 0
 		beginning = false
 	}
+}
+
+func (z *Tokenizer) calculateAbruptCommentDataEnd() int {
+	raw := z.Raw()
+	const prefixLen = len("<!--")
+	if len(raw) >= prefixLen {
+		raw = raw[prefixLen:]
+		if hasSuffix(raw, "--!") {
+			return z.raw.end - 3
+		} else if hasSuffix(raw, "--") {
+			return z.raw.end - 2
+		} else if hasSuffix(raw, "-") {
+			return z.raw.end - 1
+		}
+	}
+	return z.raw.end
+}
+
+func hasSuffix(b []byte, suffix string) bool {
+	if len(b) < len(suffix) {
+		return false
+	}
+	b = b[len(b)-len(suffix):]
+	for i := range b {
+		if b[i] != suffix[i] {
+			return false
+		}
+	}
+	return true
 }
 
 // readUntilCloseAngle reads until the next ">".
