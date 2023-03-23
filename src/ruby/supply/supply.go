@@ -82,8 +82,13 @@ type Supplier struct {
 }
 
 func Run(s *Supplier) error {
-	s.Log.BeginStep("Supplying Ruby")
+	s.Log.BeginStep("Bootstrapping Ruby")
+	if err := s.BootstrapRuby(); err != nil {
+		s.Log.Error("Error during bootstrap: %s", err)
+		return err
+	}
 
+	s.Log.BeginStep("Supplying Ruby")
 	_ = s.Command.Execute(s.Stager.BuildDir(), ioutil.Discard, ioutil.Discard, "touch", "/tmp/checkpoint")
 
 	if checksum, err := s.CalcChecksum(); err == nil {
@@ -400,6 +405,25 @@ export JRUBY_OPTS=${JRUBY_OPTS:--Xcompile.invokedynamic=false}
 	return s.Stager.WriteProfileD("jruby.sh", scriptContents)
 }
 
+func (s *Supplier) BootstrapRuby() error {
+	dep, err := s.Manifest.DefaultVersion("ruby")
+	if err != nil {
+		return err
+	}
+
+	err = s.Installer.InstallDependency(dep, "/tmp/ruby")
+	if err != nil {
+		return err
+	}
+
+	os.Setenv("PATH", fmt.Sprintf("/tmp/ruby/bin:%s", os.Getenv("PATH")))
+	os.Setenv("LIBRARY_PATH", fmt.Sprintf("/tmp/ruby/lib:%s", os.Getenv("LIBRARY_PATH")))
+	os.Setenv("LD_LIBRARY_PATH", fmt.Sprintf("/tmp/ruby/lib:%s", os.Getenv("LD_LIBRARY_PATH")))
+	os.Setenv("CPATH", fmt.Sprintf("/tmp/ruby/include:%s", os.Getenv("CPATH")))
+
+	return nil
+}
+
 func (s *Supplier) InstallRuby(name, version string) error {
 	installDir := filepath.Join(s.Stager.DepDir(), name)
 
@@ -607,11 +631,11 @@ func (s *Supplier) InstallGems() error {
 
 	tempDir, err := s.TempDir.CopyDirToTemp(s.Stager.BuildDir())
 	if err != nil {
-		return nil
+		return err
 	}
 	gemfileLock, err := filepath.Rel(s.Stager.BuildDir(), s.Versions.Gemfile())
 	if err != nil {
-		return nil
+		return err
 	}
 	gemfileLock = fmt.Sprintf("%s.lock", filepath.Join(tempDir, gemfileLock))
 
