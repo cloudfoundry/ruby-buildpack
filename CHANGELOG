@@ -1,3 +1,17 @@
+v1.9.4 Mar 23, 2023
+====================
+
+* Bootstrap ruby before running
+* Bump rack from 2.2.4 to 2.2.6.4 in /fixtures/bundler_2_0_1
+* Bump rack from 2.2.4 to 2.2.6.4 in /fixtures/rails6
+* Bump rack from 2.2.3.1 to 2.2.6.4 in /fixtures/jruby_start_command
+* Bump rack from 2.2.3.1 to 2.2.6.4 in /fixtures/sinatra_jruby
+* Bump rack in /fixtures/rails52_webpack_no_sprockets
+* Bump rack from 2.2.3 to 2.2.6.4 in /fixtures/ruby_calls_go
+* Bump rack from 2.2.3 to 2.2.6.4 in /fixtures/fail_release
+* Bump webpack from 5.75.0 to 5.76.0 in /fixtures/rails6
+* Bump github.com/onsi/gomega from 1.27.2 to 1.27.4
+
 v1.9.3 Mar 09, 2023
 ====================
 
