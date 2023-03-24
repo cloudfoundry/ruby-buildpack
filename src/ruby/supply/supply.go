@@ -416,10 +416,29 @@ func (s *Supplier) BootstrapRuby() error {
 		return err
 	}
 
-	os.Setenv("PATH", fmt.Sprintf("/tmp/ruby/bin:%s", os.Getenv("PATH")))
-	os.Setenv("LIBRARY_PATH", fmt.Sprintf("/tmp/ruby/lib:%s", os.Getenv("LIBRARY_PATH")))
-	os.Setenv("LD_LIBRARY_PATH", fmt.Sprintf("/tmp/ruby/lib:%s", os.Getenv("LD_LIBRARY_PATH")))
-	os.Setenv("CPATH", fmt.Sprintf("/tmp/ruby/include:%s", os.Getenv("CPATH")))
+	path := "/tmp/ruby/bin"
+	if p, ok := os.LookupEnv("PATH"); ok {
+		path = fmt.Sprintf("%s:%s", p, path)
+	}
+	os.Setenv("PATH", path)
+
+	libraryPath := "/tmp/ruby/lib"
+	if lp, ok := os.LookupEnv("LIBRARY_PATH"); ok {
+		libraryPath = fmt.Sprintf("%s:%s", lp, libraryPath)
+	}
+	os.Setenv("LIBRARY_PATH", libraryPath)
+
+	ldLibraryPath := "/tmp/ruby/lib"
+	if lp, ok := os.LookupEnv("LD_LIBRARY_PATH"); ok {
+		ldLibraryPath = fmt.Sprintf("%s:%s", lp, ldLibraryPath)
+	}
+	os.Setenv("LD_LIBRARY_PATH", ldLibraryPath)
+
+	cpath := "/tmp/ruby/include"
+	if cp, ok := os.LookupEnv("CPATH"); ok {
+		cpath = fmt.Sprintf("%s:%s", cp, cpath)
+	}
+	os.Setenv("CPATH", cpath)
 
 	return nil
 }
