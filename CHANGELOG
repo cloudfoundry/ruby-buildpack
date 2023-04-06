@@ -1,3 +1,20 @@
+v1.10.0 Apr 06, 2023
+====================
+
+* Add ruby 3.2.2, remove ruby 3.2.0 for stack(s) cflinuxfs4, cflinuxfs3 (#776)
+
+* Add ruby 3.0.6, remove ruby 3.0.4 for stack(s) cflinuxfs3 (#775)
+
+* Remove support for Ruby 2.7 (#773)
+
+* Bump github.com/onsi/gomega from 1.27.4 to 1.27.5 (#768)
+
+* Add rubygems 3.4.10, remove rubygems 3.4.8 (#769)
+  for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add bundler 2.4.10, remove bundler 2.4.8 (#770)
+  for stack(s) cflinuxfs4, cflinuxfs3
+
 v1.9.4 Mar 23, 2023
 ====================
 
