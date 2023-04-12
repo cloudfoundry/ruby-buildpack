@@ -411,30 +411,30 @@ func (s *Supplier) BootstrapRuby() error {
 		return err
 	}
 
-	err = s.Installer.InstallDependency(dep, "/tmp/ruby")
+	err = s.Installer.InstallDependency(dep, "/tmp/ruby-buildpack/ruby")
 	if err != nil {
 		return err
 	}
 
-	path := "/tmp/ruby/bin"
+	path := "/tmp/ruby-buildpack/ruby/bin"
 	if p, ok := os.LookupEnv("PATH"); ok {
 		path = fmt.Sprintf("%s:%s", p, path)
 	}
 	os.Setenv("PATH", path)
 
-	libraryPath := "/tmp/ruby/lib"
+	libraryPath := "/tmp/ruby-buildpack/ruby/lib"
 	if lp, ok := os.LookupEnv("LIBRARY_PATH"); ok {
 		libraryPath = fmt.Sprintf("%s:%s", lp, libraryPath)
 	}
 	os.Setenv("LIBRARY_PATH", libraryPath)
 
-	ldLibraryPath := "/tmp/ruby/lib"
+	ldLibraryPath := "/tmp/ruby-buildpack/ruby/lib"
 	if lp, ok := os.LookupEnv("LD_LIBRARY_PATH"); ok {
 		ldLibraryPath = fmt.Sprintf("%s:%s", lp, ldLibraryPath)
 	}
 	os.Setenv("LD_LIBRARY_PATH", ldLibraryPath)
 
-	cpath := "/tmp/ruby/include"
+	cpath := "/tmp/ruby-buildpack/ruby/include"
 	if cp, ok := os.LookupEnv("CPATH"); ok {
 		cpath = fmt.Sprintf("%s:%s", cp, cpath)
 	}
