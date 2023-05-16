@@ -1,3 +1,15 @@
+v1.10.2 May 16, 2023
+=====================
+
+* Add rubygems 3.4.13, remove rubygems 3.4.11 for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add bundler 2.4.13, remove bundler 2.4.11 for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add node 18.16.0, remove node 18.15.0 for stack(s) cflinuxfs3, cflinuxfs4
+
+* Install bootstrapped Ruby into ruby-buildpack specific location
+
+
 v1.10.1 Apr 11, 2023
 =====================
 
