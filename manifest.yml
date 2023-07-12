@@ -170,14 +170,14 @@ dependencies:
   source: https://cache.ruby-lang.org/pub/ruby/3.2/ruby-3.2.2.tar.gz
   source_sha256: 96c57558871a6748de5bc9f274e93f4b5aad06cd8f37befa0e8d94e7b8a423bc
 - name: rubygems
-  version: 3.4.15
-  uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems_3.4.15_linux_noarch_any-stack_ec20d94c.tgz
-  sha256: ec20d94c28252d0c5effefa3fe65b30020be9fe6ac41bff21923616449d454e9
+  version: 3.4.16
+  uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems_3.4.16_linux_noarch_any-stack_d45fd0aa.tgz
+  sha256: d45fd0aa48b3b999f8cdda3eb883edd87101439d4df32fcc7f9f0f9a21816e6d
   cf_stacks:
   - cflinuxfs4
   - cflinuxfs3
-  source: https://rubygems.org/rubygems/rubygems-3.4.15.tgz
-  source_sha256: 3828e865bcf7127f0446ae354fe6f29077a82a4386bcc5550d7db590a632a4ac
+  source: https://rubygems.org/rubygems/rubygems-3.4.16.tgz
+  source_sha256: 4f9f300cb30e08f3f0a0fb97759be95de17bc84457bd6d653f156a7bccc5b3a3
 - name: yarn
   version: 1.22.19
   uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn_1.22.19_linux_noarch_any-stack_86fa7399.tgz
