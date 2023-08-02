@@ -24,14 +24,14 @@ dependency_deprecation_dates:
   link: https://www.ruby-lang.org/en/news/2022/12/25/ruby-3-2-0-released/
 dependencies:
 - name: bundler
-  version: 2.4.17
-  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler_2.4.17_linux_noarch_any-stack_152fde3e.tgz
-  sha256: 152fde3ed8c395d6cdd63f27ded8f18da3b48e4a325ae641bd021bd5219df42e
+  version: 2.4.18
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler_2.4.18_linux_noarch_any-stack_96f21999.tgz
+  sha256: 96f21999fd501a2a511b5b0d2cd3ab40ae1f432278468c4b7b632080e87ae7e7
   cf_stacks:
   - cflinuxfs4
   - cflinuxfs3
-  source: https://github.com/rubygems/rubygems/tree/master/bundlertree/v2.4.17
-  source_sha256: d8457a5e76c9d153d4bb0fd1ffd2a3f58fbf090cb3448b9bd7a021d13f0e44ad
+  source: https://github.com/rubygems/rubygems/tree/master/bundlertree/v2.4.18
+  source_sha256: b6f7d27121d49874a69c9194d4f8ef556b2390cceec41635ccf4f3c58069f70e
 - name: jruby
   version: 9.3.10.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.3.10.0-ruby-2.6_linux_x64_cflinuxfs3_12c293b9.tgz
