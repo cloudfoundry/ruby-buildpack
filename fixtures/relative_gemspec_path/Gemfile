@@ -2,3 +2,4 @@ source 'https://rubygems.org'
 gem "webrick"
 gem "sinatra"
 gemspec path: "gems/hola"
+ruby '~> 3.2.0'
