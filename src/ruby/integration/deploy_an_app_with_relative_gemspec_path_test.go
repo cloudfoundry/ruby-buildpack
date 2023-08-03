@@ -17,6 +17,6 @@ var _ = Describe("App with relative gemspec path", func() {
 
 	It("loads the gem with the relative gemspec path", func() {
 		PushAppAndConfirm(app)
-		Expect(app.Stdout.String()).To(ContainSubstring("Using hola 0.0.0 from source at `gems/hola`"))
+		Expect(app.GetBody("/")).To(ContainSubstring("Hello World!"))
 	})
 })

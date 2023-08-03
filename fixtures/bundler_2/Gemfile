@@ -3,4 +3,4 @@ source 'https://rubygems.org'
 gem 'sinatra'
 gem 'webrick'
 
-ruby '~> 3.1.0'
+ruby '~> 3.2.0'
