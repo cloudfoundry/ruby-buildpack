@@ -65,21 +65,21 @@ dependencies:
   source: https://s3.amazonaws.com/jruby.org/downloads/9.4.3.0/jruby-src-9.4.3.0.tar.gz
   source_sha256: c7886b2686370fd282d2a294df3b23a81ae1f552231b5002533abcc9c9b68966
 - name: node
-  version: 18.17.1
-  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_18.17.1_linux_x64_cflinuxfs3_9fe96d0b.tgz
-  sha256: 9fe96d0bab8b6bd15a8df52ddad91fb56f4dff15fa5814e25374cb3ea98c1f63
+  version: 18.18.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_18.18.0_linux_x64_cflinuxfs3_656b6a20.tgz
+  sha256: 656b6a20a728d846957905d92c374a4bbcb7dee9cbd211641b4af2d67fd60e22
   cf_stacks:
   - cflinuxfs3
-  source: https://nodejs.org/dist/v18.17.1/node-v18.17.1.tar.gz
-  source_sha256: 1157525a819c395020795ff8c49eee7472b8666cc256b45558b9cbe2e0864c35
+  source: https://nodejs.org/dist/v18.18.0/node-v18.18.0.tar.gz
+  source_sha256: 5c5f4d7ee0b65f6e31788570d939a688ac7c9e47b007f14592e899b51cdca47c
 - name: node
-  version: 18.17.1
-  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_18.17.1_linux_x64_cflinuxfs4_6576bd86.tgz
-  sha256: 6576bd867498007acd7f82d5f5404da424c7b7eacf3dc8530d9064e3df930d2c
+  version: 18.18.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_18.18.0_linux_x64_cflinuxfs4_835da3c0.tgz
+  sha256: 835da3c0d563b5bd56bac5d0cf830b076f9ff4f6f1fb73a012f644b3cf81a5b0
   cf_stacks:
   - cflinuxfs4
-  source: https://nodejs.org/dist/v18.17.1/node-v18.17.1.tar.gz
-  source_sha256: 1157525a819c395020795ff8c49eee7472b8666cc256b45558b9cbe2e0864c35
+  source: https://nodejs.org/dist/v18.18.0/node-v18.18.0.tar.gz
+  source_sha256: 5c5f4d7ee0b65f6e31788570d939a688ac7c9e47b007f14592e899b51cdca47c
 - name: openjdk1.8-latest
   version: 1.8.0
   uri: https://java-buildpack.cloudfoundry.org/openjdk-jdk/bionic/x86_64/openjdk-jdk-1.8.0_242-bionic.tar.gz
