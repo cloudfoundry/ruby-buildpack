@@ -418,7 +418,7 @@ func (s *Supplier) BootstrapRuby() error {
 
 	path := "/tmp/ruby-buildpack/ruby/bin"
 	if p, ok := os.LookupEnv("PATH"); ok {
-		path = fmt.Sprintf("%s:%s", p, path)
+		path = fmt.Sprintf("%s:%s", path, p)
 	}
 	os.Setenv("PATH", path)
 
