@@ -598,3 +598,40 @@ func (mr *MockCacheMockRecorder) Save() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Save", reflect.TypeOf((*MockCache)(nil).Save))
 }
+
+// MockShebangRewriter is a mock of ShebangRewriter interface.
+type MockShebangRewriter struct {
+	ctrl     *gomock.Controller
+	recorder *MockShebangRewriterMockRecorder
+}
+
+// MockShebangRewriterMockRecorder is the mock recorder for MockShebangRewriter.
+type MockShebangRewriterMockRecorder struct {
+	mock *MockShebangRewriter
+}
+
+// NewMockShebangRewriter creates a new mock instance.
+func NewMockShebangRewriter(ctrl *gomock.Controller) *MockShebangRewriter {
+	mock := &MockShebangRewriter{ctrl: ctrl}
+	mock.recorder = &MockShebangRewriterMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockShebangRewriter) EXPECT() *MockShebangRewriterMockRecorder {
+	return m.recorder
+}
+
+// RewriteShebangs mocks base method.
+func (m *MockShebangRewriter) RewriteShebangs() error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RewriteShebangs")
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// RewriteShebangs indicates an expected call of RewriteShebangs.
+func (mr *MockShebangRewriterMockRecorder) RewriteShebangs() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RewriteShebangs", reflect.TypeOf((*MockShebangRewriter)(nil).RewriteShebangs))
+}

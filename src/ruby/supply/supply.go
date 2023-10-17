@@ -5,7 +5,6 @@ import (
 	"crypto/md5"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -89,7 +88,7 @@ func Run(s *Supplier) error {
 	}
 
 	s.Log.BeginStep("Supplying Ruby")
-	_ = s.Command.Execute(s.Stager.BuildDir(), ioutil.Discard, ioutil.Discard, "touch", "/tmp/checkpoint")
+	_ = s.Command.Execute(s.Stager.BuildDir(), io.Discard, io.Discard, "touch", "/tmp/checkpoint")
 
 	if checksum, err := s.CalcChecksum(); err == nil {
 		s.Log.Debug("BuildDir Checksum Before Supply: %s", checksum)
@@ -154,7 +153,7 @@ func Run(s *Supplier) error {
 		return err
 	}
 
-	if err := s.AddPostRubyGemsInstallDefaultEnv(engine); err != nil {
+	if err := s.AddPostRubyGemsInstallDefaultEnv(); err != nil {
 		s.Log.Error("Unable to add bundler path to default environment: %s", err.Error())
 		return err
 	}
@@ -310,7 +309,7 @@ func (s *Supplier) InstallYarn() error {
 }
 
 func (s *Supplier) InstallBundler() error {
-	contents, err := ioutil.ReadFile(fmt.Sprintf("%s.lock", s.Versions.Gemfile()))
+	contents, err := os.ReadFile(fmt.Sprintf("%s.lock", s.Versions.Gemfile()))
 	if err != nil {
 		if !os.IsNotExist(err) {
 			return err
@@ -417,26 +416,32 @@ func (s *Supplier) BootstrapRuby() error {
 	}
 
 	path := "/tmp/ruby-buildpack/ruby/bin"
-	if p, ok := os.LookupEnv("PATH"); ok {
-		path = fmt.Sprintf("%s:%s", path, p)
+	if systemPath, ok := os.LookupEnv("PATH"); ok {
+		path = s.adjustRubyPath(systemPath, path)
 	}
 	os.Setenv("PATH", path)
 
 	libraryPath := "/tmp/ruby-buildpack/ruby/lib"
 	if lp, ok := os.LookupEnv("LIBRARY_PATH"); ok {
-		libraryPath = fmt.Sprintf("%s:%s", lp, libraryPath)
+		if len(lp) > 0 {
+			libraryPath = fmt.Sprintf("%s:%s", lp, libraryPath)
+		}
 	}
 	os.Setenv("LIBRARY_PATH", libraryPath)
 
 	ldLibraryPath := "/tmp/ruby-buildpack/ruby/lib"
 	if lp, ok := os.LookupEnv("LD_LIBRARY_PATH"); ok {
-		ldLibraryPath = fmt.Sprintf("%s:%s", lp, ldLibraryPath)
+		if len(lp) > 0 {
+			ldLibraryPath = fmt.Sprintf("%s:%s", lp, ldLibraryPath)
+		}
 	}
 	os.Setenv("LD_LIBRARY_PATH", ldLibraryPath)
 
 	cpath := "/tmp/ruby-buildpack/ruby/include"
 	if cp, ok := os.LookupEnv("CPATH"); ok {
-		cpath = fmt.Sprintf("%s:%s", cp, cpath)
+		if len(cp) > 0 {
+			cpath = fmt.Sprintf("%s:%s", cp, cpath)
+		}
 	}
 	os.Setenv("CPATH", cpath)
 
@@ -503,14 +508,14 @@ func (s *Supplier) RewriteShebangs() error {
 			continue
 		}
 
-		fileContents, err := ioutil.ReadFile(file)
+		fileContents, err := os.ReadFile(file)
 		if err != nil {
 			return err
 		}
 
 		shebangRegex := regexp.MustCompile(`^#!/.*ruby.*`)
 		fileContents = shebangRegex.ReplaceAll(fileContents, []byte("#!/usr/bin/env ruby"))
-		if err := ioutil.WriteFile(file, fileContents, 0755); err != nil {
+		if err := os.WriteFile(file, fileContents, 0755); err != nil {
 			return err
 		}
 	}
@@ -587,7 +592,7 @@ func (s *Supplier) UpdateRubygems() error {
 
 	s.Log.BeginStep("Update rubygems from %s to %s", currVersion, dep.Version)
 
-	tempDir, err := ioutil.TempDir("", "rubygems")
+	tempDir, err := os.MkdirTemp("", "rubygems")
 	if err != nil {
 		return err
 	}
@@ -627,14 +632,14 @@ type LinuxTempDir struct {
 }
 
 func (t *LinuxTempDir) CopyDirToTemp(dir string) (string, error) {
-	tempDir, err := ioutil.TempDir("", "app")
+	tempDir, err := os.MkdirTemp("", "app")
 	if err != nil {
 		return "", err
 	}
 	cmd := exec.Command("cp", "-al", dir, tempDir)
 	if output, err := cmd.CombinedOutput(); err != nil {
 		t.Log.Error(string(output))
-		return "", fmt.Errorf("Could not copy build dir to temp: %v", err)
+		return "", fmt.Errorf("could not copy build dir to temp: %v", err)
 	}
 	tempDir = filepath.Join(tempDir, filepath.Base(dir))
 	return tempDir, nil
@@ -778,7 +783,7 @@ func (s *Supplier) InstallGems() error {
 	}
 
 	// Copy binstubs to bin
-	files, err := ioutil.ReadDir(filepath.Join(s.Stager.DepDir(), "binstubs"))
+	files, err := os.ReadDir(filepath.Join(s.Stager.DepDir(), "binstubs"))
 	if err != nil {
 		if !os.IsNotExist(err) {
 			return fmt.Errorf("Could not read dep/binstubs directory: %v", err)
@@ -829,7 +834,7 @@ func (s *Supplier) removeIncompatibleBundledWithVersion(bundledWithVersion strin
 	s.Log.Warning(`Deleting "Bundled With" from the Gemfile.lock`)
 
 	gemfileLockPath := s.Versions.Gemfile() + ".lock"
-	file, err := ioutil.ReadFile(gemfileLockPath)
+	file, err := os.ReadFile(gemfileLockPath)
 	if err != nil {
 		return fmt.Errorf("failed to read gemfile.lock: %s", err)
 	}
@@ -837,7 +842,7 @@ func (s *Supplier) removeIncompatibleBundledWithVersion(bundledWithVersion strin
 	match := regexp.MustCompile(`BUNDLED WITH\s+(\w|\.|-)+\n`)
 	output := match.ReplaceAll(file, []byte(""))
 
-	return ioutil.WriteFile(gemfileLockPath, output, 0666)
+	return os.WriteFile(gemfileLockPath, output, 0666)
 }
 
 func (s *Supplier) regenerateBundlerBinStub(appDir string) error {
@@ -912,7 +917,7 @@ func (s *Supplier) AddPostRubyInstallDefaultEnv(engine string) error {
 	return s.writeEnvFiles(environmentDefaults, true)
 }
 
-func (s *Supplier) AddPostRubyGemsInstallDefaultEnv(engine string) error {
+func (s *Supplier) AddPostRubyGemsInstallDefaultEnv() error {
 	vendorBundlePath, err := s.VendorBundlePath()
 	if err != nil {
 		return err
@@ -1027,7 +1032,7 @@ func (s *Supplier) CalcChecksum() (string, error) {
 }
 
 func (s *Supplier) warnWindowsGemfile() {
-	if body, err := ioutil.ReadFile(s.Versions.Gemfile()); err == nil {
+	if body, err := os.ReadFile(s.Versions.Gemfile()); err == nil {
 		if bytes.Contains(body, []byte("\r\n")) {
 			s.Log.Warning("Windows line endings detected in Gemfile. Your app may fail to stage. Please use UNIX line endings.")
 		}
@@ -1055,4 +1060,14 @@ func (s *Supplier) installBundler(constraint string) error {
 	}
 
 	return nil
+}
+
+func (s *Supplier) adjustRubyPath(systemPath, rubyPath string) string {
+	if systemPath == "" {
+		return rubyPath
+	}
+
+	pathElements := strings.Split(systemPath, ":")
+	pathElements = append(pathElements[:1], append([]string{rubyPath}, pathElements[1:]...)...)
+	return strings.Join(pathElements, ":")
 }
