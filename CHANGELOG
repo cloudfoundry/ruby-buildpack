@@ -1,3 +1,17 @@
+v1.10.5 Oct 18, 2023
+=====================
+
+* Update default Ruby version to latest 3.x
+
+* Add rubygems 3.4.21, remove rubygems 3.4.19 for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add bundler 2.4.21, remove bundler 2.4.19 for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add node 18.18.2, remove node 18.17.1 for stack(s) cflinuxfs3, cflinuxfs4
+
+* Add jruby 9.3.11.0, remove jruby 9.3.10.0 for stack(s) cflinuxfs3, cflinuxfs4
+
+
 v1.10.4 Aug 22, 2023
 =====================
 
