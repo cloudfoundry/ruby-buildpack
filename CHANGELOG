@@ -1,3 +1,19 @@
+v1.10.6 Nov 21, 2023
+=====================
+
+* Add jruby 9.4.5.0, remove jruby 9.4.3.0 for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add jruby 9.3.13.0, remove jruby 9.3.11.0 for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add yarn 1.22.21, remove yarn 1.22.19 for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add bundler 2.4.22, remove bundler 2.4.21 for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add rubygems 3.4.22, remove rubygems 3.4.21 for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add node 20.9.0, remove node 18.18.2 for stack(s) cflinuxfs4, cflinuxfs3
+
+
 v1.10.5 Oct 18, 2023
 =====================
 
