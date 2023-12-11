@@ -2,12 +2,12 @@ package integration_test
 
 import (
 	"bytes"
+	"github.com/paketo-buildpacks/packit/pexec"
 	"io/ioutil"
 	"os"
 	"strings"
 
 	"github.com/cloudfoundry/libbuildpack/cutlass"
-	"github.com/cloudfoundry/packit/pexec"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
