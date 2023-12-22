@@ -1,28 +1,29 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    mustermann (1.1.1)
+    mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
-    rack (2.2.3.1)
-    rack-protection (2.2.0)
+    rack (2.2.7)
+    rack-protection (3.0.6)
       rack
     ruby2_keywords (0.0.5)
-    sinatra (2.2.0)
-      mustermann (~> 1.0)
-      rack (~> 2.2)
-      rack-protection (= 2.2.0)
+    sinatra (3.0.6)
+      mustermann (~> 3.0)
+      rack (~> 2.2, >= 2.2.4)
+      rack-protection (= 3.0.6)
       tilt (~> 2.0)
-    tilt (2.0.10)
+    tilt (2.2.0)
+    webrick (1.8.1)
 
 PLATFORMS
   universal-java-1.8
-  x86_64-linux
 
 DEPENDENCIES
   sinatra
+  webrick
 
 RUBY VERSION
-   ruby 2.6.8p0 (jruby 9.3.13.0)
+   ruby 3.1.4p0 (jruby 9.4.3.0)
 
 BUNDLED WITH
-   2.3.16
+   2.4.14
