@@ -83,7 +83,6 @@ func CopyBrats(rubyVersion string) *cutlass.App {
 }
 
 // jruby 9.4.X.X = ruby 3.1.X
-// jruby 9.3.X.X = ruby 2.6.X
 func rubyVersionFromJRubyVersion(jrubyVersion string) (string, error) {
 	jrubyVersionRegex := regexp.MustCompile(`^(9.\d+).\d+.\d+$`)
 	version := jrubyVersionRegex.FindStringSubmatch(jrubyVersion)
@@ -93,8 +92,6 @@ func rubyVersionFromJRubyVersion(jrubyVersion string) (string, error) {
 	switch version[1] {
 	case "9.4":
 		return "~>3.1", nil
-	case "9.3":
-		return "~>2.6", nil
 	default:
 		return "", fmt.Errorf("Unknown JRuby -> Ruby version mapping for JRuby version %s", jrubyVersion)
 	}
