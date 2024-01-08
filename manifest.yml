@@ -22,6 +22,10 @@ dependency_deprecation_dates:
   name: ruby
   date: 2026-03-31
   link: https://www.ruby-lang.org/en/news/2022/12/25/ruby-3-2-0-released/
+- version_line: 3.3.x
+  name: ruby
+  date: 2027-03-31
+  link: https://www.ruby-lang.org/en/news/2023/12/25/ruby-3-3-0-released/
 dependencies:
 - name: bundler
   version: 2.5.4
@@ -153,6 +157,22 @@ dependencies:
   - cflinuxfs4
   source: https://cache.ruby-lang.org/pub/ruby/3.2/ruby-3.2.2.tar.gz
   source_sha256: 96c57558871a6748de5bc9f274e93f4b5aad06cd8f37befa0e8d94e7b8a423bc
+- name: ruby
+  version: 3.3.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.3.0_linux_x64_cflinuxfs3_8793b6fb.tgz
+  sha256: 8793b6fb4d46d44c70cf9ff0d356d13438ee6fdb6770cf82bc585f7d42a7e8c2
+  cf_stacks:
+  - cflinuxfs3
+  source: https://cache.ruby-lang.org/pub/ruby/3.3/ruby-3.3.0.tar.gz
+  source_sha256: 96518814d9832bece92a85415a819d4893b307db5921ae1f0f751a9a89a56b7d
+- name: ruby
+  version: 3.3.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.3.0_linux_x64_cflinuxfs4_ca23092b.tgz
+  sha256: ca23092ba8d2691a06cce046f5b9ae494485f5139c9ec7254674a34ae36b0ebc
+  cf_stacks:
+  - cflinuxfs4
+  source: https://cache.ruby-lang.org/pub/ruby/3.3/ruby-3.3.0.tar.gz
+  source_sha256: 96518814d9832bece92a85415a819d4893b307db5921ae1f0f751a9a89a56b7d
 - name: rubygems
   version: 3.5.4
   uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems_3.5.4_linux_noarch_any-stack_1446a3d4.tgz
