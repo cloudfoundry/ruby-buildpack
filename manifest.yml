@@ -126,22 +126,6 @@ dependencies:
   source: https://cache.ruby-lang.org/pub/ruby/3.1/ruby-3.1.4.tar.gz
   source_sha256: a3d55879a0dfab1d7141fdf10d22a07dbf8e5cdc4415da1bde06127d5cc3c7b6
 - name: ruby
-  version: 3.2.1
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.2.1_linux_x64_cflinuxfs3_c6894e9f.tgz
-  sha256: c6894e9fa0860cda4b09f89715f37b4fef2eee46a85fc2dc3f59ba16e3bdc301
-  cf_stacks:
-  - cflinuxfs3
-  source: https://cache.ruby-lang.org/pub/ruby/3.2/ruby-3.2.1.tar.gz
-  source_sha256: 13d67901660ee3217dbd9dd56059346bd4212ce64a69c306ef52df64935f8dbd
-- name: ruby
-  version: 3.2.1
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.2.1_linux_x64_cflinuxfs4_3c69ef49.tgz
-  sha256: 3c69ef49a15ce7dc19568776159843d70e656815f0452e01d00e3bd988c89b5e
-  cf_stacks:
-  - cflinuxfs4
-  source: https://cache.ruby-lang.org/pub/ruby/3.2/ruby-3.2.1.tar.gz
-  source_sha256: 13d67901660ee3217dbd9dd56059346bd4212ce64a69c306ef52df64935f8dbd
-- name: ruby
   version: 3.2.2
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.2.2_linux_x64_cflinuxfs3_abaf4c3a.tgz
   sha256: abaf4c3a6a02f3620d006cd1daea71c593ff6df5055321c4294f016a5e592299
@@ -157,6 +141,22 @@ dependencies:
   - cflinuxfs4
   source: https://cache.ruby-lang.org/pub/ruby/3.2/ruby-3.2.2.tar.gz
   source_sha256: 96c57558871a6748de5bc9f274e93f4b5aad06cd8f37befa0e8d94e7b8a423bc
+- name: ruby
+  version: 3.2.3
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.2.3_linux_x64_cflinuxfs3_a8069d21.tgz
+  sha256: a8069d2124a1e80dfd0c48d92ca82014b581d1af50ffc60545a14767fd9fbe3a
+  cf_stacks:
+  - cflinuxfs3
+  source: https://cache.ruby-lang.org/pub/ruby/3.2/ruby-3.2.3.tar.gz
+  source_sha256: af7f1757d9ddb630345988139211f1fd570ff5ba830def1cc7c468ae9b65c9ba
+- name: ruby
+  version: 3.2.3
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.2.3_linux_x64_cflinuxfs4_9bb54580.tgz
+  sha256: 9bb5458037c8541e9dd95504024a2d09214d7f19e48c09a3a5ca28ef9f0c90ae
+  cf_stacks:
+  - cflinuxfs4
+  source: https://cache.ruby-lang.org/pub/ruby/3.2/ruby-3.2.3.tar.gz
+  source_sha256: af7f1757d9ddb630345988139211f1fd570ff5ba830def1cc7c468ae9b65c9ba
 - name: ruby
   version: 3.3.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.3.0_linux_x64_cflinuxfs3_8793b6fb.tgz
