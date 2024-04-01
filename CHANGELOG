@@ -1,3 +1,15 @@
+v1.10.12 Apr 05, 2024
+======================
+
+* Deprecate Ruby 3.0.X (EOL)
+
+* Add rubygems 3.5.7, remove rubygems 3.5.6 for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add bundler 2.5.7, remove bundler 2.5.6 for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add node 20.12.1, remove node 20.11.1 for stack(s) cflinuxfs4, cflinuxfs3
+
+
 v1.10.11 Mar 18, 2024
 ======================
 
