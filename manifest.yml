@@ -53,21 +53,21 @@ dependencies:
   source: https://s3.amazonaws.com/jruby.org/downloads/9.4.6.0/jruby-src-9.4.6.0.tar.gz
   source_sha256: e100bcdc0bbaa36292a5011bbc1d88950649ec5f016934599329c26427fcdad5
 - name: node
-  version: 20.12.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_20.12.0_linux_x64_cflinuxfs3_5a38cd35.tgz
-  sha256: 5a38cd3512c82e65405ed4ed29dae22e7fa08ac5fc6f26fbfe1104a1e0989990
+  version: 20.12.1
+  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_20.12.1_linux_x64_cflinuxfs3_9fff88ff.tgz
+  sha256: 9fff88ff439a118b87b77935c09ecc1a88100f0ab901098b5682552866a1f96f
   cf_stacks:
   - cflinuxfs3
-  source: https://nodejs.org/dist/v20.12.0/node-v20.12.0.tar.gz
-  source_sha256: 6d81620a0d328ec3039184ad2f5a0fc340ed44a59e90947765567346671525e7
+  source: https://nodejs.org/dist/v20.12.1/node-v20.12.1.tar.gz
+  source_sha256: b9bef0314e12773ef004368ee56a2db509a948d4170b9efb07441bac1f1407a0
 - name: node
-  version: 20.12.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_20.12.0_linux_x64_cflinuxfs4_2bccc74c.tgz
-  sha256: 2bccc74c236e33243d496562f9533a5f947dd90d86256a6cbafe5008f6f02f50
+  version: 20.12.1
+  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_20.12.1_linux_x64_cflinuxfs4_c1bbae3e.tgz
+  sha256: c1bbae3eb6d299348e91588bef935fe7737dbf213c9d5a083b766621ea2ac75e
   cf_stacks:
   - cflinuxfs4
-  source: https://nodejs.org/dist/v20.12.0/node-v20.12.0.tar.gz
-  source_sha256: 6d81620a0d328ec3039184ad2f5a0fc340ed44a59e90947765567346671525e7
+  source: https://nodejs.org/dist/v20.12.1/node-v20.12.1.tar.gz
+  source_sha256: b9bef0314e12773ef004368ee56a2db509a948d4170b9efb07441bac1f1407a0
 - name: openjdk1.8-latest
   version: 1.8.0
   uri: https://java-buildpack.cloudfoundry.org/openjdk-jdk/bionic/x86_64/openjdk-jdk-1.8.0_242-bionic.tar.gz
