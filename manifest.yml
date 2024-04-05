@@ -10,10 +10,6 @@ dependency_deprecation_dates:
   name: node
   date: 2025-04-30
   link: https://github.com/nodejs/Release
-- version_line: 3.0.x
-  name: ruby
-  date: 2024-03-31
-  link: https://www.ruby-lang.org/en/news/2020/12/25/ruby-3-0-0-released/
 - version_line: 3.1.x
   name: ruby
   date: 2025-03-31
@@ -77,22 +73,6 @@ dependencies:
   - cflinuxfs4
   source: https://java-buildpack.cloudfoundry.org/openjdk-jdk/bionic/x86_64/openjdk-jdk-1.8.0_242-bionic.tar.gz
   source_sha256: dcb9fea2fc3a9b003031874ed17aa5d5a7ebbe397b276ecc8c814633003928fe
-- name: ruby
-  version: 3.0.5
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.0.5_linux_x64_cflinuxfs3_098393c3.tgz
-  sha256: '098393c33a20af7638ff7183bbf184daf9b207b31e39f20a7fd00466823859b3'
-  cf_stacks:
-  - cflinuxfs3
-  source: https://cache.ruby-lang.org/pub/ruby/3.0/ruby-3.0.5.tar.gz
-  source_sha256: 9afc6380a027a4fe1ae1a3e2eccb6b497b9c5ac0631c12ca56f9b7beb4848776
-- name: ruby
-  version: 3.0.6
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.0.6_linux_x64_cflinuxfs3_4b5551df.tgz
-  sha256: 4b5551df893f99f38624c1b170e4c44fb0f58a2fc94282edf17f00e2a2cce3d5
-  cf_stacks:
-  - cflinuxfs3
-  source: https://cache.ruby-lang.org/pub/ruby/3.0/ruby-3.0.6.tar.gz
-  source_sha256: 6e6cbd490030d7910c0ff20edefab4294dfcd1046f0f8f47f78b597987ac683e
 - name: ruby
   version: 3.1.3
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.1.3_linux_x64_cflinuxfs3_886f9a1c.tgz
