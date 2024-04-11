@@ -32,14 +32,11 @@ var _ = Describe("pushing an app with Rails 7.1", func() {
 
 		It("does not fail calling `rake secret` and instead calls rails secret when rails ~> 7.1 is detected", func() {
 			PushAppAndConfirm(app)
-
+			Expect(app.GetBody("/")).To(ContainSubstring("Hello World!"))
 			// 7.0 has `rake secret` and `rails secret` available.
 			// 7.1 has `rails secret` available, `rake secret` was removed
-			Expect(app.Stdout.String()).Not(To(ContainSubstring("Don't know how to build task 'secret'")))
-			Expect(app.Stdout.String()).Not(To(ContainSubstring(`Unable to write profile.d: Failed to run 'rake secret': exit status 1`)))
-
-			body, err := app.GetBody("/")
-			Expect(err).To(BeNil())
+			Expect(app.Stdout.String()).NotTo(ContainSubstring("rake aborted!"))
+			Expect(app.Stdout.String()).NotTo(ContainSubstring(`Unable to write profile.d: Failed to run 'rake secret': exit status 1`))
 		})
 	})
 })
