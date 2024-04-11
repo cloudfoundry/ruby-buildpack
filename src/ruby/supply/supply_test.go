@@ -839,9 +839,10 @@ var _ = Describe("Supply", func() {
 				mockVersions.EXPECT().RubyEngineVersion().AnyTimes().Return("2.5.0", nil)
 			})
 
-			Context("Rails >= 4.1", func() {
+			Context("Rails >= 4.1 && Rails < 7.0.0", func() {
 				BeforeEach(func() {
 					mockVersions.EXPECT().HasGemVersion("rails", ">=4.1.0.beta1").Return(true, nil)
+					mockVersions.EXPECT().HasGemVersion("rails", ">=7.0.0.beta1").Return(false, nil)
 				})
 
 				Context("SECRET_KEY_BASE is cached", func() {
@@ -861,6 +862,38 @@ var _ = Describe("Supply", func() {
 					BeforeEach(func() {
 						mockCache.EXPECT().Metadata().Return(&cache.Metadata{})
 						mockCommand.EXPECT().Output(buildDir, "bundle", "exec", "rake", "secret").Return("\n\nabcdef\n\n", nil)
+					})
+					It("writes default SECRET_KEY_BASE to profile.d", func() {
+						Expect(supplier.WriteProfileD("enginename")).To(Succeed())
+						contents, err := os.ReadFile(filepath.Join(depsDir, depsIdx, "profile.d", "ruby.sh"))
+						Expect(err).ToNot(HaveOccurred())
+						Expect(string(contents)).To(ContainSubstring("export SECRET_KEY_BASE=${SECRET_KEY_BASE:-abcdef}"))
+					})
+				})
+			})
+			Context("Rails >= 7.0", func() {
+				BeforeEach(func() {
+					mockVersions.EXPECT().HasGemVersion("rails", ">=4.1.0.beta1").Return(true, nil)
+					mockVersions.EXPECT().HasGemVersion("rails", ">=7.0.0.beta1").Return(true, nil)
+				})
+
+				Context("SECRET_KEY_BASE is cached", func() {
+					BeforeEach(func() {
+						mockCache.EXPECT().Metadata().Return(&cache.Metadata{SecretKeyBase: "foobar"})
+					})
+
+					It("writes the cached SECRET_KEY_BASE to profile.d", func() {
+						Expect(supplier.WriteProfileD("enginename")).To(Succeed())
+						contents, err := os.ReadFile(filepath.Join(depsDir, depsIdx, "profile.d", "ruby.sh"))
+						Expect(err).ToNot(HaveOccurred())
+						Expect(string(contents)).To(ContainSubstring("export SECRET_KEY_BASE=${SECRET_KEY_BASE:-foobar}"))
+					})
+				})
+
+				Context("SECRET_KEY_BASE is not cached", func() {
+					BeforeEach(func() {
+						mockCache.EXPECT().Metadata().Return(&cache.Metadata{})
+						mockCommand.EXPECT().Output(buildDir, "bundle", "exec", "rails", "secret").Return("\n\nabcdef\n\n", nil)
 					})
 					It("writes default SECRET_KEY_BASE to profile.d", func() {
 						Expect(supplier.WriteProfileD("enginename")).To(Succeed())

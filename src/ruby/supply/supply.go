@@ -984,10 +984,19 @@ bundle config BIN "$DEPS_DIR/%s/binstubs" > /dev/null
 		if err != nil {
 			return fmt.Errorf("Could not determine rails version: %v", err)
 		}
+
 		if hasRails41 {
+			subCommand := "rake"
+			hasRails7, err := s.Versions.HasGemVersion("rails", ">=7.0.0.beta1")
+			if err != nil {
+				return fmt.Errorf("Could not determine rails version: %v", err)
+			}
+			if hasRails7 {
+				subCommand = "rails"
+			}
 			metadata := s.Cache.Metadata()
 			if metadata.SecretKeyBase == "" {
-				metadata.SecretKeyBase, err = s.Command.Output(s.Stager.BuildDir(), "bundle", "exec", "rake", "secret")
+				metadata.SecretKeyBase, err = s.Command.Output(s.Stager.BuildDir(), "bundle", "exec", subCommand, "secret")
 				if err != nil {
 					return fmt.Errorf("Failed to run 'rake secret': %v", err)
 				}
