@@ -1,3 +1,23 @@
+v1.10.13 Apr 12, 2024
+======================
+
+* Enable rails 7.1 compatibility for buildpack (#925)
+
+* Add rubygems 3.5.9, remove rubygems 3.5.8 (#932)
+    for stack(s) cflinuxfs4, cflinuxfs3 [#187420578]
+
+* Add rubygems 3.5.8, remove rubygems 3.5.7 (#930)
+  for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add bundler 2.5.9, remove bundler 2.5.8 (#931)
+  for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add bundler 2.5.8, remove bundler 2.5.7 (#929)
+  for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add node 20.12.2, remove node 20.12.1 (#926)
+  for stack(s) cflinuxfs3, cflinuxfs4
+
 v1.10.12 Apr 05, 2024
 ======================
 
