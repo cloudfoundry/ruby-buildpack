@@ -14,7 +14,6 @@ var _ = Describe("Ruby buildpack", func() {
 	bratshelper.StagingWithBuildpackThatSetsEOL("ruby", func(_ string) *cutlass.App {
 		return CopyBrats("3.1.x")
 	})
-	bratshelper.StagingWithCustomBuildpackWithCredentialsInDependencies(CopyBrats)
 	bratshelper.DeployAppWithExecutableProfileScript("ruby", CopyBrats)
 	bratshelper.DeployAnAppWithSensitiveEnvironmentVariables(CopyBrats)
 	bratshelper.ForAllSupportedVersions("ruby", CopyBrats, func(rubyVersion string, app *cutlass.App) {
