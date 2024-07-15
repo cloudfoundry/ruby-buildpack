@@ -1,5 +1,7 @@
 module github.com/cloudfoundry/ruby-buildpack
 
+go 1.22.5
+
 require (
 	github.com/blang/semver v3.5.1+incompatible
 	github.com/cloudfoundry/libbuildpack v0.0.0-20231211162543-86d10e150195
@@ -30,5 +32,3 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
-
-go 1.19
