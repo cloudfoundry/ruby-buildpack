@@ -1,3 +1,19 @@
+v1.10.17 Jul 16, 2024
+======================
+
+* Add jruby 9.4.8.0, remove jruby 9.4.7.0
+  for stack(s) cflinuxfs3, cflinuxfs4
+
+* Add rubygems 3.5.15, remove rubygems 3.5.14
+  for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add bundler 2.5.15, remove bundler 2.5.14
+  for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add ruby 3.3.4, remove ruby 3.3.1
+  for stack(s) cflinuxfs3, cflinuxfs4
+
+
 v1.10.16 Jun 26, 2024
 ======================
 
