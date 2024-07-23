@@ -1,3 +1,0 @@
-ruby "~> 8.2.7"
-
-gem 'thin' unless RUBY_PLATFORM =~ /mingw|mswin/i

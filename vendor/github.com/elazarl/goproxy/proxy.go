@@ -28,10 +28,8 @@ type ProxyHttpServer struct {
 	Tr              *http.Transport
 	// ConnectDial will be used to create TCP connections for CONNECT requests
 	// if nil Tr.Dial will be used
-	ConnectDial        func(network string, addr string) (net.Conn, error)
-	ConnectDialWithReq func(req *http.Request, network string, addr string) (net.Conn, error)
-	CertStore          CertStorage
-	KeepHeader         bool
+	ConnectDial func(network string, addr string) (net.Conn, error)
+	CertStore   CertStorage
 }
 
 var hasPort = regexp.MustCompile(`:\d+$`)
@@ -95,31 +93,7 @@ func removeProxyHeaders(ctx *ProxyCtx, r *http.Request) {
 	//   The Connection general-header field allows the sender to specify
 	//   options that are desired for that particular connection and MUST NOT
 	//   be communicated by proxies over further connections.
-
-	// When server reads http request it sets req.Close to true if
-	// "Connection" header contains "close".
-	// https://github.com/golang/go/blob/master/src/net/http/request.go#L1080
-	// Later, transfer.go adds "Connection: close" back when req.Close is true
-	// https://github.com/golang/go/blob/master/src/net/http/transfer.go#L275
-	// That's why tests that checks "Connection: close" removal fail
-	if r.Header.Get("Connection") == "close" {
-		r.Close = false
-	}
 	r.Header.Del("Connection")
-}
-
-type flushWriter struct {
-	w io.Writer
-}
-
-func (fw flushWriter) Write(p []byte) (int, error) {
-	n, err := fw.w.Write(p)
-	if f, ok := fw.w.(http.Flusher); ok {
-		// only flush if the Writer implements the Flusher interface.
-		f.Flush()
-	}
-
-	return n, err
 }
 
 // Standard net/http function. Shouldn't be used directly, http.Serve will use it.
@@ -128,7 +102,7 @@ func (proxy *ProxyHttpServer) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 	if r.Method == "CONNECT" {
 		proxy.handleHttps(w, r)
 	} else {
-		ctx := &ProxyCtx{Req: r, Session: atomic.AddInt64(&proxy.sess, 1), Proxy: proxy}
+		ctx := &ProxyCtx{Req: r, Session: atomic.AddInt64(&proxy.sess, 1), proxy: proxy}
 
 		var err error
 		ctx.Logf("Got request %v %v %v %v", r.URL.Path, r.Host, r.Method, r.URL.String())
@@ -139,14 +113,7 @@ func (proxy *ProxyHttpServer) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 		r, resp := proxy.filterRequest(r, ctx)
 
 		if resp == nil {
-			if isWebSocketRequest(r) {
-				ctx.Logf("Request looks like websocket upgrade.")
-				proxy.serveWebsocket(ctx, w, r)
-			}
-
-			if !proxy.KeepHeader {
-				removeProxyHeaders(ctx, r)
-			}
+			removeProxyHeaders(ctx, r)
 			resp, err = ctx.RoundTrip(r)
 			if err != nil {
 				ctx.Error = err
@@ -157,14 +124,6 @@ func (proxy *ProxyHttpServer) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 				ctx.Logf("Received response %v", resp.Status)
 			}
 		}
-
-		var origBody io.ReadCloser
-
-		if resp != nil {
-			origBody = resp.Body
-			defer origBody.Close()
-		}
-
 		resp = proxy.filterResponse(resp, ctx)
 
 		if resp == nil {
@@ -180,6 +139,8 @@ func (proxy *ProxyHttpServer) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 			}
 			return
 		}
+		origBody := resp.Body
+		defer origBody.Close()
 		ctx.Logf("Copying response to client %v [%d]", resp.Status, resp.StatusCode)
 		// http.ResponseWriter will take care of filling the correct response length
 		// Setting it now, might impose wrong value, contradicting the actual new
@@ -192,13 +153,7 @@ func (proxy *ProxyHttpServer) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 		}
 		copyHeaders(w.Header(), resp.Header, proxy.KeepDestinationHeaders)
 		w.WriteHeader(resp.StatusCode)
-		var copyWriter io.Writer = w
-		if w.Header().Get("content-type") == "text/event-stream" {
-			// server-side events, flush the buffered data to the client.
-			copyWriter = &flushWriter{w: w}
-		}
-
-		nr, err := io.Copy(copyWriter, resp.Body)
+		nr, err := io.Copy(w, resp.Body)
 		if err := resp.Body.Close(); err != nil {
 			ctx.Warnf("Can't close response body %v", err)
 		}
@@ -218,7 +173,6 @@ func NewProxyHttpServer() *ProxyHttpServer {
 		}),
 		Tr: &http.Transport{TLSClientConfig: tlsClientSkipVerify, Proxy: http.ProxyFromEnvironment},
 	}
-
 	proxy.ConnectDial = dialerFromEnv(&proxy)
 
 	return &proxy

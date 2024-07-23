@@ -77,9 +77,8 @@ type Config struct {
 	Pipe      bool      // The file is a named pipe (mkfifo)
 
 	// Generic IO
-	Follow        bool // Continue looking for new lines (tail -f)
-	MaxLineSize   int  // If non-zero, split longer lines into multiple lines
-	CompleteLines bool // Only return complete lines (that end with "\n" or EOF when Follow is false)
+	Follow      bool // Continue looking for new lines (tail -f)
+	MaxLineSize int  // If non-zero, split longer lines into multiple lines
 
 	// Optionally, use a ratelimiter (e.g. created by the ratelimiter/NewLeakyBucket function)
 	RateLimiter *ratelimiter.LeakyBucket
@@ -97,8 +96,6 @@ type Tail struct {
 	file    *os.File
 	reader  *bufio.Reader
 	lineNum int
-
-	lineBuf *strings.Builder
 
 	watcher watch.FileWatcher
 	changes *watch.FileChanges
@@ -129,10 +126,6 @@ func TailFile(filename string, config Config) (*Tail, error) {
 		Filename: filename,
 		Lines:    make(chan *Line),
 		Config:   config,
-	}
-
-	if config.CompleteLines {
-		t.lineBuf = new(strings.Builder)
 	}
 
 	// when Logger was not specified in config, use default logger
@@ -209,9 +202,6 @@ func (tail *Tail) closeFile() {
 }
 
 func (tail *Tail) reopen() error {
-	if tail.lineBuf != nil {
-		tail.lineBuf.Reset()
-	}
 	tail.closeFile()
 	tail.lineNum = 0
 	for {
@@ -239,32 +229,16 @@ func (tail *Tail) readLine() (string, error) {
 	tail.lk.Lock()
 	line, err := tail.reader.ReadString('\n')
 	tail.lk.Unlock()
-
-	newlineEnding := strings.HasSuffix(line, "\n")
-	line = strings.TrimRight(line, "\n")
-
-	// if we don't have to handle incomplete lines, we can return the line as-is
-	if !tail.Config.CompleteLines {
+	if err != nil {
 		// Note ReadString "returns the data read before the error" in
 		// case of an error, including EOF, so we return it as is. The
 		// caller is expected to process it if err is EOF.
 		return line, err
 	}
 
-	if _, err := tail.lineBuf.WriteString(line); err != nil {
-		return line, err
-	}
+	line = strings.TrimRight(line, "\n")
 
-	if newlineEnding {
-		line = tail.lineBuf.String()
-		tail.lineBuf.Reset()
-		return line, nil
-	} else {
-		if tail.Config.Follow {
-			line = ""
-		}
-		return line, io.EOF
-	}
+	return line, err
 }
 
 func (tail *Tail) tailFileSync() {
