@@ -2,6 +2,9 @@ package integration_test
 
 import (
 	"flag"
+	"fmt"
+	"io"
+	"net/http"
 	"os"
 	"path/filepath"
 	"testing"
@@ -51,6 +54,9 @@ func TestIntegration(t *testing.T) {
 	platform, err := switchblade.NewPlatform(settings.Platform, settings.GitHubToken, settings.Stack)
 	Expect(err).NotTo(HaveOccurred())
 
+	goBuildpackFile, err := downloadBuildpack("go")
+	Expect(err).NotTo(HaveOccurred())
+
 	err = platform.Initialize(
 		switchblade.Buildpack{
 			Name: "ruby_buildpack",
@@ -62,7 +68,7 @@ func TestIntegration(t *testing.T) {
 		},
 		switchblade.Buildpack{
 			Name: "go_buildpack", // for the proxy test
-			URI:  "https://github.com/cloudfoundry/go-buildpack/releases/download/v1.10.21/go-buildpack-cflinuxfs4-v1.10.21.zip",
+			URI:  goBuildpackFile,
 		},
 	)
 	Expect(err).NotTo(HaveOccurred())
@@ -91,4 +97,24 @@ func TestIntegration(t *testing.T) {
 
 	Expect(platform.Delete.Execute(proxyName)).To(Succeed())
 	Expect(os.Remove(os.Getenv("BUILDPACK_FILE"))).To(Succeed())
+	Expect(os.Remove(goBuildpackFile)).To(Succeed())
+}
+
+func downloadBuildpack(name string) (string, error) {
+	uri := fmt.Sprintf("https://github.com/cloudfoundry/%s-buildpack/archive/master.zip", name)
+
+	file, err := os.CreateTemp("", fmt.Sprintf("%s-buildpack-*.zip", name))
+	if err != nil {
+		return "", err
+	}
+	defer file.Close()
+
+	resp, err := http.Get(uri)
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+
+	_, err = io.Copy(file, resp.Body)
+	return file.Name(), err
 }
