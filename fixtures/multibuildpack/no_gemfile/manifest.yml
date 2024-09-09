@@ -1,0 +1,4 @@
+---
+applications:
+- name: app-with-no-gemfile
+  health-check-type: process

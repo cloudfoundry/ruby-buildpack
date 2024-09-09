@@ -4,10 +4,12 @@ code.cloudfoundry.org/lager
 # github.com/Masterminds/semver v1.5.0
 ## explicit
 github.com/Masterminds/semver
-# github.com/Microsoft/go-winio v0.6.0
+# github.com/Microsoft/go-winio v0.6.1
 ## explicit; go 1.17
 github.com/Microsoft/go-winio
+github.com/Microsoft/go-winio/internal/fs
 github.com/Microsoft/go-winio/internal/socket
+github.com/Microsoft/go-winio/internal/stringbuffer
 github.com/Microsoft/go-winio/pkg/guid
 # github.com/blang/semver v3.5.1+incompatible
 ## explicit
@@ -24,17 +26,17 @@ github.com/cloudfoundry/libbuildpack/cutlass
 github.com/cloudfoundry/libbuildpack/cutlass/docker
 github.com/cloudfoundry/libbuildpack/cutlass/glow
 github.com/cloudfoundry/libbuildpack/packager
-# github.com/cloudfoundry/switchblade v0.4.0
+# github.com/cloudfoundry/switchblade v0.6.0
 ## explicit; go 1.19
 github.com/cloudfoundry/switchblade
 github.com/cloudfoundry/switchblade/internal/cloudfoundry
 github.com/cloudfoundry/switchblade/internal/docker
 github.com/cloudfoundry/switchblade/matchers
-# github.com/docker/distribution v2.8.1+incompatible
+# github.com/docker/distribution v2.8.2+incompatible
 ## explicit
 github.com/docker/distribution/digestset
 github.com/docker/distribution/reference
-# github.com/docker/docker v23.0.3+incompatible
+# github.com/docker/docker v24.0.2+incompatible
 ## explicit
 github.com/docker/docker/api
 github.com/docker/docker/api/types
@@ -135,14 +137,14 @@ github.com/onsi/gomega/types
 # github.com/opencontainers/go-digest v1.0.0
 ## explicit; go 1.13
 github.com/opencontainers/go-digest
-# github.com/opencontainers/image-spec v1.1.0-rc2
-## explicit; go 1.17
+# github.com/opencontainers/image-spec v1.1.0-rc3
+## explicit; go 1.18
 github.com/opencontainers/image-spec/specs-go
 github.com/opencontainers/image-spec/specs-go/v1
 # github.com/paketo-buildpacks/packit v1.3.1
 ## explicit; go 1.16
 github.com/paketo-buildpacks/packit/pexec
-# github.com/paketo-buildpacks/packit/v2 v2.9.0
+# github.com/paketo-buildpacks/packit/v2 v2.11.0
 ## explicit; go 1.16
 github.com/paketo-buildpacks/packit/v2/fs
 github.com/paketo-buildpacks/packit/v2/pexec
