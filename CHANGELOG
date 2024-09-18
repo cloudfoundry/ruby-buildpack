@@ -1,3 +1,28 @@
+v1.10.18 Sep 18, 2024
+======================
+
+* Update to ruby 3.2.5
+  for stack(s) cflinuxfs4, cflinuxfs3
+
+* Update to bundler 2.5.18
+  for stack(s) cflinuxfs4, cflinuxfs3
+
+* Update to rubygems 3.5.18
+  for stack(s) cflinuxfs4, cflinuxfs3
+
+* Updated to node 20.16.0
+  for stack(s) cflinuxfs3, cflinuxfs4
+
+* No gemfile test: Use manifest to set health-check-type
+  pull in https://github.com/cloudfoundry/switchblade/pull/113
+
+* fix tests: fs3 envs do not have go_buildpack
+  See https://github.com/cloudfoundry/nodejs-buildpack/pull/692
+
+* Migrate test suite to switchblade (#977)
+  - delete low-value tests.
+
+
 v1.10.17 Jul 16, 2024
 ======================
 
