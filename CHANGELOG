@@ -1,3 +1,13 @@
+v1.10.19 Nov 07, 2024
+======================
+
+* Add bundler 2.5.20, remove bundler 2.5.18
+  for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add rubygems 3.5.21, remove rubygems 3.5.18
+  for stack(s) cflinuxfs4, cflinuxfs3
+
+
 v1.10.18 Sep 18, 2024
 ======================
 
