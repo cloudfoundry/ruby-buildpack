@@ -1,3 +1,16 @@
+v1.10.20 Dec 12, 2024
+======================
+
+* Add ruby 3.2.6, remove ruby 3.2.4 (#1000)
+  for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add bundler 2.5.23, remove bundler 2.5.20
+  for stack(s) cflinuxfs4, cflinuxfs3
+
+* Add ruby 3.3.6, remove ruby 3.3.2
+  for stack(s) cflinuxfs4, cflinuxfs3
+
+
 v1.10.19 Nov 07, 2024
 ======================
 
