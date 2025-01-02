@@ -356,6 +356,17 @@ var _ = Describe("Finalize", func() {
 						Expect(buffer.String()).To(ContainSubstring("Detected assets manifest file, assuming assets were compiled locally"))
 					})
 				})
+				Context("public/assets/.manifest.json is present", func() {
+					BeforeEach(func() {
+						Expect(os.MkdirAll(filepath.Join(buildDir, "public", "assets"), 0755)).To(Succeed())
+						Expect(ioutil.WriteFile(filepath.Join(buildDir, "public", "assets", ".manifest.json"), []byte("memanifest"), 0644)).To(Succeed())
+					})
+					It("skips assets:precompile", func() {
+						Expect(finalizer.PrecompileAssets()).To(Succeed())
+						Expect(cmds).To(BeEmpty())
+						Expect(buffer.String()).To(ContainSubstring("Detected assets manifest file, assuming assets were compiled locally"))
+					})
+				})
 				Context("public/assets/manifest.yml is present", func() {
 					BeforeEach(func() {
 						Expect(os.MkdirAll(filepath.Join(buildDir, "public", "assets"), 0755)).To(Succeed())

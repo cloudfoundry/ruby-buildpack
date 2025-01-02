@@ -214,7 +214,7 @@ func (f *Finalizer) databaseUrl() string {
 }
 
 func (f *Finalizer) hasPrecompiledAssets() (bool, error) {
-	globs := []string{".sprockets-manifest-*.json", "manifest-*.json"}
+	globs := []string{".sprockets-manifest-*.json", "manifest-*.json", ".manifest.json"}
 	if f.RailsVersion < 4 {
 		globs = []string{"manifest.yml"}
 	}
