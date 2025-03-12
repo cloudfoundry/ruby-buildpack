@@ -1,11 +1,13 @@
 module github.com/cloudfoundry/ruby-buildpack
 
-go 1.22.5
+go 1.23.0
+
+toolchain go1.24.0
 
 require (
 	github.com/blang/semver v3.5.1+incompatible
 	github.com/cloudfoundry/libbuildpack v0.0.0-20240717165421-f2ae8069fcba
-	github.com/cloudfoundry/switchblade v0.6.0
+	github.com/cloudfoundry/switchblade v0.9.0
 	github.com/golang/mock v1.6.0
 	github.com/kr/text v0.2.0
 	github.com/onsi/ginkgo v1.16.5
