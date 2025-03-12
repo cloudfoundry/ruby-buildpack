@@ -98,6 +98,7 @@ func TestIntegration(t *testing.T) {
 	Expect(platform.Delete.Execute(proxyName)).To(Succeed())
 	Expect(os.Remove(os.Getenv("BUILDPACK_FILE"))).To(Succeed())
 	Expect(os.Remove(goBuildpackFile)).To(Succeed())
+	Expect(platform.Deinitialize()).To(Succeed())
 }
 
 func downloadBuildpack(name string) (string, error) {
