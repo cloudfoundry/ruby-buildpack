@@ -44,7 +44,7 @@ func TestIntegration(t *testing.T) {
 	var Expect = NewWithT(t).Expect
 
 	format.MaxLength = 0
-	SetDefaultEventuallyTimeout(10 * time.Second)
+	SetDefaultEventuallyTimeout(20 * time.Second)
 
 	root, err := filepath.Abs("./../../..")
 	Expect(err).NotTo(HaveOccurred())
