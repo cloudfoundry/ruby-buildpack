@@ -37,7 +37,7 @@ func testDefault(platform switchblade.Platform, fixtures string) func(*testing.T
 					Execute(name, filepath.Join(fixtures, "default", "specified_ruby_version"))
 				Expect(err).NotTo(HaveOccurred())
 
-				Eventually(deployment).Should(Serve(ContainSubstring("ruby 3.1.6")).WithEndpoint("/ruby"))
+				Eventually(deployment).Should(Serve(MatchRegexp(`ruby 3\.2\.\d+`)).WithEndpoint("/ruby"))
 			})
 		})
 

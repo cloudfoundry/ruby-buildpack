@@ -27,3 +27,9 @@ DEPENDENCIES
   hola!
   sinatra
   webrick
+
+RUBY VERSION
+   ruby 3.2.0p0
+
+BUNDLED WITH
+   2.4.1
