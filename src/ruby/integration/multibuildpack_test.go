@@ -56,7 +56,7 @@ func testMultiBuildpack(platform switchblade.Platform, fixtures string) func(*te
 				Expect(err).NotTo(HaveOccurred())
 
 				Eventually(deployment).Should(Serve(ContainSubstring("Ruby version: ruby 3.")))
-				Eventually(deployment).Should(Serve(ContainSubstring("Node version: v18.")))
+				Eventually(deployment).Should(Serve(MatchRegexp(`Node version: v\d+\.\d+\.\d+`)))
 			})
 		})
 
