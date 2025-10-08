@@ -159,16 +159,16 @@ dependencies:
   source_sha256: 5ae28a87a59a3e4ad66bc2931d232dbab953d0aa8f6baf3bc4f8f80977c89cab
 - name: ruby
   version: 3.3.9
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.3.9_linux_x64_cflinuxfs3_8387680f.tgz
-  sha256: 8387680f143c7f7d037612fe52c46269c8ebf4af350c3c27c79496bc4b8d77d8
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.3.9_linux_x64_cflinuxfs3_2d29a0c5.tgz
+  sha256: 2d29a0c51d27175ef36070ed814faed2f7845cd00969b8fcd63bec94c349cad3
   cf_stacks:
   - cflinuxfs3
   source: https://cache.ruby-lang.org/pub/ruby/3.3/ruby-3.3.9.tar.gz
   source_sha256: d1991690a4e17233ec6b3c7844c1e1245c0adce3e00d713551d0458467b727b1
 - name: ruby
   version: 3.3.9
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.3.9_linux_x64_cflinuxfs4_2b67dae6.tgz
-  sha256: 2b67dae6803e922f17ae768fe893bcc1d3f0efb36939faf366a199a7be643710
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.3.9_linux_x64_cflinuxfs4_0ee9a82c.tgz
+  sha256: 0ee9a82c000002c8ea9aae3c6b067760ffd3e141780a4819e11d9b35768fac43
   cf_stacks:
   - cflinuxfs4
   source: https://cache.ruby-lang.org/pub/ruby/3.3/ruby-3.3.9.tar.gz
