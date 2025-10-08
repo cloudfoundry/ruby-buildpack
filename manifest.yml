@@ -37,21 +37,21 @@ dependencies:
   source: https://github.com/rubygems/rubygems/tree/master/bundlertree/v2.6.5
   source_sha256: 9d0eef5779ee569c43f317484f034081f58e9cf7529af6cd59d15266e46a72a3
 - name: jruby
-  version: 9.4.8.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.4.8.0-ruby-3.1_linux_x64_cflinuxfs3_70896f95.tgz
-  sha256: 70896f95619b2244e68342aae3e596792bcd3d748333084640d1d7ea56cb1905
+  version: 9.4.14.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.4.14.0-ruby-3.1_linux_x64_cflinuxfs3_dd00db05.tgz
+  sha256: dd00db053e4fc5dcda418b0b8af2a81fb586abd37d3297fe45e68c81116b71d7
   cf_stacks:
   - cflinuxfs3
-  source: https://s3.amazonaws.com/jruby.org/downloads/9.4.8.0/jruby-src-9.4.8.0.tar.gz
-  source_sha256: d1a7abb31bd02335cf0e26e3de54e2f82232044c0b6e59bd336a00cab8e1e211
+  source: https://repo1.maven.org/maven2/org/jruby/jruby-dist/9.4.14.0/jruby-dist-9.4.14.0-src.zip
+  source_sha256: 400086b33f701a47dc28c5965d5a408bc2740301a5fb3b545e37abaa002ccdf8
 - name: jruby
-  version: 9.4.8.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.4.8.0-ruby-3.1_linux_x64_cflinuxfs4_89442854.tgz
-  sha256: 89442854db82ec0636e5f9c79a6c78a189222fbef8a68d7ce40c3afc82b99bd8
+  version: 9.4.14.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.4.14.0-ruby-3.1_linux_x64_cflinuxfs4_ab1682e2.tgz
+  sha256: ab1682e2022ce30ac0f768890349b467458d3b3e096bb3ac6756f68bd9cdaaaf
   cf_stacks:
   - cflinuxfs4
-  source: https://s3.amazonaws.com/jruby.org/downloads/9.4.8.0/jruby-src-9.4.8.0.tar.gz
-  source_sha256: d1a7abb31bd02335cf0e26e3de54e2f82232044c0b6e59bd336a00cab8e1e211
+  source: https://repo1.maven.org/maven2/org/jruby/jruby-dist/9.4.14.0/jruby-dist-9.4.14.0-src.zip
+  source_sha256: 400086b33f701a47dc28c5965d5a408bc2740301a5fb3b545e37abaa002ccdf8
 - name: node
   version: 20.16.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_20.16.0_linux_x64_cflinuxfs3_62df07a7.tgz
