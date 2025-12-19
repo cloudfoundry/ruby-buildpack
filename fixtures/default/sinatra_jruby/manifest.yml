@@ -1,3 +1,5 @@
 ---
 applications:
 - name: sinatra_jruby_web_app
+  health-check-type: process
+  timeout: 180
