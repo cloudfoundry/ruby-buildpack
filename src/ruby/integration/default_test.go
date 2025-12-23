@@ -28,9 +28,9 @@ func testDefault(platform switchblade.Platform, fixtures string) func(*testing.T
 			println(name)
 		})
 
-		// it.After(func() {
-		// 	Expect(platform.Delete.Execute(name)).To(Succeed())
-		// })
+		it.After(func() {
+			Expect(platform.Delete.Execute(name)).To(Succeed())
+		})
 
 		context("when the ruby version is specified in the app", func() {
 			it("builds and runs the app with the specified version", func() {
