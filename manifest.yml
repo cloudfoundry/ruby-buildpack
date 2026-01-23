@@ -10,10 +10,7 @@ dependency_deprecation_dates:
   name: node
   date: 2025-04-30
   link: https://github.com/nodejs/Release
-- version_line: 3.1.x
-  name: ruby
-  date: 2025-03-31
-  link: https://www.ruby-lang.org/en/news/2021/12/25/ruby-3-1-0-released/
+
 - version_line: 3.2.x
   name: ruby
   date: 2026-03-31
@@ -77,38 +74,7 @@ dependencies:
   - cflinuxfs4
   source: https://java-buildpack.cloudfoundry.org/openjdk-jdk/bionic/x86_64/openjdk-jdk-1.8.0_242-bionic.tar.gz
   source_sha256: dcb9fea2fc3a9b003031874ed17aa5d5a7ebbe397b276ecc8c814633003928fe
-- name: ruby
-  version: 3.1.6
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.1.6_linux_x64_cflinuxfs3_ae207103.tgz
-  sha256: ae207103a80831dd56cc6e99eeecbbc66f89b22140f8348db2358e196a63937d
-  cf_stacks:
-  - cflinuxfs3
-  source: https://cache.ruby-lang.org/pub/ruby/3.1/ruby-3.1.6.tar.gz
-  source_sha256: 0d0dafb859e76763432571a3109d1537d976266be3083445651dc68deed25c22
-- name: ruby
-  version: 3.1.6
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.1.6_linux_x64_cflinuxfs4_3bb9e196.tgz
-  sha256: 3bb9e196ce24341ec075b6cccd39c764997453f248e7765793d34215829588f0
-  cf_stacks:
-  - cflinuxfs4
-  source: https://cache.ruby-lang.org/pub/ruby/3.1/ruby-3.1.6.tar.gz
-  source_sha256: 0d0dafb859e76763432571a3109d1537d976266be3083445651dc68deed25c22
-- name: ruby
-  version: 3.1.7
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.1.7_linux_x64_cflinuxfs3_0469d2af.tgz
-  sha256: '0469d2afc8b0bd03aaa0c497de995b5e3435080fe087aa7fbb5ede6d90c79522'
-  cf_stacks:
-  - cflinuxfs3
-  source: https://cache.ruby-lang.org/pub/ruby/3.1/ruby-3.1.7.tar.gz
-  source_sha256: 0556acd69f141ddace03fa5dd8d76e7ea0d8f5232edf012429579bcdaab30e7b
-- name: ruby
-  version: 3.1.7
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.1.7_linux_x64_cflinuxfs4_b50704f1.tgz
-  sha256: b50704f13d77a6bec7a6f82ba4f0a75ec2a74f80c0943cc98f8142eee011e35e
-  cf_stacks:
-  - cflinuxfs4
-  source: https://cache.ruby-lang.org/pub/ruby/3.1/ruby-3.1.7.tar.gz
-  source_sha256: 0556acd69f141ddace03fa5dd8d76e7ea0d8f5232edf012429579bcdaab30e7b
+
 - name: ruby
   version: 3.2.8
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.2.8_linux_x64_cflinuxfs3_f36a7c8d.tgz
