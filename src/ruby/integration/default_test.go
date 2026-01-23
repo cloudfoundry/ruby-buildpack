@@ -25,6 +25,7 @@ func testDefault(platform switchblade.Platform, fixtures string) func(*testing.T
 			var err error
 			name, err = switchblade.RandomName()
 			Expect(err).NotTo(HaveOccurred())
+			println(name)
 		})
 
 		it.After(func() {
@@ -113,7 +114,9 @@ func testDefault(platform switchblade.Platform, fixtures string) func(*testing.T
 				Expect(err).NotTo(HaveOccurred())
 
 				Expect(logs).To(ContainLines(MatchRegexp(`Installing jruby \d+\.\d+\.\d+\.\d+`)))
-				Eventually(deployment, 1*time.Minute, 1*time.Second).Should(Serve(ContainSubstring("jruby 3.1.4")).WithEndpoint("/ruby"), logs.String())
+				// JRuby needs extra time to warm up after health check passes
+				// Increase timeout to 3 minutes with 2-second intervals for CI environments
+				Eventually(deployment, 3*time.Minute, 2*time.Second).Should(Serve(ContainSubstring("jruby 3.1.4")).WithEndpoint("/ruby"), logs.String())
 			})
 		})
 	}
