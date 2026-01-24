@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require "pathname"
+require "logger"
 require "bundler/setup"
 require "webpacker"
 require "webpacker/webpack_runner"

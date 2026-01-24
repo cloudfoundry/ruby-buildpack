@@ -2,5 +2,6 @@ source 'https://rubygems.org'
 
 ruby '~>3'
 
+gem 'rackup'
 gem 'sinatra'
 gem 'webrick'

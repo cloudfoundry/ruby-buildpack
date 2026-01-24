@@ -52,7 +52,7 @@ func testMultiBuildpack(platform switchblade.Platform, fixtures string) func(*te
 						"https://github.com/cloudfoundry/nodejs-buildpack#master",
 						"ruby_buildpack",
 					).
-					Execute(name, filepath.Join(fixtures, "multibuildpack", "rails6"))
+					Execute(name, filepath.Join(fixtures, "multibuildpack", "rails72"))
 				Expect(err).NotTo(HaveOccurred())
 
 				Eventually(deployment).Should(Serve(ContainSubstring("Ruby version: ruby 3.")))

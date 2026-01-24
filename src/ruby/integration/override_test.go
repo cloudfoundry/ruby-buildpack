@@ -32,7 +32,7 @@ func testOverride(platform switchblade.Platform, fixtures string) func(*testing.
 		it("forces node from override buildpack", func() {
 			_, logs, err := platform.Deploy.
 				WithBuildpacks("override_buildpack", "ruby_buildpack").
-				Execute(name, filepath.Join(fixtures, "default", "rails6_sprockets"))
+				Execute(name, filepath.Join(fixtures, "default", "rails72_sprockets"))
 			Expect(err).To(MatchError(ContainSubstring("App staging failed")))
 
 			Expect(logs).To(ContainLines(ContainSubstring("-----> OverrideYML Buildpack")))
