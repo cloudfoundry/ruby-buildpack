@@ -27,7 +27,9 @@ func testOffline(platform switchblade.Platform, fixtures string) func(*testing.T
 		})
 
 		it.After(func() {
-			Expect(platform.Delete.Execute(name)).To(Succeed())
+			if name != "" && (!settings.KeepFailedContainers || !t.Failed()) {
+				Expect(platform.Delete.Execute(name)).To(Succeed())
+			}
 		})
 
 		it("runs a vendored cached app", func() {

@@ -27,7 +27,9 @@ func testMultiBuildpack(platform switchblade.Platform, fixtures string) func(*te
 		})
 
 		it.After(func() {
-			Expect(platform.Delete.Execute(name)).To(Succeed())
+			if name != "" && (!settings.KeepFailedContainers || !t.Failed()) {
+				Expect(platform.Delete.Execute(name)).To(Succeed())
+			}
 		})
 
 		context("when ruby is a supply for the binary buildpack", func() {

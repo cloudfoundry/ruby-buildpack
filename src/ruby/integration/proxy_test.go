@@ -27,7 +27,9 @@ func testProxy(platform switchblade.Platform, fixtures, uri string) func(*testin
 		})
 
 		it.After(func() {
-			Expect(platform.Delete.Execute(name)).To(Succeed())
+			if name != "" && (!settings.KeepFailedContainers || !t.Failed()) {
+				Expect(platform.Delete.Execute(name)).To(Succeed())
+			}
 		})
 
 		it("builds an app with the proxy set", func() {
