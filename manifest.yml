@@ -10,7 +10,6 @@ dependency_deprecation_dates:
   name: node
   date: 2025-04-30
   link: https://github.com/nodejs/Release
-
 - version_line: 3.2.x
   name: ruby
   date: 2026-03-31
@@ -42,13 +41,13 @@ dependencies:
   source: https://s3.amazonaws.com/jruby.org/downloads/9.4.8.0/jruby-src-9.4.8.0.tar.gz
   source_sha256: d1a7abb31bd02335cf0e26e3de54e2f82232044c0b6e59bd336a00cab8e1e211
 - name: jruby
-  version: 9.4.8.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.4.8.0-ruby-3.1_linux_x64_cflinuxfs4_89442854.tgz
-  sha256: 89442854db82ec0636e5f9c79a6c78a189222fbef8a68d7ce40c3afc82b99bd8
+  version: 9.4.14.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.4.14.0-ruby-3.1_linux_x64_cflinuxfs4_ab1682e2.tgz
+  sha256: ab1682e2022ce30ac0f768890349b467458d3b3e096bb3ac6756f68bd9cdaaaf
   cf_stacks:
   - cflinuxfs4
-  source: https://s3.amazonaws.com/jruby.org/downloads/9.4.8.0/jruby-src-9.4.8.0.tar.gz
-  source_sha256: d1a7abb31bd02335cf0e26e3de54e2f82232044c0b6e59bd336a00cab8e1e211
+  source: https://repo1.maven.org/maven2/org/jruby/jruby-dist/9.4.14.0/jruby-dist-9.4.14.0-src.zip
+  source_sha256: 400086b33f701a47dc28c5965d5a408bc2740301a5fb3b545e37abaa002ccdf8
 - name: node
   version: 20.16.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_20.16.0_linux_x64_cflinuxfs3_62df07a7.tgz
@@ -74,7 +73,6 @@ dependencies:
   - cflinuxfs4
   source: https://java-buildpack.cloudfoundry.org/openjdk-jdk/bionic/x86_64/openjdk-jdk-1.8.0_242-bionic.tar.gz
   source_sha256: dcb9fea2fc3a9b003031874ed17aa5d5a7ebbe397b276ecc8c814633003928fe
-
 - name: ruby
   version: 3.2.8
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.2.8_linux_x64_cflinuxfs3_f36a7c8d.tgz
