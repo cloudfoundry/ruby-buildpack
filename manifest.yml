@@ -10,7 +10,6 @@ dependency_deprecation_dates:
   name: node
   date: 2025-04-30
   link: https://github.com/nodejs/Release
-
 - version_line: 3.2.x
   name: ruby
   date: 2026-03-31
@@ -33,6 +32,14 @@ dependencies:
   - cflinuxfs3
   source: https://github.com/rubygems/rubygems/tree/master/bundlertree/v2.6.5
   source_sha256: 9d0eef5779ee569c43f317484f034081f58e9cf7529af6cd59d15266e46a72a3
+- name: bundler
+  version: 2.7.2
+  uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler_2.7.2_linux_noarch_any-stack_54c53519.tgz
+  sha256: 54c53519ff41ac0ad0d498086039f6ee2eac5d1bdef5ad31ab33e8ab2c2b1e21
+  cf_stacks:
+  - cflinuxfs4
+  source: https://github.com/rubygems/rubygems/tree/master/bundlertree/v2.7.2
+  source_sha256: 1decaf9e2e1acb91b6586a2925c8f3f6da2334a82731a62ff2ded1b83c283871
 - name: jruby
   version: 9.4.8.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.4.8.0-ruby-3.1_linux_x64_cflinuxfs3_70896f95.tgz
@@ -74,7 +81,6 @@ dependencies:
   - cflinuxfs4
   source: https://java-buildpack.cloudfoundry.org/openjdk-jdk/bionic/x86_64/openjdk-jdk-1.8.0_242-bionic.tar.gz
   source_sha256: dcb9fea2fc3a9b003031874ed17aa5d5a7ebbe397b276ecc8c814633003928fe
-
 - name: ruby
   version: 3.2.8
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.2.8_linux_x64_cflinuxfs3_f36a7c8d.tgz
