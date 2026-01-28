@@ -64,10 +64,10 @@ func testDefault(platform switchblade.Platform, fixtures string) func(*testing.T
 			})
 		})
 
-		context("rails6 sprockets", func() {
+		context("rails72 sprockets", func() {
 			it("builds and runs the app", func() {
 				deployment, _, err := platform.Deploy.
-					Execute(name, filepath.Join(fixtures, "default", "rails6_sprockets"))
+					Execute(name, filepath.Join(fixtures, "default", "rails72_sprockets"))
 				Expect(err).NotTo(HaveOccurred())
 
 				Eventually(deployment).Should(Serve(ContainSubstring("Hello World!")))
