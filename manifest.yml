@@ -10,7 +10,6 @@ dependency_deprecation_dates:
   name: node
   date: 2025-04-30
   link: https://github.com/nodejs/Release
-
 - version_line: 3.2.x
   name: ruby
   date: 2026-03-31
@@ -74,7 +73,6 @@ dependencies:
   - cflinuxfs4
   source: https://java-buildpack.cloudfoundry.org/openjdk-jdk/bionic/x86_64/openjdk-jdk-1.8.0_242-bionic.tar.gz
   source_sha256: dcb9fea2fc3a9b003031874ed17aa5d5a7ebbe397b276ecc8c814633003928fe
-
 - name: ruby
   version: 3.2.8
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.2.8_linux_x64_cflinuxfs3_f36a7c8d.tgz
@@ -180,6 +178,14 @@ dependencies:
   - cflinuxfs3
   source: https://rubygems.org/rubygems/rubygems-3.6.8.tgz
   source_sha256: da5340b42ba3ddc5ede4a6b948ffa5b409d48cb119e2937e27e4c0b13bf9c390
+- name: rubygems
+  version: 4.0.5
+  uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems_4.0.5_linux_noarch_any-stack_ffa47692.tgz
+  sha256: ffa476929d1ca48ada29340d48c8c88f5ee0cdc1324dabe874cbddbd31124ef2
+  cf_stacks:
+  - cflinuxfs4
+  source: https://rubygems.org/rubygems/rubygems-4.0.5.tgz
+  source_sha256: f3d3be045119301be1f2dbb4d6ac018a76f2969a367cf072c94ce06392961c75
 - name: yarn
   version: 1.22.22
   uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn_1.22.22_linux_noarch_any-stack_4911d0a6.tgz
