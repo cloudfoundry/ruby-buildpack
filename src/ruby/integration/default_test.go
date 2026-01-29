@@ -118,7 +118,7 @@ func testDefault(platform switchblade.Platform, fixtures string) func(*testing.T
 				Expect(logs).To(ContainLines(MatchRegexp(`Installing jruby \d+\.\d+\.\d+\.\d+`)))
 				// JRuby needs extra time to warm up after health check passes
 				// Increase timeout to 3 minutes with 2-second intervals for CI environments
-				Eventually(deployment, 3*time.Minute, 2*time.Second).Should(Serve(ContainSubstring("jruby 3.1.4")).WithEndpoint("/ruby"), logs.String())
+				Eventually(deployment, 3*time.Minute, 2*time.Second).Should(Serve(ContainSubstring("jruby 3.1.7")).WithEndpoint("/ruby"), logs.String())
 			})
 		})
 	}

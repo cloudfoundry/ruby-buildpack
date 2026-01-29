@@ -27,8 +27,10 @@ GEM
     webrick (1.9.2)
 
 PLATFORMS
+  java
   universal-java-1.8
   universal-java-25
+  universal-java-8
 
 DEPENDENCIES
   rackup
@@ -36,7 +38,7 @@ DEPENDENCIES
   webrick
 
 RUBY VERSION
-   ruby 3.1.4p0 (jruby 9.4.8.0)
+   ruby 3.1.7p0 (jruby 9.4.14.0)
 
 BUNDLED WITH
-   2.3.26
+   2.6.3
