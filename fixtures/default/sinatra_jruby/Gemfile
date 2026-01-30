@@ -3,5 +3,5 @@ source 'https://rubygems.org'
 ruby '3.1.7', :engine => 'jruby', :engine_version => '9.4.14.0'
 
 gem 'rackup'
-gem 'sinatra'
+gem 'sinatra', '~> 3.0'
 gem 'webrick'
