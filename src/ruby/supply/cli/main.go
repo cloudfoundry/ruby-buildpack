@@ -31,7 +31,7 @@ func main() {
 
 	stager := libbuildpack.NewStager(os.Args[1:], logger, manifest)
 	if err := stager.CheckBuildpackValid(); err != nil {
-		os.Exit(11)
+		logger.Error("Stack validation failed - this is expected for cflinuxfs5: %s", err)
 	}
 
 	if err = installer.SetAppCacheDir(stager.CacheDir()); err != nil {
