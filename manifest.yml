@@ -195,6 +195,62 @@ dependencies:
   - cflinuxfs3
   source: https://github.com/yarnpkg/yarn/releases/download/v1.22.22/yarn-v1.22.22.tar.gz
   source_sha256: 88268464199d1611fcf73ce9c0a6c4d44c7d5363682720d8506f6508addf36a0
+
+- name: node
+  version: 20.18.1
+  uri: http://localhost:8080/node_20.18.1_linux_x64_cflinuxfs5.tgz
+  sha256: 2fe4fbb5b32440c149ff19fa60ea1a3d6f951a3369290b2667757298639f748c
+  cf_stacks:
+  - cflinuxfs5
+  source: https://nodejs.org/dist/v20.18.1/node-v20.18.1.tar.gz
+  source_sha256: 5bad8ced873eef3b32e7daee703156bce9224920ac6044f4232f5393df0628b8
+
+- name: bundler
+  version: 2.5.23
+  uri: http://localhost:8080/bundler_2.5.23_linux_x64_cflinuxfs5.tgz
+  sha256: 3e189883397a366465b866e7367e08cdf5c33fb5ae8ed06e25decb3db0e6a2fc
+  cf_stacks:
+  - cflinuxfs5
+  source: https://rubygems.org/downloads/bundler-2.5.23.gem
+
+- name: ruby
+  version: 3.1.6
+  uri: http://localhost:8080/ruby_3.1.6_linux_x64_cflinuxfs5.tgz
+  sha256: 8ac8a52d8472887d9b48978c757588448294b97666a2fc7620268fb6e46dc3d0
+  cf_stacks:
+  - cflinuxfs5
+  source: https://cache.ruby-lang.org/pub/ruby/3.1/ruby-3.1.6.tar.gz
+  source_sha256: 0d0dafb859e76763432571a3109d1537d976266be3083445651dc68deed25c22
+
+- name: ruby
+  version: 3.2.5
+  uri: http://localhost:8080/ruby_3.2.5_linux_x64_cflinuxfs5.tgz
+  sha256: 611190f34020d96a74d2f1c454af5d8c961f28819042adab0a5b1c611e4359e9
+  cf_stacks:
+  - cflinuxfs5
+  source: https://cache.ruby-lang.org/pub/ruby/3.2/ruby-3.2.5.tar.gz
+  source_sha256: ef0610b498f60fb5cfd77b51adb3c10f4ca8ed9a17cb87c61e5bea314ac34a16
+
+- name: ruby
+  version: 3.3.6
+  uri: http://localhost:8080/ruby_3.3.6_linux_x64_cflinuxfs5.tgz
+  sha256: 602c70bea4370a70548f607d25c647e11390d2da2a7e2740aaa888e5b3b5be09
+  cf_stacks:
+  - cflinuxfs5
+  source: https://cache.ruby-lang.org/pub/ruby/3.3/ruby-3.3.6.tar.gz
+  source_sha256: 8dc48fffaf270f86f1019053f28e51e4da4cce32a36760a0603a9aee67d7fd8d
+
+- name: yarn
+  version: 1.22.22
+  uri: http://localhost:8080/yarn_1.22.22_linux_x64_cflinuxfs5.tgz
+  sha256: 8ab7c7c950613218dff787768b3294ecea9b8c1fc2abb4f788428074775a8c9b
+  cf_stacks:
+  - cflinuxfs5
+  source: https://github.com/yarnpkg/yarn/releases/download/v1.22.22/yarn-v1.22.22.tar.gz
+  source_sha256: 88268464199d1611fcf73ce9c0a6c4d44c7d5363682720d8506f6508addf36a0
+
+
+
 include_files:
 - CHANGELOG
 - CONTRIBUTING.md
