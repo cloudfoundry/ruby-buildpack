@@ -198,7 +198,7 @@ dependencies:
 
 - name: node
   version: 20.18.1
-  uri: https://github.com/ivanovac/ruby-buildpack/releases/download/v1.11.00-beta-cflinuxfs5/node_20.18.1_linux_x64_cflinuxfs5.tgz
+  uri: https://github.com/ivanovac/ruby-buildpack/releases/download/v1.11.03-beta-cflinuxfs5/node_20.18.1_linux_x64_cflinuxfs5.tgz
   sha256: 2fe4fbb5b32440c149ff19fa60ea1a3d6f951a3369290b2667757298639f748c
   cf_stacks:
   - cflinuxfs5
@@ -207,16 +207,16 @@ dependencies:
 
 - name: bundler
   version: 2.5.23
-  uri: https://github.com/ivanovac/ruby-buildpack/releases/download/v1.11.00-beta-cflinuxfs5/bundler_2.5.23_linux_x64_cflinuxfs5.tgz
-  sha256: 3e189883397a366465b866e7367e08cdf5c33fb5ae8ed06e25decb3db0e6a2fc
+  uri: https://github.com/ivanovac/ruby-buildpack/releases/download/v1.11.03-beta-cflinuxfs5/bundler_2.5.23_linux_x64_cflinuxfs5.tgz
+  sha256: 8093b22b906fe7a1590c20c4eb86e11e79125abe911f0162a8ca61017670e543
   cf_stacks:
   - cflinuxfs5
   source: https://rubygems.org/downloads/bundler-2.5.23.gem
 
 - name: ruby
   version: 3.1.6
-  uri: https://github.com/ivanovac/ruby-buildpack/releases/download/v1.11.00-beta-cflinuxfs5/ruby_3.1.6_linux_x64_cflinuxfs5.tgz
-  sha256: 8ac8a52d8472887d9b48978c757588448294b97666a2fc7620268fb6e46dc3d0
+  uri: https://github.com/ivanovac/ruby-buildpack/releases/download/v1.11.03-beta-cflinuxfs5/ruby_3.1.6_linux_x64_cflinuxfs5.tgz
+  sha256: e238a705e24cbe4dac7ccb85499a270f8c3bf7039b6b158d584372b23e1627b9
   cf_stacks:
   - cflinuxfs5
   source: https://cache.ruby-lang.org/pub/ruby/3.1/ruby-3.1.6.tar.gz
@@ -224,8 +224,8 @@ dependencies:
 
 - name: ruby
   version: 3.2.5
-  uri: https://github.com/ivanovac/ruby-buildpack/releases/download/v1.11.00-beta-cflinuxfs5/ruby_3.2.5_linux_x64_cflinuxfs5.tgz
-  sha256: 611190f34020d96a74d2f1c454af5d8c961f28819042adab0a5b1c611e4359e9
+  uri: https://github.com/ivanovac/ruby-buildpack/releases/download/v1.11.03-beta-cflinuxfs5/ruby_3.2.5_linux_x64_cflinuxfs5.tgz
+  sha256: efa9e0d8a6b713f0879ae0bdd6b23a2b4bdfda2e66b9e8c24a96894e810c3521
   cf_stacks:
   - cflinuxfs5
   source: https://cache.ruby-lang.org/pub/ruby/3.2/ruby-3.2.5.tar.gz
@@ -233,8 +233,8 @@ dependencies:
 
 - name: ruby
   version: 3.3.6
-  uri: https://github.com/ivanovac/ruby-buildpack/releases/download/v1.11.00-beta-cflinuxfs5/ruby_3.3.6_linux_x64_cflinuxfs5.tgz
-  sha256: 602c70bea4370a70548f607d25c647e11390d2da2a7e2740aaa888e5b3b5be09
+  uri: https://github.com/ivanovac/ruby-buildpack/releases/download/v1.11.03-beta-cflinuxfs5/ruby_3.3.6_linux_x64_cflinuxfs5.tgz
+  sha256: 09ee7456b4c8b6df7ccac70184ea00fdd1a18d329095f7c6d20198a2e7289a88
   cf_stacks:
   - cflinuxfs5
   source: https://cache.ruby-lang.org/pub/ruby/3.3/ruby-3.3.6.tar.gz
@@ -242,8 +242,8 @@ dependencies:
 
 - name: yarn
   version: 1.22.22
-  uri: https://github.com/ivanovac/ruby-buildpack/releases/download/v1.11.00-beta-cflinuxfs5/yarn_1.22.22_linux_x64_cflinuxfs5.tgz
-  sha256: 8ab7c7c950613218dff787768b3294ecea9b8c1fc2abb4f788428074775a8c9b
+  uri: https://github.com/ivanovac/ruby-buildpack/releases/download/v1.11.03-beta-cflinuxfs5/yarn_1.22.22_linux_x64_cflinuxfs5.tgz
+  sha256: 193823166c351ab4392b1e184e48118003167345c028f3976d84a1e69c7387ba
   cf_stacks:
   - cflinuxfs5
   source: https://github.com/yarnpkg/yarn/releases/download/v1.22.22/yarn-v1.22.22.tar.gz
