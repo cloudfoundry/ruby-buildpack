@@ -8,8 +8,6 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"reflect"
-
 	"github.com/cloudfoundry/ruby-buildpack/src/ruby/cache"
 	"github.com/cloudfoundry/ruby-buildpack/src/ruby/supply"
 
@@ -481,31 +479,12 @@ var _ = Describe("Supply", func() {
 
 		const windowsWarning = "**WARNING** Windows line endings detected in Gemfile. Your app may fail to stage. Please use UNIX line endings."
 
-		handleBundleBinstubRegeneration := func(cmd *exec.Cmd) error {
-			if len(cmd.Args) > 5 && reflect.DeepEqual(cmd.Args[0:5], []string{"bundle", "binstubs", "bundler", "--force", "--path"}) {
-				Expect(cmd.Args[5]).To(HavePrefix(filepath.Join(depsDir, depsIdx)))
-				Expect(os.MkdirAll(cmd.Args[5], 0755)).To(Succeed())
-				Expect(os.WriteFile(filepath.Join(cmd.Args[5], "bundle"), []byte("new bundle binstub"), 0644)).To(Succeed())
-			}
-			return nil
-		}
-
-		itRegeneratesBundleBinstub := func() {
-			It("Re-generates the bundler binstub to replace older, rails-generated ones that are incompatible with bundler > 1.16.0", func() {
-				Expect(supplier.InstallGems()).To(Succeed())
-				Expect(os.ReadFile(filepath.Join(depsDir, depsIdx, "binstubs", "bundle"))).To(Equal([]byte("new bundle binstub")))
-				Expect(os.ReadFile(filepath.Join(depsDir, depsIdx, "bin", "bundle"))).To(Equal([]byte("new bundle binstub")))
-			})
-		}
-
 		Context("Windows Gemfile", func() {
 			BeforeEach(func() {
 				mockVersions.EXPECT().HasWindowsGemfileLock().Return(false, nil)
-				mockCommand.EXPECT().Run(gomock.Any()).AnyTimes().Do(handleBundleBinstubRegeneration)
+				mockCommand.EXPECT().Run(gomock.Any()).AnyTimes()
 				Expect(os.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte("source \"https://rubygems.org\"\r\ngem \"rack\"\r\n"), 0644)).To(Succeed())
 			})
-
-			itRegeneratesBundleBinstub()
 
 			It("Warns the user", func() {
 				Expect(supplier.InstallGems()).To(Succeed())
@@ -521,10 +500,7 @@ var _ = Describe("Supply", func() {
 					if len(cmd.Args) > 2 && cmd.Args[1] == "install" {
 						Expect(os.MkdirAll(filepath.Join(cmd.Dir, ".bundle"), 0755)).To(Succeed())
 						Expect(os.WriteFile(filepath.Join(cmd.Dir, ".bundle", "config"), []byte("new bundle config"), 0644)).To(Succeed())
-					} else {
-						return handleBundleBinstubRegeneration(cmd)
 					}
-
 					return nil
 				})
 				Expect(os.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte("source \"https://rubygems.org\"\ngem \"rack\"\n"), 0644)).To(Succeed())
@@ -533,8 +509,6 @@ var _ = Describe("Supply", func() {
 			AfterEach(func() {
 				os.Unsetenv("BUNDLE_CONFIG")
 			})
-
-			itRegeneratesBundleBinstub()
 
 			It("Does not warn the user", func() {
 				Expect(supplier.InstallGems()).To(Succeed())
@@ -572,8 +546,6 @@ var _ = Describe("Supply", func() {
 						if cmd.Args[1] == "install" {
 							Expect(filepath.Join(cmd.Dir, "Gemfile")).To(BeAnExistingFile())
 							Expect(filepath.Join(cmd.Dir, "Gemfile.lock")).To(BeAnExistingFile())
-						} else {
-							handleBundleBinstubRegeneration(cmd)
 						}
 					})
 					Expect(supplier.InstallGems()).To(Succeed())
@@ -588,8 +560,6 @@ var _ = Describe("Supply", func() {
 						if cmd.Args[1] == "install" {
 							Expect(cmd.Dir).ToNot(Equal(buildDir))
 							installCalled = true
-						} else {
-							handleBundleBinstubRegeneration(cmd)
 						}
 					})
 					Expect(supplier.InstallGems()).To(Succeed())
@@ -614,8 +584,6 @@ var _ = Describe("Supply", func() {
 							Expect(filepath.Join(cmd.Dir, "Gemfile")).To(BeAnExistingFile())
 							Expect(filepath.Join(cmd.Dir, "Gemfile.lock")).ToNot(BeAnExistingFile())
 							Expect(os.WriteFile(filepath.Join(cmd.Dir, "Gemfile.lock"), []byte(newGemfileLock), 0644)).To(Succeed())
-						} else {
-							handleBundleBinstubRegeneration(cmd)
 						}
 					})
 					Expect(supplier.InstallGems()).To(Succeed())
@@ -630,8 +598,6 @@ var _ = Describe("Supply", func() {
 						if cmd.Args[1] == "install" {
 							Expect(cmd.Dir).ToNot(Equal(buildDir))
 							installCalled = true
-						} else {
-							handleBundleBinstubRegeneration(cmd)
 						}
 					})
 					Expect(supplier.InstallGems()).To(Succeed())

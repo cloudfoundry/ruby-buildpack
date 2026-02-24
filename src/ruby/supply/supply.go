@@ -768,10 +768,6 @@ func (s *Supplier) InstallGems() error {
 		return err
 	}
 
-	if err := s.regenerateBundlerBinStub(tempDir); err != nil {
-		return err
-	}
-
 	s.Log.Info("Cleaning up the bundler cache.")
 	cmd = exec.Command("bundle", "clean")
 	cmd.Dir = tempDir
@@ -843,18 +839,6 @@ func (s *Supplier) removeIncompatibleBundledWithVersion(bundledWithVersion strin
 	output := match.ReplaceAll(file, []byte(""))
 
 	return os.WriteFile(gemfileLockPath, output, 0666)
-}
-
-func (s *Supplier) regenerateBundlerBinStub(appDir string) error {
-	s.Log.BeginStep("Regenerating bundler binstubs...")
-	cmd := exec.Command("bundle", "binstubs", "bundler", "--force", "--path", filepath.Join(s.Stager.DepDir(), "binstubs"))
-	cmd.Dir = appDir
-	cmd.Stdout = text.NewIndentWriter(os.Stdout, []byte("       "))
-	cmd.Stderr = text.NewIndentWriter(os.Stderr, []byte("       "))
-	if err := s.Command.Run(cmd); err != nil {
-		return err
-	}
-	return libbuildpack.CopyFile(filepath.Join(s.Stager.DepDir(), "binstubs", "bundle"), filepath.Join(s.Stager.DepDir(), "bin", "bundle"))
 }
 
 func (s *Supplier) EnableLDLibraryPathEnv() error {
