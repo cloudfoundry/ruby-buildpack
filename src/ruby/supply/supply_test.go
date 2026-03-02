@@ -628,7 +628,9 @@ var _ = Describe("Supply", func() {
 	})
 
 	Describe("EnableLDLibraryPathEnv", func() {
-		DeferCleanup(os.Unsetenv, "LD_LIBRARY_PATH")
+		BeforeEach(func() {
+			DeferCleanup(os.Unsetenv, "LD_LIBRARY_PATH")
+		})
 		Context("app has ld_library_path directory", func() {
 			BeforeEach(func() {
 				Expect(os.Mkdir(filepath.Join(buildDir, "ld_library_path"), 0755)).To(Succeed())
@@ -694,10 +696,12 @@ var _ = Describe("Supply", func() {
 	})
 
 	Describe("CreateDefaultEnv", func() {
-		DeferCleanup(func() {
-			_ = os.Unsetenv("RAILS_ENV")
-			_ = os.Unsetenv("RACK_ENV")
-			_ = os.Unsetenv("RAILS_GROUPS")
+		BeforeEach(func() {
+			DeferCleanup(func() {
+				_ = os.Unsetenv("RAILS_ENV")
+				_ = os.Unsetenv("RACK_ENV")
+				_ = os.Unsetenv("RAILS_GROUPS")
+			})
 		})
 
 		It("Sets RAILS_ENV", func() {
