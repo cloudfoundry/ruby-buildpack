@@ -13,7 +13,7 @@ import (
 	"github.com/cloudfoundry/libbuildpack/ansicleaner"
 	"github.com/cloudfoundry/ruby-buildpack/src/ruby/finalize"
 	"github.com/golang/mock/gomock"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
