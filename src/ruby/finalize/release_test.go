@@ -53,16 +53,13 @@ var _ = Describe("Finalize", func() {
 			Versions: mockVersions,
 			Log:      logger,
 		}
-	})
+		DeferCleanup(func() {
+			err = os.RemoveAll(buildDir)
+			Expect(err).To(BeNil())
 
-	AfterEach(func() {
-		mockCtrl.Finish()
-
-		err = os.RemoveAll(buildDir)
-		Expect(err).To(BeNil())
-
-		err = os.RemoveAll(depsDir)
-		Expect(err).To(BeNil())
+			err = os.RemoveAll(depsDir)
+			Expect(err).To(BeNil())
+		})
 	})
 
 	Describe("GenerateReleaseYaml", func() {

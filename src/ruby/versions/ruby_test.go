@@ -33,10 +33,6 @@ var _ = Describe("Ruby", func() {
 		Expect(err).ToNot(HaveOccurred())
 	})
 
-	AfterEach(func() {
-		mockCtrl.Finish()
-	})
-
 	Describe("HasWindowsGemfileLock", func() {
 		Context("Gemfile.lock has only mingw/mswin platforms", func() {
 			BeforeEach(func() {
@@ -236,8 +232,8 @@ var _ = Describe("Ruby", func() {
 				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
 				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile-App"), []byte(`ruby "~>2.3.0"`), 0644)).To(Succeed())
 				os.Setenv("BUNDLE_GEMFILE", "Gemfile-App")
+				DeferCleanup(os.Unsetenv, "BUNDLE_GEMFILE")
 			})
-			AfterEach(func() { os.Unsetenv("BUNDLE_GEMFILE") })
 
 			It("returns highest matching version", func() {
 				mockManifest.EXPECT().AllDependencyVersions("ruby").Return([]string{"1.2.3", "2.2.3", "2.2.4", "2.2.1", "2.3.3", "3.1.2"})
@@ -270,8 +266,8 @@ var _ = Describe("Ruby", func() {
 				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby '2.3.3', :engine => 'jruby', :engine_version => '9.1.12.0'`), 0644)).To(Succeed())
 				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile-App"), []byte(`ruby '2.4.4', :engine => 'jruby', :engine_version => '9.2.13.0'`), 0644)).To(Succeed())
 				os.Setenv("BUNDLE_GEMFILE", "Gemfile-App")
+				DeferCleanup(os.Unsetenv, "BUNDLE_GEMFILE")
 			})
-			AfterEach(func() { os.Unsetenv("BUNDLE_GEMFILE") })
 			It("returns the requested version", func() {
 				v := versions.New(tmpDir, depDir, mockManifest)
 				Expect(v.JrubyVersion()).To(Equal("9.2.13.0"))
