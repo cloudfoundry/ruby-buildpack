@@ -3,7 +3,6 @@ package finalize
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -178,7 +177,7 @@ func (f *Finalizer) WriteDatabaseYml() error {
 	}
 
 	f.Log.BeginStep("Writing config/database.yml to read from DATABASE_URL")
-	if err := ioutil.WriteFile(filepath.Join(f.Stager.BuildDir(), "config", "database.yml"), []byte(config_database_yml), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(f.Stager.BuildDir(), "config", "database.yml"), []byte(config_database_yml), 0644); err != nil {
 		return err
 	}
 
@@ -329,7 +328,7 @@ end
 	if err := os.MkdirAll(filepath.Join(f.Stager.BuildDir(), "vendor", "plugins", "rails_log_stdout"), 0755); err != nil {
 		return fmt.Errorf("Error creating rails_log_stdout plugin directory: %v", err)
 	}
-	if err := ioutil.WriteFile(filepath.Join(f.Stager.BuildDir(), "vendor", "plugins", "rails_log_stdout", "init.rb"), []byte(code), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(f.Stager.BuildDir(), "vendor", "plugins", "rails_log_stdout", "init.rb"), []byte(code), 0644); err != nil {
 		return fmt.Errorf("Error writing rails_log_stdout plugin file: %v", err)
 	}
 	return nil
@@ -347,7 +346,7 @@ func (f *Finalizer) installPluginServeStaticAssets() error {
 	if err := os.MkdirAll(filepath.Join(f.Stager.BuildDir(), "vendor", "plugins", "rails3_serve_static_assets"), 0755); err != nil {
 		return fmt.Errorf("Error creating rails3_serve_static_assets plugin directory: %v", err)
 	}
-	if err := ioutil.WriteFile(filepath.Join(f.Stager.BuildDir(), "vendor", "plugins", "rails3_serve_static_assets", "init.rb"), []byte(code), 0644); err != nil {
+	if err := os.WriteFile(filepath.Join(f.Stager.BuildDir(), "vendor", "plugins", "rails3_serve_static_assets", "init.rb"), []byte(code), 0644); err != nil {
 		return fmt.Errorf("Error writing rails3_serve_static_assets plugin file: %v", err)
 	}
 	return nil
@@ -378,12 +377,12 @@ func (f *Finalizer) CopyToAppBin() error {
 		return fmt.Errorf("Could not create /app/bin directory: %v", err)
 	}
 
-	files, err := ioutil.ReadDir(filepath.Join(f.Stager.DepDir(), "binstubs"))
+	files, err := os.ReadDir(filepath.Join(f.Stager.DepDir(), "binstubs"))
 	if err != nil {
 		if !os.IsNotExist(err) {
 			return fmt.Errorf("Could not read dep/binstubs directory: %v", err)
 		}
-		files = []os.FileInfo{}
+		files = []os.DirEntry{}
 	}
 	for _, file := range files {
 		source := filepath.Join(f.Stager.DepDir(), "binstubs", file.Name())
@@ -397,12 +396,12 @@ func (f *Finalizer) CopyToAppBin() error {
 		}
 	}
 
-	files, err = ioutil.ReadDir(filepath.Join(f.Stager.DepDir(), "bin"))
+	files, err = os.ReadDir(filepath.Join(f.Stager.DepDir(), "bin"))
 	if err != nil {
 		if !os.IsNotExist(err) {
 			return fmt.Errorf("Could not read dep/bin directory: %v", err)
 		}
-		files = []os.FileInfo{}
+		files = []os.DirEntry{}
 	}
 	for _, file := range files {
 		target := filepath.Join(binDir, file.Name())
@@ -410,7 +409,7 @@ func (f *Finalizer) CopyToAppBin() error {
 			return fmt.Errorf("Checking existence: %v", err)
 		} else if !exists {
 			contents := fmt.Sprintf("#!/usr/bin/env ruby\nKernel.exec \"#{ENV['DEPS_DIR']}/%s/bin/%s\", *ARGV\n", f.Stager.DepsIdx(), file.Name())
-			if err := ioutil.WriteFile(target, []byte(contents), 0755); err != nil {
+			if err := os.WriteFile(target, []byte(contents), 0755); err != nil {
 				return fmt.Errorf("WriteFile: %v", err)
 			}
 		}

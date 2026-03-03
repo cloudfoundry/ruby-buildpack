@@ -2,7 +2,6 @@ package cache_test
 
 import (
 	"bytes"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -32,13 +31,13 @@ var _ = Describe("Cache", func() {
 	)
 
 	BeforeEach(func() {
-		buildDir, err = ioutil.TempDir("", "ruby-buildpack.build.")
+		buildDir, err = os.MkdirTemp("", "ruby-buildpack.build.")
 		Expect(err).To(BeNil())
 
-		cacheDir, err = ioutil.TempDir("", "ruby-buildpack.cache.")
+		cacheDir, err = os.MkdirTemp("", "ruby-buildpack.cache.")
 		Expect(err).To(BeNil())
 
-		depsDir, err = ioutil.TempDir("", "ruby-buildpack.deps.")
+		depsDir, err = os.MkdirTemp("", "ruby-buildpack.deps.")
 		Expect(err).To(BeNil())
 
 		depsIdx = "23"
