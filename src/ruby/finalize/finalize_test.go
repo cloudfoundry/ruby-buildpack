@@ -12,7 +12,7 @@ import (
 	"github.com/cloudfoundry/libbuildpack/ansicleaner"
 	"github.com/cloudfoundry/ruby-buildpack/src/ruby/finalize"
 	"github.com/golang/mock/gomock"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
@@ -59,16 +59,13 @@ var _ = Describe("Finalize", func() {
 			Command:  mockCommand,
 			Log:      logger,
 		}
-	})
+		DeferCleanup(func() {
+			err = os.RemoveAll(buildDir)
+			Expect(err).To(BeNil())
 
-	AfterEach(func() {
-		mockCtrl.Finish()
-
-		err = os.RemoveAll(buildDir)
-		Expect(err).To(BeNil())
-
-		err = os.RemoveAll(depsDir)
-		Expect(err).To(BeNil())
+			err = os.RemoveAll(depsDir)
+			Expect(err).To(BeNil())
+		})
 	})
 
 	Describe("AssertGemfileLockExists", func() {
@@ -402,8 +399,10 @@ var _ = Describe("Finalize", func() {
 				}
 
 				Context("SECRET_KEY_BASE is set", func() {
-					BeforeEach(func() { os.Setenv("SECRET_KEY_BASE", "existing-key") })
-					AfterEach(func() { os.Unsetenv("SECRET_KEY_BASE") })
+					BeforeEach(func() {
+						os.Setenv("SECRET_KEY_BASE", "existing-key")
+						DeferCleanup(os.Unsetenv, "SECRET_KEY_BASE")
+					})
 					It("passes SECRET_KEY_BASE through", func() {
 						Expect(finalizer.PrecompileAssets()).To(Succeed())
 						Expect(cmds).To(HaveLen(4))
@@ -425,8 +424,10 @@ var _ = Describe("Finalize", func() {
 
 	Describe("best practice warnings", func() {
 		Context("RAILS_ENV == production", func() {
-			BeforeEach(func() { os.Setenv("RAILS_ENV", "production") })
-			AfterEach(func() { os.Setenv("RAILS_ENV", "") })
+			BeforeEach(func() {
+				os.Setenv("RAILS_ENV", "production")
+				DeferCleanup(os.Setenv, "RAILS_ENV", "")
+			})
 
 			It("does not warn the user", func() {
 				finalizer.BestPracticeWarnings()
@@ -435,8 +436,10 @@ var _ = Describe("Finalize", func() {
 		})
 
 		Context("RAILS_ENV != production", func() {
-			BeforeEach(func() { os.Setenv("RAILS_ENV", "otherenv") })
-			AfterEach(func() { os.Setenv("RAILS_ENV", "") })
+			BeforeEach(func() {
+				os.Setenv("RAILS_ENV", "otherenv")
+				DeferCleanup(os.Setenv, "RAILS_ENV", "")
+			})
 
 			It("warns the user", func() {
 				finalizer.BestPracticeWarnings()

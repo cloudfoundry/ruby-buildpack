@@ -10,7 +10,7 @@ import (
 	"github.com/cloudfoundry/libbuildpack/ansicleaner"
 	"github.com/cloudfoundry/ruby-buildpack/src/ruby/cache"
 	"github.com/golang/mock/gomock"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
@@ -52,12 +52,8 @@ var _ = Describe("Cache", func() {
 		mockStager.EXPECT().BuildDir().AnyTimes().Return(buildDir)
 		mockStager.EXPECT().CacheDir().AnyTimes().Return(cacheDir)
 		mockStager.EXPECT().DepDir().AnyTimes().Return(filepath.Join(depsDir, depsIdx))
-	})
-
-	AfterEach(func() {
-		mockCtrl.Finish()
-		Expect(os.RemoveAll(buildDir)).To(Succeed())
-		Expect(os.RemoveAll(cacheDir)).To(Succeed())
+		DeferCleanup(os.RemoveAll, buildDir)
+		DeferCleanup(os.RemoveAll, cacheDir)
 	})
 
 	Describe("New", func() {

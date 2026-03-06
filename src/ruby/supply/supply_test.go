@@ -14,7 +14,7 @@ import (
 	"github.com/cloudfoundry/libbuildpack"
 	"github.com/cloudfoundry/libbuildpack/ansicleaner"
 	"github.com/golang/mock/gomock"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 
 	// . "github.com/onsi/ginkgo/extensions/table"
 	. "github.com/onsi/gomega"
@@ -95,20 +95,17 @@ var _ = Describe("Supply", func() {
 			Command:   mockCommand,
 			TempDir:   mockTempDir,
 		}
+		DeferCleanup(func() {
+			err = os.RemoveAll(buildDir)
+			Expect(err).To(BeNil())
+
+			err = os.RemoveAll(depsDir)
+			Expect(err).To(BeNil())
+		})
 	})
 
 	JustBeforeEach(func() {
 		Expect(supplier.Setup()).To(Succeed())
-	})
-
-	AfterEach(func() {
-		mockCtrl.Finish()
-
-		err = os.RemoveAll(buildDir)
-		Expect(err).To(BeNil())
-
-		err = os.RemoveAll(depsDir)
-		Expect(err).To(BeNil())
 	})
 
 	Describe("InstallBundler", func() {
@@ -189,17 +186,16 @@ var _ = Describe("Supply", func() {
 			os.Setenv("LIBRARY_PATH", "")
 			os.Setenv("LD_LIBRARY_PATH", "")
 			os.Setenv("CPATH", "")
-		})
+			DeferCleanup(func() {
+				// Clean up environment variables set during the test.
+				os.Unsetenv("PATH")
+				os.Unsetenv("LIBRARY_PATH")
+				os.Unsetenv("LD_LIBRARY_PATH")
+				os.Unsetenv("CPATH")
 
-		AfterEach(func() {
-			// Clean up environment variables set during the test.
-			os.Unsetenv("PATH")
-			os.Unsetenv("LIBRARY_PATH")
-			os.Unsetenv("LD_LIBRARY_PATH")
-			os.Unsetenv("CPATH")
-
-			// Restore the system path.
-			os.Setenv("PATH", systemPath)
+				// Restore the system path.
+				os.Setenv("PATH", systemPath)
+			})
 		})
 
 		Describe("When there is something in the paths (PATH, LIBRARY_PATH, LD_LIBRARY_PATH, CPATH)", func() {
@@ -271,10 +267,7 @@ var _ = Describe("Supply", func() {
 			tempSupplier.Stager = mockStager
 
 			os.Setenv("GEM_PATH", "")
-		})
-
-		AfterEach(func() {
-			os.Unsetenv("GEM_PATH")
+			DeferCleanup(os.Unsetenv, "GEM_PATH")
 		})
 
 		It("should set the correct environment variables", func() {
@@ -324,10 +317,7 @@ var _ = Describe("Supply", func() {
 			tempSupplier.Stager = mockStager
 
 			os.Setenv("BUNDLE_PATH", "")
-		})
-
-		AfterEach(func() {
-			os.Unsetenv("BUNDLE_PATH")
+			DeferCleanup(os.Unsetenv, "BUNDLE_PATH")
 		})
 
 		Describe("With Bundler version 2.x.x", func() {
@@ -417,11 +407,7 @@ var _ = Describe("Supply", func() {
 			tempLinuxTempDir = &supply.LinuxTempDir{
 				Log: mockLog,
 			}
-		})
-
-		AfterEach(func() {
-			// Clean up the temporary directory and its contents.
-			Expect(os.RemoveAll(tempDir)).To(Succeed())
+			DeferCleanup(os.RemoveAll, tempDir)
 		})
 
 		It("should copy a directory to a temporary location", func() {
@@ -495,6 +481,7 @@ var _ = Describe("Supply", func() {
 		Context("UNIX Gemfile", func() {
 			BeforeEach(func() {
 				os.Setenv("BUNDLE_CONFIG", filepath.Join(depsDir, depsIdx, "bundle_config"))
+				DeferCleanup(os.Unsetenv, "BUNDLE_CONFIG")
 				mockVersions.EXPECT().HasWindowsGemfileLock().Return(false, nil)
 				mockCommand.EXPECT().Run(gomock.Any()).AnyTimes().Do(func(cmd *exec.Cmd) error {
 					if len(cmd.Args) > 2 && cmd.Args[1] == "install" {
@@ -504,10 +491,6 @@ var _ = Describe("Supply", func() {
 					return nil
 				})
 				Expect(os.WriteFile(filepath.Join(buildDir, "Gemfile"), []byte("source \"https://rubygems.org\"\ngem \"rack\"\n"), 0644)).To(Succeed())
-			})
-
-			AfterEach(func() {
-				os.Unsetenv("BUNDLE_CONFIG")
 			})
 
 			It("Does not warn the user", func() {
@@ -645,8 +628,8 @@ var _ = Describe("Supply", func() {
 	})
 
 	Describe("EnableLDLibraryPathEnv", func() {
-		AfterEach(func() {
-			Expect(os.Unsetenv("LD_LIBRARY_PATH")).To(Succeed())
+		BeforeEach(func() {
+			DeferCleanup(os.Unsetenv, "LD_LIBRARY_PATH")
 		})
 		Context("app has ld_library_path directory", func() {
 			BeforeEach(func() {
@@ -698,10 +681,7 @@ var _ = Describe("Supply", func() {
 			BeforeEach(func() {
 				oldLibraryPath = os.Getenv("LD_LIBRARY_PATH")
 				Expect(os.Setenv("LD_LIBRARY_PATH", "/foo/lib")).To(Succeed())
-			})
-
-			AfterEach(func() {
-				Expect(os.Setenv("LD_LIBRARY_PATH", oldLibraryPath)).To(Succeed())
+				DeferCleanup(os.Setenv, "LD_LIBRARY_PATH", oldLibraryPath)
 			})
 
 			It("Does not change LD_LIBRARY_PATH", func() {
@@ -716,10 +696,12 @@ var _ = Describe("Supply", func() {
 	})
 
 	Describe("CreateDefaultEnv", func() {
-		AfterEach(func() {
-			_ = os.Unsetenv("RAILS_ENV")
-			_ = os.Unsetenv("RACK_ENV")
-			_ = os.Unsetenv("RAILS_GROUPS")
+		BeforeEach(func() {
+			DeferCleanup(func() {
+				_ = os.Unsetenv("RAILS_ENV")
+				_ = os.Unsetenv("RACK_ENV")
+				_ = os.Unsetenv("RAILS_GROUPS")
+			})
 		})
 
 		It("Sets RAILS_ENV", func() {

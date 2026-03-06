@@ -206,7 +206,7 @@ func Run(s *Supplier) error {
 
 	if filesChanged, err := s.Command.Output(s.Stager.BuildDir(), "find", ".", "-newer", "/tmp/checkpoint", "-not", "-path", "./.cloudfoundry/*", "-not", "-path", "./.cloudfoundry"); err == nil && filesChanged != "" {
 		s.Log.Debug("Below files changed:")
-		s.Log.Debug(filesChanged)
+		s.Log.Debug("%s", filesChanged)
 	}
 
 	return nil
@@ -606,7 +606,7 @@ func (s *Supplier) UpdateRubygems() error {
 	}
 
 	if output, err := s.Command.Output(tempDir, "ruby", "setup.rb"); err != nil {
-		s.Log.Error(output)
+		s.Log.Error("%s", output)
 		return fmt.Errorf("Could not install rubygems: %v", err)
 	}
 
@@ -638,7 +638,7 @@ func (t *LinuxTempDir) CopyDirToTemp(dir string) (string, error) {
 	}
 	cmd := exec.Command("cp", "-al", dir, tempDir)
 	if output, err := cmd.CombinedOutput(); err != nil {
-		t.Log.Error(string(output))
+		t.Log.Error("%s", string(output))
 		return "", fmt.Errorf("could not copy build dir to temp: %v", err)
 	}
 	tempDir = filepath.Join(tempDir, filepath.Base(dir))
@@ -826,7 +826,7 @@ func (s *Supplier) removeIncompatibleBundledWithVersion(bundledWithVersion strin
 		return err
 	}
 
-	s.Log.Warning(fmt.Sprintf(`Your Gemfile.lock was bundled with bundler %s, which is incompatible with the current bundler version (%s).`, bundledWithVersion, bundlerVersion))
+	s.Log.Warning(`Your Gemfile.lock was bundled with bundler %s, which is incompatible with the current bundler version (%s).`, bundledWithVersion, bundlerVersion)
 	s.Log.Warning(`Deleting "Bundled With" from the Gemfile.lock`)
 
 	gemfileLockPath := s.Versions.Gemfile() + ".lock"

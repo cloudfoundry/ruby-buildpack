@@ -42,7 +42,7 @@ func Run(f *Finalizer) error {
 	}
 
 	if err := f.AssertGemfileLockExists(gemfileName); err != nil {
-		f.Log.Error(err.Error())
+		f.Log.Error("%s", err.Error())
 		return err
 	}
 

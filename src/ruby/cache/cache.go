@@ -85,7 +85,7 @@ func (c *Cache) Save() error {
 			c.log.BeginStep("Saving %s to cache", name)
 			cmd := exec.Command("cp", "-al", filepath.Join(c.depDir, name), filepath.Join(c.cacheDir, name))
 			if output, err := cmd.CombinedOutput(); err != nil {
-				c.log.Error(string(output))
+				c.log.Error("%s", string(output))
 				return fmt.Errorf("Could not copy %s: %v", name, err)
 			}
 		}
