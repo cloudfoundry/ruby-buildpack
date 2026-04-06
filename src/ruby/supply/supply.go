@@ -9,6 +9,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/cloudfoundry/libbuildpack"
@@ -624,9 +625,11 @@ func (s *Supplier) UpdateRubygems() error {
 	// overwrites the buildpack-installed bundler (2.x) with bundler 4.x,
 	// which has incompatible output format changes and untested behavior.
 	// Re-install the buildpack's bundler to restore the manifest version.
-	s.Log.Debug("Re-installing bundler after rubygems update")
-	if err := s.InstallBundler(); err != nil {
-		return fmt.Errorf("Could not re-install bundler after rubygems update: %v", err)
+	if majorVersion, err := strconv.Atoi(strings.SplitN(dep.Version, ".", 2)[0]); err == nil && majorVersion >= 4 {
+		s.Log.Debug("Re-installing bundler after rubygems %s update", dep.Version)
+		if err := s.InstallBundler(); err != nil {
+			return fmt.Errorf("Could not re-install bundler after rubygems update: %v", err)
+		}
 	}
 
 	return nil

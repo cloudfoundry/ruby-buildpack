@@ -1185,16 +1185,6 @@ var _ = Describe("Supply", func() {
 				})
 				mockCommand.EXPECT().Output(gomock.Any(), "ruby", "setup.rb")
 
-				// After ruby setup.rb, UpdateRubygems re-installs bundler.
-				// InstallBundler reads Gemfile.lock (not present here, so defaults
-				// to 2.x.x constraint) and installs bundler from the manifest.
-				mockInstaller.EXPECT().InstallDependency(gomock.Any(), gomock.Any()).Do(func(dep libbuildpack.Dependency, installDir string) {
-					Expect(dep.Name).To(Equal("bundler"))
-					Expect(dep.Version).To(Equal("2.7.2"))
-					// Create bin dir so LinkDirectoryInDepDir succeeds
-					Expect(os.MkdirAll(filepath.Join(installDir, "bin"), 0755)).To(Succeed())
-				})
-
 				Expect(supplier.UpdateRubygems()).To(Succeed())
 			})
 
@@ -1222,6 +1212,39 @@ var _ = Describe("Supply", func() {
 			})
 
 			It("does nothing", func() {
+				Expect(supplier.UpdateRubygems()).To(Succeed())
+			})
+		})
+	})
+
+	Describe("UpdateRubygems with rubygems >= 4 re-installs bundler", func() {
+		BeforeEach(func() {
+			mockManifest.EXPECT().AllDependencyVersions("rubygems").AnyTimes().Return([]string{"4.0.9"})
+		})
+		Context("gem version is less than 4.0.9", func() {
+			BeforeEach(func() {
+				mockCommand.EXPECT().Output(gomock.Any(), "gem", "--version").AnyTimes().Return("3.4.19\n", nil)
+				mockVersions.EXPECT().VersionConstraint("3.4.19", ">= 4.0.9").AnyTimes().Return(false, nil)
+			})
+
+			It("updates rubygems and re-installs bundler", func() {
+				mockVersions.EXPECT().Engine().Return("ruby", nil)
+				mockInstaller.EXPECT().InstallDependency(gomock.Any(), gomock.Any()).Do(func(dep libbuildpack.Dependency, _ string) {
+					Expect(dep.Name).To(Equal("rubygems"))
+					Expect(dep.Version).To(Equal("4.0.9"))
+				})
+				mockCommand.EXPECT().Output(gomock.Any(), "ruby", "setup.rb")
+
+				// Rubygems >= 4 triggers bundler re-install.
+				// InstallBundler reads Gemfile.lock (not present here, so defaults
+				// to 2.x.x constraint) and installs bundler from the manifest.
+				mockInstaller.EXPECT().InstallDependency(gomock.Any(), gomock.Any()).Do(func(dep libbuildpack.Dependency, installDir string) {
+					Expect(dep.Name).To(Equal("bundler"))
+					Expect(dep.Version).To(Equal("2.7.2"))
+					// Create bin dir so LinkDirectoryInDepDir succeeds
+					Expect(os.MkdirAll(filepath.Join(installDir, "bin"), 0755)).To(Succeed())
+				})
+
 				Expect(supplier.UpdateRubygems()).To(Succeed())
 			})
 		})
