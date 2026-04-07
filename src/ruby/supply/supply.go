@@ -30,6 +30,7 @@ type Manifest interface {
 type Installer interface {
 	InstallDependency(libbuildpack.Dependency, string) error
 	InstallOnlyVersion(string, string) error
+	InstallOnlyVersionWithStrip(string, string, int) error
 }
 
 type Versions interface {
@@ -386,8 +387,17 @@ func (s *Supplier) InstallJVM() error {
 	}
 
 	jvmInstallDir := filepath.Join(s.Stager.DepDir(), "jvm")
-	if err := s.Installer.InstallOnlyVersion("openjdk1.8-latest", jvmInstallDir); err != nil {
-		return err
+	if len(s.Manifest.AllDependencyVersions("openjdk")) > 0 {
+		// New naming used in cflinuxfs5: openjdk with semantic version (8.x, 17.x, 21.x,…)
+		// BellSoft Liberica / Temurin tarballs have a top-level jdk-XX/ directory, strip it.
+		if err := s.Installer.InstallOnlyVersionWithStrip("openjdk", jvmInstallDir, 1); err != nil {
+			return err
+		}
+	} else {
+		// Legacy naming used in cflinuxfs3/4: flat tarball, no strip needed.
+		if err := s.Installer.InstallOnlyVersion("openjdk1.8-latest", jvmInstallDir); err != nil {
+			return err
+		}
 	}
 	if err := s.Stager.LinkDirectoryInDepDir(filepath.Join(jvmInstallDir, "bin"), "bin"); err != nil {
 		return err

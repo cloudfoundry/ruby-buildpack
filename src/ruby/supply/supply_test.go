@@ -605,6 +605,7 @@ var _ = Describe("Supply", func() {
 
 		Context("app/.jdk does not exist", func() {
 			BeforeEach(func() {
+				mockManifest.EXPECT().AllDependencyVersions("openjdk").Return([]string{})
 				mockInstaller.EXPECT().InstallOnlyVersion("openjdk1.8-latest", gomock.Any()).Do(func(_, path string) error {
 					Expect(os.MkdirAll(filepath.Join(path, "bin"), 0755)).To(Succeed())
 					Expect(os.WriteFile(filepath.Join(path, "bin", "java"), []byte("java.exe"), 0755)).To(Succeed())
@@ -623,6 +624,24 @@ var _ = Describe("Supply", func() {
 				body, err := os.ReadFile(filepath.Join(depsDir, depsIdx, "profile.d", "jruby.sh"))
 				Expect(err).ToNot(HaveOccurred())
 				Expect(string(body)).To(ContainSubstring(`export JAVA_MEM=${JAVA_MEM:--Xmx${JVM_MAX_HEAP:-384}m}`))
+			})
+		})
+
+		Context("app/.jdk does not exist and openjdk (new naming) is available", func() {
+			BeforeEach(func() {
+				// Override the global AllDependencyVersions("openjdk") mock for this context
+				mockManifest.EXPECT().AllDependencyVersions("openjdk").Return([]string{"17.0.13"}).AnyTimes()
+				mockInstaller.EXPECT().InstallOnlyVersionWithStrip("openjdk", gomock.Any(), 1).Do(func(_, path string, _ int) error {
+					Expect(os.MkdirAll(filepath.Join(path, "bin"), 0755)).To(Succeed())
+					Expect(os.WriteFile(filepath.Join(path, "bin", "java"), []byte("java.exe"), 0755)).To(Succeed())
+					return nil
+				})
+			})
+
+			It("installs and links the JDK using new openjdk naming (cflinuxfs5)", func() {
+				Expect(supplier.InstallJVM()).To(Succeed())
+				Expect(filepath.Join(depsDir, depsIdx, "jvm", "bin", "java")).To(BeAnExistingFile())
+				Expect(filepath.Join(depsDir, depsIdx, "bin", "java")).To(BeAnExistingFile())
 			})
 		})
 	})
