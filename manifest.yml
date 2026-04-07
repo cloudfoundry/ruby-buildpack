@@ -97,6 +97,7 @@ dependencies:
   cf_stacks:
   - cflinuxfs3
   - cflinuxfs4
+  - cflinuxfs5
   source: https://java-buildpack.cloudfoundry.org/openjdk-jdk/bionic/x86_64/openjdk-jdk-1.8.0_242-bionic.tar.gz
   source_sha256: dcb9fea2fc3a9b003031874ed17aa5d5a7ebbe397b276ecc8c814633003928fe
 - name: ruby
