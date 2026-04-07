@@ -47,6 +47,12 @@ type output struct {
 }
 
 func (v *Versions) GetBundlerVersion() (string, error) {
+	if v.bundlerVersion != "" {
+		return v.bundlerVersion, nil
+	}
+
+	// Fallback: run `bundle version` for environments where bundlerVersion
+	// was not populated from the manifest.
 	stdout := bytes.NewBuffer(nil)
 
 	cmd := exec.Command("bundle", "version")
@@ -58,6 +64,8 @@ func (v *Versions) GetBundlerVersion() (string, error) {
 		return "", err
 	}
 
+	// rubygems >= 4.x changed `bundle version` output from
+	// "Bundler version X.Y.Z (...)" to "X.Y.Z (...)".
 	re := regexp.MustCompile(`(?:Bundler version )?(\d+\.\d+\.\d+) .*`)
 	match := re.FindStringSubmatch(stdout.String())
 
