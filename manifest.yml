@@ -29,6 +29,7 @@ dependencies:
   sha256: cbc59f6dfcae65c6c5eaac1b748bc1c1a7120f6b73b3a723d56d8a7e2850dafc
   cf_stacks:
   - cflinuxfs4
+  - cflinuxfs5
   - cflinuxfs3
   - cflinuxfs5
   source: https://github.com/rubygems/rubygems/tree/master/bundlertree/v2.6.5
@@ -97,6 +98,7 @@ dependencies:
   cf_stacks:
   - cflinuxfs3
   - cflinuxfs4
+  - cflinuxfs5
   source: https://java-buildpack.cloudfoundry.org/openjdk-jdk/bionic/x86_64/openjdk-jdk-1.8.0_242-bionic.tar.gz
   source_sha256: dcb9fea2fc3a9b003031874ed17aa5d5a7ebbe397b276ecc8c814633003928fe
 - name: ruby
@@ -216,6 +218,7 @@ dependencies:
   uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems_4.0.9_linux_noarch_any-stack_99452d87.tgz
   sha256: 99452d87d70b91f792f752e6dead71af3922cebe96c140473a2c36cc24ab89c3
   cf_stacks:
+  - cflinuxfs3
   - cflinuxfs4
   - cflinuxfs5
   source: https://rubygems.org/rubygems/rubygems-4.0.9.tgz
