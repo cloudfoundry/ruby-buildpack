@@ -30,6 +30,7 @@ dependencies:
   cf_stacks:
   - cflinuxfs4
   - cflinuxfs3
+  - cflinuxfs5
   source: https://github.com/rubygems/rubygems/tree/master/bundlertree/v2.6.5
   source_sha256: 9d0eef5779ee569c43f317484f034081f58e9cf7529af6cd59d15266e46a72a3
 - name: bundler
@@ -38,6 +39,7 @@ dependencies:
   sha256: 54c53519ff41ac0ad0d498086039f6ee2eac5d1bdef5ad31ab33e8ab2c2b1e21
   cf_stacks:
   - cflinuxfs4
+  - cflinuxfs5
   source: https://github.com/rubygems/rubygems/tree/master/bundlertree/v2.7.2
   source_sha256: 1decaf9e2e1acb91b6586a2925c8f3f6da2334a82731a62ff2ded1b83c283871
 - name: jruby
@@ -215,6 +217,7 @@ dependencies:
   sha256: 99452d87d70b91f792f752e6dead71af3922cebe96c140473a2c36cc24ab89c3
   cf_stacks:
   - cflinuxfs4
+  - cflinuxfs5
   - cflinuxfs5
   source: https://rubygems.org/rubygems/rubygems-4.0.9.tgz
   source_sha256: 39b1e2c878946e420116c3c26e4e708c0ddbdf7cd4a13c48dd0fc0774c7add8d
