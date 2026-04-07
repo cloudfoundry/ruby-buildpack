@@ -28,9 +28,8 @@ dependencies:
   uri: https://buildpacks.cloudfoundry.org/dependencies/bundler/bundler_2.6.5_linux_noarch_any-stack_cbc59f6d.tgz
   sha256: cbc59f6dfcae65c6c5eaac1b748bc1c1a7120f6b73b3a723d56d8a7e2850dafc
   cf_stacks:
-  - cflinuxfs4
-  - cflinuxfs5
   - cflinuxfs3
+  - cflinuxfs4
   - cflinuxfs5
   source: https://github.com/rubygems/rubygems/tree/master/bundlertree/v2.6.5
   source_sha256: 9d0eef5779ee569c43f317484f034081f58e9cf7529af6cd59d15266e46a72a3
