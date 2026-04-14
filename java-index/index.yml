@@ -2,4 +2,5 @@
 3.2.0: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.2.0_linux_x64_cflinuxfs4_eed4b6cb.tgz
 3.2.1: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.2.1_linux_x64_cflinuxfs4_3c69ef49.tgz
 3.2.8: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.2.8_linux_x64_cflinuxfs4_18ec473d.tgz
-
+3.3.10: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.3.10_linux_x64_cflinuxfs4_e27e64c4.tgz
+3.4.7: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.4.7_linux_x64_cflinuxfs4_95d83a23.tgz
