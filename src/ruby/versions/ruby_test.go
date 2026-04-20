@@ -1,14 +1,13 @@
 package versions_test
 
 import (
-	"io/ioutil"
 	"os"
 	"path/filepath"
 
 	"github.com/cloudfoundry/ruby-buildpack/src/ruby/versions"
 
 	"github.com/golang/mock/gomock"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
@@ -27,21 +26,17 @@ var _ = Describe("Ruby", func() {
 		mockManifest.EXPECT().AllDependencyVersions("bundler").Return([]string{"1.17.2"}).AnyTimes()
 
 		var err error
-		tmpDir, err = ioutil.TempDir("", "versions.ruby")
+		tmpDir, err = os.MkdirTemp("", "versions.ruby")
 		Expect(err).ToNot(HaveOccurred())
-		depDir, err = ioutil.TempDir("", "tmpDepdir")
+		depDir, err = os.MkdirTemp("", "tmpDepdir")
 		Expect(err).ToNot(HaveOccurred())
-	})
-
-	AfterEach(func() {
-		mockCtrl.Finish()
 	})
 
 	Describe("HasWindowsGemfileLock", func() {
 		Context("Gemfile.lock has only mingw/mswin platforms", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(windowsOnlyGemfileLockFixture), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(windowsOnlyGemfileLockFixture), 0644)).To(Succeed())
 			})
 
 			It("returns true", func() {
@@ -54,8 +49,8 @@ var _ = Describe("Ruby", func() {
 
 		Context("Gemfile.lock has mingw and ruby platforms and windows line endings", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(windowsEndingsGemfileLockFixture), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(windowsEndingsGemfileLockFixture), 0644)).To(Succeed())
 			})
 
 			It("returns true", func() {
@@ -68,8 +63,8 @@ var _ = Describe("Ruby", func() {
 
 		Context("Gemfile.lock has mingw platform and a ruby platform", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(bothGemfileLockFixture), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(bothGemfileLockFixture), 0644)).To(Succeed())
 			})
 
 			It("returns false", func() {
@@ -82,8 +77,8 @@ var _ = Describe("Ruby", func() {
 
 		Context("Gemfile.lock has ruby platform", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(rubyGemfileLockFixture), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(rubyGemfileLockFixture), 0644)).To(Succeed())
 			})
 
 			It("returns false", func() {
@@ -96,8 +91,8 @@ var _ = Describe("Ruby", func() {
 
 		Context("Gemfile.lock has jruby platform", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(jrubyGemfileLockFixture), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(jrubyGemfileLockFixture), 0644)).To(Succeed())
 			})
 
 			It("returns false", func() {
@@ -110,8 +105,8 @@ var _ = Describe("Ruby", func() {
 
 		Context("Gemfile.lock has linux platform", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(linuxGemfileLockFixture), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(linuxGemfileLockFixture), 0644)).To(Succeed())
 			})
 
 			It("returns false", func() {
@@ -124,8 +119,8 @@ var _ = Describe("Ruby", func() {
 
 		Context("Gemfile.lock has mingw platform and linux platform", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(mingwLinuxGemfileLockFixture), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(mingwLinuxGemfileLockFixture), 0644)).To(Succeed())
 			})
 
 			It("returns false", func() {
@@ -147,7 +142,7 @@ var _ = Describe("Ruby", func() {
 	Describe("Engine", func() {
 		Context("Gemfile has a mri", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
 			})
 
 			It("returns ruby", func() {
@@ -158,7 +153,7 @@ var _ = Describe("Ruby", func() {
 
 		Context("Gemfile has jruby", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby '2.2.3', :engine => 'jruby', :engine_version => '9.1.12.0'`), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby '2.2.3', :engine => 'jruby', :engine_version => '9.1.12.0'`), 0644)).To(Succeed())
 			})
 
 			It("returns jruby", func() {
@@ -169,7 +164,7 @@ var _ = Describe("Ruby", func() {
 
 		Context("Gemfile has no constraint", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(``), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(``), 0644)).To(Succeed())
 			})
 
 			It("returns ruby", func() {
@@ -187,7 +182,7 @@ var _ = Describe("Ruby", func() {
 
 		Context("Gemfile does a puts", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte("ruby '2.2.3'\nputs 'Hello'\nSTDERR.puts 'Bye'\n"), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte("ruby '2.2.3'\nputs 'Hello'\nSTDERR.puts 'Bye'\n"), 0644)).To(Succeed())
 			})
 
 			It("stdout from gemfile does not create problems", func() {
@@ -200,7 +195,7 @@ var _ = Describe("Ruby", func() {
 	Describe("Version", func() {
 		Context("Gemfile has a constraint", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
 			})
 
 			It("returns highest matching version", func() {
@@ -219,7 +214,7 @@ var _ = Describe("Ruby", func() {
 
 		Context("Gemfile has no constraint", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(``), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(``), 0644)).To(Succeed())
 			})
 
 			It("returns the default version from the manifest", func() {
@@ -233,11 +228,11 @@ var _ = Describe("Ruby", func() {
 
 		Context("BUNDLE_GEMFILE env var is set", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile-App"), []byte(`ruby "~>2.3.0"`), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile-App"), []byte(`ruby "~>2.3.0"`), 0644)).To(Succeed())
 				os.Setenv("BUNDLE_GEMFILE", "Gemfile-App")
+				DeferCleanup(os.Unsetenv, "BUNDLE_GEMFILE")
 			})
-			AfterEach(func() { os.Unsetenv("BUNDLE_GEMFILE") })
 
 			It("returns highest matching version", func() {
 				mockManifest.EXPECT().AllDependencyVersions("ruby").Return([]string{"1.2.3", "2.2.3", "2.2.4", "2.2.1", "2.3.3", "3.1.2"})
@@ -257,7 +252,7 @@ var _ = Describe("Ruby", func() {
 	Describe("JrubyVersion", func() {
 		Context("Gemfile has a constraint", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby '2.3.3', :engine => 'jruby', :engine_version => '9.1.12.0'`), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby '2.3.3', :engine => 'jruby', :engine_version => '9.1.12.0'`), 0644)).To(Succeed())
 			})
 			It("returns the requested version", func() {
 				v := versions.New(tmpDir, depDir, mockManifest)
@@ -267,11 +262,11 @@ var _ = Describe("Ruby", func() {
 
 		Context("BUNDLE_GEMFILE env var is set", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby '2.3.3', :engine => 'jruby', :engine_version => '9.1.12.0'`), 0644)).To(Succeed())
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile-App"), []byte(`ruby '2.4.4', :engine => 'jruby', :engine_version => '9.2.13.0'`), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby '2.3.3', :engine => 'jruby', :engine_version => '9.1.12.0'`), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile-App"), []byte(`ruby '2.4.4', :engine => 'jruby', :engine_version => '9.2.13.0'`), 0644)).To(Succeed())
 				os.Setenv("BUNDLE_GEMFILE", "Gemfile-App")
+				DeferCleanup(os.Unsetenv, "BUNDLE_GEMFILE")
 			})
-			AfterEach(func() { os.Unsetenv("BUNDLE_GEMFILE") })
 			It("returns the requested version", func() {
 				v := versions.New(tmpDir, depDir, mockManifest)
 				Expect(v.JrubyVersion()).To(Equal("9.2.13.0"))
@@ -290,8 +285,8 @@ var _ = Describe("Ruby", func() {
 
 	Describe("HasGem", func() {
 		BeforeEach(func() {
-			Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`gem 'roda'`), 0644)).To(Succeed())
-			Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(`GEM
+			Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`gem 'roda'`), 0644)).To(Succeed())
+			Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(`GEM
   specs:
     rack (2.0.3)
     roda (2.28.0)
@@ -320,8 +315,8 @@ DEPENDENCIES
 
 	Describe("GemMajorVersion", func() {
 		BeforeEach(func() {
-			Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`gem 'roda'`), 0644)).To(Succeed())
-			Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(`GEM
+			Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`gem 'roda'`), 0644)).To(Succeed())
+			Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(`GEM
   specs:
     rack (2.0.3)
     roda (4.28.0.beta1)
@@ -353,8 +348,8 @@ DEPENDENCIES
 
 	Describe("HasGemVersion", func() {
 		BeforeEach(func() {
-			Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`gem 'roda'`), 0644)).To(Succeed())
-			Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(`GEM
+			Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`gem 'roda'`), 0644)).To(Succeed())
+			Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(`GEM
   specs:
     rack (2.0.3)
     roda (2.28.0)
@@ -432,8 +427,8 @@ DEPENDENCIES
 	Describe("BundledWithVersion", func() {
 		Context("Gemfile.lock has a Bundled With version", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(`
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(`
 PLATFORMS
    ruby
 
@@ -449,8 +444,8 @@ BUNDLED WITH
 
 		Context("Gemfile.lock doesn't have a Bundled With version", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(`
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile.lock"), []byte(`
 PLATFORMS
    ruby
 `), 0644)).To(Succeed())
@@ -464,7 +459,7 @@ PLATFORMS
 
 		Context("There is no Gemfile.lock", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(tmpDir, "Gemfile"), []byte(`ruby "~>2.2.0"`), 0644)).To(Succeed())
 			})
 
 			It("returns the requested version", func() {

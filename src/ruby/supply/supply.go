@@ -30,6 +30,7 @@ type Manifest interface {
 type Installer interface {
 	InstallDependency(libbuildpack.Dependency, string) error
 	InstallOnlyVersion(string, string) error
+	InstallOnlyVersionWithStrip(string, string, int) error
 }
 
 type Versions interface {
@@ -206,7 +207,7 @@ func Run(s *Supplier) error {
 
 	if filesChanged, err := s.Command.Output(s.Stager.BuildDir(), "find", ".", "-newer", "/tmp/checkpoint", "-not", "-path", "./.cloudfoundry/*", "-not", "-path", "./.cloudfoundry"); err == nil && filesChanged != "" {
 		s.Log.Debug("Below files changed:")
-		s.Log.Debug(filesChanged)
+		s.Log.Debug("%s", filesChanged)
 	}
 
 	return nil
@@ -386,8 +387,17 @@ func (s *Supplier) InstallJVM() error {
 	}
 
 	jvmInstallDir := filepath.Join(s.Stager.DepDir(), "jvm")
-	if err := s.Installer.InstallOnlyVersion("openjdk1.8-latest", jvmInstallDir); err != nil {
-		return err
+	if len(s.Manifest.AllDependencyVersions("openjdk")) > 0 {
+		// New naming used in cflinuxfs5: openjdk with semantic version (8.x, 17.x, 21.x,…)
+		// BellSoft Liberica / Temurin tarballs have a top-level jdk-XX/ directory, strip it.
+		if err := s.Installer.InstallOnlyVersionWithStrip("openjdk", jvmInstallDir, 1); err != nil {
+			return err
+		}
+	} else {
+		// Legacy naming used in cflinuxfs3/4: flat tarball, no strip needed.
+		if err := s.Installer.InstallOnlyVersion("openjdk1.8-latest", jvmInstallDir); err != nil {
+			return err
+		}
 	}
 	if err := s.Stager.LinkDirectoryInDepDir(filepath.Join(jvmInstallDir, "bin"), "bin"); err != nil {
 		return err
@@ -606,7 +616,7 @@ func (s *Supplier) UpdateRubygems() error {
 	}
 
 	if output, err := s.Command.Output(tempDir, "ruby", "setup.rb"); err != nil {
-		s.Log.Error(output)
+		s.Log.Error("%s", output)
 		return fmt.Errorf("Could not install rubygems: %v", err)
 	}
 
@@ -638,7 +648,7 @@ func (t *LinuxTempDir) CopyDirToTemp(dir string) (string, error) {
 	}
 	cmd := exec.Command("cp", "-al", dir, tempDir)
 	if output, err := cmd.CombinedOutput(); err != nil {
-		t.Log.Error(string(output))
+		t.Log.Error("%s", string(output))
 		return "", fmt.Errorf("could not copy build dir to temp: %v", err)
 	}
 	tempDir = filepath.Join(tempDir, filepath.Base(dir))
@@ -826,7 +836,7 @@ func (s *Supplier) removeIncompatibleBundledWithVersion(bundledWithVersion strin
 		return err
 	}
 
-	s.Log.Warning(fmt.Sprintf(`Your Gemfile.lock was bundled with bundler %s, which is incompatible with the current bundler version (%s).`, bundledWithVersion, bundlerVersion))
+	s.Log.Warning(`Your Gemfile.lock was bundled with bundler %s, which is incompatible with the current bundler version (%s).`, bundledWithVersion, bundlerVersion)
 	s.Log.Warning(`Deleting "Bundled With" from the Gemfile.lock`)
 
 	gemfileLockPath := s.Versions.Gemfile() + ".lock"

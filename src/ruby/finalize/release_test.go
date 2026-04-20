@@ -2,7 +2,6 @@ package finalize_test
 
 import (
 	"bytes"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 
@@ -10,7 +9,7 @@ import (
 	"github.com/cloudfoundry/libbuildpack/ansicleaner"
 	"github.com/cloudfoundry/ruby-buildpack/src/ruby/finalize"
 	"github.com/golang/mock/gomock"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
@@ -31,10 +30,10 @@ var _ = Describe("Finalize", func() {
 	)
 
 	BeforeEach(func() {
-		buildDir, err = ioutil.TempDir("", "ruby-buildpack.build.")
+		buildDir, err = os.MkdirTemp("", "ruby-buildpack.build.")
 		Expect(err).To(BeNil())
 
-		depsDir, err = ioutil.TempDir("", "ruby-buildpack.deps.")
+		depsDir, err = os.MkdirTemp("", "ruby-buildpack.deps.")
 		Expect(err).To(BeNil())
 
 		depsIdx = "9"
@@ -53,16 +52,13 @@ var _ = Describe("Finalize", func() {
 			Versions: mockVersions,
 			Log:      logger,
 		}
-	})
+		DeferCleanup(func() {
+			err = os.RemoveAll(buildDir)
+			Expect(err).To(BeNil())
 
-	AfterEach(func() {
-		mockCtrl.Finish()
-
-		err = os.RemoveAll(buildDir)
-		Expect(err).To(BeNil())
-
-		err = os.RemoveAll(depsDir)
-		Expect(err).To(BeNil())
+			err = os.RemoveAll(depsDir)
+			Expect(err).To(BeNil())
+		})
 	})
 
 	Describe("GenerateReleaseYaml", func() {

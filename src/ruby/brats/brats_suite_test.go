@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -16,7 +15,7 @@ import (
 	"github.com/cloudfoundry/libbuildpack/bratshelper"
 	"github.com/cloudfoundry/libbuildpack/cutlass"
 
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
@@ -61,7 +60,7 @@ func TestBrats(t *testing.T) {
 func CopyBrats(rubyVersion string) *cutlass.App {
 	dir, err := cutlass.CopyFixture(filepath.Join(bratshelper.Data.BpDir, "fixtures", "brats_ruby"))
 	Expect(err).ToNot(HaveOccurred())
-	data, err := ioutil.ReadFile(filepath.Join(dir, "Gemfile"))
+	data, err := os.ReadFile(filepath.Join(dir, "Gemfile"))
 	Expect(err).ToNot(HaveOccurred())
 	if rubyVersion == "" {
 		manifest, err := libbuildpack.NewManifest(bratshelper.Data.BpDir, nil, time.Now())
@@ -77,7 +76,7 @@ func CopyBrats(rubyVersion string) *cutlass.App {
 		Expect(err).ToNot(HaveOccurred())
 	}
 	data = bytes.Replace(data, []byte("<%= ruby_version %>"), []byte(rubyVersion), -1)
-	Expect(ioutil.WriteFile(filepath.Join(dir, "Gemfile"), data, 0644)).To(Succeed())
+	Expect(os.WriteFile(filepath.Join(dir, "Gemfile"), data, 0644)).To(Succeed())
 
 	return cutlass.New(dir)
 }
@@ -104,12 +103,12 @@ func CopyBratsJRuby(jrubyVersion string) *cutlass.App {
 	dir, err := cutlass.CopyFixture(filepath.Join(bratshelper.Data.BpDir, "fixtures", "brats_jruby"))
 	Expect(err).ToNot(HaveOccurred())
 
-	data, err := ioutil.ReadFile(filepath.Join(dir, "Gemfile"))
+	data, err := os.ReadFile(filepath.Join(dir, "Gemfile"))
 	Expect(err).ToNot(HaveOccurred())
 
 	data = bytes.Replace(data, []byte("<%= ruby_version %>"), []byte(rubyVersion), -1)
 	data = bytes.Replace(data, []byte("<%= engine_version %>"), []byte(jrubyVersion), -1)
-	Expect(ioutil.WriteFile(filepath.Join(dir, "Gemfile"), data, 0644)).To(Succeed())
+	Expect(os.WriteFile(filepath.Join(dir, "Gemfile"), data, 0644)).To(Succeed())
 
 	Expect(createGemfileLockFile(jrubyVersion, dir)).To(Succeed())
 
@@ -161,7 +160,7 @@ DEPENDENCIES
 		return fmt.Errorf("Unknown JRuby version %s, could not write Gemfile.lock", jrubyVersion)
 	}
 
-	Expect(ioutil.WriteFile(filepath.Join(fixtureDir, "Gemfile.lock"), buffer, 0644)).To(Succeed())
+	Expect(os.WriteFile(filepath.Join(fixtureDir, "Gemfile.lock"), buffer, 0644)).To(Succeed())
 
 	return nil
 }

@@ -2,7 +2,6 @@ package cache_test
 
 import (
 	"bytes"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -11,7 +10,7 @@ import (
 	"github.com/cloudfoundry/libbuildpack/ansicleaner"
 	"github.com/cloudfoundry/ruby-buildpack/src/ruby/cache"
 	"github.com/golang/mock/gomock"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
@@ -32,13 +31,13 @@ var _ = Describe("Cache", func() {
 	)
 
 	BeforeEach(func() {
-		buildDir, err = ioutil.TempDir("", "ruby-buildpack.build.")
+		buildDir, err = os.MkdirTemp("", "ruby-buildpack.build.")
 		Expect(err).To(BeNil())
 
-		cacheDir, err = ioutil.TempDir("", "ruby-buildpack.cache.")
+		cacheDir, err = os.MkdirTemp("", "ruby-buildpack.cache.")
 		Expect(err).To(BeNil())
 
-		depsDir, err = ioutil.TempDir("", "ruby-buildpack.deps.")
+		depsDir, err = os.MkdirTemp("", "ruby-buildpack.deps.")
 		Expect(err).To(BeNil())
 
 		depsIdx = "23"
@@ -53,12 +52,8 @@ var _ = Describe("Cache", func() {
 		mockStager.EXPECT().BuildDir().AnyTimes().Return(buildDir)
 		mockStager.EXPECT().CacheDir().AnyTimes().Return(cacheDir)
 		mockStager.EXPECT().DepDir().AnyTimes().Return(filepath.Join(depsDir, depsIdx))
-	})
-
-	AfterEach(func() {
-		mockCtrl.Finish()
-		Expect(os.RemoveAll(buildDir)).To(Succeed())
-		Expect(os.RemoveAll(cacheDir)).To(Succeed())
+		DeferCleanup(os.RemoveAll, buildDir)
+		DeferCleanup(os.RemoveAll, cacheDir)
 	})
 
 	Describe("New", func() {

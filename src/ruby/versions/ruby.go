@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -203,7 +202,7 @@ func (v *Versions) HasWindowsGemfileLock() (bool, error) {
 	} else if !good {
 		return false, nil
 	}
-	contents, err := ioutil.ReadFile(gemfileLockPath)
+	contents, err := os.ReadFile(gemfileLockPath)
 	if err != nil {
 		return false, err
 	} else if strings.Contains(string(contents), "\r\n") {
