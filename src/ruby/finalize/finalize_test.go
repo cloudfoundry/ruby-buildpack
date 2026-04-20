@@ -3,7 +3,6 @@ package finalize_test
 import (
 	"bytes"
 	"errors"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -13,7 +12,7 @@ import (
 	"github.com/cloudfoundry/libbuildpack/ansicleaner"
 	"github.com/cloudfoundry/ruby-buildpack/src/ruby/finalize"
 	"github.com/golang/mock/gomock"
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
@@ -34,10 +33,10 @@ var _ = Describe("Finalize", func() {
 	)
 
 	BeforeEach(func() {
-		buildDir, err = ioutil.TempDir("", "ruby-buildpack.build.")
+		buildDir, err = os.MkdirTemp("", "ruby-buildpack.build.")
 		Expect(err).To(BeNil())
 
-		depsDir, err = ioutil.TempDir("", "ruby-buildpack.deps.")
+		depsDir, err = os.MkdirTemp("", "ruby-buildpack.deps.")
 		Expect(err).To(BeNil())
 
 		depsIdx = "9"
@@ -60,22 +59,19 @@ var _ = Describe("Finalize", func() {
 			Command:  mockCommand,
 			Log:      logger,
 		}
-	})
+		DeferCleanup(func() {
+			err = os.RemoveAll(buildDir)
+			Expect(err).To(BeNil())
 
-	AfterEach(func() {
-		mockCtrl.Finish()
-
-		err = os.RemoveAll(buildDir)
-		Expect(err).To(BeNil())
-
-		err = os.RemoveAll(depsDir)
-		Expect(err).To(BeNil())
+			err = os.RemoveAll(depsDir)
+			Expect(err).To(BeNil())
+		})
 	})
 
 	Describe("AssertGemfileLockExists", func() {
 		Context("Gemfile.lock exists", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(buildDir, "Gemfile.lock"), []byte("body"), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(buildDir, "Gemfile.lock"), []byte("body"), 0644)).To(Succeed())
 				Expect(filepath.Join(buildDir, "Gemfile.lock")).To(BeAnExistingFile())
 			})
 			It("Succeeds", func() {
@@ -99,12 +95,12 @@ var _ = Describe("Finalize", func() {
 
 		Context("DEPS/IDX/.bundle_config exists", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(depsDir, depsIdx, "bundle_config"), []byte("bundler is awesome"), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(depsDir, depsIdx, "bundle_config"), []byte("bundler is awesome"), 0644)).To(Succeed())
 			})
 
 			It("Copies the config file to build dir", func() {
 				Expect(filepath.Join(buildDir, ".bundle", "config")).To(BeARegularFile())
-				Expect(ioutil.ReadFile(filepath.Join(buildDir, ".bundle", "config"))).To(Equal([]byte("bundler is awesome")))
+				Expect(os.ReadFile(filepath.Join(buildDir, ".bundle", "config"))).To(Equal([]byte("bundler is awesome")))
 			})
 		})
 
@@ -310,7 +306,7 @@ var _ = Describe("Finalize", func() {
 				Context("public/assets/manifest.yml is present", func() {
 					BeforeEach(func() {
 						Expect(os.MkdirAll(filepath.Join(buildDir, "public", "assets"), 0755)).To(Succeed())
-						Expect(ioutil.WriteFile(filepath.Join(buildDir, "public", "assets", "manifest.yml"), []byte("memanifest"), 0644)).To(Succeed())
+						Expect(os.WriteFile(filepath.Join(buildDir, "public", "assets", "manifest.yml"), []byte("memanifest"), 0644)).To(Succeed())
 					})
 					It("skips assets:precompile", func() {
 						Expect(finalizer.PrecompileAssets()).To(Succeed())
@@ -337,7 +333,7 @@ var _ = Describe("Finalize", func() {
 				Context("public/assets/.sprockets-manifest-*.json is present", func() {
 					BeforeEach(func() {
 						Expect(os.MkdirAll(filepath.Join(buildDir, "public", "assets"), 0755)).To(Succeed())
-						Expect(ioutil.WriteFile(filepath.Join(buildDir, "public", "assets", ".sprockets-manifest-123.json"), []byte("memanifest"), 0644)).To(Succeed())
+						Expect(os.WriteFile(filepath.Join(buildDir, "public", "assets", ".sprockets-manifest-123.json"), []byte("memanifest"), 0644)).To(Succeed())
 					})
 					It("skips assets:precompile", func() {
 						Expect(finalizer.PrecompileAssets()).To(Succeed())
@@ -348,7 +344,7 @@ var _ = Describe("Finalize", func() {
 				Context("public/assets/manifest-*.json is present", func() {
 					BeforeEach(func() {
 						Expect(os.MkdirAll(filepath.Join(buildDir, "public", "assets"), 0755)).To(Succeed())
-						Expect(ioutil.WriteFile(filepath.Join(buildDir, "public", "assets", "manifest-123.json"), []byte("memanifest"), 0644)).To(Succeed())
+						Expect(os.WriteFile(filepath.Join(buildDir, "public", "assets", "manifest-123.json"), []byte("memanifest"), 0644)).To(Succeed())
 					})
 					It("skips assets:precompile", func() {
 						Expect(finalizer.PrecompileAssets()).To(Succeed())
@@ -359,7 +355,7 @@ var _ = Describe("Finalize", func() {
 				Context("public/assets/.manifest.json is present", func() {
 					BeforeEach(func() {
 						Expect(os.MkdirAll(filepath.Join(buildDir, "public", "assets"), 0755)).To(Succeed())
-						Expect(ioutil.WriteFile(filepath.Join(buildDir, "public", "assets", ".manifest.json"), []byte("memanifest"), 0644)).To(Succeed())
+						Expect(os.WriteFile(filepath.Join(buildDir, "public", "assets", ".manifest.json"), []byte("memanifest"), 0644)).To(Succeed())
 					})
 					It("skips assets:precompile", func() {
 						Expect(finalizer.PrecompileAssets()).To(Succeed())
@@ -370,7 +366,7 @@ var _ = Describe("Finalize", func() {
 				Context("public/assets/manifest.yml is present", func() {
 					BeforeEach(func() {
 						Expect(os.MkdirAll(filepath.Join(buildDir, "public", "assets"), 0755)).To(Succeed())
-						Expect(ioutil.WriteFile(filepath.Join(buildDir, "public", "assets", "manifest.yml"), []byte("memanifest"), 0644)).To(Succeed())
+						Expect(os.WriteFile(filepath.Join(buildDir, "public", "assets", "manifest.yml"), []byte("memanifest"), 0644)).To(Succeed())
 					})
 					It("runs assets:precompile with DATABASE_URL", func() {
 						Expect(finalizer.PrecompileAssets()).To(Succeed())
@@ -403,8 +399,10 @@ var _ = Describe("Finalize", func() {
 				}
 
 				Context("SECRET_KEY_BASE is set", func() {
-					BeforeEach(func() { os.Setenv("SECRET_KEY_BASE", "existing-key") })
-					AfterEach(func() { os.Unsetenv("SECRET_KEY_BASE") })
+					BeforeEach(func() {
+						os.Setenv("SECRET_KEY_BASE", "existing-key")
+						DeferCleanup(os.Unsetenv, "SECRET_KEY_BASE")
+					})
 					It("passes SECRET_KEY_BASE through", func() {
 						Expect(finalizer.PrecompileAssets()).To(Succeed())
 						Expect(cmds).To(HaveLen(4))
@@ -426,8 +424,10 @@ var _ = Describe("Finalize", func() {
 
 	Describe("best practice warnings", func() {
 		Context("RAILS_ENV == production", func() {
-			BeforeEach(func() { os.Setenv("RAILS_ENV", "production") })
-			AfterEach(func() { os.Setenv("RAILS_ENV", "") })
+			BeforeEach(func() {
+				os.Setenv("RAILS_ENV", "production")
+				DeferCleanup(os.Setenv, "RAILS_ENV", "")
+			})
 
 			It("does not warn the user", func() {
 				finalizer.BestPracticeWarnings()
@@ -436,8 +436,10 @@ var _ = Describe("Finalize", func() {
 		})
 
 		Context("RAILS_ENV != production", func() {
-			BeforeEach(func() { os.Setenv("RAILS_ENV", "otherenv") })
-			AfterEach(func() { os.Setenv("RAILS_ENV", "") })
+			BeforeEach(func() {
+				os.Setenv("RAILS_ENV", "otherenv")
+				DeferCleanup(os.Setenv, "RAILS_ENV", "")
+			})
 
 			It("warns the user", func() {
 				finalizer.BestPracticeWarnings()
@@ -480,48 +482,48 @@ var _ = Describe("Finalize", func() {
 		})
 		Context("file exists in app/bin", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(buildDir, "bin", "rake"), []byte("original"), 0755)).To(Succeed())
-				Expect(ioutil.WriteFile(filepath.Join(depsDir, depsIdx, "binstubs", "rake"), []byte("dep/binstub"), 0755)).To(Succeed())
-				Expect(ioutil.WriteFile(filepath.Join(depsDir, depsIdx, "bin", "rake"), []byte("dep/bin"), 0755)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(buildDir, "bin", "rake"), []byte("original"), 0755)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(depsDir, depsIdx, "binstubs", "rake"), []byte("dep/binstub"), 0755)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(depsDir, depsIdx, "bin", "rake"), []byte("dep/bin"), 0755)).To(Succeed())
 			})
 
 			It("remains unchanged", func() {
 				Expect(finalizer.CopyToAppBin()).To(Succeed())
-				Expect(ioutil.ReadFile(filepath.Join(buildDir, "bin", "rake"))).To(ContainSubstring("original"))
+				Expect(os.ReadFile(filepath.Join(buildDir, "bin", "rake"))).To(ContainSubstring("original"))
 			})
 		})
 
 		Context("file exists in dep/bin and dep/binstubs", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(depsDir, depsIdx, "binstubs", "rake"), []byte("dep/binstub"), 0755)).To(Succeed())
-				Expect(ioutil.WriteFile(filepath.Join(depsDir, depsIdx, "bin", "rake"), []byte("dep/bin"), 0755)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(depsDir, depsIdx, "binstubs", "rake"), []byte("dep/binstub"), 0755)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(depsDir, depsIdx, "bin", "rake"), []byte("dep/bin"), 0755)).To(Succeed())
 			})
 
 			It("copies deps binstubs file", func() {
 				Expect(finalizer.CopyToAppBin()).To(Succeed())
-				Expect(ioutil.ReadFile(filepath.Join(buildDir, "bin", "rake"))).To(ContainSubstring("dep/binstub"))
+				Expect(os.ReadFile(filepath.Join(buildDir, "bin", "rake"))).To(ContainSubstring("dep/binstub"))
 			})
 		})
 
 		Context("file only exists in dep/bin", func() {
 			BeforeEach(func() {
-				Expect(ioutil.WriteFile(filepath.Join(depsDir, depsIdx, "bin", "rake"), []byte("dep/bin"), 0755)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(depsDir, depsIdx, "bin", "rake"), []byte("dep/bin"), 0755)).To(Succeed())
 			})
 
 			It("creates a shim for dep/bin", func() {
 				Expect(finalizer.CopyToAppBin()).To(Succeed())
-				Expect(ioutil.ReadFile(filepath.Join(buildDir, "bin", "rake"))).To(ContainSubstring(`Kernel.exec "#{ENV['DEPS_DIR']}/%s/bin/rake", *ARGV`, depsIdx))
+				Expect(os.ReadFile(filepath.Join(buildDir, "bin", "rake"))).To(ContainSubstring(`Kernel.exec "#{ENV['DEPS_DIR']}/%s/bin/rake", *ARGV`, depsIdx))
 			})
 		})
 
 		Context("binstubs does not exist", func() {
 			BeforeEach(func() {
 				Expect(os.RemoveAll(filepath.Join(depsDir, depsIdx, "binstubs"))).To(Succeed())
-				Expect(ioutil.WriteFile(filepath.Join(depsDir, depsIdx, "bin", "rake"), []byte("dep/bin"), 0755)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(depsDir, depsIdx, "bin", "rake"), []byte("dep/bin"), 0755)).To(Succeed())
 			})
 			It("creates a shim for dep/bin", func() {
 				Expect(finalizer.CopyToAppBin()).To(Succeed())
-				Expect(ioutil.ReadFile(filepath.Join(buildDir, "bin", "rake"))).To(ContainSubstring(`Kernel.exec "#{ENV['DEPS_DIR']}/%s/bin/rake", *ARGV`, depsIdx))
+				Expect(os.ReadFile(filepath.Join(buildDir, "bin", "rake"))).To(ContainSubstring(`Kernel.exec "#{ENV['DEPS_DIR']}/%s/bin/rake", *ARGV`, depsIdx))
 			})
 		})
 	})

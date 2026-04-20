@@ -2,7 +2,6 @@ package main
 
 import (
 	"io"
-	"io/ioutil"
 	"os"
 	"time"
 
@@ -12,7 +11,7 @@ import (
 )
 
 func main() {
-	logfile, err := ioutil.TempFile("", "cloudfoundry.ruby-buildpack.finalize")
+	logfile, err := os.CreateTemp("", "cloudfoundry.ruby-buildpack.finalize")
 	defer logfile.Close()
 	if err != nil {
 		logger := libbuildpack.NewLogger(os.Stdout)
