@@ -68,7 +68,7 @@ var _ = Describe("Supply", func() {
 		mockCtrl = gomock.NewController(GinkgoT())
 
 		mockManifest = NewMockManifest(mockCtrl)
-		mockManifest.EXPECT().AllDependencyVersions("bundler").Return([]string{"1.17.2"}).AnyTimes()
+		mockManifest.EXPECT().AllDependencyVersions("bundler").Return([]string{"1.17.2", "2.7.2"}).AnyTimes()
 
 		mockInstaller = NewMockInstaller(mockCtrl)
 
@@ -126,6 +126,28 @@ var _ = Describe("Supply", func() {
 		})
 
 		It("installs bundler version matching constraint given", func() {
+			Expect(tempSupplier.InstallBundler()).To(Succeed())
+		})
+	})
+
+	Describe("InstallBundler with bundler 2.x BUNDLED WITH", func() {
+
+		var tempSupplier supply.Supplier
+
+		BeforeEach(func() {
+			tempSupplier = *supplier
+			mockStager := NewMockStager(mockCtrl)
+			tempSupplier.Stager = mockStager
+
+			mockInstaller.EXPECT().InstallDependency(libbuildpack.Dependency{Name: "bundler", Version: "2.7.2"}, gomock.Any())
+			mockStager.EXPECT().LinkDirectoryInDepDir(gomock.Any(), gomock.Any())
+			mockStager.EXPECT().DepDir().AnyTimes()
+
+			err := os.WriteFile(filepath.Join(buildDir, "Gemfile.lock"), []byte("BUNDLED WITH\n    2.4.0"), 0644)
+			Expect(err).NotTo(HaveOccurred())
+		})
+
+		It("installs bundler 2.x matching constraint given", func() {
 			Expect(tempSupplier.InstallBundler()).To(Succeed())
 		})
 	})
@@ -375,6 +397,23 @@ var _ = Describe("Supply", func() {
 
 				// Assert that the environment variables are set correctly.
 				expectedEnv := fmt.Sprintf("some/test-dir/vendor_bundle/%s/%s", engine, rubyEngineVersion)
+				actualEnv := os.Getenv("BUNDLE_PATH")
+				Expect(actualEnv).To(Equal(expectedEnv))
+			})
+		})
+
+		Describe("With Bundler version 4.x.x (future-proofing)", func() {
+			BeforeEach(func() {
+				mockVersions.EXPECT().GetBundlerVersion().Return("4.0.9", nil).AnyTimes()
+
+				mockStager.EXPECT().DepDir().Return("some/test-dir").AnyTimes()
+				mockStager.EXPECT().WriteEnvFile(gomock.Any(), gomock.Any()).Return(nil)
+			})
+
+			It("should use vendor_bundle path like bundler 2.x", func() {
+				Expect(tempSupplier.AddPostRubyGemsInstallDefaultEnv()).To(Succeed())
+
+				expectedEnv := "some/test-dir/vendor_bundle"
 				actualEnv := os.Getenv("BUNDLE_PATH")
 				Expect(actualEnv).To(Equal(expectedEnv))
 			})
@@ -1173,6 +1212,39 @@ var _ = Describe("Supply", func() {
 			})
 
 			It("does nothing", func() {
+				Expect(supplier.UpdateRubygems()).To(Succeed())
+			})
+		})
+	})
+
+	Describe("UpdateRubygems with rubygems >= 4 re-installs bundler", func() {
+		BeforeEach(func() {
+			mockManifest.EXPECT().AllDependencyVersions("rubygems").AnyTimes().Return([]string{"4.0.9"})
+		})
+		Context("gem version is less than 4.0.9", func() {
+			BeforeEach(func() {
+				mockCommand.EXPECT().Output(gomock.Any(), "gem", "--version").AnyTimes().Return("3.4.19\n", nil)
+				mockVersions.EXPECT().VersionConstraint("3.4.19", ">= 4.0.9").AnyTimes().Return(false, nil)
+			})
+
+			It("updates rubygems and re-installs bundler", func() {
+				mockVersions.EXPECT().Engine().Return("ruby", nil)
+				mockInstaller.EXPECT().InstallDependency(gomock.Any(), gomock.Any()).Do(func(dep libbuildpack.Dependency, _ string) {
+					Expect(dep.Name).To(Equal("rubygems"))
+					Expect(dep.Version).To(Equal("4.0.9"))
+				})
+				mockCommand.EXPECT().Output(gomock.Any(), "ruby", "setup.rb")
+
+				// Rubygems >= 4 triggers bundler re-install.
+				// InstallBundler reads Gemfile.lock (not present here, so defaults
+				// to 2.x.x constraint) and installs bundler from the manifest.
+				mockInstaller.EXPECT().InstallDependency(gomock.Any(), gomock.Any()).Do(func(dep libbuildpack.Dependency, installDir string) {
+					Expect(dep.Name).To(Equal("bundler"))
+					Expect(dep.Version).To(Equal("2.7.2"))
+					// Create bin dir so LinkDirectoryInDepDir succeeds
+					Expect(os.MkdirAll(filepath.Join(installDir, "bin"), 0755)).To(Succeed())
+				})
+
 				Expect(supplier.UpdateRubygems()).To(Succeed())
 			})
 		})

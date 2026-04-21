@@ -58,7 +58,9 @@ func (v *Versions) GetBundlerVersion() (string, error) {
 		return "", err
 	}
 
-	re := regexp.MustCompile(`Bundler version (\d+\.\d+\.\d+) .*`)
+	// Bundler 2.x outputs "Bundler version X.Y.Z (...)" but bundler 4.x
+	// omits the "Bundler version" prefix and outputs just "X.Y.Z (...)".
+	re := regexp.MustCompile(`(?:Bundler version )?(\d+\.\d+\.\d+)`)
 	match := re.FindStringSubmatch(stdout.String())
 
 	if len(match) != 2 {
@@ -191,9 +193,11 @@ func (v *Versions) GemMajorVersion(gem string) (int, error) {
 	}
 }
 
-//Should return true if either:
+// Should return true if either:
 // (1) the only platform in the Gemfile.lock is windows (mingw/mswin)
-//     -or-
+//
+//	-or-
+//
 // (2) the Gemfile.lock line endings are /r/n, rather than just /n
 func (v *Versions) HasWindowsGemfileLock() (bool, error) {
 	gemfileLockPath := v.Gemfile() + ".lock"

@@ -9,6 +9,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/cloudfoundry/libbuildpack"
@@ -324,11 +325,11 @@ func (s *Supplier) InstallBundler() error {
 		matches = []string{"", "2"}
 	}
 
-	if strings.HasPrefix(matches[1], "2") {
-		return s.installBundler("2.x.x")
+	if strings.HasPrefix(matches[1], "1") {
+		return s.installBundler("1.x.x")
 	}
 
-	return s.installBundler("1.x.x")
+	return s.installBundler("2.x.x")
 }
 
 func (s *Supplier) InstallNode() error {
@@ -478,7 +479,7 @@ func (s *Supplier) VendorBundlePath() (string, error) {
 		return "", err
 	}
 
-	if strings.HasPrefix(bundlerVersion, "2.") {
+	if !strings.HasPrefix(bundlerVersion, "1.") {
 		return "vendor_bundle", nil
 	}
 
@@ -620,6 +621,17 @@ func (s *Supplier) UpdateRubygems() error {
 		return fmt.Errorf("Could not install rubygems: %v", err)
 	}
 
+	// Rubygems 4.x ships bundler 4.x as a default gem. Running setup.rb
+	// overwrites the buildpack-installed bundler (2.x) with bundler 4.x,
+	// which has incompatible output format changes and untested behavior.
+	// Re-install the buildpack's bundler to restore the manifest version.
+	if majorVersion, err := strconv.Atoi(strings.SplitN(dep.Version, ".", 2)[0]); err == nil && majorVersion >= 4 {
+		s.Log.Debug("Re-installing bundler after rubygems %s update", dep.Version)
+		if err := s.InstallBundler(); err != nil {
+			return fmt.Errorf("Could not re-install bundler after rubygems update: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -749,7 +761,7 @@ func (s *Supplier) InstallGems() error {
 			return fmt.Errorf("could not read Bundled With version from gemfile.lock: %s", err)
 		}
 
-		if bundledWithVersion != bundlerVersion && strings.HasPrefix(bundledWithVersion, "2") {
+		if bundledWithVersion != bundlerVersion && !strings.HasPrefix(bundledWithVersion, "1") {
 			if err := s.removeIncompatibleBundledWithVersion(bundledWithVersion); err != nil {
 				return fmt.Errorf("could not remove Bundled With from end of "+
 					"gemfile.lock: %s", err)
