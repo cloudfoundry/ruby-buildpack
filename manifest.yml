@@ -52,8 +52,8 @@ dependencies:
   source_sha256: d1a7abb31bd02335cf0e26e3de54e2f82232044c0b6e59bd336a00cab8e1e211
 - name: jruby
   version: 9.4.14.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.4.14.0-ruby-3.1_linux_x64_cflinuxfs4_d7e5d1a2.tgz
-  sha256: d7e5d1a2b8bfbd37461c4f2a689ecebe6470d094413c7cb41d0837f28e07e62d
+  uri: https://buildpacks.cloudfoundry.org/dependencies/jruby/jruby_9.4.14.0-ruby-3.1_linux_x64_cflinuxfs4_1263cd2e.tgz
+  sha256: 1263cd2e2bb801d322aaabe3ae0447ea9a0f2b1a5e7d4a383dc1ba8242a45d17
   cf_stacks:
   - cflinuxfs4
   source: https://github.com/jruby/jruby/releases/download/9.4.14.0/jruby-src-9.4.14.0.zip
