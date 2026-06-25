@@ -229,6 +229,15 @@ dependencies:
   - cflinuxfs3
   source: https://rubygems.org/rubygems/rubygems-3.6.8.tgz
   source_sha256: da5340b42ba3ddc5ede4a6b948ffa5b409d48cb119e2937e27e4c0b13bf9c390
+- name: rubygems
+  version: 4.0.9
+  uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems_4.0.9_linux_noarch_cflinuxfs4_64a69641.tgz
+  sha256: 64a6964127be47c9bb8f172ca1f3f0c58350248eeb99822e32463ad6ffe74771
+  cf_stacks:
+  - cflinuxfs4
+  - cflinuxfs5
+  source: https://rubygems.org/rubygems/rubygems-4.0.9.tgz
+  source_sha256: ''
 - name: yarn
   version: 1.22.22
   uri: https://buildpacks.cloudfoundry.org/dependencies/yarn/yarn_1.22.22_linux_noarch_any-stack_b6132b86.tgz
