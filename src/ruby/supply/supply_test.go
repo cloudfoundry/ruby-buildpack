@@ -1062,6 +1062,33 @@ var _ = Describe("Supply", func() {
 				Expect(filepath.Join(depsDir, depsIdx, "bin", "yarn")).ToNot(BeAnExistingFile())
 			})
 		})
+		Context("app has yarn.lock and .yarnrc.yml files (Yarn Berry)", func() {
+			BeforeEach(func() {
+				Expect(os.WriteFile(filepath.Join(buildDir, "yarn.lock"), []byte("contents"), 0644)).To(Succeed())
+				Expect(os.WriteFile(filepath.Join(buildDir, ".yarnrc.yml"), []byte("yarnPath: .yarn/releases/yarn-4.18.0.cjs\n"), 0644)).To(Succeed())
+			})
+			It("installs yarn-berry instead of yarn, and shims a yarn wrapper script", func() {
+				mockInstaller.EXPECT().InstallOnlyVersion("yarn-berry", gomock.Any()).Do(func(_, installDir string) error {
+					Expect(os.MkdirAll(installDir, 0755)).To(Succeed())
+					Expect(os.WriteFile(filepath.Join(installDir, "yarn-berry-4.18.0.js"), []byte("#!/usr/bin/env node\n"), 0644)).To(Succeed())
+					return nil
+				})
+				Expect(supplier.InstallYarn()).To(Succeed())
+
+				yarnBerryInstallDir := filepath.Join(depsDir, depsIdx, "yarn-berry")
+				link, err := os.Readlink(filepath.Join(depsDir, depsIdx, "bin", "yarn"))
+				Expect(err).ToNot(HaveOccurred())
+				Expect(link).To(Equal("../yarn-berry/bin/yarn"))
+
+				shimContents, err := os.ReadFile(filepath.Join(yarnBerryInstallDir, "bin", "yarn"))
+				Expect(err).ToNot(HaveOccurred())
+				Expect(string(shimContents)).To(ContainSubstring(`exec node "` + filepath.Join(yarnBerryInstallDir, "yarn-berry-4.18.0.js") + `" "$@"`))
+
+				info, err := os.Stat(filepath.Join(yarnBerryInstallDir, "bin", "yarn"))
+				Expect(err).ToNot(HaveOccurred())
+				Expect(info.Mode().Perm()&0111).ToNot(BeZero(), "shim script should be executable")
+			})
+		})
 	})
 
 	Describe("NeedsNode", func() {

@@ -298,6 +298,18 @@ func (s *Supplier) InstallYarn() error {
 		return nil
 	}
 
+	// .yarnrc.yml is the marker file Yarn Berry (2.x/3.x/4.x) itself uses to
+	// identify a project as using the "modern" (non-Classic) CLI/protocol -
+	// Yarn Classic (1.x) projects never have this file. See
+	// https://yarnpkg.com/configuration/yarnrc.
+	usesBerry, err := libbuildpack.FileExists(filepath.Join(s.Stager.BuildDir(), ".yarnrc.yml"))
+	if err != nil {
+		return err
+	}
+	if usesBerry {
+		return s.InstallYarnBerry()
+	}
+
 	yarnInstallDir := filepath.Join(s.Stager.DepDir(), "yarn")
 	if err != nil {
 		return err
@@ -307,6 +319,45 @@ func (s *Supplier) InstallYarn() error {
 	}
 
 	return s.Stager.LinkDirectoryInDepDir(filepath.Join(yarnInstallDir, "bin"), "bin")
+}
+
+// InstallYarnBerry installs the "yarn-berry" dependency (Yarn 2.x/3.x/4.x)
+// for projects whose .yarnrc.yml marks them as using the modern Yarn CLI.
+//
+// Unlike Yarn Classic, Yarn Berry is not distributed as a self-contained
+// installable tarball with a bin/ directory - it ships as a single bundled
+// CLI script (see https://repo.yarnpkg.com). InstallOnlyVersion therefore
+// just copies that file as-is into the install dir (libbuildpack falls back
+// to a plain copy for any dependency URI it doesn't recognize as an
+// archive), so a small wrapper script is created here to expose it on PATH
+// as a normal "yarn" executable via `node <script> "$@"`.
+func (s *Supplier) InstallYarnBerry() error {
+	yarnBerryInstallDir := filepath.Join(s.Stager.DepDir(), "yarn-berry")
+
+	if err := s.Installer.InstallOnlyVersion("yarn-berry", yarnBerryInstallDir); err != nil {
+		return err
+	}
+
+	matches, err := filepath.Glob(filepath.Join(yarnBerryInstallDir, "*.js"))
+	if err != nil {
+		return err
+	}
+	if len(matches) == 0 {
+		return fmt.Errorf("could not locate yarn-berry CLI script in %s", yarnBerryInstallDir)
+	}
+	yarnBerryScript := matches[0]
+
+	binDir := filepath.Join(yarnBerryInstallDir, "bin")
+	if err := os.MkdirAll(binDir, 0755); err != nil {
+		return err
+	}
+
+	shim := fmt.Sprintf("#!/usr/bin/env bash\nexec node \"%s\" \"$@\"\n", yarnBerryScript)
+	if err := os.WriteFile(filepath.Join(binDir, "yarn"), []byte(shim), 0755); err != nil {
+		return err
+	}
+
+	return s.Stager.LinkDirectoryInDepDir(binDir, "bin")
 }
 
 func (s *Supplier) InstallBundler() error {
