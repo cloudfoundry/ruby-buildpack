@@ -58,11 +58,24 @@ func (v *Versions) GetBundlerVersion() (string, error) {
 		return "", err
 	}
 
-	re := regexp.MustCompile(`Bundler version (\d+\.\d+\.\d+) .*`)
-	match := re.FindStringSubmatch(stdout.String())
+	return parseBundlerVersion(stdout.String())
+}
+
+// parseBundlerVersion extracts the bundler version number from the output of
+// `bundle version`.
+//
+// Historically this command printed output prefixed with "Bundler version "
+// (e.g. "Bundler version 2.7.2 (2025-09-09 commit b463ced1459)"), but as of
+// RubyGems/Bundler 4.x the prefix has been dropped and the command just
+// prints the bare version number instead (e.g.
+// "4.0.22 (2026-09-30 commit ff2bd50)"). This parses both formats by making
+// the "Bundler version " prefix optional.
+func parseBundlerVersion(output string) (string, error) {
+	re := regexp.MustCompile(`(?:Bundler version )?(\d+\.\d+\.\d+)`)
+	match := re.FindStringSubmatch(output)
 
 	if len(match) != 2 {
-		return "", fmt.Errorf("failed to determine bundler version from output: %s", stdout)
+		return "", fmt.Errorf("failed to determine bundler version from output: %s", output)
 	}
 
 	return match[1], nil
@@ -191,9 +204,11 @@ func (v *Versions) GemMajorVersion(gem string) (int, error) {
 	}
 }
 
-//Should return true if either:
+// Should return true if either:
 // (1) the only platform in the Gemfile.lock is windows (mingw/mswin)
-//     -or-
+//
+//	-or-
+//
 // (2) the Gemfile.lock line endings are /r/n, rather than just /n
 func (v *Versions) HasWindowsGemfileLock() (bool, error) {
 	gemfileLockPath := v.Gemfile() + ".lock"
