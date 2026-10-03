@@ -115,10 +115,7 @@ function specs::run() {
   nodes=1
 
   if [[ "${parallel}" == "true" ]]; then
-    # Honour GINKGO_NODES from the CI pipeline (defaults to 3) so parallelism can be
-    # tuned per environment -- e.g. lowered on the single-AZ buildpacks test CF where
-    # heavy Rails fixtures otherwise saturate the one Diego cell.
-    nodes="${GINKGO_NODES:-3}"
+    nodes=3
     serial_flag=""
   fi
 
