@@ -119,6 +119,7 @@ function specs::run() {
     # tuned per environment -- e.g. lowered on the single-AZ buildpacks test CF where
     # heavy Rails fixtures otherwise saturate the one Diego cell.
     nodes="${GINKGO_NODES:-3}"
+    serial_flag=""
   fi
 
   local buildpack_file
