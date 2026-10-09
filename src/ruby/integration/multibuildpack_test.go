@@ -3,6 +3,7 @@ package integration_test
 import (
 	"path/filepath"
 	"testing"
+	"time"
 
 	"github.com/cloudfoundry/switchblade"
 	"github.com/sclevine/spec"
@@ -43,7 +44,9 @@ func testMultiBuildpack(platform switchblade.Platform, fixtures string) func(*te
 				deployment, _, err := deploymentProcess.Execute(name, filepath.Join(fixtures, "multibuildpack", "no_gemfile"))
 				Expect(err).NotTo(HaveOccurred())
 
-				Eventually(deployment).Should(Serve(MatchRegexp(`Ruby Version: \d+\.\d+\.\d+`)))
+				// Extended timeout for multi-buildpack deployment consistency,
+				// matching the pattern established in d5294b6d.
+				Eventually(deployment, 90*time.Second, 2*time.Second).Should(Serve(MatchRegexp(`Ruby Version: \d+\.\d+\.\d+`)))
 			})
 		})
 
@@ -57,8 +60,13 @@ func testMultiBuildpack(platform switchblade.Platform, fixtures string) func(*te
 					Execute(name, filepath.Join(fixtures, "multibuildpack", "rails72"))
 				Expect(err).NotTo(HaveOccurred())
 
-				Eventually(deployment).Should(Serve(ContainSubstring("Ruby version: ruby 3.")))
-				Eventually(deployment).Should(Serve(MatchRegexp(`Node version: v\d+\.\d+\.\d+`)))
+				// The default 20s Eventually timeout has been observed to be insufficient for
+				// this heavy multi-buildpack Rails 7.2 + Webpacker app, especially under
+				// parallel test execution. Staging alone takes 4-5 minutes, and app boot can
+				// take 60-120s. Extended timeout matches the pattern established for JRuby
+				// (#1140) and other slow-booting fixtures (d5294b6d).
+				Eventually(deployment, 90*time.Second, 2*time.Second).Should(Serve(ContainSubstring("Ruby version: ruby 3.")))
+				Eventually(deployment, 90*time.Second, 2*time.Second).Should(Serve(MatchRegexp(`Node version: v\d+\.\d+\.\d+`)))
 			})
 		})
 
@@ -72,8 +80,9 @@ func testMultiBuildpack(platform switchblade.Platform, fixtures string) func(*te
 					Execute(name, filepath.Join(fixtures, "multibuildpack", "ruby_calls_go"))
 				Expect(err).NotTo(HaveOccurred())
 
-				Eventually(deployment).Should(Serve(MatchRegexp(`RUBY_VERSION IS \d+\.\d+\.\d+`)))
-				Eventually(deployment).Should(Serve(MatchRegexp(`go version go\d+\.\d+(\.\d+)?`)))
+				// Extended timeout for multi-buildpack deployment consistency.
+				Eventually(deployment, 90*time.Second, 2*time.Second).Should(Serve(MatchRegexp(`RUBY_VERSION IS \d+\.\d+\.\d+`)))
+				Eventually(deployment, 90*time.Second, 2*time.Second).Should(Serve(MatchRegexp(`go version go\d+\.\d+(\.\d+)?`)))
 			})
 		})
 
@@ -87,7 +96,8 @@ func testMultiBuildpack(platform switchblade.Platform, fixtures string) func(*te
 					Execute(name, filepath.Join(fixtures, "multibuildpack", "dotnet_core"))
 				Expect(err).NotTo(HaveOccurred())
 
-				Eventually(deployment).Should(Serve(MatchRegexp(`dotnet: \d+\.\d+\.\d+`)))
+				// Extended timeout for multi-buildpack deployment consistency.
+				Eventually(deployment, 90*time.Second, 2*time.Second).Should(Serve(MatchRegexp(`dotnet: \d+\.\d+\.\d+`)))
 			})
 		})
 	}
