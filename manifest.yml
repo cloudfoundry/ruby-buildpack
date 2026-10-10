@@ -76,20 +76,28 @@ dependencies:
   source_sha256: 8f24bf9abe455a09ab30f9ae8edda1e945ed678a4b1c3b07ee0f901fdc0ff4fd
 - name: node
   version: 24.15.0
-  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_24.15.0_linux_x64_cflinuxfs4_1a62d98b.tgz
-  sha256: 1a62d98bd21e0bdf79fec37ec000be04955b8733af40c2acbf8da8f064cea912
-  cf_stacks:
-  - cflinuxfs4
-  source: https://nodejs.org/dist/v24.15.0/node-v24.15.0.tar.gz
-  source_sha256: 729de494dd2872e5a3a6c32a1cd156a5413d4aca2772b2d873ee86bb5531bcd9
-- name: node
-  version: 24.15.0
   uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_24.15.0_linux_x64_cflinuxfs5_23519f1d.tgz
   sha256: 23519f1df6d063ffb2edc5ccc98aa38ee9608ddf11a512441912d4f5e23e7ef3
   cf_stacks:
   - cflinuxfs5
   source: https://nodejs.org/dist/v24.15.0/node-v24.15.0.tar.gz
   source_sha256: 729de494dd2872e5a3a6c32a1cd156a5413d4aca2772b2d873ee86bb5531bcd9
+- name: node
+  version: 24.19.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_24.19.0_linux_x64_cflinuxfs4_9ab26efa.tgz
+  sha256: 9ab26efa6abadf21f589b0fffd4888b432066c4c06b8ccd4ac8981879c9a47c2
+  cf_stacks:
+  - cflinuxfs4
+  source: https://nodejs.org/dist/v24.19.0/node-v24.19.0.tar.gz
+  source_sha256: 16fe258006a6e86844fbe05b3b5e1e5623ca8d3da54e32d98d9e83234bf25b01
+- name: node
+  version: 24.19.0
+  uri: https://buildpacks.cloudfoundry.org/dependencies/node/node_24.19.0_linux_x64_cflinuxfs5_25a15e50.tgz
+  sha256: 25a15e50fa982ebce399167f9e522d4cccbcd5bef250ab14dc590d91f48dba23
+  cf_stacks:
+  - cflinuxfs5
+  source: https://nodejs.org/dist/v24.19.0/node-v24.19.0.tar.gz
+  source_sha256: 16fe258006a6e86844fbe05b3b5e1e5623ca8d3da54e32d98d9e83234bf25b01
 - name: openjdk
   version: 17.0.13
   uri: https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.13%2B11/OpenJDK17U-jre_x64_linux_hotspot_17.0.13_11.tar.gz
