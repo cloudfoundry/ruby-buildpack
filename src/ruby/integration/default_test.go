@@ -82,7 +82,13 @@ func testDefault(platform switchblade.Platform, fixtures string) func(*testing.T
 					Execute(name, filepath.Join(fixtures, "default", "vendor_bundle"))
 				Expect(err).NotTo(HaveOccurred())
 
-				Eventually(deployment).Should(Serve(ContainSubstring("Healthy")))
+				// The default 20s Eventually timeout has been observed to
+				// intermittently race with the Docker platform backend
+				// under parallel CI load (container reports started before
+				// the app has actually bound its port). Give this more
+				// headroom, matching the precedent set for the JRuby
+				// fixture (#1140).
+				Eventually(deployment, 90*time.Second, 2*time.Second).Should(Serve(ContainSubstring("Healthy")))
 			})
 		})
 
@@ -95,7 +101,9 @@ func testDefault(platform switchblade.Platform, fixtures string) func(*testing.T
 					Execute(name, filepath.Join(fixtures, "default", "custom_gemfile"))
 				Expect(err).NotTo(HaveOccurred())
 
-				Eventually(deployment).Should(Serve(ContainSubstring("Hello World")))
+				// See the "vendor bundle" test above for why this has an
+				// extended timeout.
+				Eventually(deployment, 90*time.Second, 2*time.Second).Should(Serve(ContainSubstring("Hello World")))
 			})
 		})
 
