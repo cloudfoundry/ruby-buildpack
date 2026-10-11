@@ -1,6 +1,5 @@
 ---
 applications:
-- name: ((name))
-  memory: 1G
+- memory: 1G
   timeout: 180
   health-check-type: port
