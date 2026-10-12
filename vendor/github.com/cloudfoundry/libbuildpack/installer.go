@@ -4,7 +4,6 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -47,7 +46,7 @@ func (i *Installer) InstallDependency(dep Dependency, outputDir string) error {
 func (i *Installer) InstallDependencyWithStrip(dep Dependency, outputDir string, stripComponents int) error {
 	i.manifest.log.BeginStep("Installing %s %s", dep.Name, dep.Version)
 
-	tmpDir, err := ioutil.TempDir("", "downloads")
+	tmpDir, err := os.MkdirTemp("", "downloads")
 	if err != nil {
 		return err
 	}
@@ -111,7 +110,7 @@ func (i *Installer) InstallDependencyWithStrip(dep Dependency, outputDir string,
 
 func (i *Installer) warnNewerPatch(dep Dependency) error {
 
-	v, err := semver.NewVersion(dep.Version)
+	v, err := semver.NewVersion(normalizeSemver(dep.Version))
 	if err != nil {
 		return nil
 	}
@@ -132,6 +131,11 @@ func (i *Installer) warnNewerPatch(dep Dependency) error {
 
 	latest, err := FindMatchingVersion(constraint, versions)
 	if err != nil {
+		if normalizeSemver(dep.Version) != dep.Version {
+			// Versions with more than three fields were never checked before;
+			// don't let an unparsable sibling version fail their installation.
+			return nil
+		}
 		return err
 	}
 
@@ -143,13 +147,13 @@ func (i *Installer) warnNewerPatch(dep Dependency) error {
 }
 
 func (i *Installer) warnEndOfLife(dep Dependency) error {
-	matchVersion := func(versionLine, depVersion string) bool {
+	matchSemver := func(versionLine, depVersion string) bool {
 		return versionLine == depVersion
 	}
 
-	v, err := semver.NewVersion(dep.Version)
+	v, err := semver.NewVersion(normalizeSemver(dep.Version))
 	if err == nil {
-		matchVersion = func(versionLine, depVersion string) bool {
+		matchSemver = func(versionLine, depVersion string) bool {
 			constraint, err := semver.NewConstraint(versionLine)
 			if err != nil {
 				return false
@@ -157,6 +161,16 @@ func (i *Installer) warnEndOfLife(dep Dependency) error {
 
 			return constraint.Check(v)
 		}
+	}
+
+	matchVersion := func(versionLine, depVersion string) bool {
+		// Exact version lines such as "21.0.12+10" or "21.0.12.1" are matched
+		// like exact FindMatchingVersion constraints; semver would ignore the
+		// build number or fail to parse more than three fields.
+		if c, ok := isExactJEP322Constraint(versionLine); ok {
+			return matchesExactJEP322(c, depVersion)
+		}
+		return matchSemver(versionLine, depVersion)
 	}
 
 	for _, deprecation := range i.manifest.Deprecations {
