@@ -13,7 +13,8 @@
 !/tmp/pids
 
 
-/public/assets
+/public/assets/*
+!/public/assets/.sprockets-manifest-test.json
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.
