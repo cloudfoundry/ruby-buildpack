@@ -3,5 +3,3 @@ applications:
 - memory: 1G
   timeout: 180
   health-check-type: port
-  env:
-    RAILS_SKIP_ASSET_COMPILATION: "true"
