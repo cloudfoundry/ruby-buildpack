@@ -445,7 +445,7 @@ func (s *Supplier) InstallJVM() error {
 			return err
 		}
 	} else {
-		// Legacy naming used in cflinuxfs3/4: flat tarball, no strip needed.
+		// Legacy naming used in cflinuxfs4: flat tarball, no strip needed.
 		if err := s.Installer.InstallOnlyVersion("openjdk1.8-latest", jvmInstallDir); err != nil {
 			return err
 		}
