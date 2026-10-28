@@ -36,7 +36,7 @@ DEPENDENCIES
   webrick
 
 RUBY VERSION
-   ruby 3.2.9p265
+  ruby 3.3.11
 
 BUNDLED WITH
    2.7.2
