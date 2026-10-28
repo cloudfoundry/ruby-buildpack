@@ -204,14 +204,6 @@ dependencies:
   source: https://cache.ruby-lang.org/pub/ruby/3.4/ruby-3.4.4.tar.gz
   source_sha256: a0597bfdf312e010efd1effaa8d7f1d7833146fdc17950caa8158ffa3dcbfa85
 - name: ruby
-  version: 3.4.4
-  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.4.4_linux_x64_cflinuxfs4_5f8c8f1e.tgz
-  sha256: 5f8c8f1ec5527297a1649da993059b18f5b914f3f28afdde075f1110ce273c1d
-  cf_stacks:
-  - cflinuxfs4
-  source: https://cache.ruby-lang.org/pub/ruby/3.4/ruby-3.4.4.tar.gz
-  source_sha256: a0597bfdf312e010efd1effaa8d7f1d7833146fdc17950caa8158ffa3dcbfa85
-- name: ruby
   version: 3.4.7
   uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.4.7_linux_x64_cflinuxfs3_72757c9c.tgz
   sha256: 72757c9c9fd8ada603b6f76a121052228e60b49f67205b5d4df2db12fc089f78
@@ -227,6 +219,22 @@ dependencies:
   - cflinuxfs4
   source: https://cache.ruby-lang.org/pub/ruby/3.4/ruby-3.4.7.tar.gz
   source_sha256: 23815a6d095696f7919090fdc3e2f9459b2c83d57224b2e446ce1f5f7333ef36
+- name: ruby
+  version: 3.4.12
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.4.12_linux_x64_cflinuxfs4_62a4c0b9.tgz
+  sha256: 62a4c0b91d65ee105457fd96a702dda66f39ad5ec50e74c2b6e48cc6710572fc
+  cf_stacks:
+  - cflinuxfs4
+  source: https://cache.ruby-lang.org/pub/ruby/3.4/ruby-3.4.12.tar.gz
+  source_sha256: 5e5d85ad93b0adcccbad47733680f4892bd0078e3342437f7babce01c1872479
+- name: ruby
+  version: 3.4.12
+  uri: https://buildpacks.cloudfoundry.org/dependencies/ruby/ruby_3.4.12_linux_x64_cflinuxfs5_dec66dd5.tgz
+  sha256: dec66dd51ca8f2319f094cd1bbda32d2feb0390cbc8e781f6ec1545007f8bcae
+  cf_stacks:
+  - cflinuxfs5
+  source: https://cache.ruby-lang.org/pub/ruby/3.4/ruby-3.4.12.tar.gz
+  source_sha256: 5e5d85ad93b0adcccbad47733680f4892bd0078e3342437f7babce01c1872479
 - name: rubygems
   version: 3.6.8
   uri: https://buildpacks.cloudfoundry.org/dependencies/rubygems/rubygems_3.6.8_linux_noarch_any-stack_7a02eb5e.tgz
