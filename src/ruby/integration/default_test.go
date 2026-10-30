@@ -40,7 +40,7 @@ func testDefault(platform switchblade.Platform, fixtures string) func(*testing.T
 					Execute(name, filepath.Join(fixtures, "default", "specified_ruby_version"))
 				Expect(err).NotTo(HaveOccurred())
 
-				Eventually(deployment).Should(Serve(MatchRegexp(`ruby 3\.2\.\d+`)).WithEndpoint("/ruby"))
+				Eventually(deployment).Should(Serve(MatchRegexp(`ruby 3\.3\.\d+`)).WithEndpoint("/ruby"))
 			})
 		})
 
@@ -50,7 +50,7 @@ func testDefault(platform switchblade.Platform, fixtures string) func(*testing.T
 					Execute(name, filepath.Join(fixtures, "default", "unspecified_ruby_version"))
 				Expect(err).NotTo(HaveOccurred())
 
-				Eventually(deployment).Should(Serve(MatchRegexp(`ruby 3\.\d+\.\d+`)).WithEndpoint("/ruby"))
+				Eventually(deployment).Should(Serve(MatchRegexp(`ruby 3\.4\.\d+`)).WithEndpoint("/ruby"))
 			})
 		})
 
