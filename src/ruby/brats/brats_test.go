@@ -38,13 +38,7 @@ var _ = Describe("Ruby buildpack", func() {
 			Expect(app.GetBody("/pg")).To(ContainSubstring("No such file or directory"))
 		})
 		By("supports mysql2", func() {
-			Expect(app.GetBody("/mysql2")).To(
-				Or(
-					// cflinuxfs3 and cflinuxfs4 have different libmysql versions, so diff msgs
-					ContainSubstring("Unknown MySQL server host 'testing'"),
-					ContainSubstring("Unknown server host 'testing'"),
-				),
-			)
+			Expect(app.GetBody("/mysql2")).To(ContainSubstring("Unknown server host 'testing'"))
 		})
 	})
 
